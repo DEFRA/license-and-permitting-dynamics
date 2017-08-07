@@ -10,7 +10,7 @@ This service is currently beta and has been developed in accordance with the [Di
 
 Please make sure the following are installed:
 
-- [Visual Studio 2015]
+- Visual Studio 2015
 - [Latest version of Dynamics 365 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=50032)
 - [Github for Visual Studio](https://visualstudio.github.com/)
 
@@ -24,11 +24,13 @@ The Visual Studio solutions reflect the Dynamics 365 Solutions:-
 
 ## Installation
 
-Clone the repository and build each solution. All nuget package dependencies will be automatically installed:
+Clone the repository:
 
 ```bash
 git clone https://github.com/DEFRA/license-and-permitting-dynamics.git && cd license-and-permitting-dynamics
 ```
+
+Build each solution. All nuget package dependencies will be automatically installed.
 
 ## License
 
