@@ -11,8 +11,8 @@ This service is currently beta and has been developed in accordance with the [Di
 Please make sure the following are installed:
 
 - [Visual Studio 2015]
-- [Latest version of Dynamics 365 SDK] (https://www.microsoft.com/en-us/download/details.aspx?id=50032)
-- [Github for Visual Studio] (https://visualstudio.github.com/)
+- [Latest version of Dynamics 365 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=50032)
+- [Github for Visual Studio](https://visualstudio.github.com/)
 
 ## Visual Studio Solutions
 
