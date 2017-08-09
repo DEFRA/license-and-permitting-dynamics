@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>2029</returnedtypecode>
+  <savedqueryid>{7bea29f4-0240-4f79-9e89-e07a134dc405}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="queueitems" object="2029" jump="title" select="1" icon="1" preview="1">
+      <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
+        <cell name="title" width="300" />
+        <cell name="enteredon" width="140" />
+        <cell name="queueid" width="150" />
+        <cell name="workerid" width="150" />
+        <cell name="casealias.prioritycode" width="150" LabelId="query.7F554701-0D30-413B-8B21-555C58DB2C32.cell.Priority.label" />
+        <cell name="queueitemid" ishidden="1" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch distinct="false" mapping="logical">
+      <entity name="queueitem">
+        <attribute name="title" />
+        <attribute name="enteredon" />
+        <attribute name="objecttypecode" />
+        <attribute name="objectid" />
+        <attribute name="queueid" />
+        <attribute name="workerid" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="0" />
+          <condition attribute="objecttypecode" operator="eq" value="112" />
+        </filter>
+        <link-entity alias="casealias" name="incident" from="incidentid" to="objectid" link-type="inner">
+          <attribute name="prioritycode" />
+        </link-entity>
+        <order attribute="enteredon" descending="true" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>6.1.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="All Cases in Selected Queues" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

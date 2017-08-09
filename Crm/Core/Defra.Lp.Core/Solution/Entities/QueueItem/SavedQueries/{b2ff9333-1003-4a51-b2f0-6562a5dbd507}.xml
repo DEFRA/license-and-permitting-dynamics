@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>1</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>1</isdefault>
+  <returnedtypecode>2029</returnedtypecode>
+  <savedqueryid>{b2ff9333-1003-4a51-b2f0-6562a5dbd507}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="resultset" object="2029" jump="title" select="1" preview="1" icon="1">
+      <row name="result" id="objectid" multiobjectidfield="objecttypecode">
+        <cell name="title" width="300" />
+        <cell name="queueitemid" ishidden="1" width="100" />
+        <cell name="enteredon" width="140" />
+        <cell name="objecttypecode" width="100" />
+        <cell name="queueid" width="150" />
+        <cell name="workerid" width="150" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>4</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical">
+      <entity name="queueitem">
+        <attribute name="queueitemid" />
+        <attribute name="title" />
+        <attribute name="objectid" />
+        <attribute name="objecttypecode" />
+        <attribute name="enteredon" />
+        <attribute name="queueid" />
+        <attribute name="workerid" />
+        <order attribute="title" descending="false" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="0" />
+        </filter>
+        <filter type="or" isquickfindfields="1">
+          <condition attribute="title" operator="like" value="{0}" />
+        </filter>
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>5.0.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Quick Find Queue Items" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

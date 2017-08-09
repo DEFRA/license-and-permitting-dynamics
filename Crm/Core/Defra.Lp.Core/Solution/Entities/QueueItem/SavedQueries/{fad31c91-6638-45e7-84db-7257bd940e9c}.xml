@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>2029</returnedtypecode>
+  <savedqueryid>{fad31c91-6638-45e7-84db-7257bd940e9c}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="queueitems" object="2029" jump="title" select="1" icon="1" preview="1">
+      <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
+        <cell name="title" width="300" />
+        <cell name="enteredon" width="140" />
+        <cell name="workerid" width="150" />
+        <cell name="queueitemid" ishidden="1" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>2</querytype>
+  <fetchxml>
+    <fetch distinct="false" mapping="logical">
+      <entity name="queueitem">
+        <attribute name="title" />
+        <attribute name="objecttypecode" />
+        <attribute name="objectid" />
+        <attribute name="workerid" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="0" />
+        </filter>
+        <order attribute="enteredon" descending="true" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>6.1.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="QueueItem Sub Grid View" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Displays information about related queueitems in sub grid of detail form " languagecode="1033" />
+  </Descriptions>
+</savedquery>
