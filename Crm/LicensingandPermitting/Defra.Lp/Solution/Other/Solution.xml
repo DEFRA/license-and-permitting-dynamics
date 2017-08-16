@@ -91,6 +91,7 @@
       <RootComponent type="1" schemaName="defra_notification" behavior="0" />
       <RootComponent type="1" schemaName="defra_preapplication" behavior="0" />
       <RootComponent type="1" schemaName="defra_requestforinformation" behavior="0" />
+      <RootComponent type="1" schemaName="defra_schedule5" behavior="0" />
       <RootComponent type="9" schemaName="defra_applicationtype" behavior="0" />
       <RootComponent type="9" schemaName="defra_permittype" behavior="0" />
       <RootComponent type="20" id="{941a6823-a973-e711-80e9-3863bb35ecd0}" behavior="0" />
@@ -127,39 +128,35 @@
         <Dependent key="1" type="1" schemaName="defra_address" displayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="0" type="1" schemaName="defra_addressdetails" displayName="Contact Details" solution="Active" />
-        <Dependent key="2" type="1" schemaName="defra_application" displayName="Application" />
+        <Required key="2" type="1" schemaName="defra_country" displayName="Country" solution="Active" />
+        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="3" type="1" schemaName="defra_town" displayName="Town" solution="Active" />
-        <Dependent key="4" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="4" type="1" schemaName="defra_town" displayName="Town" solution="Active" />
+        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="5" type="1" schemaName="defra_country" displayName="Country" solution="Active" />
-        <Dependent key="6" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="6" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
+        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="7" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
-        <Dependent key="6" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="7" type="2" schemaName="defra_countryid" displayName="Country" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
+        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="8" type="2" schemaName="defra_townid" displayName="Town" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
-        <Dependent key="4" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="8" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
+        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="9" type="2" schemaName="defra_countryid" displayName="Country" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
-        <Dependent key="6" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="9" type="2" schemaName="defra_townid" displayName="Town" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
+        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="10" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
-        <Dependent key="4" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="11" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
+        <Required key="10" type="61" schemaName="defra_address16" displayName="defra_address16" solution="Active" />
         <Dependent key="1" type="1" schemaName="defra_address" displayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="12" type="61" schemaName="defra_address16" displayName="defra_address16" solution="Active" />
+        <Required key="11" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
         <Dependent key="1" type="1" schemaName="defra_address" displayName="Address" />
       </MissingDependency>
     </MissingDependencies>
