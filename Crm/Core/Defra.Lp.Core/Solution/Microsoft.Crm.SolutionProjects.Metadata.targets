@@ -86,7 +86,7 @@ PluginsDirectory="$(PluginsDirectory)">
 
     <!--<CallTarget Targets="LSBuild" />-->
 
-    <!--Copying stuff from $(IntermediateOutputPath)\$(BeforeLocDir) into output folder so its accessible on VSTS hosted agent -->
+    <!--Copying stuff from $(IntermediateOutputPath)\$(BeforeLocDir) into output folder so its accessible on VSTS hosted agent 
     <ItemGroup>
       <BeforeLocFiles Include="$(IntermediateOutputPath)\$(BeforeLocDir)\**\*"></BeforeLocFiles>
     </ItemGroup>
@@ -94,7 +94,7 @@ PluginsDirectory="$(PluginsDirectory)">
     <Copy SourceFiles="@(BeforeLocFiles)"
           DestinationFolder="$(OutDir)\$(BeforeLocDir)\%(RecursiveDir)"
           OverwriteReadOnlyFiles="true"></Copy>
-
+-->
     <Warning Condition="'$(SolutionLocToolsDir)' == '' or !Exists('$(SolutionLocToolsDir)')" Text="Property 'SolutionLocToolsDir' is either not defined or not found, using default '$(DefaultLocToolsDir)'" />
     <PropertyGroup>
       <SolutionLocToolsDir Condition="$(SolutionLocToolsDir) == '' or !Exists('$(SolutionLocToolsDir)')">$(DefaultLocToolsDir)</SolutionLocToolsDir>
