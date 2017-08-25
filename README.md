@@ -18,9 +18,9 @@ Please make sure the following are installed:
 
 The Visual Studio solutions reflect the Dynamics 365 Solutions:-
 
-- Core
-- Licensing and Permitting
-- Waste Permits
+- Core - Common Customer configuration that will be common across all DEFRA CRM instances
+- Licensing and Permitting - Generic Licensing and Permitting Configuration
+- Waste Permits - Configuration specific to Waste Permits
 
 ## Installation
 
@@ -31,6 +31,12 @@ git clone https://github.com/DEFRA/license-and-permitting-dynamics.git && cd lic
 ```
 
 Build each solution. All nuget package dependencies will be automatically installed.
+
+Once built, import the Solutions into Dynamics 365 in the following order:-
+
+1) Core
+2) Licensing and Permitting
+3) Waste Permits
 
 ## License
 
