@@ -1,10 +1,10 @@
-# Waste Permits Service
+# Licensing and Permitting Dynamics 365 Solutions
 
 You may need to apply to the [Environment Agency](https://www.gov.uk/government/organisations/environment-agency) for an environmental permit if your business uses, recycles, treats, stores or disposes of waste or mining waste. This permit can be for activities at one site or for mobile plant that can be used at many sites.
 
-The Waste Permits service will be a new, online way to apply for a waste permit. The service will be based on Dynamics 365 and the Solutions for this are contained within this repository.
+There are multiple Licensing and Permitting services which will all be based on Dynamics 365. The generic Licensing and Permitting Solution and the Solution for each specific service are contained within this repository.
 
-This service is currently beta and has been developed in accordance with the [Digital by Default service standard](https://www.gov.uk/service-manual/digital-by-default), putting user needs first and delivered iteratively.
+This service is currently beta for the Waste Permitting Solution and has been developed in accordance with the [Digital by Default service standard](https://www.gov.uk/service-manual/digital-by-default), putting user needs first and delivered iteratively.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Please make sure the following are installed:
 
 ## Visual Studio Solutions
 
-The Visual Studio solutions reflect the Dynamics 365 Solutions:-
+The Visual Studio solutions reflect the Dynamics 365 Solutions. Additional Solutions will be added as subsequent Licensing and Permitting services are developed:-
 
 - Core - Common Customer configuration that will be common across all DEFRA CRM instances
 - Licensing and Permitting - Generic Licensing and Permitting Configuration
