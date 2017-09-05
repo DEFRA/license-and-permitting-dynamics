@@ -140,7 +140,7 @@
           <label description="CUSTOMER" languagecode="1033" />
         </labels>
         <columns>
-          <column width="100%">
+          <column width="50%">
             <sections>
               <section name="tab_4_section_1" showlabel="false" showbar="false" locklevel="0" id="{a27c7a6d-092c-b808-4c77-c582d1d35a01}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" labelid="{b3635fd3-36d5-4ec7-9223-9cd30049797b}">
                 <labels>
@@ -169,6 +169,43 @@
                         <label description="Agent" languagecode="1033" />
                       </labels>
                       <control id="defra_agentid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_agentid" disabled="false" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+          <column width="50%">
+            <sections>
+              <section name="tab_customer_section_2" showlabel="false" showbar="false" locklevel="0" id="{3b9a731a-9e81-01c3-ac1a-da1243e30d0e}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                <labels>
+                  <label description="Section" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{bd3d97d9-92a8-bed7-38ee-2e22654888a4}" showlabel="false" colspan="1" auto="false">
+                      <labels>
+                        <label description="Contact" languagecode="1033" />
+                      </labels>
+                      <control id="Contact" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid" disabled="false">
+                        <parameters>
+                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="contact"&gt;c82fe34b-a303-469b-86ad-1903e2c6c572&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                          <ControlMode>Edit</ControlMode>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{5d1cce21-b198-108c-c63b-a0d0e95e2836}" showlabel="false" colspan="1" auto="false">
+                      <labels>
+                        <label description="Account" languagecode="1033" />
+                      </labels>
+                      <control id="Account" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid" disabled="false">
+                        <parameters>
+                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;84ba3b39-7d48-4812-94fa-0a86deff9595&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                          <ControlMode>Edit</ControlMode>
+                        </parameters>
+                      </control>
                     </cell>
                   </row>
                 </rows>
@@ -216,12 +253,36 @@
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{791c16d2-6b11-95ad-ce44-ed510039d95d}" showlabel="false" labelid="{e0193d3b-2369-4a77-b15e-6ab0f002b65b}">
+                    <cell id="{474ca4a4-acdb-0326-e98a-e611d19b3e81}" showlabel="false" colspan="1" auto="false" rowspan="6">
                       <labels>
-                        <label description="" languagecode="1033" />
+                        <label description="Document References" languagecode="1033" />
                       </labels>
+                      <control id="documents" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                        <parameters>
+                          <ViewId>{CE3C6EF2-C4E9-4655-AB77-9D6F79E2C4B6}</ViewId>
+                          <IsUserView>false</IsUserView>
+                          <RelationshipName>defra_documentreference_defra_preapp</RelationshipName>
+                          <TargetEntityType>defra_documentreference</TargetEntityType>
+                          <AutoExpand>Fixed</AutoExpand>
+                          <EnableQuickFind>false</EnableQuickFind>
+                          <EnableViewPicker>false</EnableViewPicker>
+                          <ViewIds>{CE3C6EF2-C4E9-4655-AB77-9D6F79E2C4B6}</ViewIds>
+                          <EnableJumpBar>false</EnableJumpBar>
+                          <ChartGridMode>All</ChartGridMode>
+                          <VisualizationId />
+                          <IsUserChart>false</IsUserChart>
+                          <EnableChartPicker>true</EnableChartPicker>
+                          <RecordsPerPage>4</RecordsPerPage>
+                          <RelationshipRoleOrdinal>2</RelationshipRoleOrdinal>
+                        </parameters>
+                      </control>
                     </cell>
                   </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
                 </rows>
               </section>
             </sections>
@@ -284,6 +345,7 @@
         </NavBarArea>
       </NavBarAreas>
     </Navigation>
+    <controlDescriptions />
     <DisplayConditions Order="1">
       <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
       <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
