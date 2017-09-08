@@ -1,4 +1,4 @@
-﻿using Defra.Lp.Plugins.Common.ProxyClasses;
+﻿using Defra.Lp.Common.ProxyClasses;
 using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
 using System;
