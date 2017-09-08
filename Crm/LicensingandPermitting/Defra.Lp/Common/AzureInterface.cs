@@ -210,7 +210,6 @@ namespace Defra.Lp.Common
                                                             <link-entity name='{1}' from='activityid' to='objectid' alias='email' link-type='inner' >
                                                               <attribute name='activityid' />
                                                               <attribute name='statuscode' />
-                                                              <attribute name='rpa_documenttype' />
                                                               <attribute name='regardingobjectid' />
                                                               <filter type='and' >
                                                                 <condition attribute='statuscode' operator='not-null' />
