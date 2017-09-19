@@ -4,7 +4,7 @@
   <IntroducedVersion>1.0.0.0</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
   <FormActivationState>1</FormActivationState>
-  <form shownavigationbar="true" showImage="false" maxWidth="1900">
+  <form>
     <tabs>
       <tab verticallayout="true" id="{4264e8f2-b43e-411d-a0cf-ef202a30dfa8}" IsUserDefined="1" name="{4264e8f2-b43e-411d-a0cf-ef202a30dfa8}" locklevel="0" expanded="true" showlabel="true">
         <labels>
@@ -23,7 +23,7 @@
                       <labels>
                         <label description="Name" languagecode="1033" />
                       </labels>
-                      <control id="defra_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_name" uniqueid="{d54ad1a7-c23e-2394-314a-62abcbbbc193}" disabled="false" />
+                      <control id="defra_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_name" uniqueid="{d54ad1a7-c23e-2394-314a-62abcbbbc193}" disabled="true" />
                     </cell>
                   </row>
                   <row>
@@ -32,32 +32,6 @@
                         <label description="UPRN" languagecode="1033" />
                       </labels>
                       <control id="defra_uprn" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_uprn" disabled="false" />
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{4a3e4d8e-14d7-4900-4ac6-0577d8787483}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="Postcode" languagecode="1033" />
-                      </labels>
-                      <control id="defra_postcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_postcode" disabled="false" uniqueid="{a5d4050b-06c0-ca85-99be-c1b7b534137a}" />
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{aa5e6ed7-e738-0288-4753-99746d963c0c}" showlabel="true" colspan="1" auto="false" rowspan="1" visible="false">
-                      <labels>
-                        <label description="Address" languagecode="1033" />
-                      </labels>
-                      <control id="WebResource_address" classid="{9FDF5F91-88B1-47f4-AD53-C11EFC01A01D}">
-                        <parameters>
-                          <Url>defra_/addresslookup/addressui.html</Url>
-                          <PassParameters>false</PassParameters>
-                          <ShowOnMobileClient>false</ShowOnMobileClient>
-                          <Security>false</Security>
-                          <Scrolling>auto</Scrolling>
-                          <Border>false</Border>
-                          <WebResourceId>{98D83294-5C70-E711-80E7-3863BB359C70}</WebResourceId>
-                        </parameters>
-                      </control>
                     </cell>
                   </row>
                   <row>
@@ -90,6 +64,14 @@
                         <label description="Town" languagecode="1033" />
                       </labels>
                       <control id="defra_town" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_town" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{4a3e4d8e-14d7-4900-4ac6-0577d8787483}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Postcode" languagecode="1033" />
+                      </labels>
+                      <control id="defra_postcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_postcode" disabled="false" />
                     </cell>
                   </row>
                   <row>
@@ -192,16 +174,6 @@
       </NavBarAreas>
     </Navigation>
     <controlDescriptions />
-    <formLibraries>
-      <Library name="defra_/addresslookup/postcodeOnchange.js" libraryUniqueId="{39a45147-cdeb-2832-049c-067d4a58d3c7}" />
-    </formLibraries>
-    <events>
-      <event name="onchange" application="false" active="false" attribute="defra_postcode">
-        <Handlers>
-          <Handler functionName="postcodeOnChange" libraryName="defra_/addresslookup/postcodeOnchange.js" handlerUniqueId="{c55b27b0-3272-219d-0c23-7cc4a9c78d2a}" enabled="true" parameters="" passExecutionContext="true" />
-        </Handlers>
-      </event>
-    </events>
   </form>
   <IsCustomizable>1</IsCustomizable>
   <CanBeDeleted>1</CanBeDeleted>
