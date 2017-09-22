@@ -92,6 +92,7 @@ namespace Defra.Lp.Plugins
                     TracingService.Trace("Start of MoveFile from annotation");
                     Entity PostEntityImage = Context.PostEntityImages["PostImage"];
 
+                    TracingService.Trace("Got PostImage");
 
                     EntityReference Regarding = null;
                     if (PostEntityImage.Attributes.Contains("objectid"))
@@ -111,6 +112,11 @@ namespace Defra.Lp.Plugins
                     {
                         azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_memo", "rpa_internalnoteid");
                         TracingService.Trace("Memo Processed Successfully");
+                    }
+                    else if (Regarding.LogicalName == "account")
+                    {
+                        azureInterface.MoveFile(entity.ToEntityReference(), true, "account", "accountid");
+                        TracingService.Trace("Account Note Processed Successfully");
                     }
                     else if (Regarding.LogicalName == "defra_application")
                     {
