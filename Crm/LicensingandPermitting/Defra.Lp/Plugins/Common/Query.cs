@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Common
 {
@@ -36,23 +31,23 @@ namespace Defra.Lp.Common
         public static string GetConfigurationValue(IOrganizationService adminService, string name)
         {
             string query = string.Format(@"<fetch>
-                                 <entity name='rpa_configuration'>
-                                     <attribute name='rpa_value' />
+                                 <entity name='defra_configuration'>
+                                     <attribute name='defra_value' />
                                      <filter>
-                                        <condition attribute='rpa_name' operator= 'eq' value='{0}' />
+                                        <condition attribute='defra_name' operator= 'eq' value='{0}' />
                                     </filter>
                                  </entity>
                             </fetch>", name);
 
             Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
 
-            if (configRecord == null || !configRecord.Attributes.Contains("rpa_value"))
+            if (configRecord == null || !configRecord.Attributes.Contains("defra_value"))
             {
                 throw new InvalidPluginExecutionException(string.Format("Configuration value {0} not found or has not been set", name));
             }
             else
             {
-                return (string)configRecord["rpa_value"];
+                return (string)configRecord["defra_value"];
             }
         }
     }

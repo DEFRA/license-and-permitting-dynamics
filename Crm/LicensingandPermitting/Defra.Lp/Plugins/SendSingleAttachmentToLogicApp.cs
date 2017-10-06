@@ -47,7 +47,6 @@ namespace Defra.Lp.Plugins
             // TODO: Implement your custom configuration handling.
         }
 
-
         /// <summary>
         /// Main entry point for he business logic that the plug-in is to execute.
         /// </summary>
@@ -103,24 +102,25 @@ namespace Defra.Lp.Plugins
                     TracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
 
 
-                    if (Regarding.LogicalName == "rpa_customernotification")
-                    {
-                        azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_customernotification", "rpa_customernotificationid");
-                        TracingService.Trace("Customer Notification Processed Successfully");
-                    }
-                    else if (Regarding.LogicalName == "rpa_memo")
-                    {
-                        azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_memo", "rpa_internalnoteid");
-                        TracingService.Trace("Memo Processed Successfully");
-                    }
-                    else if (Regarding.LogicalName == "account")
+                    //if (Regarding.LogicalName == "rpa_customernotification")
+                    //{
+                    //    azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_customernotification", "rpa_customernotificationid");
+                    //    TracingService.Trace("Customer Notification Processed Successfully");
+                    //}
+                    //else if (Regarding.LogicalName == "rpa_memo")
+                    //{
+                    //    azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_memo", "rpa_internalnoteid");
+                    //    TracingService.Trace("Memo Processed Successfully");
+                    //}
+
+                    if (Regarding.LogicalName == "account")
                     {
                         azureInterface.MoveFile(entity.ToEntityReference(), true, "account", "accountid");
                         TracingService.Trace("Account Note Processed Successfully");
                     }
                     else if (Regarding.LogicalName == "defra_application")
                     {
-                        //azureInterface.MoveFile(entity.ToEntityReference(), true, "defra_application", "defra_applicationid");
+                        azureInterface.MoveFile(entity.ToEntityReference(), true, "defra_application", "defra_applicationid");
                         TracingService.Trace("Application Note Processed Successfully");
                     }
                 }

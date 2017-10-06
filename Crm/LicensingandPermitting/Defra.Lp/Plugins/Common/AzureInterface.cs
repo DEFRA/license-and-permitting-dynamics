@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Defra.Lp.Common
 {
-    public enum AzureTarget : int
+    public enum AzureTarget
     {
         DocumentProcessorLogicApp = 0,
-        //MetadataAzureFunction = 1,
+        MetadataAzureFunction = 1,
         //AddUserToSharePointGroupAzureFunction = 2,
         //RemoveUserFromSharePointGroupAzureFunction = 3
     }
@@ -80,19 +80,19 @@ namespace Defra.Lp.Common
                 {
 
                     //This will have been fired against the cration of the Activity Mime Attachment Record
-                    Entity annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity);
+                    Entity annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
                     if (annotationData == null)
                     {
                         throw new InvalidPluginExecutionException("No annotation data record returned from query");
                     }
                     else
                     {
-                        if (annotationData.Contains("case.ticketnumber"))
-                        {
-                            caseNo = (string)((AliasedValue)annotationData.Attributes["case.ticketnumber"]).Value;
-                        }
+                        //if (annotationData.Contains("case.ticketnumber"))
+                        //{
+                        //    caseNo = (string)((AliasedValue)annotationData.Attributes["case.ticketnumber"]).Value;
+                        //}
 
-                        activityId = AddInsertFileParametersToRequest(request, annotationData, caseNo, parentEntity);
+                        activityId = AddInsertFileParametersToRequest(request, annotationData, caseNo, parentEntity, parentLookup);
 
                        // entityMetadataQuery = ReturnCustomerNotificationMetadataQuery(activityId, parentEntity);
 
@@ -109,18 +109,18 @@ namespace Defra.Lp.Common
 
             //TracingService.Trace(string.Format("Performing entity metadata query with query {0}", entityMetadataQuery));
 
-            Entity metadataQueryResult = Query.QueryCRMForSingleEntity(Service, entityMetadataQuery);
+            //Entity metadataQueryResult = Query.QueryCRMForSingleEntity(Service, entityMetadataQuery);
 
-            TracingService.Trace(string.Format("metadataQueryResult {0}", metadataQueryResult.Id.ToString()));
-            if (metadataQueryResult == null)
-            {
-                throw new Exception("No result returned for entity metadata query");
-            }
+            //TracingService.Trace(string.Format("metadataQueryResult {0}", metadataQueryResult.Id.ToString()));
+            //if (metadataQueryResult == null)
+            //{
+            //    throw new Exception("No result returned for entity metadata query");
+            //}
 
-            if (!initialCreation)
-            {
+            //if (!initialCreation)
+            //{
                 //activityId = AddMovementFileParametersToRequest(request, metadataQueryResult, parentEntity);
-            }
+            //}
             TracingService.Trace(string.Format("activityId {0}", activityId.ToString()));
             //request.Metadata = GenerateMetadata(metadataQueryResult, initialCreation, parentEntity);
 
@@ -144,11 +144,14 @@ namespace Defra.Lp.Common
             }
         }
 
-        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string caseNo, string parentEntityName)
+        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string caseNo, string parentEntityName, string parentLookup)
         {
             TracingService.Trace(string.Format("In AddInsertFileParametersToRequest. CaseNo: {0}", caseNo));
 
             string fileName = queryRecord.GetAttributeValue<string>("filename");
+
+            TracingService.Trace(string.Format("Filename: {0}", fileName));
+            TracingService.Trace(string.Format("Logical Name: {0}", queryRecord.LogicalName));
 
             string body = string.Empty;
             if (queryRecord.LogicalName == "activitymimeattachment")
@@ -170,32 +173,37 @@ namespace Defra.Lp.Common
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
 
+            TracingService.Trace(string.Format("Requests: {0}", request));
+
             request.FileBody = body;
 
-            if (!string.IsNullOrEmpty(caseNo))
-            {
-                request.CaseNo = caseNo;
-            }
+            //if (!string.IsNullOrEmpty(caseNo))
+            //{
+            //    request.CaseNo = caseNo;
+            //}
 
-            AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("email.activityid");
-            Guid activityId = (Guid)activityIdAliasedValue.Value;
-            request.ActivityId = activityId.ToString();
+            //AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("parent." + parentLookup);
+            //Guid activityId = (Guid)activityIdAliasedValue.Value;
+            //request.ActivityId = activityId.ToString();
             request.ActivityName = parentEntityName;
-            request.AttachmentType = queryRecord.LogicalName;
+            //request.AttachmentType = queryRecord.LogicalName;
             request.FileName = fileName;
-            request.AttachmentId = queryRecord.Id;
+            //request.AttachmentId = queryRecord.Id;
+            request.Operation = "CreateFile";
 
-            if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
-            {
+            //if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
+            //{
 
-                EntityReference documentType = (EntityReference)((AliasedValue)queryRecord.Attributes["email.rpa_documenttype"]).Value;
-                request.DocumentId = documentType.Name;
-            }
+            //    EntityReference documentType = (EntityReference)((AliasedValue)queryRecord.Attributes["email.rpa_documenttype"]).Value;
+            //    request.DocumentId = documentType.Name;
+            //}
 
-            return activityId;
+            //return activityId;
+
+            return new Guid();
         }
 
-        private Entity ReturnAnnotationData(Guid recordId, string parentEntityName)
+        private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
         {
             string fetchXml = string.Format(@"<fetch top='1' >
                                                           <entity name='annotation' >
@@ -207,22 +215,15 @@ namespace Defra.Lp.Common
                                                             <filter type='and' >
                                                               <condition attribute='annotationid' operator='eq' uitype='annotation' value='{0}' />
                                                             </filter>
-                                                            <link-entity name='{1}' from='activityid' to='objectid' alias='email' link-type='inner' >
-                                                              <attribute name='activityid' />
+                                                            <link-entity name='{1}' from='{2}' to='objectid' alias='parent' link-type='inner' >
+                                                              <attribute name='{2}' />
                                                               <attribute name='statuscode' />
-                                                              <attribute name='regardingobjectid' />
                                                               <filter type='and' >
                                                                 <condition attribute='statuscode' operator='not-null' />
                                                               </filter>
-                                                              <link-entity name='incident' from='incidentid' to='regardingobjectid' alias='case' link-type='outer' >
-                                                                <attribute name='ticketnumber' />
-                                                                <filter type='and' >
-                                                                  <condition attribute='ticketnumber' operator='not-null' />
-                                                                </filter>
-                                                              </link-entity>
                                                             </link-entity>
                                                           </entity>
-                                                        </fetch>", recordId, parentEntityName);
+                                                        </fetch>", recordId, parentEntityName, parentLookup);
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
         }
@@ -249,16 +250,16 @@ namespace Defra.Lp.Common
 
         private string GetAzureLocationUrl(AzureTarget azureTarget)
         {
-            string configName = "";
+            string configName = string.Empty;
 
             switch (azureTarget)
             {
                 case AzureTarget.DocumentProcessorLogicApp:
                     configName = "DocumentProcessorLogicAppUrl";
                     break;
-                //case AzureTarget.MetadataAzureFunction:
-                //    configName = "MetadataAzureFunctionUrl";
-                //    break;
+                case AzureTarget.MetadataAzureFunction:
+                    configName = "MetadataAzureFunctionUrl";
+                    break;
                 //case AzureTarget.AddUserToSharePointGroupAzureFunction:
                 //    configName = "AddUserToSharePointGroupAzureFunctionUrl";
                 //    break;

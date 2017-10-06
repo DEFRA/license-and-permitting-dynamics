@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Common.ProxyClasses
 {
@@ -25,5 +21,6 @@ namespace Defra.Lp.Common.ProxyClasses
         public string FileURL { get; internal set; }
         public string ListName { get; internal set; }
         public MetadataValues Metadata { get; internal set; }
+        public string Operation { get; internal set; }
     }
 }
