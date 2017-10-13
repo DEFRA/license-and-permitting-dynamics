@@ -63,6 +63,29 @@ namespace Defra.Lp.Workflows
 
 	        try
 	        {
+                // use the same synchronous application workflow
+                // create document location record sychronously on post stage
+                // Then create the folder in SharePoint asynchronously
+                // This means that if the the user clicks the document location record
+                // Also need to change the way configuration table works - tell Josh
+                // Create document location in logic app or return relative path and create in workflow
+                // Check existing document location when going to create
+                // create record as a step rather than in assembly
+                //
+                //
+                // Create application synchro 
+                // create document location record which is child of permits library which attaches to another library which is application library 
+                // and the relative path is the permit number
+                // then asynchrously trigger to create a folder in SharePoint if it doesn't exist (logic app) with Application number
+                //
+                // PAss libraty name to Logic App - Permit or Application
+                //
+                // If fails logic app then workflow fails
+                //
+                // Create mnew document location record in a step if its needed - The workflow assembly will query to tell us if it exists. Don't want to do this in .NET code 
+
+                // Document creation in Child workflow
+
                 var service = crmWorkflowContext.OrganizationService;
             }
 	        catch (FaultException<OrganizationServiceFault> e)

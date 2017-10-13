@@ -1,11 +1,42 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
+using System;
+using System.Linq;
 
 namespace Defra.Lp.Common
 {
     public static class Query
     {
+        public static string GetFieldValueAsString(Entity entity, string attributeName)
+        {
+            string sendValue = string.Empty;
+
+            if (entity.Attributes.Contains(attributeName))
+            {
+                object value = entity.Attributes[attributeName];
+
+                if (value != null)
+                {
+                    if (value.GetType() == typeof(AliasedValue))
+                    {
+                        AliasedValue aliasedValue = value as AliasedValue;
+
+                        if (aliasedValue.Value != null)
+                        {
+                            sendValue = Convert.ToString(aliasedValue.Value);
+                        }
+                    }
+                    else
+                    {
+                        sendValue = Convert.ToString(value);
+                    }
+                }
+            }
+            return sendValue;
+        }
+
         public static Entity QueryCRMForSingleEntity(IOrganizationService service, string fetchXml)
         {
             EntityCollection results = QueryCRMForMultipleRecords(service, fetchXml);
@@ -49,6 +80,25 @@ namespace Defra.Lp.Common
             {
                 return (string)configRecord["defra_value"];
             }
+        }
+
+        public static string GetCRMOptionsetText(IOrganizationService service, string entityName, string attributeName, int optionSetValue)
+        {
+            RetrieveEntityRequest retrieveDetails = new RetrieveEntityRequest
+            {
+                EntityFilters = EntityFilters.All,
+                LogicalName = entityName
+            };
+
+            RetrieveEntityResponse retrieveEntityResponseObj = (RetrieveEntityResponse)service.Execute(retrieveDetails);
+            EntityMetadata metadata = retrieveEntityResponseObj.EntityMetadata;
+            PicklistAttributeMetadata picklistMetadata = metadata.Attributes.FirstOrDefault(attribute => String.Equals(attribute.LogicalName, attributeName, StringComparison.OrdinalIgnoreCase)) as PicklistAttributeMetadata;
+            OptionSetMetadata options = picklistMetadata.OptionSet;
+
+            string optionsetLabel = (from o in options.Options
+                                     where o.Value.Value == optionSetValue
+                                     select o).First().Label.UserLocalizedLabel.Label;
+            return optionsetLabel;
         }
     }
 }

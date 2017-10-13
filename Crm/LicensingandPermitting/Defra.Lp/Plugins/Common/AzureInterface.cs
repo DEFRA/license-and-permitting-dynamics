@@ -2,13 +2,11 @@
 using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Common
 {
@@ -94,8 +92,10 @@ namespace Defra.Lp.Common
 
                         activityId = AddInsertFileParametersToRequest(request, annotationData, caseNo, parentEntity, parentLookup);
 
-                       // entityMetadataQuery = ReturnCustomerNotificationMetadataQuery(activityId, parentEntity);
+                        // entityMetadataQuery = ReturnCustomerNotificationMetadataQuery(activityId, parentEntity);
 
+                        
+                        request.Metadata = GenerateMetadata(annotationData, initialCreation, parentEntity);
                     }
 
                 }
@@ -122,6 +122,7 @@ namespace Defra.Lp.Common
                 //activityId = AddMovementFileParametersToRequest(request, metadataQueryResult, parentEntity);
             //}
             TracingService.Trace(string.Format("activityId {0}", activityId.ToString()));
+
             //request.Metadata = GenerateMetadata(metadataQueryResult, initialCreation, parentEntity);
 
             string stringContent = JsonConvert.SerializeObject(request);
@@ -226,6 +227,73 @@ namespace Defra.Lp.Common
                                                         </fetch>", recordId, parentEntityName, parentLookup);
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
+        }
+
+        private MetadataValues GenerateMetadata(Entity attachment, bool initialCreation, string parentEntity)
+        {
+            TracingService.Trace("Start Generate Metadata");
+
+            MetadataValues returnValue = new MetadataValues();
+
+            returnValue.ListName = Query.GetConfigurationValue(AdminService, "SharePointListName");
+
+            PropertyGenerator propertyGenerator = new PropertyGenerator(AdminService);
+
+            propertyGenerator.AddProperty<string>(returnValue.Fields, "filename", "Title", attachment);
+
+            if (!initialCreation)
+            {
+                // Activity Metadata fields 
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_filename", "Title", attachment);
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_envelopeid", "EnvelopeID", attachment);
+                //    propertyGenerator.AddProperty<DateTime>(returnValue.Fields, "rpa_postreceiveddate", "Post_x0020_Received", attachment);
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_sourcesystem", "Source_x0020_System", attachment, true);
+                //    propertyGenerator.AddProperty<bool>(returnValue.Fields, "rpa_sensitive", "Sensitive", attachment);
+                //    propertyGenerator.AddProperty<DateTime>(returnValue.Fields, "rpa_scandate", "Scan_x0020_Date", attachment);
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_envelopeid", "EnvelopeID", attachment);
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_filesinenvelope", "File_x0020_In_x0020_Envelope", attachment);
+                //Use full "AddProperty" function so that we can pass in the entity alias, so that the optionset text an be retrieved
+                //    propertyGenerator.AddProperty<OptionSetValue>(returnValue.Fields, attachment.LogicalName, "rpa_securitymarking", true, "Security_x0020_Markings", attachment, true);
+
+                // Document Type fields
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_documenttypes", "rpa_name", "Document_x0020_Ref", attachment);
+                //    propertyGenerator.AddProperty<OptionSetValue>(returnValue.Fields, "rpa_documenttypes", "rpa_imageorproforma", "Submission_x0020_Type", attachment);
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "rpa_documenttypes", "rpa_documentcategory", "Doc_x0020_Category", attachment, true);
+
+                // Business Unit fields
+                //    propertyGenerator.AddProperty<string>(returnValue.Fields, "businessunit", "name", "Code_x0020_Words", attachment, true);
+            }
+
+
+            //string activityId = Query.GetFieldValueAsString(attachment, "activityid");
+            //string url = Query.GetConfigurationValue(AdminService, "CRMServerUrl") + "?etn=" + parentEntity + "& pagetype=entityrecord&id=" + activityId;
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "Activity_x0020_Url", url, false);
+
+
+            //Email fields
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "email", "subject", initialCreation, "Activity_x0020_Description", attachment);
+            //propertyGenerator.AddProperty<Guid>(returnValue.Fields, "email", "activityid", initialCreation, "Activity_x0020_Id", attachment);
+            //propertyGenerator.AddProperty<DateTime>(returnValue.Fields, "email", "createdon", initialCreation, "Activity_x0020_Date", attachment);
+            ////    propertyGenerator.AddProperty<bool>(returnValue.Fields, "email", "directioncode", initialCreation, "Direction", attachment);
+
+            // Case fields
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "case", "ticketnumber", "Case_x0020_Number", attachment);
+
+            // Organisation fields
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "account", "rpa_sbinumber", "Business_x002d_ID", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "account", "rpa_sbinumber", "SBI", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "account", "name", "CRM_x0020_Organisation", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "account", "rpa_mhsnumber", "MHS_x0020_Number", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "account", "rpa_capfirmid", "FRN", attachment);
+
+            // Contact fields
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "contact", "fullname", "CRM_x0020_Contact", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "contact", "rpa_pinumber", "Personal_x002d_ID", attachment);
+            //propertyGenerator.AddProperty<string>(returnValue.Fields, "contact", "rpa_capcustomerid", "CRN", attachment);
+
+            TracingService.Trace("End Generate Metadata");
+
+            return returnValue;
         }
 
         private string SendRequest(string url, string requestContent)
