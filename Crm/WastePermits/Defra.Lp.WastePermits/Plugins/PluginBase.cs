@@ -65,6 +65,8 @@ namespace Defra.Lp.WastePermits.Plugins
                     throw new InvalidPluginExecutionException("serviceProvider");
                 }
 
+                this.ServiceProvider = serviceProvider;
+
                 // Obtain the execution context service from the service provider.
                 PluginExecutionContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
 
