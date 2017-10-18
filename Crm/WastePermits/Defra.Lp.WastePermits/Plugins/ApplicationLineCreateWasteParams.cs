@@ -70,18 +70,24 @@ namespace Defra.Lp.WastePermits.Plugins
             if (Context.InputParameters.Contains("Target") && Context.InputParameters["Target"] is Entity)
              {
                 Entity entity = (Entity)Context.InputParameters["Target"];
-                if(entity.LogicalName =="defra_applicationline")
+                if (entity.LogicalName == "defra_applicationline")
                 {
                     //Check if the standard rule id is null
-                        EntityReference standardRule = (EntityReference)entity.Attributes["defra_standardruleid"];
+                    EntityReference standardRule = (EntityReference)entity.Attributes["defra_standardruleid"];
+                    if (entity.Attributes["defra_standardruleid"] == null)
+                    {
+                        return;
+                    }
+                    else
+                    {
                         var standardRuleid = standardRule.Id;
 
                         TracingService.Trace("Guid is: " + standardRuleid);
 
                         Entity standardRuleEntity = new Entity("defra_standardrule");
-                       
-                        ColumnSet srAttribute = new ColumnSet(new string[] { "defra_wasteparametersid"});
-                         
+
+                        ColumnSet srAttribute = new ColumnSet(new string[] { "defra_wasteparametersid" });
+
                         standardRuleEntity = Service.Retrieve(standardRuleEntity.LogicalName, standardRuleid, srAttribute);
 
                         EntityReference wasteparam = (EntityReference)standardRuleEntity["defra_wasteparametersid"];
@@ -89,14 +95,14 @@ namespace Defra.Lp.WastePermits.Plugins
 
                         TracingService.Trace("Param guid is:" + wasteParamid);
 
-                  
-                        Entity wasteParamEntity = Service.Retrieve("defra_wasteparams", wasteParamid, new ColumnSet(true) );
 
-                        
-                            
-                            Entity newWasteParams = new Entity("defra_wasteparams");
-                            foreach (string attribute in wasteParamEntity.Attributes.Keys)
-                            {
+                        Entity wasteParamEntity = Service.Retrieve("defra_wasteparams", wasteParamid, new ColumnSet(true));
+
+
+
+                        Entity newWasteParams = new Entity("defra_wasteparams");
+                        foreach (string attribute in wasteParamEntity.Attributes.Keys)
+                        {
                             if (attribute != ("defra_wasteparamsid"))
                             {
                                 if (attribute.Contains("_"))
@@ -107,18 +113,18 @@ namespace Defra.Lp.WastePermits.Plugins
                                     TracingService.Trace("Attribute of new record:" + newWasteParams[attribute]);
                                 }
                             }
-                           
-                            }
-
-                            newWasteParams["defra_name"] = "Application Completion";
-                            TracingService.Trace("Name set to application completion ");
-                            Guid newWasteParamsGuid = Service.Create(newWasteParams);
-                            TracingService.Trace("New waste params created " +newWasteParamsGuid);
-                            entity["defra_parametersid"] = new EntityReference("defra_wasteparams",newWasteParamsGuid);
-                            
 
                         }
-               
+
+                        newWasteParams["defra_name"] = "Application Completion";
+                        TracingService.Trace("Name set to application completion ");
+                        Guid newWasteParamsGuid = Service.Create(newWasteParams);
+                        TracingService.Trace("New waste params created " + newWasteParamsGuid);
+                        entity["defra_parametersid"] = new EntityReference("defra_wasteparams", newWasteParamsGuid);
+
+
+                    }
+                }
                 }
              }
             
