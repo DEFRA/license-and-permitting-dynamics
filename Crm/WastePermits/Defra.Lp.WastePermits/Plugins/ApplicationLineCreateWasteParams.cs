@@ -123,6 +123,15 @@ namespace Defra.Lp.WastePermits.Plugins
                         entity["defra_parametersid"] = new EntityReference("defra_wasteparams", newWasteParamsGuid);
 
 
+                        //Working with new waste parameters to map to duly made.
+                        Entity dulymadeCheck = new Entity("defra_dulymadechecklist");
+
+                        if (newWasteParams.GetAttributeValue<bool>("defra_siteplanrequired"))
+                        {
+                            dulymadeCheck["defra_siteplan"] = false;
+                        }
+                        dulymadeCheck["defra_name"] = "testing";
+                        Service.Create(dulymadeCheck);
                     }
                 }
                 }
