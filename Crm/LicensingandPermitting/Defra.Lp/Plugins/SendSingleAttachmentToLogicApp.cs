@@ -22,17 +22,6 @@ namespace Defra.Lp.Plugins
     /// </summary>    
     public class SendSingleAttachmentToLogicApp : PluginBase
     {
-        private ITracingService TracingService { get; set; }
-        private IPluginExecutionContext Context { get; set; }
-        private IOrganizationServiceFactory ServiceFactory { get; set; }
-        private IOrganizationService Service { get; set; }
-        private IOrganizationService AdminService { get; set; }
-
-        //private IPluginExecutionContext _context;
-        //private IOrganizationService _service;
-        //private ITracingService _tracingService;
-        //private Entity _applicationLine;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SendSingleAttachmentToLogicApp"/> class.
         /// </summary>
@@ -69,29 +58,29 @@ namespace Defra.Lp.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
-            TracingService = localContext.TracingService;
-            Context = localContext.PluginExecutionContext;
-            Service = localContext.OrganizationService;
-            ServiceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
-            AdminService = ServiceFactory.CreateOrganizationService(null);
+            var tracingService = localContext.TracingService;
+            var context = localContext.PluginExecutionContext;
+            var service = localContext.OrganizationService;
+            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
+            var adminService = serviceFactory.CreateOrganizationService(null);
 
-            if (Context.InputParameters.Contains("Target") && Context.InputParameters["Target"] is Entity)
+            if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
-                Entity entity = (Entity)Context.InputParameters["Target"];
-                AzureInterface azureInterface = new AzureInterface(AdminService, Service, TracingService);
+                Entity entity = (Entity)context.InputParameters["Target"];
+                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
                 if (entity.LogicalName == "activitymimeattachment")
                 {
 
-                    TracingService.Trace("Start of MoveFile from activitymimeattachment");
-                    azureInterface.MoveFile(entity.ToEntityReference(), true, "email", "rpa_relatedmetadataid");
-                    TracingService.Trace("Email Processed Successfully");
+                    tracingService.Trace("Start of MoveFile from activitymimeattachment");
+                    azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
+                    tracingService.Trace("Email Processed Successfully");
                 }
                 else if (entity.LogicalName == "annotation")
                 {
-                    TracingService.Trace("Start of MoveFile from annotation");
-                    Entity PostEntityImage = Context.PostEntityImages["PostImage"];
+                    tracingService.Trace("Start of MoveFile from annotation");
+                    Entity PostEntityImage = context.PostEntityImages["PostImage"];
 
-                    TracingService.Trace("Got PostImage");
+                    tracingService.Trace("Got PostImage");
 
                     EntityReference Regarding = null;
                     if (PostEntityImage.Attributes.Contains("objectid"))
@@ -99,29 +88,17 @@ namespace Defra.Lp.Plugins
 
                         Regarding = (EntityReference)PostEntityImage.Attributes["objectid"];
                     }
-                    TracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
-
-
-                    //if (Regarding.LogicalName == "rpa_customernotification")
-                    //{
-                    //    azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_customernotification", "rpa_customernotificationid");
-                    //    TracingService.Trace("Customer Notification Processed Successfully");
-                    //}
-                    //else if (Regarding.LogicalName == "rpa_memo")
-                    //{
-                    //    azureInterface.MoveFile(entity.ToEntityReference(), true, "rpa_memo", "rpa_internalnoteid");
-                    //    TracingService.Trace("Memo Processed Successfully");
-                    //}
+                    tracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
 
                     if (Regarding.LogicalName == "account")
                     {
-                        azureInterface.MoveFile(entity.ToEntityReference(), true, "account", "accountid");
-                        TracingService.Trace("Account Note Processed Successfully");
+                        azureInterface.MoveFile(entity.ToEntityReference(), "account", "accountid");
+                        tracingService.Trace("Account Note Processed Successfully");
                     }
                     else if (Regarding.LogicalName == "defra_application")
                     {
-                        azureInterface.MoveFile(entity.ToEntityReference(), true, "defra_application", "defra_applicationid");
-                        TracingService.Trace("Application Note Processed Successfully");
+                        azureInterface.MoveFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
+                        tracingService.Trace("Application Note Processed Successfully");
                     }
                 }
             }

@@ -13,8 +13,9 @@ namespace Defra.Lp.Common.ProxyClasses
         public string ActivityName { get; internal set; }
         public Guid AttachmentId { get; internal set; }
         public string AttachmentType { get; internal set; }
+        public string ContentTypeName { get; internal set; }
         public string DocumentId { get; internal set; }
-        public string CaseNo { get; internal set; }
+        public string PermitNo { get; internal set; }
         public object FileBody { get; internal set; }
         public string FileName { get; internal set; }
         public string FileRelativeUrl { get; internal set; }

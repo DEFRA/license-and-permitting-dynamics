@@ -1,5 +1,4 @@
-﻿
-// <copyright file="ApplicationCreateFolderInSharePoint.cs" company="">
+﻿// <copyright file="ApplicationCreateFolderInSharePoint.cs" company="">
 // Copyright (c) 2017 All Rights Reserved
 // </copyright>
 // <author></author>
@@ -21,16 +20,15 @@ using System.Activities;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System.Runtime.Serialization;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
+using Defra.Lp.Common;
 
 namespace Defra.Lp.Workflows
 {
-
-
     /// </summary>    
     public class ApplicationCreateFolderInSharePoint: WorkFlowActivityBase
     {
-
-         
         #region Properties 
         //Property for Entity defra_application
         [RequiredArgument]
@@ -38,7 +36,6 @@ namespace Defra.Lp.Workflows
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
         #endregion
-        
 
         /// <summary>
         /// Executes the WorkFlow.
@@ -61,38 +58,24 @@ namespace Defra.Lp.Workflows
                 throw new ArgumentNullException("crmWorkflowContext");
             }
 
-	        try
-	        {
-                // use the same synchronous application workflow
-                // create document location record sychronously on post stage
-                // Then create the folder in SharePoint asynchronously
-                // This means that if the the user clicks the document location record
-                // Also need to change the way configuration table works - tell Josh
-                // Create document location in logic app or return relative path and create in workflow
-                // Check existing document location when going to create
-                // create record as a step rather than in assembly
-                //
-                //
-                // Create application synchro 
-                // create document location record which is child of permits library which attaches to another library which is application library 
-                // and the relative path is the permit number
-                // then asynchrously trigger to create a folder in SharePoint if it doesn't exist (logic app) with Application number
-                //
-                // PAss libraty name to Logic App - Permit or Application
-                //
-                // If fails logic app then workflow fails
-                //
-                // Create mnew document location record in a step if its needed - The workflow assembly will query to tell us if it exists. Don't want to do this in .NET code 
-
-                // Document creation in Child workflow
-
+            try
+            { 
+                var context = executionContext.GetExtension<IWorkflowContext>();
+                var tracingService = executionContext.GetExtension<ITracingService>();
+                var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
                 var service = crmWorkflowContext.OrganizationService;
+                var adminService = serviceFactory.CreateOrganizationService(null);
+
+                tracingService.Trace("In ApplicationCreateFolderInSharePoint with Application Name");
+
+                var application = this.Application.Get(executionContext);
+                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                azureInterface.CreateFolder(application);
             }
-	        catch (FaultException<OrganizationServiceFault> e)
-            {                
-                // Handle the exception.
-                throw e;
-            }	  
+            catch (Exception ex)
+            {
+                throw new InvalidPluginExecutionException("An error occurred in Workflow assembly.", ex);
+            }
         }
     }
 }
