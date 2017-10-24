@@ -17,6 +17,8 @@
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_2" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_3" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_4" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_5" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_6" />
       </Sequence.Variables>
       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_wasteparams&quot;)]" />
       <mxswa:GetEntityProperty Attribute="defra_code" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_standardrule" Value="[CreateStep1_3]">
@@ -60,6 +62,30 @@
         <mxswa:SetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+        </mxswa:SetEntityProperty.TargetType>
+      </mxswa:SetEntityProperty>
+      <mxswa:GetEntityProperty Attribute="defra_standardruleid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_standardrule" Value="[CreateStep1_6]">
+        <mxswa:GetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+          </InArgument>
+        </mxswa:GetEntityProperty.TargetType>
+      </mxswa:GetEntityProperty>
+      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+        <mxswa:ActivityReference.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep1_6 }]</InArgument>
+          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_5]</OutArgument>
+        </mxswa:ActivityReference.Arguments>
+      </mxswa:ActivityReference>
+      <mxswa:SetEntityProperty Attribute="defra_standardruleid" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_wasteparams" Value="[CreateStep1_5]">
+        <mxswa:SetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
           </InArgument>
         </mxswa:SetEntityProperty.TargetType>
       </mxswa:SetEntityProperty>
