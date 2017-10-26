@@ -82,6 +82,31 @@ namespace Defra.Lp.Common
             }
         }
 
+        public static Entity GetConfigurationEntity(IOrganizationService adminService, string name)
+        {
+            string query = string.Format(@"<fetch>
+                                 <entity name='defra_configuration'>
+                                     <attribute name='defra_addressbasefacadeurl' />
+                                     <attribute name='defra_sharepointlogicappurl' />
+                                     <attribute name='defra_sharepointpermitlist' />
+                                     <filter>
+                                        <condition attribute='defra_name' operator= 'eq' value='{0}' />
+                                    </filter>
+                                 </entity>
+                            </fetch>", name);
+
+            Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
+
+            if (configRecord == null || configRecord.Attributes.Count == 0)
+            {
+                throw new InvalidPluginExecutionException(string.Format("Configuration record {0} not found or has not been set", name));
+            }
+            else
+            {
+                return configRecord;
+            }
+        }
+
         public static string GetCRMOptionsetText(IOrganizationService service, string entityName, string attributeName, int optionSetValue)
         {
             RetrieveEntityRequest retrieveDetails = new RetrieveEntityRequest
