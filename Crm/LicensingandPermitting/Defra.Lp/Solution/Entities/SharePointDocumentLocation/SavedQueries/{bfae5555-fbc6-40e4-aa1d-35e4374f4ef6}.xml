@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>9508</returnedtypecode>
+  <savedqueryid>{bfae5555-fbc6-40e4-aa1d-35e4374f4ef6}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="resultset" object="9508" jump="name" select="1" preview="1" icon="1">
+      <row name="result" id="sharepointdocumentlocationid">
+        <cell name="name" width="150" />
+        <cell name="regardingobjectid" width="150" />
+        <cell name="absoluteurl" width="240" />
+        <cell name="parentsiteorlocation" width="140" />
+        <cell name="relativeurl" width="160" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="sharepointdocumentlocation">
+        <attribute name="relativeurl" />
+        <attribute name="regardingobjectid" />
+        <attribute name="parentsiteorlocation" />
+        <attribute name="absoluteurl" />
+        <attribute name="name" />
+        <attribute name="sharepointdocumentlocationid" />
+        <order attribute="name" descending="false" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="1" />
+          <condition attribute="locationtype" operator="eq" value="1" />
+          <condition attribute="servicetype" operator="eq" value="0" />
+        </filter>
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>7.1.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Inactive Document Locations for OneNote Integration" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
