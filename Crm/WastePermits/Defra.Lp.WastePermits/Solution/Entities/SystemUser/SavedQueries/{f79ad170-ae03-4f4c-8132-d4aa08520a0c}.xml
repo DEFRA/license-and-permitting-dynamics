@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>8</returnedtypecode>
+  <savedqueryid>{f79ad170-ae03-4f4c-8132-d4aa08520a0c}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="systemusers" object="8" jump="fullname" select="1" icon="1" preview="1">
+      <row name="systemuser" id="systemuserid">
+        <cell name="fullname" width="100" />
+        <cell name="title" width="100" />
+        <cell name="internalemailaddress" ishidden="1" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical">
+      <entity name="systemuser">
+        <attribute name="systemuserid" />
+        <attribute name="fullname" />
+        <attribute name="internalemailaddress" />
+        <attribute name="title" />
+        <filter type="and">
+          <condition attribute="fullname" operator="ne" value="SYSTEM" />
+          <condition attribute="fullname" operator="ne" value="INTEGRATION" />
+        </filter>
+        <order attribute="fullname" descending="false" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>6.0.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Associated Record Team Members" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery unmodified="1">
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>8</returnedtypecode>
+  <savedqueryid>{b2529a68-5f90-e011-95ae-00155d9cfa02}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" object="8" jump="fullname" select="1" icon="1" preview="1">
+      <row name="result" id="systemuserid">
+        <cell name="fullname" width="300" />
+        <cell name="siteid" width="150" />
+        <cell name="businessunitid" width="150" />
+        <cell name="title" width="100" />
+        <cell name="address1_telephone1" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+      <entity name="systemuser">
+        <attribute name="fullname" />
+        <attribute name="title" />
+        <attribute name="address1_telephone1" />
+        <attribute name="businessunitid" />
+        <attribute name="siteid" />
+        <order attribute="fullname" descending="false" />
+        <link-entity name="postfollow" from="regardingobjectid" to="systemuserid" alias="aa">
+          <filter type="and">
+            <condition attribute="ownerid" operator="eq-userid" />
+            <condition attribute="regardingobjectid" operator="ne-userid" />
+          </filter>
+        </link-entity>
+        <attribute name="systemuserid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.0.5.418</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Users I Follow" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Users I follow." languagecode="1033" />
+  </Descriptions>
+</savedquery>
