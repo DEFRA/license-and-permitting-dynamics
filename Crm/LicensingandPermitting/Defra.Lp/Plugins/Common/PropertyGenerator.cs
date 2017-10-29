@@ -7,42 +7,42 @@ namespace Defra.Lp.Common
 {
     internal class PropertyGenerator
     {
-        private IOrganizationService AdminService { get; set; }
+        //private IOrganizationService AdminService { get; set; }
 
-        public PropertyGenerator(IOrganizationService adminService)
-        {
-            AdminService = adminService;
-        }
+        //public PropertyGenerator(IOrganizationService adminService)
+        //{
+        //    AdminService = adminService;
+        //}
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, string sharePointFieldName, Entity entity)
-        {
-            AddProperty<T>(properties, crmEntityAlias, crmFieldName, false, sharePointFieldName, entity, false);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, string sharePointFieldName, Entity entity)
+        //{
+        //    AddProperty<T>(properties, crmEntityAlias, crmFieldName, false, sharePointFieldName, entity, false);
+        //}
 
         internal void AddProperty<T>(List<FieldMetadata> properties, string crmFieldName, string sharePointFieldName, Entity entity)
         {
             AddProperty<T>(properties, null, crmFieldName, true, sharePointFieldName, entity, false);
         }
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string crmFieldName, bool ignoreAlias, string sharePointFieldName, Entity entity, bool managedMetaDataType)
-        {
-            AddProperty<T>(properties, null, crmFieldName, ignoreAlias, sharePointFieldName, entity, managedMetaDataType);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string crmFieldName, bool ignoreAlias, string sharePointFieldName, Entity entity, bool managedMetaDataType)
+        //{
+        //    AddProperty<T>(properties, null, crmFieldName, ignoreAlias, sharePointFieldName, entity, managedMetaDataType);
+        //}
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, string sharePointFieldName, Entity entity, bool managedMetaDataType)
-        {
-            AddProperty<T>(properties, crmEntityAlias, crmFieldName, false, sharePointFieldName, entity, managedMetaDataType);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, string sharePointFieldName, Entity entity, bool managedMetaDataType)
+        //{
+        //    AddProperty<T>(properties, crmEntityAlias, crmFieldName, false, sharePointFieldName, entity, managedMetaDataType);
+        //}
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string crmFieldName, string sharePointFieldName, Entity entity, bool managedMetaDataType)
-        {
-            AddProperty<T>(properties, null, crmFieldName, true, sharePointFieldName, entity, managedMetaDataType);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string crmFieldName, string sharePointFieldName, Entity entity, bool managedMetaDataType)
+        //{
+        //    AddProperty<T>(properties, null, crmFieldName, true, sharePointFieldName, entity, managedMetaDataType);
+        //}
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, bool ignoreAlias, string sharePointFieldName, Entity entity)
-        {
-            AddProperty<T>(properties, crmEntityAlias, crmFieldName, ignoreAlias, sharePointFieldName, entity, false);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, bool ignoreAlias, string sharePointFieldName, Entity entity)
+        //{
+        //    AddProperty<T>(properties, crmEntityAlias, crmFieldName, ignoreAlias, sharePointFieldName, entity, false);
+        //}
 
         internal void AddProperty<T>(List<FieldMetadata> properties, string crmEntityAlias, string crmFieldName, bool ignoreAlias, string sharePointFieldName, Entity entity, bool managedMetaDataType)
         {
@@ -68,11 +68,11 @@ namespace Defra.Lp.Common
             }
         }
 
-        internal void AddProperty<T>(List<FieldMetadata> properties, string sharePointFieldName, object value, bool managedMetaDataType)
-        {
-            FieldMetadata propertyValue = CreateFieldMetadataInstance(properties, sharePointFieldName, managedMetaDataType);
-            propertyValue.Value = ConvertCRMValueToSharePointValue<T>(value);
-        }
+        //internal void AddProperty<T>(List<FieldMetadata> properties, string sharePointFieldName, object value, bool managedMetaDataType)
+        //{
+        //    FieldMetadata propertyValue = CreateFieldMetadataInstance(properties, sharePointFieldName, managedMetaDataType);
+        //    propertyValue.Value = ConvertCRMValueToSharePointValue<T>(value);
+        //}
 
         private static FieldMetadata CreateFieldMetadataInstance(List<FieldMetadata> properties, string sharePointFieldName, bool managedMetaDataType)
         {
@@ -109,12 +109,12 @@ namespace Defra.Lp.Common
             //Conversions to support SharePoint
             if (result is OptionSetValue)
             {
-                if (string.IsNullOrEmpty(crmEntityAlias) || string.IsNullOrEmpty(crmFieldName))
-                {
-                    throw new Exception("Error converting CRM Value to SharePoint Value; CRM Entity Alias or CRM Field Name not specified");
-                }
+                //if (string.IsNullOrEmpty(crmEntityAlias) || string.IsNullOrEmpty(crmFieldName))
+                //{
+                //    throw new Exception("Error converting CRM Value to SharePoint Value; CRM Entity Alias or CRM Field Name not specified");
+                //}
 
-                result = Query.GetCRMOptionsetText(AdminService, crmEntityAlias, crmFieldName, ((OptionSetValue)result).Value);
+                //result = Query.GetCRMOptionsetText(AdminService, crmEntityAlias, crmFieldName, ((OptionSetValue)result).Value);
             }
             else if (result is bool)
             {

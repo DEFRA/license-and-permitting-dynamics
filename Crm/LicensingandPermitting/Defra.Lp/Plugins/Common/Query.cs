@@ -125,5 +125,15 @@ namespace Defra.Lp.Common
                                      select o).First().Label.UserLocalizedLabel.Label;
             return optionsetLabel;
         }
+
+        public static Entity RetrieveDataForEntityRef(IOrganizationService service, string[] columns, EntityReference target)
+        {
+            var retrieveRequest = new RetrieveRequest();
+            retrieveRequest.ColumnSet = new ColumnSet(columns);
+            retrieveRequest.Target = target;
+            var retrieveResponse = (RetrieveResponse)service.Execute(retrieveRequest);
+            var entity = retrieveResponse.Entity as Entity;
+            return entity;
+        }
     }
 }

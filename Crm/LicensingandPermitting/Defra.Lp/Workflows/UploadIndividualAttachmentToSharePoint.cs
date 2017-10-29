@@ -3,7 +3,6 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
-using System.ServiceModel;
 
 namespace Defra.Lp.Workflows
 {
@@ -16,29 +15,30 @@ namespace Defra.Lp.Workflows
                 throw new ArgumentNullException(nameof(crmWorkflowContext));
             }
 
-            var tracingService = executionContext.GetExtension<ITracingService>();
-            var context = executionContext.GetExtension<IWorkflowContext>();
-            var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
-            var service = serviceFactory.CreateOrganizationService(context.UserId);
-            var adminService = serviceFactory.CreateOrganizationService(null);
-
             try
             {
+                var tracingService = executionContext.GetExtension<ITracingService>();
+                var context = executionContext.GetExtension<IWorkflowContext>();
+                var service = crmWorkflowContext.OrganizationService;
+
+                tracingService.Trace("In UploadIndividualAttachmentToSharePoint.");
+
                 var parentEntityName = Parent_Entity_Name.Get(executionContext);
                 var parentLookupName = Parent_Lookup_Name.Get(executionContext);
 
                 tracingService.Trace(string.Format("Parent Entity = {0}; Parent Lookup = {1}", parentEntityName, parentLookupName));
 
-                //AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
-                //azureInterface.MoveFile(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), false, parentEntityName, parentLookupName);
+                var configuration = this.Configuration.Get(executionContext);
+
+                AzureInterface azureInterface = new AzureInterface(configuration, service, tracingService);
+                azureInterface.MoveFile(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), parentEntityName, parentLookupName);
             }
-            catch (FaultException<OrganizationServiceFault> e)
+            catch (Exception ex)
             {
-                // Handle the exception.
-                tracingService.Trace(e.Message);
-                throw new InvalidPluginExecutionException("An error occurred in Workflow assembly.", e);
+                throw new InvalidPluginExecutionException("An error occurred in Workflow assembly.", ex);
             }
         }
+
         [RequiredArgument]
         [Input("Parent Entity Name")]
         public InArgument<string> Parent_Entity_Name { get; set; }
@@ -46,5 +46,10 @@ namespace Defra.Lp.Workflows
         [RequiredArgument]
         [Input("Parent Lookup Name")]
         public InArgument<string> Parent_Lookup_Name { get; set; }
+
+        [RequiredArgument]
+        [Input("Configuration")]
+        [ReferenceTarget("defra_configuration")]
+        public InArgument<EntityReference> Configuration { get; set; }
     }
 }

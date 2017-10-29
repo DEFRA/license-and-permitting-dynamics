@@ -62,45 +62,46 @@ namespace Defra.Lp.Plugins
             var context = localContext.PluginExecutionContext;
             var service = localContext.OrganizationService;
             var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
-            var adminService = serviceFactory.CreateOrganizationService(null);
+           // var adminService = serviceFactory.CreateOrganizationService(null);
 
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
                 Entity entity = (Entity)context.InputParameters["Target"];
-                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
-                if (entity.LogicalName == "activitymimeattachment")
-                {
 
-                    tracingService.Trace("Start of MoveFile from activitymimeattachment");
-                    azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
-                    tracingService.Trace("Email Processed Successfully");
-                }
-                else if (entity.LogicalName == "annotation")
-                {
-                    tracingService.Trace("Start of MoveFile from annotation");
-                    Entity PostEntityImage = context.PostEntityImages["PostImage"];
+                //AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                //if (entity.LogicalName == "activitymimeattachment")
+                //{
 
-                    tracingService.Trace("Got PostImage");
+                //    tracingService.Trace("Start of MoveFile from activitymimeattachment");
+                //    azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
+                //    tracingService.Trace("Email Processed Successfully");
+                //}
+                //else if (entity.LogicalName == "annotation")
+                //{
+                //    tracingService.Trace("Start of MoveFile from annotation");
+                //    Entity PostEntityImage = context.PostEntityImages["PostImage"];
 
-                    EntityReference Regarding = null;
-                    if (PostEntityImage.Attributes.Contains("objectid"))
-                    {
+                //    tracingService.Trace("Got PostImage");
 
-                        Regarding = (EntityReference)PostEntityImage.Attributes["objectid"];
-                    }
-                    tracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
+                //    EntityReference Regarding = null;
+                //    if (PostEntityImage.Attributes.Contains("objectid"))
+                //    {
 
-                    if (Regarding.LogicalName == "account")
-                    {
-                        azureInterface.MoveFile(entity.ToEntityReference(), "account", "accountid");
-                        tracingService.Trace("Account Note Processed Successfully");
-                    }
-                    else if (Regarding.LogicalName == "defra_application")
-                    {
-                        azureInterface.MoveFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
-                        tracingService.Trace("Application Note Processed Successfully");
-                    }
-                }
+                //        Regarding = (EntityReference)PostEntityImage.Attributes["objectid"];
+                //    }
+                //    tracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
+
+                //    if (Regarding.LogicalName == "account")
+                //    {
+                //        azureInterface.MoveFile(entity.ToEntityReference(), "account", "accountid");
+                //        tracingService.Trace("Account Note Processed Successfully");
+                //    }
+                //    else if (Regarding.LogicalName == "defra_application")
+                //    {
+                //        azureInterface.MoveFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
+                //        tracingService.Trace("Application Note Processed Successfully");
+                //    }
+                //}
             }
         }
     }

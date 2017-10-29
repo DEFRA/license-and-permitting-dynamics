@@ -29,13 +29,15 @@ namespace Defra.Lp.Workflows
     /// </summary>    
     public class ApplicationCreateFolderInSharePoint: WorkFlowActivityBase
     {
-        #region Properties 
-        //Property for Entity defra_application
         [RequiredArgument]
         [Input("Application")] 
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
-        #endregion
+
+        [RequiredArgument]
+        [Input("Configuration")]
+        [ReferenceTarget("defra_configuration")]
+        public InArgument<EntityReference> Configuration { get; set; }
 
         /// <summary>
         /// Executes the WorkFlow.
@@ -60,16 +62,18 @@ namespace Defra.Lp.Workflows
 
             try
             { 
-                var context = executionContext.GetExtension<IWorkflowContext>();
+                //var context = executionContext.GetExtension<IWorkflowContext>();
                 var tracingService = executionContext.GetExtension<ITracingService>();
-                var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
+                //var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
                 var service = crmWorkflowContext.OrganizationService;
-                var adminService = serviceFactory.CreateOrganizationService(null);
+                //var adminService = serviceFactory.CreateOrganizationService(null);
 
                 tracingService.Trace("In ApplicationCreateFolderInSharePoint with Application Name");
 
                 var application = this.Application.Get(executionContext);
-                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                var configuration = this.Configuration.Get(executionContext);
+
+                AzureInterface azureInterface = new AzureInterface(configuration, service, tracingService);
                 azureInterface.CreateFolder(application);
             }
             catch (Exception ex)
