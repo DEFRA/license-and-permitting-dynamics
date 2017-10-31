@@ -1,7 +1,19 @@
 <?xml version="1.0"?>
 <Register xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
   <Solutions>
-    <Solution Assembly="Defra.Lp.Plugins.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />
+    <Solution Assembly="Defra.Lp.Plugins.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database">
+      <PluginTypes>
+        <clear />
+        <Plugin Description="Plug-in to Create of defra_address" FriendlyName="Create of defra_address" Name="Defra.Lp.Plugins.PopulateTownLookup" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Plugins.PopulateTownLookup">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="Create of defra_address" Description="Create of defra_address" Id="00000000-0000-0000-0000-000000000000" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Create" Mode="Synchronous" PrimaryEntityName="defra_address" Rank="1" Stage="PreOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
+      </PluginTypes>
+    </Solution>
     <Solution Assembly="Defra.Lp.Workflows.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />
   </Solutions>
   <XamlWorkflows>

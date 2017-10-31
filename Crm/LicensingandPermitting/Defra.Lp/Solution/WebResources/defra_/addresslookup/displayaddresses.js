@@ -1,7 +1,11 @@
 function displayAddresses() {
     var uri = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/defra_postcodelookup";
     //encodeURI(uri+"defra_postcodelookup");
-
+            window.parent.Xrm.Page.getControl("defra_name").setDisabled(false);
+            window.parent.Xrm.Page.getControl("defra_premises").setDisabled(false);
+            window.parent.Xrm.Page.getControl("defra_street").setDisabled(false);
+            window.parent.Xrm.Page.getControl("defra_locality").setDisabled(false);
+            window.parent.Xrm.Page.getControl("defra_towntext").setDisabled(false);
 
     jQuery('#the_address').empty();
     var postcode = window.parent.Xrm.Page.getControl("defra_postcode").getValue();
@@ -73,6 +77,7 @@ function displayAddresses() {
                       window.parent.Xrm.Page.getAttribute("defra_premises").setValue(results.premises);   
                       window.parent.Xrm.Page.getAttribute("defra_street").setValue(results.street_address);
                       window.parent.Xrm.Page.getAttribute("defra_locality").setValue(results.locality);
+                      window.parent.Xrm.Page.getAttribute("defra_towntext").setValue(results.city);
                     }
 
                     
@@ -83,6 +88,11 @@ function displayAddresses() {
             }
     
         });
+            window.parent.Xrm.Page.getControl("defra_name").setDisabled(true);
+            window.parent.Xrm.Page.getControl("defra_premises").setDisabled(true);
+            window.parent.Xrm.Page.getControl("defra_street").setDisabled(true);
+            window.parent.Xrm.Page.getControl("defra_locality").setDisabled(true);
+            window.parent.Xrm.Page.getControl("defra_towntext").setDisabled(true);
             window.parent.Xrm.Page.getAttribute("defra_name").setValue(addressSelected);
 
         });
