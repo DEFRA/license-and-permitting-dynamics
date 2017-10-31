@@ -73,13 +73,14 @@ namespace Defra.Lp.WastePermits.Plugins
                 if (entity.LogicalName == "defra_applicationline")
                 {
                     //Check if the standard rule id is null
-                    EntityReference standardRule = (EntityReference)entity.Attributes["defra_standardruleid"];
-                    if (entity.Attributes["defra_standardruleid"] == null)
+
+                    if (!entity.Attributes.Contains("defra_standardruleid") ||entity.Attributes["defra_standardruleid"] == null)
                     {
                         return;
                     }
                     else
                     {
+                        EntityReference standardRule = (EntityReference)entity.Attributes["defra_standardruleid"];
                         var standardRuleid = standardRule.Id;
 
                         TracingService.Trace("Guid is: " + standardRuleid);
