@@ -21,12 +21,28 @@ namespace Defra.Lp.WastePermits.Plugins
     /// <summary>
     /// ApplicationLineCreateWasteParams Plugin.
     /// </summary>    
-    public class ApplicationLineCreateWasteParams: PluginBase
+    public class ApplicationLineCreateWasteParams : PluginBase
     {
+
         private ITracingService TracingService { get; set; }
         private IPluginExecutionContext Context { get; set; }
         private IOrganizationService Service { get; set; }
         /// <summary>
+        /// Alias of the image registered for the snapshot of the
+        /// primary entity's attributes before the core platform operation executes.
+        /// The image contains the following attributes:
+        /// No Attributes
+        /// </summary>
+        private const string PreImageAlias = "preImg";
+
+        Dictionary<string, string> paramMapping = new Dictionary<string, string>
+            {
+                { "defra_siteplanrequired", "defra_adequatesiteplan" },
+            {"defra_siteconditionreport","defra_siteconditionreportadequate" },
+            { "defra_techcompetenceevreq","defra_evidenceoftechnicalabilityadequate" }
+
+            };
+
         /// Initializes a new instance of the <see cref="ApplicationLineCreateWasteParams"/> class.
         /// </summary>
         /// <param name="unsecure">Contains public (unsecured) configuration information.</param>
@@ -36,8 +52,9 @@ namespace Defra.Lp.WastePermits.Plugins
         public ApplicationLineCreateWasteParams(string unsecure, string secure)
             : base(typeof(ApplicationLineCreateWasteParams))
         {
-            
-           // TODO: Implement your custom configuration handling.
+
+            // TODO: Implement your custom configuration handling.
+
         }
 
 
@@ -62,19 +79,66 @@ namespace Defra.Lp.WastePermits.Plugins
             {
                 throw new InvalidPluginExecutionException("localContext");
             }
+
+
             TracingService = localContext.TracingService;
             Context = localContext.PluginExecutionContext;
             Service = localContext.OrganizationService;
+
+           
+
             // TODO: Implement your custom Plug-in business logic.
+            if (Context.MessageName == "Update")
+            {
+                Entity preImageEntity = (Context.PreEntityImages != null &&
+                              Context.PreEntityImages.Contains(PreImageAlias))
+                                 ? Context.PreEntityImages[PreImageAlias]
+                                 : null;
+
+
+                EntityReference paramsLookup = preImageEntity.GetAttributeValue<EntityReference>("defra_parametersid");
+
+
+                if (paramsLookup == null)
+                {
+                    return;
+                }
+                else
+                {
+                    var lookupID = paramsLookup.Id;
+                    Entity wasteParamEntity = Service.Retrieve("defra_wasteparams", lookupID, new ColumnSet(true));
+
+                    EntityReference applicationLookup = preImageEntity.GetAttributeValue<EntityReference>("defra_applicationid");
+
+                    var applicationID = applicationLookup.Id;
+                    Entity applicationEntity = Service.Retrieve("defra_application",
+                        applicationID, new ColumnSet("defra_dulymadechecklistid"));
+
+                    foreach(var attribute in paramMapping)
+                    {
+
+                    }
+                    {
+
+                    }
+                }
+
+
+
+
+
+            }
 
             if (Context.InputParameters.Contains("Target") && Context.InputParameters["Target"] is Entity)
-             {
+            {
+
                 Entity entity = (Entity)Context.InputParameters["Target"];
+
                 if (entity.LogicalName == "defra_applicationline")
                 {
                     //Check if the standard rule id is null
 
-                    if (!entity.Attributes.Contains("defra_standardruleid") ||entity.Attributes["defra_standardruleid"] == null)
+                    if (!entity.Attributes.Contains("defra_standardruleid") || entity.Attributes["defra_standardruleid"] == null)
                     {
                         return;
                     }
@@ -124,21 +188,14 @@ namespace Defra.Lp.WastePermits.Plugins
                         entity["defra_parametersid"] = new EntityReference("defra_wasteparams", newWasteParamsGuid);
 
 
-                        //Working with new waste parameters to map to duly made.
-                        Entity dulymadeCheck = new Entity("defra_dulymadechecklist");
 
-                        if (newWasteParams.GetAttributeValue<bool>("defra_siteplanrequired"))
-                        {
-                            dulymadeCheck["defra_siteplan"] = false;
-                        }
-                        dulymadeCheck["defra_name"] = "testing";
-                        Service.Create(dulymadeCheck);
+
                     }
                 }
-                }
-             }
-            
-            
             }
+        }
+
+
     }
+}
 
