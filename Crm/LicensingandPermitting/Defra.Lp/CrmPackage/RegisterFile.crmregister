@@ -1,20 +1,38 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Register xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
   <Solutions>
-    <Solution Assembly="Defra.Lp.Plugins.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database">
+    <Solution Assembly="Defra.Lp.Plugins.dll" Id="a161c744-74bd-411f-9ad9-571a0550f2a5" IsolationMode="Sandbox" SourceType="Database">
       <PluginTypes>
         <clear />
-        <Plugin Description="Plug-in to Create of defra_address" FriendlyName="Create of defra_address" Name="Defra.Lp.Plugins.PopulateTownLookup" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Plugins.PopulateTownLookup">
+        <Plugin Description="Plug-in to Create of annotation: Send Attachment to Logic App" FriendlyName="Create of annotation: Send Attachment to Logic App" Name="Defra.Lp.Plugins.SendSingleAttachmentToLogicApp" Id="23d259c7-0d89-4417-979d-d7f178f175a3" TypeName="Defra.Lp.Plugins.SendSingleAttachmentToLogicApp">
           <Steps>
             <clear />
-            <Step AsyncAutoDelete="false" Name="Create of defra_address" Description="Create of defra_address" Id="00000000-0000-0000-0000-000000000000" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Create" Mode="Synchronous" PrimaryEntityName="defra_address" Rank="1" Stage="PreOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+            <Step AsyncAutoDelete="false" Name="Create of annotation: Send Attachment to Logic App" Description="Create of annotation: Send Attachment to Logic App" Id="ed1ed057-a59f-e711-80e4-3863bb35fc90" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Create" Mode="Synchronous" PrimaryEntityName="annotation" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images>
+                <Image EntityAlias="PostImage" Name="PostImage" Id="2c439cea-a69f-e711-80e4-3863bb35fc90" MessagePropertyName="Target" ImageType="PostImage" />
+              </Images>
+            </Step>
+          </Steps>
+        </Plugin>
+        <Plugin Description="Plug-in to Create of defra_application" FriendlyName="Create of defra_application" Name="Defra.Lp.Plugins.AutoNumber" Id="744df0bc-96d0-4136-8521-09771d74e6eb" TypeName="Defra.Lp.Plugins.AutoNumber">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="Create of defra_application" Description="Increment AutoNumber on Create of defra_application" Id="bee23c26-d9b4-e711-80e9-3863bb34b7d0" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Create" Mode="Synchronous" PrimaryEntityName="defra_application" Rank="1" Stage="PreInsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
               <Images />
             </Step>
           </Steps>
         </Plugin>
       </PluginTypes>
     </Solution>
-    <Solution Assembly="Defra.Lp.Workflows.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />
+    <Solution Assembly="Defra.Lp.Workflows.dll" Id="16d4cdb7-1070-41a8-a4e2-21c7d997aa23" IsolationMode="Sandbox" SourceType="Database">
+      <WorkflowTypes>
+        <clear />
+        <WorkflowType FriendlyName="ApplicationCreateFolderInSharePoint" Name="ApplicationCreateFolderInSharePoint" Description="Application" WorkflowActivityGroupName="SharePointDocumentRelay" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.ApplicationCreateFolderInSharePoint" />
+        <WorkflowType FriendlyName="UploadIndividualAttachmentToSharePoint" Name="UploadIndividualAttachmentToSharePoint" Description="Parent Entity Name" WorkflowActivityGroupName="SharePointDocumentRelay" WorkflowActivityProjectName="Workflows" Id="2b5c868d-3c5c-444e-a9a3-5679eeaf2948" TypeName="Defra.Lp.Workflows.UploadIndividualAttachmentToSharePoint" />
+        <WorkflowType FriendlyName="GetAddressesForPostcode" Name="GetAddressesForPostcode" Description="Postcode" WorkflowActivityGroupName="AddressLookup" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.GetAddressesForPostcode" />
+        <WorkflowType FriendlyName="GetConfiguration" Name="GetConfiguration" Description="Configuration" WorkflowActivityGroupName="Common" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.GetConfiguration" />
+      </WorkflowTypes>
+    </Solution>
   </Solutions>
   <XamlWorkflows>
     <XamlWorkflowSolution Assembly="Defra.Lp.Workflows.dll" />
