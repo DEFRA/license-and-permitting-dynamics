@@ -107,20 +107,17 @@
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep3_2_converted]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Guid, "5ed2b83e-41ba-e711-80ea-3863bb34ecf0", "UniqueIdentifier" }]</InArgument>
-              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+          <mxswa:GetEntityProperty Attribute="defra_configurationid" Entity="[CreatedEntities(&quot;CustomActivityStep2Configuration_entity&quot;)]" EntityName="defra_configuration" Value="[CustomActivityStep3_4]">
+            <mxswa:GetEntityProperty.TargetType>
+              <InArgument x:TypeArguments="s:Type">
                 <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
               </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep3_4]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
+            </mxswa:GetEntityProperty.TargetType>
+          </mxswa:GetEntityProperty>
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
             <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.EntityReference, "defra_configuration", "", CustomActivityStep3_4, "Lookup" }]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep3_4 }]</InArgument>
               <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                 <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
               </InArgument>
