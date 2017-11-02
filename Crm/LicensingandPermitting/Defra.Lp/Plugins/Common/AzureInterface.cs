@@ -65,6 +65,7 @@ namespace Defra.Lp.Common
             var request = new MoveFileRequest();
             var activityId = Guid.Empty;
             var permitNo = string.Empty;
+            Entity annotationData = null;
 
             if (parentEntity == "email")
             {
@@ -74,7 +75,7 @@ namespace Defra.Lp.Common
             else
             {
                 //This will have been fired against the creation of the Attachment Record
-                Entity annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
+                annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
                 if (annotationData == null)
                 {
                     throw new InvalidPluginExecutionException("No annotation data record returned from query");
@@ -96,8 +97,12 @@ namespace Defra.Lp.Common
             TracingService.Trace(string.Format("Sending data to Logic App URL {0}", logicAppUrl));
 
             var resultBody = SendRequest(logicAppUrl, stringContent);
-
             MoveSharePointResult data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+            if (data != null && !string.IsNullOrEmpty(data.SharePointId))
+            {
+                TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
+                Service.Delete(annotationData.LogicalName, annotationData.Id);
+            }
         }
 
         private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string permitNo, string parentEntityName, string parentLookup)

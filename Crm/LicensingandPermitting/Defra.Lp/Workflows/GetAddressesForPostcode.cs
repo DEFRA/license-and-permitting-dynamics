@@ -14,17 +14,10 @@ using Microsoft.Xrm.Sdk.Workflow;
 using Newtonsoft.Json;
 using System;
 using System.Activities;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Workflows
 {
