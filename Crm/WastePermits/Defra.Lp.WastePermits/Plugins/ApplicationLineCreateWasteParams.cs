@@ -85,7 +85,7 @@ namespace Defra.Lp.WastePermits.Plugins
             Context = localContext.PluginExecutionContext;
             Service = localContext.OrganizationService;
 
-           
+
 
             // TODO: Implement your custom Plug-in business logic.
             if (Context.MessageName == "Update")
@@ -95,30 +95,53 @@ namespace Defra.Lp.WastePermits.Plugins
                                  ? Context.PreEntityImages[PreImageAlias]
                                  : null;
 
-
+                TracingService.Trace("Test 1");
                 EntityReference paramsLookup = preImageEntity.GetAttributeValue<EntityReference>("defra_parametersid");
 
-
+                TracingService.Trace("Test 2");
                 if (paramsLookup == null)
                 {
                     return;
                 }
                 else
                 {
-                    var lookupID = paramsLookup.Id;
-                    Entity wasteParamEntity = Service.Retrieve("defra_wasteparams", lookupID, new ColumnSet(true));
+                    TracingService.Trace("Test 3");
+                    var paramsID = paramsLookup.Id;
+                    Entity wasteParamEntity = Service.Retrieve("defra_wasteparams", paramsID, new ColumnSet(true));
 
-                    EntityReference applicationLookup = preImageEntity.GetAttributeValue<EntityReference>("defra_applicationid");
+                    TracingService.Trace("Test 4");
 
-                    var applicationID = applicationLookup.Id;
-                    Entity applicationEntity = Service.Retrieve("defra_application",
-                        applicationID, new ColumnSet("defra_dulymadechecklistid"));
-
-                    foreach(var attribute in paramMapping)
+                    if (preImageEntity.Attributes.Contains("defra_applicationid"))
                     {
 
-                    }
-                    {
+                        TracingService.Trace("Test 5");
+                        EntityReference applicationLookup = (EntityReference)preImageEntity.Attributes["defra_applicationid"];
+
+                        var applicationID = applicationLookup.Id;
+                        TracingService.Trace("Test " + applicationLookup);
+                        TracingService.Trace("App id" + applicationLookup.Id);
+                        
+
+                        Entity applicationEntity = Service.Retrieve("defra_application",
+                           applicationID, new ColumnSet("defra_dulymadechecklistid"));
+
+                        TracingService.Trace("Test 6");
+                        EntityReference dulymadeLookup = (EntityReference)applicationEntity.Attributes["defra_dulymadechecklistid"];
+
+                        var dulymadeID = dulymadeLookup.Id;
+
+                        TracingService.Trace("Parameter lookup " + paramsID);
+                        TracingService.Trace("Application lookup " + applicationID);
+                        TracingService.Trace("Duly made ID " + dulymadeID);
+                        foreach (var attribute in paramMapping.Keys)
+                        {
+                            if (attribute.Equals(0))
+                            {
+                                 
+                            }
+                        }
+
+
 
                     }
                 }
