@@ -38,7 +38,7 @@ namespace Defra.Lp.WastePermits.Plugins
         private Entity WasteParameters { get; set; }
 
         Dictionary<string, string> paramMapping = new Dictionary<string, string> {
-            { "defra_siteplanrequired", "defra_siteplanadequate" },
+            //{ "defra_siteplanrequired", "defra_siteplanadequate" },
             //{ "defra_techcompetenceevreq","defra_evidenceoftechnicalabilityadequate" }
         };
 

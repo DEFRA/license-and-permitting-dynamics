@@ -173,7 +173,7 @@
           <Type>nvarchar</Type>
           <Name>defra_applicationnumber</Name>
           <LogicalName>defra_applicationnumber</LogicalName>
-          <RequiredLevel>none</RequiredLevel>
+          <RequiredLevel>required</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -207,7 +207,7 @@
           <Type>picklist</Type>
           <Name>defra_applicationtype</Name>
           <LogicalName>defra_applicationtype</LogicalName>
-          <RequiredLevel>none</RequiredLevel>
+          <RequiredLevel>required</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -370,7 +370,7 @@
           <IsCustomField>1</IsCustomField>
           <IsAuditEnabled>1</IsAuditEnabled>
           <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.1.15.0</IntroducedVersion>
+          <IntroducedVersion>1.1.22.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
           <IsRenameable>1</IsRenameable>
           <CanModifySearchSettings>1</CanModifySearchSettings>
@@ -381,8 +381,8 @@
           <IsSortableEnabled>0</IsSortableEnabled>
           <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
           <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
-          <MinValue>-922337203685477</MinValue>
-          <MaxValue>922337203685477</MaxValue>
+          <MinValue>-1000000</MinValue>
+          <MaxValue>1000000</MaxValue>
           <Accuracy>4</Accuracy>
           <AccuracySource>2</AccuracySource>
           <displaynames>
@@ -403,7 +403,7 @@
           <IsCustomField>1</IsCustomField>
           <IsAuditEnabled>1</IsAuditEnabled>
           <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.1.15.0</IntroducedVersion>
+          <IntroducedVersion>1.1.22.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
           <IsRenameable>1</IsRenameable>
           <CanModifySearchSettings>1</CanModifySearchSettings>
@@ -1342,6 +1342,61 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="defra_paymentreceived">
+          <Type>bit</Type>
+          <Name>defra_paymentreceived</Name>
+          <LogicalName>defra_paymentreceived</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.1.22.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <AppDefaultValue>0</AppDefaultValue>
+          <optionset Name="defra_application_defra_paymentreceived">
+            <OptionSetType>bit</OptionSetType>
+            <IntroducedVersion>1.1.22.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <displaynames>
+              <displayname description="Payment Received" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+            <options>
+              <option value="0" Color="#0000ff">
+                <labels>
+                  <label description="No" languagecode="1033" />
+                </labels>
+              </option>
+              <option value="1" Color="#0000ff">
+                <labels>
+                  <label description="Yes" languagecode="1033" />
+                </labels>
+              </option>
+            </options>
+          </optionset>
+          <displaynames>
+            <displayname description="Payment Received" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="defra_paymentreceivedcheque">
           <Type>bit</Type>
           <Name>defra_paymentreceivedcheque</Name>
@@ -1652,9 +1707,9 @@
           <ValidForReadApi>1</ValidForReadApi>
           <ValidForCreateApi>1</ValidForCreateApi>
           <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsAuditEnabled>0</IsAuditEnabled>
           <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IntroducedVersion>1.1.21.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
           <IsRenameable>1</IsRenameable>
           <CanModifySearchSettings>1</CanModifySearchSettings>
@@ -1671,7 +1726,7 @@
             <displayname description="Pre-Application" languagecode="1033" />
           </displaynames>
           <Descriptions>
-            <Description description="" languagecode="1033" />
+            <Description description="Unique identifier for Pre-Application associated with Application." languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="defra_primarycontactid">
@@ -1812,7 +1867,7 @@
           <Type>picklist</Type>
           <Name>defra_regime</Name>
           <LogicalName>defra_regime</LogicalName>
-          <RequiredLevel>none</RequiredLevel>
+          <RequiredLevel>required</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -2504,7 +2559,7 @@
             <LookupType id="00000000-0000-0000-0000-000000000000">9</LookupType>
           </LookupTypes>
           <displaynames>
-            <displayname description="Permitting Officer" languagecode="1033" />
+            <displayname description="Owner" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="Owner Id" languagecode="1033" />
@@ -3130,7 +3185,7 @@
       <IsRequiredOffline>0</IsRequiredOffline>
       <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
       <IsCollaboration>1</IsCollaboration>
-      <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+      <AutoRouteToOwnerQueue>1</AutoRouteToOwnerQueue>
       <IsConnectionsEnabled>0</IsConnectionsEnabled>
       <EntityColor>#ffffff</EntityColor>
       <IsDocumentManagementEnabled>1</IsDocumentManagementEnabled>
