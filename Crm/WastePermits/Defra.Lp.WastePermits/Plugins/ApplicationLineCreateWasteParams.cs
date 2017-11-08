@@ -38,7 +38,7 @@ namespace Defra.Lp.WastePermits.Plugins
         private Entity WasteParameters { get; set; }
 
         Dictionary<string, string> paramMapping = new Dictionary<string, string> {
-            //{ "defra_siteplanrequired", "defra_siteplanadequate" },
+            { "defra_siteplanrequired", "defra_siteplanadequate" },
             //{ "defra_techcompetenceevreq","defra_evidenceoftechnicalabilityadequate" }
         };
 
@@ -191,7 +191,6 @@ namespace Defra.Lp.WastePermits.Plugins
                 TracingService.Trace("Duly Made record with ID {0} has been found", dulyMade.Id);
             }
 
-
             TracingService.Trace("Preparing the duly made record parameters based on the line parameters");
             if (this.WasteParameters != null && this.WasteParameters.Attributes.Count > 0)
                 foreach (var mappingAtt in paramMapping)
@@ -202,6 +201,9 @@ namespace Defra.Lp.WastePermits.Plugins
             TracingService.Trace("Creating the duly made record if it doesnt exist");
             if (dulyMade.Id == Guid.Empty)
             {
+                //Populate the Application lookup
+                dulyMade.Attributes.Add("defra_applicationid", applicationER);
+
                 TracingService.Trace("Creating duly made record");
                 //Create the duly made record
                 dulyMade.Attributes.Add("defra_name", (applicationEntity.Attributes.Contains("defra_applicationnumber") && applicationEntity["defra_applicationnumber"] != null) ? string.Format("Duly Made Checklist {0}", applicationEntity["defra_applicationnumber"]) : "Duly Made Checklist");
@@ -214,6 +216,8 @@ namespace Defra.Lp.WastePermits.Plugins
                 Service.Update(updatedApp);
             }
             else
+                //Update only if a checks are added
+                if (dulyMade.Attributes.Count > 0)
             {
                 TracingService.Trace("Updating the duly made record");
                 Service.Update(dulyMade);
