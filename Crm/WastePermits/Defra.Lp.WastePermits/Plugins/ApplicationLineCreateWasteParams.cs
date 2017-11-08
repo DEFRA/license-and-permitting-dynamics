@@ -38,8 +38,9 @@ namespace Defra.Lp.WastePermits.Plugins
         private Entity WasteParameters { get; set; }
 
         Dictionary<string, string> paramMapping = new Dictionary<string, string> {
-            //{ "defra_siteplanrequired", "defra_siteplanadequate" },
-            //{ "defra_techcompetenceevreq","defra_evidenceoftechnicalabilityadequate" }
+            { "defra_siteplanrequired", "defra_adequatesiteplan" },
+            { "defra_siteconditionreport","defra_adequatesiteconditionreport" },
+            { "defra_techcompetenceevreq","defra_adequatetechnicalability" },
         };
 
         /// Initializes a new instance of the <see cref="ApplicationLineCreateWasteParams"/> class.
