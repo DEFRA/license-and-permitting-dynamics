@@ -22,10 +22,9 @@ namespace Defra.Lp.WastePermits.Plugins
     /// </summary>    
     public class ApplicationLineCreateWasteParams : PluginBase
     {
-
-        private ITracingService TracingService { get; set; }
-        private IPluginExecutionContext Context { get; set; }
-        private IOrganizationService Service { get; set; }
+        private ITracingService _TracingService { get; set; }
+        private IPluginExecutionContext _Context { get; set; }
+        private IOrganizationService _Service { get; set; }
         /// <summary>
         /// Alias of the image registered for the snapshot of the
         /// primary entity's attributes before the core platform operation executes.
@@ -42,6 +41,15 @@ namespace Defra.Lp.WastePermits.Plugins
             { "defra_siteconditionreport","defra_adequatesiteconditionreport" },
             { "defra_techcompetenceevreq","defra_adequatetechnicalability" },
         };
+
+        //The Application Entity
+        private Entity ApplicationEntity { get; set; }
+
+        //The Updated Application Entity
+        private Entity UpdatedApplicationEntity { get; set; }
+
+        //The Application Line Standard Rule
+        private Entity standardRuleEntity { get; set; }
 
         /// Initializes a new instance of the <see cref="ApplicationLineCreateWasteParams"/> class.
         /// </summary>
@@ -80,31 +88,42 @@ namespace Defra.Lp.WastePermits.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
-            TracingService = localContext.TracingService;
-            Context = localContext.PluginExecutionContext;
-            Service = localContext.OrganizationService;
+            _TracingService = localContext.TracingService;
+            _Context = localContext.PluginExecutionContext;
+            _Service = localContext.OrganizationService;
 
             // TODO: Implement your custom Plug-in business logic.
 
             //The pre Image 
-            Entity preImageEntity = (Context.PreEntityImages != null && Context.PreEntityImages.Contains(PreImageAlias))
-                    ? Context.PreEntityImages[PreImageAlias] : null;
+            Entity preImageEntity = (_Context.PreEntityImages != null && _Context.PreEntityImages.Contains(PreImageAlias))
+                    ? _Context.PreEntityImages[PreImageAlias] : null;
 
 
-            if (Context.InputParameters.Contains("Target") && Context.InputParameters["Target"] is Entity)
+            if (_Context.InputParameters.Contains("Target") && _Context.InputParameters["Target"] is Entity)
             {
-                Entity targetAppLine = (Entity)Context.InputParameters["Target"];
+                Entity targetAppLine = (Entity)_Context.InputParameters["Target"];
 
                 //Run only if Application Line
                 if (targetAppLine.LogicalName == "defra_applicationline")
                 {
+                    //Retrieve the Application
+                    this.RetrieveApplicationEntity(targetAppLine, preImageEntity);
+
                     //Run only if the standard rule is updated
                     if (targetAppLine.Attributes.Contains("defra_standardruleid"))
-                        //Create the Parameters record based on the Standard Rule Parameteres record
-                        this.CrateApplicationLineParameters(Context, targetAppLine, preImageEntity);
+                    {
+                        //Retrieve the Standard Rule
+                        this.RetrieveStandardRule(targetAppLine, preImageEntity);
 
-                    //Create the Duly Made record (if bespoke it will only create the record if it does not exist
-                    this.UpdateDulyMadeChecklist(Context, targetAppLine, preImageEntity);
+                        //Create the Parameters record based on the Standard Rule Parameteres record
+                        this.CrateApplicationLineParameters(targetAppLine, preImageEntity);
+
+                        //Create the Duly Made record (if bespoke it will only create the record if it does not exist
+                        this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
+                    }
+
+                    //Update the Application
+                    this.UpdateApplication(targetAppLine, preImageEntity);
                 }
             }
         }
@@ -112,64 +131,103 @@ namespace Defra.Lp.WastePermits.Plugins
         /// <summary>
         /// Create the Parameters record based on the Standard Rule Parameteres record
         /// </summary>
-        private void CrateApplicationLineParameters(IPluginExecutionContext context, Entity targetAppLine, Entity preImage)
+        private void CrateApplicationLineParameters(Entity targetAppLine, Entity preImage)
         {
-            //Check if the standard rule id is null
-            EntityReference standardRuleER = null;
+            if (standardRuleEntity == null || standardRuleEntity.Id == Guid.Empty)
+                return;
 
-            if (context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_standardruleid"))
-                standardRuleER = (EntityReference)preImage["defra_standardruleid"];
-            if (targetAppLine.Attributes.Contains("defra_standardruleid"))
-                standardRuleER = (EntityReference)targetAppLine["defra_standardruleid"];
-
-            //Standard rule is not null (created or updated)
-            if (standardRuleER != null)
+            //If the Waste parameters is not null on the standard rule
+            if (standardRuleEntity.Attributes.Contains("defra_wasteparametersid") && standardRuleEntity.Attributes["defra_wasteparametersid"] != null)
             {
-                TracingService.Trace("Retrieving a Standard Rule with Id: " + standardRuleER.Id);
-                Entity standardRuleEntity = Service.Retrieve(standardRuleER.LogicalName, standardRuleER.Id, new ColumnSet("defra_wasteparametersid"));
+                //Retrieve the Waste Parameter record from the standard rule
+                EntityReference wasteparam = (EntityReference)standardRuleEntity["defra_wasteparametersid"];
 
-                //If the Waste parameters is not null on the standard rule
-                if (standardRuleEntity.Attributes.Contains("defra_wasteparametersid") && standardRuleEntity.Attributes["defra_wasteparametersid"] != null)
-                {
-                    //Retrieve the Waste Parameter record from the standard rule
-                    EntityReference wasteparam = (EntityReference)standardRuleEntity["defra_wasteparametersid"];
+                _TracingService.Trace("Retrieving Waste Parameters record with Id: {0}", wasteparam.Id);
+                Entity wasteParamEntity = _Service.Retrieve(wasteparam.LogicalName, wasteparam.Id, new ColumnSet(true));
 
-                    TracingService.Trace("Retrieving Waste Parameters record with Id: {0}", wasteparam.Id);
-                    Entity wasteParamEntity = Service.Retrieve(wasteparam.LogicalName, wasteparam.Id, new ColumnSet(true));
+                //Create the new Waste Parameters record
+                this.WasteParameters = new Entity("defra_wasteparams");
+                foreach (string attribute in wasteParamEntity.Attributes.Keys)
+                    if (attribute != ("defra_wasteparamsid") && attribute.Contains("_"))
+                    {
+                        _TracingService.Trace("Attribute of source record:" + wasteParamEntity[attribute]);
+                        this.WasteParameters[attribute] = wasteParamEntity[attribute];
+                        _TracingService.Trace("Attribute of new record:" + this.WasteParameters[attribute]);
+                    }
 
-                    //Create the new Waste Parameters record
-                    this.WasteParameters = new Entity("defra_wasteparams");
-                    foreach (string attribute in wasteParamEntity.Attributes.Keys)
-                        if (attribute != ("defra_wasteparamsid") && attribute.Contains("_"))
-                        {
-                            TracingService.Trace("Attribute of source record:" + wasteParamEntity[attribute]);
-                            this.WasteParameters[attribute] = wasteParamEntity[attribute];
-                            TracingService.Trace("Attribute of new record:" + this.WasteParameters[attribute]);
-                        }
+                //Set the name
+                this.WasteParameters["defra_name"] = "Application Completion";
+                _TracingService.Trace("Name set to application completion ");
 
-                    //Set the name
-                    this.WasteParameters["defra_name"] = "Application Completion";
-                    TracingService.Trace("Name set to application completion ");
+                _TracingService.Trace("Create new waste params record");
+                this.WasteParameters.Id = _Service.Create(this.WasteParameters);
+                _TracingService.Trace("New waste params created " + this.WasteParameters.Id);
 
-                    TracingService.Trace("Create new waste params record");
-                    this.WasteParameters.Id = Service.Create(this.WasteParameters);
-                    TracingService.Trace("New waste params created " + this.WasteParameters.Id);
-
-                    //Update the Parameters lookup with the newly created record - Add the newly created record to the target entity
-                    targetAppLine["defra_parametersid"] = this.WasteParameters.ToEntityReference();
-                }
+                //Update the Parameters lookup with the newly created record - Add the newly created record to the target entity
+                targetAppLine["defra_parametersid"] = this.WasteParameters.ToEntityReference();
             }
         }
 
         /// <summary>
         /// Creates a Duly Made Checklist based on the Parameters. Updates it if exists
         /// </summary>
-        private void UpdateDulyMadeChecklist(IPluginExecutionContext context, Entity targetAppLine, Entity preImage)
+        private void UpdateDulyMadeChecklist(Entity targetAppLine, Entity preImage)
+        {
+            if (this.ApplicationEntity == null)
+                return;
+
+            //Create the duly made entity object
+            Entity dulyMade = new Entity("defra_dulymadechecklist") { Id = Guid.Empty };
+
+            if (ApplicationEntity.Attributes.Contains("defra_dulymadechecklistid") && ApplicationEntity["defra_dulymadechecklistid"] != null)
+            {
+                EntityReference appER = (EntityReference)ApplicationEntity["defra_dulymadechecklistid"];
+                dulyMade = new Entity(appER.LogicalName, appER.Id) { Id = appER.Id };
+                _TracingService.Trace("Duly Made record with ID {0} has been found", dulyMade.Id);
+            }
+
+            _TracingService.Trace("Preparing the duly made record parameters based on the line parameters");
+            if (this.WasteParameters != null && this.WasteParameters.Attributes.Count > 0)
+                foreach (var mappingAtt in paramMapping)
+                    if (this.WasteParameters.Attributes.Contains(mappingAtt.Key) && (bool)this.WasteParameters[mappingAtt.Key] == true)
+                        //Set the Duly made check to No (the check to be performed) if the Parameter is Yes (customer input)
+                        dulyMade.Attributes.Add(mappingAtt.Value, new OptionSetValue(910400001));
+
+            _TracingService.Trace("Creating the duly made record if it doesnt exist");
+            if (dulyMade.Id == Guid.Empty)
+            {
+                //Populate the Application lookup
+                dulyMade.Attributes.Add("defra_applicationid", ApplicationEntity.ToEntityReference());
+
+                _TracingService.Trace("Creating duly made record");
+                //Create the duly made record
+                dulyMade.Attributes.Add("defra_name", (ApplicationEntity.Attributes.Contains("defra_applicationnumber") && ApplicationEntity["defra_applicationnumber"] != null) ? string.Format("Duly Made Checklist {0}", ApplicationEntity["defra_applicationnumber"]) : "Duly Made Checklist");
+                dulyMade.Id = _Service.Create(dulyMade);
+
+                _TracingService.Trace("Updating the application duly made lookup");
+                //Update the application duly made checklist lkp
+
+                this.UpdatedApplicationEntity.Attributes.Add("defra_dulymadechecklistid", new EntityReference(dulyMade.LogicalName, dulyMade.Id));
+                //Service.Update(updatedApp);
+            }
+            else
+                //Update only if a checks are added
+                if (dulyMade.Attributes.Count > 0)
+            {
+                _TracingService.Trace("Updating the duly made record");
+                _Service.Update(dulyMade);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the Application entity
+        /// </summary>
+        private void RetrieveApplicationEntity(Entity targetAppLine, Entity preImage)
         {
             //Get the Application
             EntityReference applicationER = null;
 
-            if (context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_applicationid"))
+            if (_Context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_applicationid"))
                 applicationER = (EntityReference)preImage["defra_applicationid"];
             if (targetAppLine.Attributes.Contains("defra_applicationid"))
                 applicationER = (EntityReference)targetAppLine["defra_applicationid"];
@@ -178,50 +236,95 @@ namespace Defra.Lp.WastePermits.Plugins
             if (applicationER == null)
                 return;
 
-            //Create the duly made entity object
-            Entity dulyMade = new Entity("defra_dulymadechecklist") { Id = Guid.Empty };
-
             //Retrieve the duly made record if exists
-            TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
-            Entity applicationEntity = Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber"));
+            _TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
+            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination"));
 
-            if (applicationEntity.Attributes.Contains("defra_dulymadechecklistid") && applicationEntity["defra_dulymadechecklistid"] != null)
+            //Initiate the updated application entity
+            this.UpdatedApplicationEntity = new Entity(ApplicationEntity.LogicalName) { Id = ApplicationEntity.Id };
+        }
+
+        /// <summary>
+        /// Retrieves the Standard Rule entity
+        /// </summary>
+        private void RetrieveStandardRule(Entity targetAppLine, Entity preImage)
+        {
+            if (!targetAppLine.Contains("defra_standardruleid"))
+                return;
+
+            //Check if the standard rule id is null
+            EntityReference standardRuleER = null;
+
+            if (_Context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_standardruleid"))
+                standardRuleER = (EntityReference)preImage["defra_standardruleid"];
+            if (targetAppLine.Attributes.Contains("defra_standardruleid"))
+                standardRuleER = (EntityReference)targetAppLine["defra_standardruleid"];
+
+            //Standard rule is not null (created or updated)
+            if (standardRuleER != null)
             {
-                EntityReference appER = (EntityReference)applicationEntity["defra_dulymadechecklistid"];
-                dulyMade = new Entity(appER.LogicalName, appER.Id) { Id = appER.Id };
-                TracingService.Trace("Duly Made record with ID {0} has been found", dulyMade.Id);
+                _TracingService.Trace("Retrieving a Standard Rule with Id: " + standardRuleER.Id);
+                standardRuleEntity = _Service.Retrieve(standardRuleER.LogicalName, standardRuleER.Id, new ColumnSet("defra_wasteparametersid", "defra_npsdetermination", "defra_regulatedfacilitytype"));
+
+                //Roll down the SR Fields
+                if (standardRuleEntity.Attributes.Contains("defra_npsdetermination"))
+                    targetAppLine["defra_npsdetermination"] = standardRuleEntity["defra_npsdetermination"];
+
+                if (standardRuleEntity.Attributes.Contains("defra_regulatedfacilitytype"))
+                    targetAppLine["defra_regulatedfacilitytype"] = standardRuleEntity["defra_regulatedfacilitytype"];
+            }
+        }
+
+        /// <summary>
+        /// Updates the Application entity
+        /// </summary>
+        private void UpdateApplication(Entity targetAppLine, Entity preImage)
+        {
+            if (this.UpdatedApplicationEntity == null || this.UpdatedApplicationEntity.Id == Guid.Empty)
+                return;
+
+            //Update the NPS Determination required flag to No only if no line is determined by NPS (all lines NPS determination is No) Note! Default value is Yes 
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination"))
+            {
+                //Update the Application NPS Determination to No if all lines NPS Determination are No
+                bool allLinesNPSDetAreNo = (bool)targetAppLine["defra_npsdetermination"] == true ? false : true;
+
+                _TracingService.Trace("Retrieve the NPS determination flag for all Standard rules lines");
+
+                QueryExpression AppLinesRulesQuery = new QueryExpression("defra_applicationline")
+                {
+                    ColumnSet = new ColumnSet("defra_npsdetermination"),
+
+                    Criteria = new FilterExpression()
+                    {
+                        Conditions =
+                        {
+                            new ConditionExpression("defra_applicationid", ConditionOperator.Equal, this.ApplicationEntity.Id)
+                        }
+                    }
+                };
+
+                if (_Context.MessageName == "Update")
+                    AppLinesRulesQuery.Criteria.Conditions.Add(new ConditionExpression("defra_applicationlineid", ConditionOperator.NotEqual, _Context.PrimaryEntityId));
+
+
+                EntityCollection appLines = _Service.RetrieveMultiple(AppLinesRulesQuery);
+
+                foreach (Entity appLineRetrieved in appLines.Entities)
+                    if (appLineRetrieved.Attributes.Contains("defra_npsdetermination") && (bool)appLineRetrieved["defra_npsdetermination"])
+                        allLinesNPSDetAreNo = false;
+
+                if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_npsdetermination"])
+                {
+                    _TracingService.Trace("Add to the Application upated entity the NPS Determination flag set to {0}", !allLinesNPSDetAreNo);
+                    this.UpdatedApplicationEntity.Attributes.Add("defra_npsdetermination", !allLinesNPSDetAreNo);
+                }
             }
 
-            TracingService.Trace("Preparing the duly made record parameters based on the line parameters");
-            if (this.WasteParameters != null && this.WasteParameters.Attributes.Count > 0)
-                foreach (var mappingAtt in paramMapping)
-                    if (this.WasteParameters.Attributes.Contains(mappingAtt.Key) && (bool)this.WasteParameters[mappingAtt.Key] == true)
-                        //Set the Duly made check to No (the check to be performed) if the Parameter is Yes (customer input)
-                        dulyMade.Attributes.Add(mappingAtt.Value, new OptionSetValue(910400001));
-
-            TracingService.Trace("Creating the duly made record if it doesnt exist");
-            if (dulyMade.Id == Guid.Empty)
+            if (this.UpdatedApplicationEntity.Attributes.Count > 0)
             {
-                //Populate the Application lookup
-                dulyMade.Attributes.Add("defra_applicationid", applicationER);
-
-                TracingService.Trace("Creating duly made record");
-                //Create the duly made record
-                dulyMade.Attributes.Add("defra_name", (applicationEntity.Attributes.Contains("defra_applicationnumber") && applicationEntity["defra_applicationnumber"] != null) ? string.Format("Duly Made Checklist {0}", applicationEntity["defra_applicationnumber"]) : "Duly Made Checklist");
-                dulyMade.Id = Service.Create(dulyMade);
-
-                TracingService.Trace("Updating the application duly made lookup");
-                //Update the application duly made checklist lkp
-                Entity updatedApp = new Entity(applicationEntity.LogicalName) { Id = applicationEntity.Id };
-                updatedApp.Attributes.Add("defra_dulymadechecklistid", new EntityReference(dulyMade.LogicalName, dulyMade.Id));
-                Service.Update(updatedApp);
-            }
-            else
-                //Update only if a checks are added
-                if (dulyMade.Attributes.Count > 0)
-            {
-                TracingService.Trace("Updating the duly made record");
-                Service.Update(dulyMade);
+                _TracingService.Trace("Update the application with id {0}", this.UpdatedApplicationEntity.Id);
+                _Service.Update(this.UpdatedApplicationEntity);
             }
         }
     }
