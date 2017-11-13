@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>10008</returnedtypecode>
+  <savedqueryid>{412dfd52-5bc5-e711-80eb-3863bb34fad0}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" object="10008" jump="defra_name" select="1" preview="1" icon="1">
+      <row name="result" id="defra_applicationid">
+        <cell name="defra_name" width="150" />
+        <cell name="defra_applicationnumber" width="100" />
+        <cell name="defra_applicationtype" width="100" />
+        <cell name="defra_customerid" width="100" />
+        <cell name="defra_penfolddate" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+      <entity name="defra_application">
+        <attribute name="defra_name" />
+        <attribute name="defra_penfolddate" />
+        <attribute name="defra_customerid" />
+        <attribute name="defra_applicationtype" />
+        <attribute name="defra_applicationnumber" />
+        <order attribute="defra_penfolddate" descending="false" />
+        <filter type="and">
+          <condition attribute="statuscode" operator="ne" value="910400007" />
+        </filter>
+        <link-entity name="queueitem" from="objectid" to="defra_applicationid" alias="aa">
+          <link-entity name="queue" from="queueid" to="queueid" alias="ab">
+            <link-entity name="queuemembership" from="queueid" to="queueid" visible="false" intersect="true">
+              <link-entity name="systemuser" from="systemuserid" to="systemuserid" alias="ac">
+                <filter type="and">
+                  <condition attribute="systemuserid" operator="eq-userid" />
+                </filter>
+              </link-entity>
+            </link-entity>
+          </link-entity>
+        </link-entity>
+        <attribute name="defra_applicationid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.1.28.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="My team applications queue" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
