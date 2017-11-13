@@ -47,7 +47,7 @@ namespace Defra.Lp.Common
             TracingService.Trace(string.Format("Application Name = {0}", applicationEntity["defra_name"].ToString()));
 
             request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            request.ListName = "TestLibKal";
+            request.ListName = "Permit"; // Config.GetAttributeValue<string>(ConfigNames.SharePointPermitList); //"TestLibKal";
             request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_name");
 
             var stringContent = JsonConvert.SerializeObject(request);
@@ -152,7 +152,7 @@ namespace Defra.Lp.Common
             request.FileDescription = queryRecord.GetAttributeValue<string>("subject");
             //request.AttachmentId = queryRecord.Id;
             request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            request.ListName = "TestLibKal";  // ToDo: This needs to come from the Config
+            request.ListName = "Permit";  // ToDo: This needs to come from the Config "TestLibKal"
             request.Operation = string.Empty;
 
             //if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
@@ -226,7 +226,7 @@ namespace Defra.Lp.Common
         {
             TracingService.Trace(string.Format("Sending request to {0}", url));
 
-            using (HttpClient httpclient = new HttpClient())
+            using (var httpclient = new HttpClient())
             {
                 var httpRequest = new HttpRequestMessage
                 {
