@@ -3552,6 +3552,10 @@
     <value>A form for this entity.</value>
     <comment>'Duly Made Checklist' : Description for systemform in Entity FormXml ID: '{6096e10f-78bc-4654-99b2-b4cc1da2deba}'</comment>
   </data>
+  <data name="1:Description,EmailentityEmail" xml:space="preserve">
+    <value>Activity that is delivered using email protocols.</value>
+    <comment> 'Email' : Description for Entity</comment>
+  </data>
   <data name="1:Description,Exception{074fa5a9-4878-441a-98c5-8069e8479890}" xml:space="preserve">
     <value>A form for this entity.</value>
     <comment>'Exception' : Description for systemform in Entity FormXml ID: '{074fa5a9-4878-441a-98c5-8069e8479890}'</comment>
@@ -3571,6 +3575,10 @@
   <data name="1:Description,Exception{e18fbc5c-5e65-e711-80e8-3863bb345a68}" xml:space="preserve">
     <value>Active Exceptions owned by me</value>
     <comment>'Exception' : Description for SavedQuery on Entity QueryId: '{e18fbc5c-5e65-e711-80e8-3863bb345a68}'</comment>
+  </data>
+  <data name="1:Description,LetterentityLetter" xml:space="preserve">
+    <value>Activity that tracks the delivery of a letter. The activity can contain the electronic copy of the letter.</value>
+    <comment> 'Letter' : Description for Entity</comment>
   </data>
   <data name="1:Description,Location Details{0a1ec805-cb10-442c-b948-e91988d30c53}" xml:space="preserve">
     <value>This is the form that is displayed for the CRM for phones express application.</value>
@@ -3731,6 +3739,10 @@
   <data name="1:Description,Schedule 5{fced7a87-db07-4d6f-858f-ab3db0a3d812}" xml:space="preserve">
     <value>This is the form that is displayed for the CRM for phones express application.</value>
     <comment>'Schedule 5' : Description for systemform in Entity FormXml ID: '{fced7a87-db07-4d6f-858f-ab3db0a3d812}'</comment>
+  </data>
+  <data name="1:Description,TaskentityTask" xml:space="preserve">
+    <value>Generic activity representing work needed to be done.</value>
+    <comment> 'Task' : Description for Entity</comment>
   </data>
   <data name="1:Description,User{094fb08a-77bb-49e0-b7ea-8dbddfd01294}" xml:space="preserve">
     <value>This form displays an appointment book for the Service Calendar.</value>
@@ -4777,7 +4789,7 @@
     <comment>'defra_dulymadechecklist' : displayname for Attribute 'OverriddenCreatedOn' on Entity</comment>
   </data>
   <data name="1:displayname,defra_dulymadechecklistOwnerId" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'defra_dulymadechecklist' : displayname for Attribute 'OwnerId' on Entity</comment>
   </data>
   <data name="1:displayname,defra_dulymadechecklistOwningBusinessUnit" xml:space="preserve">
@@ -6948,14 +6960,6 @@
     <value>On Hold: Pending Response to Schedule 5 Notice</value>
     <comment>'defra_application' : label for status '910400009' on Entity</comment>
   </data>
-  <data name="1:label,defra_applicationdefra_application_statuscode910400010" xml:space="preserve">
-    <value>On Hold: Schedule 5</value>
-    <comment>'defra_application' : label for status '910400010' on Entity</comment>
-  </data>
-  <data name="1:label,defra_applicationdefra_application_statuscode910400011" xml:space="preserve">
-    <value>Returned</value>
-    <comment>'defra_application' : label for status '910400011' on Entity</comment>
-  </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400012" xml:space="preserve">
     <value>Withdrawn</value>
     <comment>'defra_application' : label for status '910400012' on Entity</comment>
@@ -7069,7 +7073,7 @@
     <comment>'defra_dulymadechecklist' : label for state '1' on Entity</comment>
   </data>
   <data name="1:label,defra_dulymadechecklistdefra_dulymadechecklist_statuscode1" xml:space="preserve">
-    <value>Completed</value>
+    <value>Completed Duly Made</value>
     <comment>'defra_dulymadechecklist' : label for status '1' on Entity</comment>
   </data>
   <data name="1:label,defra_dulymadechecklistdefra_dulymadechecklist_statuscode2" xml:space="preserve">
@@ -7079,6 +7083,10 @@
   <data name="1:label,defra_dulymadechecklistdefra_dulymadechecklist_statuscode910400000" xml:space="preserve">
     <value>Incomplete</value>
     <comment>'defra_dulymadechecklist' : label for status '910400000' on Entity</comment>
+  </data>
+  <data name="1:label,defra_dulymadechecklistdefra_dulymadechecklist_statuscode910400001" xml:space="preserve">
+    <value>Completed Returned</value>
+    <comment>'defra_dulymadechecklist' : label for status '910400001' on Entity</comment>
   </data>
   <data name="1:label,defra_exceptiondefra_exception_defra_isdefinition0" xml:space="preserve">
     <value>No</value>
@@ -7537,7 +7545,7 @@
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{05fae465-d962-4533-adaa-64cfc91bd14c}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{079afd3e-82f3-4818-9bc7-735d5b38869b}" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{079afd3e-82f3-4818-9bc7-735d5b38869b}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{0c33909e-ee24-50d1-a581-3675105d1d8d}" xml:space="preserve">
@@ -7556,12 +7564,20 @@
     <value>RELATED</value>
     <comment>'Duly Made Checklist' : label for section in Entity FormXml ID: '{184a1c71-98ec-4d73-9d00-f334b1444f93}'</comment>
   </data>
+  <data name="1:label,Duly Made Checklist{18c68558-0cd9-253a-c950-dca97be44e5e}" xml:space="preserve">
+    <value>Status Reason</value>
+    <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{18c68558-0cd9-253a-c950-dca97be44e5e}'</comment>
+  </data>
+  <data name="1:label,Duly Made Checklist{193eb300-bad6-a19c-4dee-0dcebaa8832d}" xml:space="preserve">
+    <value>Application</value>
+    <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{193eb300-bad6-a19c-4dee-0dcebaa8832d}'</comment>
+  </data>
   <data name="1:label,Duly Made Checklist{1df43269-75d6-459e-85ee-efa0aead1551}" xml:space="preserve">
     <value />
     <comment>'Duly Made Checklist' : label for tab in Entity FormXml ID: '{1df43269-75d6-459e-85ee-efa0aead1551}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{24bb7453-f541-44a5-9705-4033ac802e0f}" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{24bb7453-f541-44a5-9705-4033ac802e0f}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{3039d620-901d-db1a-bdd1-55992841c20c}" xml:space="preserve">
@@ -7596,8 +7612,12 @@
     <value />
     <comment>'Duly Made Checklist' : label for tab in Entity FormXml ID: '{457a7195-dbc6-4f4c-91d3-4c52d6b1318e}'</comment>
   </data>
+  <data name="1:label,Duly Made Checklist{4a1aee35-2536-32ee-1106-8e080874c9a4}" xml:space="preserve">
+    <value>Assigned To</value>
+    <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{4a1aee35-2536-32ee-1106-8e080874c9a4}'</comment>
+  </data>
   <data name="1:label,Duly Made Checklist{5b97fcff-c3c7-4418-8ba3-7e33a80d3599}" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{5b97fcff-c3c7-4418-8ba3-7e33a80d3599}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{5c2a3060-0404-555e-9355-d4ad185d53ae}" xml:space="preserve">
@@ -7641,7 +7661,7 @@
     <comment>'Duly Made Checklist' : label for section in Entity FormXml ID: '{862f4e74-ebbc-44dc-bea1-f038a919c436}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{89fd82f6-c542-43ea-9c5d-010027304a44}" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{89fd82f6-c542-43ea-9c5d-010027304a44}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{8c60d60e-9285-550b-b48e-e711e2626db5}" xml:space="preserve">
@@ -7757,7 +7777,7 @@
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{e911e3a8-e041-4f6f-b13f-7874f3b54250}'</comment>
   </data>
   <data name="1:label,Duly Made Checklist{eca3308d-e1b9-4939-afaa-f6b97218665c}" xml:space="preserve">
-    <value>Permitting Officer</value>
+    <value>Assigned To</value>
     <comment>'Duly Made Checklist' : label for cell in Entity FormXml ID: '{eca3308d-e1b9-4939-afaa-f6b97218665c}'</comment>
   </data>
   <data name="1:label,Exception{0bec573f-09ee-47c4-9a0a-65ad0fbe9aef}" xml:space="preserve">
@@ -8060,6 +8080,10 @@
     <value>Owner</value>
     <comment>'Location' : label for cell in Entity FormXml ID: '{2b35e081-69cd-4e2c-a2d4-1018c32c458e}'</comment>
   </data>
+  <data name="1:label,Location{34907a72-d7e7-4f34-a550-6eb94bc6223e}" xml:space="preserve">
+    <value />
+    <comment>'Location' : label for cell in Entity FormXml ID: '{34907a72-d7e7-4f34-a550-6eb94bc6223e}'</comment>
+  </data>
   <data name="1:label,Location{41acedeb-30ca-421f-b7ab-3ca9599f4409}" xml:space="preserve">
     <value />
     <comment>'Location' : label for tab in Entity FormXml ID: '{41acedeb-30ca-421f-b7ab-3ca9599f4409}'</comment>
@@ -8079,6 +8103,10 @@
   <data name="1:label,Location{698ad0ab-b796-4429-a7d8-2a54eff9fb78}" xml:space="preserve">
     <value />
     <comment>'Location' : label for tab in Entity FormXml ID: '{698ad0ab-b796-4429-a7d8-2a54eff9fb78}'</comment>
+  </data>
+  <data name="1:label,Location{73f13bb9-1cda-4859-8adf-62d141267ecb}" xml:space="preserve">
+    <value />
+    <comment>'Location' : label for cell in Entity FormXml ID: '{73f13bb9-1cda-4859-8adf-62d141267ecb}'</comment>
   </data>
   <data name="1:label,Location{74ecbfe7-ae7f-457d-a307-2d9e53da4413}" xml:space="preserve">
     <value />
@@ -8108,6 +8136,10 @@
     <value>Owner</value>
     <comment>'Location' : label for cell in Entity FormXml ID: '{a5b792f1-7b97-4175-9522-4adb40cf60b2}'</comment>
   </data>
+  <data name="1:label,Location{b697b203-3ad0-4de6-1a10-4720a8c4698b}" xml:space="preserve">
+    <value>Application</value>
+    <comment>'Location' : label for cell in Entity FormXml ID: '{b697b203-3ad0-4de6-1a10-4720a8c4698b}'</comment>
+  </data>
   <data name="1:label,Location{b77d4607-79b6-4b90-8053-443f0ad6bb57}" xml:space="preserve">
     <value>Footer</value>
     <comment>'Location' : label for section in Entity FormXml ID: '{b77d4607-79b6-4b90-8053-443f0ad6bb57}'</comment>
@@ -8135,6 +8167,10 @@
   <data name="1:label,Location{c30d5200-0554-454b-8840-8e25c388502e}" xml:space="preserve">
     <value>General</value>
     <comment>'Location' : label for section in Entity FormXml ID: '{c30d5200-0554-454b-8840-8e25c388502e}'</comment>
+  </data>
+  <data name="1:label,Location{c51518dc-800c-bad4-dc76-2a2a48e3315a}" xml:space="preserve">
+    <value>Location Details</value>
+    <comment>'Location' : label for cell in Entity FormXml ID: '{c51518dc-800c-bad4-dc76-2a2a48e3315a}'</comment>
   </data>
   <data name="1:label,Location{c5c0ed87-02e7-4010-a00d-0075d312d7f2}" xml:space="preserve">
     <value>RELATED</value>
@@ -9776,6 +9812,18 @@
     <value>Schedule 5s</value>
     <comment> 'defra_schedule5' : LocalizedCollectionName for Entity</comment>
   </data>
+  <data name="1:LocalizedCollectionName,EmailentityEmail" xml:space="preserve">
+    <value>Email Messages</value>
+    <comment> 'Email' : LocalizedCollectionName for Entity</comment>
+  </data>
+  <data name="1:LocalizedCollectionName,LetterentityLetter" xml:space="preserve">
+    <value>Letters</value>
+    <comment> 'Letter' : LocalizedCollectionName for Entity</comment>
+  </data>
+  <data name="1:LocalizedCollectionName,TaskentityTask" xml:space="preserve">
+    <value>Tasks</value>
+    <comment> 'Task' : LocalizedCollectionName for Entity</comment>
+  </data>
   <data name="1:LocalizedName,Address{37771d31-9e12-4e27-916c-90b53022af09}" xml:space="preserve">
     <value>Information</value>
     <comment>'Address' : LocalizedName for systemform in Entity FormXml ID: '{37771d31-9e12-4e27-916c-90b53022af09}'</comment>
@@ -9888,6 +9936,10 @@
     <value>Information</value>
     <comment>'Application' : LocalizedName for systemform in Entity FormXml ID: '{27c33e20-e915-400e-9ab2-57943a2e4ac6}'</comment>
   </data>
+  <data name="1:LocalizedName,Application{412dfd52-5bc5-e711-80eb-3863bb34fad0}" xml:space="preserve">
+    <value>My team applications queue</value>
+    <comment>'Application' : LocalizedName for SavedQuery on Entity QueryId: '{412dfd52-5bc5-e711-80eb-3863bb34fad0}'</comment>
+  </data>
   <data name="1:LocalizedName,Application{429a9f58-5c65-e711-80e8-3863bb345a68}" xml:space="preserve">
     <value>My Applications</value>
     <comment>'Application' : LocalizedName for SavedQuery on Entity QueryId: '{429a9f58-5c65-e711-80e8-3863bb345a68}'</comment>
@@ -9915,6 +9967,10 @@
   <data name="1:LocalizedName,Application{BDE54FD9-5292-E711-80E3-3863BB34ECF0}" xml:space="preserve">
     <value>Active Applications by Owner</value>
     <comment>'Application' : LocalizedName for Visualization '{BDE54FD9-5292-E711-80E3-3863BB34ECF0}' on  Entity</comment>
+  </data>
+  <data name="1:LocalizedName,Application{BE2C73B0-5AC5-E711-80EB-3863BB34FAD0}" xml:space="preserve">
+    <value>Application by Penfold Date</value>
+    <comment>'Application' : LocalizedName for Visualization '{BE2C73B0-5AC5-E711-80EB-3863BB34FAD0}' on  Entity</comment>
   </data>
   <data name="1:LocalizedName,Application{c3f83426-4fa1-4491-add3-24b5b91a9b30}" xml:space="preserve">
     <value>Information</value>
@@ -10240,6 +10296,10 @@
     <value>Information</value>
     <comment>'Duly Made Checklist' : LocalizedName for systemform in Entity FormXml ID: '{cc7f6f85-7e07-4383-ae8f-6cc877271735}'</comment>
   </data>
+  <data name="1:LocalizedName,EmailentityEmail" xml:space="preserve">
+    <value>Email</value>
+    <comment> 'Email' : LocalizedName for Entity</comment>
+  </data>
   <data name="1:LocalizedName,Exception{074fa5a9-4878-441a-98c5-8069e8479890}" xml:space="preserve">
     <value>Information</value>
     <comment>'Exception' : LocalizedName for systemform in Entity FormXml ID: '{074fa5a9-4878-441a-98c5-8069e8479890}'</comment>
@@ -10287,6 +10347,10 @@
   <data name="1:LocalizedName,Exception{e18fbc5c-5e65-e711-80e8-3863bb345a68}" xml:space="preserve">
     <value>My Exceptions</value>
     <comment>'Exception' : LocalizedName for SavedQuery on Entity QueryId: '{e18fbc5c-5e65-e711-80e8-3863bb345a68}'</comment>
+  </data>
+  <data name="1:LocalizedName,LetterentityLetter" xml:space="preserve">
+    <value>Letter</value>
+    <comment> 'Letter' : LocalizedName for Entity</comment>
   </data>
   <data name="1:LocalizedName,Location Details{0a1ec805-cb10-442c-b948-e91988d30c53}" xml:space="preserve">
     <value>Information</value>
@@ -10580,6 +10644,14 @@
     <value>Inactive Pre-Applications</value>
     <comment>'Pre-Application' : LocalizedName for SavedQuery on Entity QueryId: '{ff7defe6-4e32-42dd-826d-3b728e867032}'</comment>
   </data>
+  <data name="1:LocalizedName,Queue Item{829cd7f3-4cc5-e711-80eb-3863bb34ecf0}" xml:space="preserve">
+    <value>Activities available to work on</value>
+    <comment>'Queue Item' : LocalizedName for SavedQuery on Entity QueryId: '{829cd7f3-4cc5-e711-80eb-3863bb34ecf0}'</comment>
+  </data>
+  <data name="1:LocalizedName,Queue Item{924fe1b7-4cc5-e711-80eb-3863bb34ecf0}" xml:space="preserve">
+    <value>Applications available to work on</value>
+    <comment>'Queue Item' : LocalizedName for SavedQuery on Entity QueryId: '{924fe1b7-4cc5-e711-80eb-3863bb34ecf0}'</comment>
+  </data>
   <data name="1:LocalizedName,Request for Information{2f502ee6-1166-e711-80e8-3863bb345a68}" xml:space="preserve">
     <value>My Request for Informations</value>
     <comment>'Request for Information' : LocalizedName for SavedQuery on Entity QueryId: '{2f502ee6-1166-e711-80e8-3863bb345a68}'</comment>
@@ -10675,6 +10747,10 @@
   <data name="1:LocalizedName,Schedule 5{fe4c0f53-a224-4492-8d97-dbf3bd789462}" xml:space="preserve">
     <value>Schedule 5 Lookup View</value>
     <comment>'Schedule 5' : LocalizedName for SavedQuery on Entity QueryId: '{fe4c0f53-a224-4492-8d97-dbf3bd789462}'</comment>
+  </data>
+  <data name="1:LocalizedName,TaskentityTask" xml:space="preserve">
+    <value>Task</value>
+    <comment> 'Task' : LocalizedName for Entity</comment>
   </data>
   <data name="1:LocalizedName,User{00000000-0000-0000-00aa-000000666d00}" xml:space="preserve">
     <value>User Advanced Find View</value>
@@ -11201,7 +11277,7 @@
     <comment>'defra_dulymadechecklist2' : label for OptionSet Value '910400000'</comment>
   </data>
   <data name="9:label,defra_dulymadechecklist2910400001" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>To be completed</value>
     <comment>'defra_dulymadechecklist2' : label for OptionSet Value '910400001'</comment>
   </data>
   <data name="9:label,defra_dulymadechecklist2910400002" xml:space="preserve">
