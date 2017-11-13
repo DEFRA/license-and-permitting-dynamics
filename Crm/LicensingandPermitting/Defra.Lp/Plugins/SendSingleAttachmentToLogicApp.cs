@@ -62,20 +62,21 @@ namespace Defra.Lp.Plugins
             var context = localContext.PluginExecutionContext;
             var service = localContext.OrganizationService;
             var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
-           // var adminService = serviceFactory.CreateOrganizationService(null);
+            var adminService = serviceFactory.CreateOrganizationService(null);
 
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
-                Entity entity = (Entity)context.InputParameters["Target"];
+                var entity = (Entity)context.InputParameters["Target"];
 
-                //AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
-                //if (entity.LogicalName == "activitymimeattachment")
-                //{
+                var config = Query.GetConfigurationEntity(adminService, "Licensing and Permitting");
 
-                //    tracingService.Trace("Start of MoveFile from activitymimeattachment");
-                //    azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
-                //    tracingService.Trace("Email Processed Successfully");
-                //}
+                var azureInterface = new AzureInterface(config, service, tracingService);
+                if (entity.LogicalName == "activitymimeattachment")
+                {
+                    tracingService.Trace("Start of MoveFile from activitymimeattachment");
+                    //azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
+                    tracingService.Trace("Email Processed Successfully");
+                }
                 //else if (entity.LogicalName == "annotation")
                 //{
                 //    tracingService.Trace("Start of MoveFile from annotation");

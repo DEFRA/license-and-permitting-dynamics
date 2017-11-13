@@ -89,6 +89,7 @@ namespace Defra.Lp.Common
                                      <attribute name='defra_addressbasefacadeurl' />
                                      <attribute name='defra_sharepointlogicappurl' />
                                      <attribute name='defra_sharepointpermitlist' />
+                                     <attribute name='defra_sharepointfoldercontenttype' />
                                      <filter>
                                         <condition attribute='defra_name' operator= 'eq' value='{0}' />
                                     </filter>
