@@ -6,7 +6,7 @@
       <LocalizedName description="Waste Permits" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.1.21.0</Version>
+    <Version>1.1.22.0</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>defra</UniqueName>
@@ -108,7 +108,7 @@
       <RootComponent type="20" id="{216cdd95-2ebb-e711-80ea-1458d043c6c0}" behavior="0" />
       <RootComponent type="20" id="{9d8ca988-b073-e711-80e9-3863bb341a18}" behavior="0" />
       <RootComponent type="20" id="{b8f72dd6-8f77-e711-80e9-3863bb359c70}" behavior="0" />
-      <RootComponent type="29" id="{10aff571-e6ee-42b6-b49d-1d22361e7f8b}" behavior="0" />
+      <RootComponent type="29" id="{154a5a6c-d090-451b-9076-438c9a2e9eeb}" behavior="0" />
       <RootComponent type="29" id="{18bbe873-3a42-408e-8309-7cda47112576}" behavior="0" />
       <RootComponent type="29" id="{2dea25bb-440d-45f5-b024-ce4d643b4980}" behavior="0" />
       <RootComponent type="29" id="{2eb8b990-15de-4b60-a07a-d79fd99f4fbb}" behavior="0" />
@@ -234,10 +234,6 @@
         <Dependent key="15" type="62" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="12" type="1" schemaName="defra_locationdetails" displayName="Location Details" solution="Active" />
-        <Dependent key="15" type="62" />
-      </MissingDependency>
-      <MissingDependency>
         <Required key="17" type="1" schemaName="defra_autonumbering" displayName="Auto Numbering" solution="Active" />
         <Dependent key="15" type="62" />
       </MissingDependency>
@@ -247,14 +243,18 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="19" type="1" schemaName="defra_permit" displayName="Permit" solution="Active" />
-        <Dependent key="20" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
+        <Dependent key="15" type="62" />
       </MissingDependency>
       <MissingDependency>
         <Required key="4" type="1" schemaName="defra_location" displayName="Location" solution="Active" />
         <Dependent key="15" type="62" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="21" type="1" schemaName="msdyn_postruleconfig" displayName="Post Rule Configuration" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Required key="20" type="1" schemaName="msdyn_postruleconfig" displayName="Post Rule Configuration" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Dependent key="15" type="62" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="12" type="1" schemaName="defra_locationdetails" displayName="Location Details" solution="Active" />
         <Dependent key="15" type="62" />
       </MissingDependency>
       <MissingDependency>
@@ -263,66 +263,62 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="19" type="1" schemaName="defra_permit" displayName="Permit" solution="Active" />
-        <Dependent key="15" type="62" />
+        <Dependent key="21" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="23" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="23" type="2" schemaName="defra_regulatedfacilitiescount" displayName="Regulated Facilities Count" parentSchemaName="defra_application" parentDisplayName="Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="24" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="25" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+        <Required key="24" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="25" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="25" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+        <Required key="26" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_permit" parentDisplayName="Permit" solution="Active" />
+        <Dependent key="21" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="25" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+        <Required key="24" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="27" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="27" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_location" parentDisplayName="Location" solution="Active" />
+        <Required key="28" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_location" parentDisplayName="Location" solution="Active" />
         <Dependent key="7" type="10" schemaName="defra_location_defra_preapplication_siteid" displayName="defra_location_defra_preapplication_siteid" parentSchemaName="defra_preapplication" parentDisplayName="Pre-Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="28" type="2" schemaName="defra_locationid" displayName="Location" parentSchemaName="defra_location" parentDisplayName="Location" solution="Active" />
+        <Required key="29" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="30" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="24" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="30" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="30" type="29" displayName="Standard Rule" id="{ac2100ad-3dc5-e711-80eb-3863bb357ff8}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="31" type="2" schemaName="defra_locationid" displayName="Location" parentSchemaName="defra_location" parentDisplayName="Location" solution="Active" />
         <Dependent key="7" type="10" schemaName="defra_location_defra_preapplication_siteid" displayName="defra_location_defra_preapplication_siteid" parentSchemaName="defra_preapplication" parentDisplayName="Pre-Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="24" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="29" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
+        <Required key="29" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="32" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="30" type="2" schemaName="defra_tonnesperannum" displayName="Tonnes Per Annum (tpa)" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="29" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
+        <Required key="33" type="2" schemaName="defra_tonnesperannum" displayName="Tonnes Per Annum (tpa)" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="32" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="29" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
+        <Required key="24" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="32" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="29" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="32" type="26" schemaName="Waste Application Lines" displayName="Waste Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{c15766ad-73c2-e711-80eb-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="31" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_permit" parentDisplayName="Permit" solution="Active" />
-        <Dependent key="20" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="32" type="2" schemaName="defra_regulatedfacilitiescount" displayName="Regulated Facilities Count" parentSchemaName="defra_application" parentDisplayName="Application" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="33" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="24" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="34" type="26" schemaName="My team applications by regime, type and facility" displayName="My team applications by regime, type and facility" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{f5c3815c-7dc4-e711-80ec-3863bb358f68}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
         <Dependent key="34" type="26" schemaName="My team applications by regime, type and facility" displayName="My team applications by regime, type and facility" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{f5c3815c-7dc4-e711-80ec-3863bb358f68}" />
       </MissingDependency>
       <MissingDependency>
@@ -330,7 +326,11 @@
         <Dependent key="34" type="26" schemaName="My team applications by regime, type and facility" displayName="My team applications by regime, type and facility" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{f5c3815c-7dc4-e711-80ec-3863bb358f68}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="30" type="2" schemaName="defra_tonnesperannum" displayName="Tonnes Per Annum (tpa)" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Required key="29" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="34" type="26" schemaName="My team applications by regime, type and facility" displayName="My team applications by regime, type and facility" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" id="{f5c3815c-7dc4-e711-80ec-3863bb358f68}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="33" type="2" schemaName="defra_tonnesperannum" displayName="Tonnes Per Annum (tpa)" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
         <Dependent key="36" type="60" displayName="Waste" parentDisplayName="Application Line" id="{3225d6c4-2402-43f0-86ac-cbe5993c6f81}" />
       </MissingDependency>
       <MissingDependency>
@@ -338,11 +338,11 @@
         <Dependent key="36" type="60" displayName="Waste" parentDisplayName="Application Line" id="{3225d6c4-2402-43f0-86ac-cbe5993c6f81}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Required key="24" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
         <Dependent key="36" type="60" displayName="Waste" parentDisplayName="Application Line" id="{3225d6c4-2402-43f0-86ac-cbe5993c6f81}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="24" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Required key="29" type="2" schemaName="defra_permittype" displayName="Permit Type" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
         <Dependent key="36" type="60" displayName="Waste" parentDisplayName="Application Line" id="{3225d6c4-2402-43f0-86ac-cbe5993c6f81}" />
       </MissingDependency>
       <MissingDependency>
@@ -355,19 +355,19 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="39" type="2" schemaName="defra_permitid" displayName="Permit" parentSchemaName="defra_permit" parentDisplayName="Permit" solution="Active" />
-        <Dependent key="20" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
+        <Dependent key="21" type="10" schemaName="defra_permit_defra_application" displayName="defra_permit_defra_application" parentSchemaName="defra_application" parentDisplayName="Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="23" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="27" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="26" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="33" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
+        <Required key="22" type="2" schemaName="defra_applicationlineid" displayName="Application Line" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
+        <Dependent key="25" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
       </MissingDependency>
       <MissingDependency>
         <Required key="40" type="10" schemaName="defra_application_defra_applicationline" displayName="defra_application_defra_applicationline" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" />
-        <Dependent key="32" type="2" schemaName="defra_regulatedfacilitiescount" displayName="Regulated Facilities Count" parentSchemaName="defra_application" parentDisplayName="Application" />
+        <Dependent key="23" type="2" schemaName="defra_regulatedfacilitiescount" displayName="Regulated Facilities Count" parentSchemaName="defra_application" parentDisplayName="Application" />
       </MissingDependency>
       <MissingDependency>
         <Required key="41" type="9" schemaName="defra_dulymadechecklist2" displayName="Duly Made Checklist C/I/NA" solution="Active" />
@@ -410,16 +410,16 @@
         <Dependent key="50" type="60" displayName="Application Quick View" parentDisplayName="Application" id="{77b90140-9be5-4eea-8490-99ee85a966e4}" />
       </MissingDependency>
       <MissingDependency>
+        <Required key="8" type="1" schemaName="defra_documentreference" displayName="Document Reference" solution="Active" />
+        <Dependent key="51" type="10" schemaName="defra_documentreference_defra_application" displayName="defra_documentreference_defra_application" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" />
+      </MissingDependency>
+      <MissingDependency>
         <Required key="5" type="1" schemaName="defra_applicationline" displayName="Application Line" solution="Active" />
-        <Dependent key="51" type="10" schemaName="defra_wasteparams_defra_applicationline" displayName="defra_wasteparams_defra_applicationline" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" />
+        <Dependent key="52" type="10" schemaName="defra_wasteparams_defra_applicationline" displayName="defra_wasteparams_defra_applicationline" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" />
       </MissingDependency>
       <MissingDependency>
         <Required key="6" type="1" schemaName="defra_exception" displayName="Exception" solution="Active" />
-        <Dependent key="52" type="10" schemaName="defra_standardrule_defra_exception" displayName="defra_standardrule_defra_exception" parentSchemaName="defra_exception" parentDisplayName="Exception" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="8" type="1" schemaName="defra_documentreference" displayName="Document Reference" solution="Active" />
-        <Dependent key="53" type="10" schemaName="defra_documentreference_defra_application" displayName="defra_documentreference_defra_application" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" />
+        <Dependent key="53" type="10" schemaName="defra_standardrule_defra_exception" displayName="defra_standardrule_defra_exception" parentSchemaName="defra_exception" parentDisplayName="Exception" />
       </MissingDependency>
       <MissingDependency>
         <Required key="8" type="1" schemaName="defra_documentreference" displayName="Document Reference" solution="Active" />
@@ -431,11 +431,11 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="5" type="1" schemaName="defra_applicationline" displayName="Application Line" solution="Active" />
-        <Dependent key="23" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
+        <Dependent key="27" type="10" schemaName="defra_applicationline_defra_operatingtechnique_applicationlineid" displayName="defra_applicationline_defra_operatingtechnique_applicationlineid" parentSchemaName="defra_operatingtechnique" parentDisplayName="Operating Technique" />
       </MissingDependency>
       <MissingDependency>
         <Required key="5" type="1" schemaName="defra_applicationline" displayName="Application Line" solution="Active" />
-        <Dependent key="33" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
+        <Dependent key="25" type="10" schemaName="defra_applicationline_defra_wastetypedetail_applicationlineid" displayName="defra_applicationline_defra_wastetypedetail_applicationlineid" parentSchemaName="defra_wastetypedetail" parentDisplayName="Waste Type Detail" />
       </MissingDependency>
       <MissingDependency>
         <Required key="8" type="1" schemaName="defra_documentreference" displayName="Document Reference" solution="Active" />
@@ -454,24 +454,24 @@
         <Dependent key="50" type="60" displayName="Application Quick View" parentDisplayName="Application" id="{77b90140-9be5-4eea-8490-99ee85a966e4}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="60" type="26" schemaName="Active Location Details" displayName="Active Location Details" parentSchemaName="defra_locationdetails" parentDisplayName="Location Details" solution="Active" id="{8ccd3241-650d-4986-b4f3-2f2dc83e5f33}" />
+        <Required key="60" type="26" schemaName="Applications available to work on" displayName="Applications available to work on" parentSchemaName="queueitem" parentDisplayName="Queue Item" solution="Active" id="{924fe1b7-4cc5-e711-80eb-3863bb34ecf0}" />
         <Dependent key="13" type="60" displayName="Applications and work queues" id="{11d44b4d-5092-e711-80e3-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="61" type="26" schemaName="Applications available to work on" displayName="Applications available to work on" parentSchemaName="queueitem" parentDisplayName="Queue Item" solution="Active" id="{924fe1b7-4cc5-e711-80eb-3863bb34ecf0}" />
+        <Required key="61" type="26" schemaName="Activities available to work on" displayName="Activities available to work on" parentSchemaName="queueitem" parentDisplayName="Queue Item" solution="Active" id="{829cd7f3-4cc5-e711-80eb-3863bb34ecf0}" />
         <Dependent key="13" type="60" displayName="Applications and work queues" id="{11d44b4d-5092-e711-80e3-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="62" type="26" schemaName="Activities available to work on" displayName="Activities available to work on" parentSchemaName="queueitem" parentDisplayName="Queue Item" solution="Active" id="{829cd7f3-4cc5-e711-80eb-3863bb34ecf0}" />
+        <Required key="62" type="26" schemaName="Active Location Details" displayName="Active Location Details" parentSchemaName="defra_locationdetails" parentDisplayName="Location Details" solution="Active" id="{8ccd3241-650d-4986-b4f3-2f2dc83e5f33}" />
         <Dependent key="13" type="60" displayName="Applications and work queues" id="{11d44b4d-5092-e711-80e3-3863bb357ff8}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="63" type="26" schemaName="Application Line Lookup View" displayName="Application Line Lookup View" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" id="{43109d77-325a-42e4-971b-6015617388e9}" />
-        <Dependent key="64" type="60" displayName="Information" parentDisplayName="Operating Technique" id="{5e2b8a53-518f-4568-82f1-cf28a7314f07}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="65" type="26" schemaName="Active Document References" displayName="Active Document References" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" solution="Active" id="{ce3c6ef2-c4e9-4655-ab77-9d6f79e2c4b6}" />
+        <Required key="63" type="26" schemaName="Active Document References" displayName="Active Document References" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" solution="Active" id="{ce3c6ef2-c4e9-4655-ab77-9d6f79e2c4b6}" />
         <Dependent key="11" type="60" displayName="Waste" parentDisplayName="Pre-Application" id="{68a7a0ab-6d43-4562-bc45-b4dab8a3797f}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="64" type="26" schemaName="Application Line Lookup View" displayName="Application Line Lookup View" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" id="{43109d77-325a-42e4-971b-6015617388e9}" />
+        <Dependent key="65" type="60" displayName="Information" parentDisplayName="Operating Technique" id="{5e2b8a53-518f-4568-82f1-cf28a7314f07}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="59" type="26" schemaName="Active Application Lines" displayName="Active Application Lines" parentSchemaName="defra_applicationline" parentDisplayName="Application Line" solution="Active" id="{25eee541-d349-4c31-b7cd-81f4bf66dd39}" />
@@ -486,7 +486,7 @@
         <Dependent key="10" type="60" displayName="Waste" parentDisplayName="Application" id="{f5880608-0176-460b-97dd-8d840c9d8bd4}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="65" type="26" schemaName="Active Document References" displayName="Active Document References" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" solution="Active" id="{ce3c6ef2-c4e9-4655-ab77-9d6f79e2c4b6}" />
+        <Required key="63" type="26" schemaName="Active Document References" displayName="Active Document References" parentSchemaName="defra_documentreference" parentDisplayName="Document Reference" solution="Active" id="{ce3c6ef2-c4e9-4655-ab77-9d6f79e2c4b6}" />
         <Dependent key="9" type="60" displayName="Waste standard rule configuration" parentDisplayName="Waste Application Parameters" id="{e457a301-d3c2-4fe6-9264-74fd40067724}" />
       </MissingDependency>
       <MissingDependency>
@@ -522,44 +522,44 @@
         <Dependent key="74" type="1" schemaName="defra_preapplication" displayName="Pre-Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="76" type="61" schemaName="defra_exception32" displayName="defra_exception32" solution="Active" />
+        <Required key="76" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Dependent key="77" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="78" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Dependent key="77" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="79" type="61" schemaName="defra_exception32" displayName="defra_exception32" solution="Active" />
         <Dependent key="6" type="1" schemaName="defra_exception" displayName="Exception" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="77" type="61" schemaName="defra_exception16" displayName="defra_exception16" solution="Active" />
+        <Required key="80" type="61" schemaName="defra_exception16" displayName="defra_exception16" solution="Active" />
         <Dependent key="6" type="1" schemaName="defra_exception" displayName="Exception" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="78" type="61" schemaName="defra_applicationline16" displayName="defra_applicationline16" solution="Active" />
+        <Required key="81" type="61" schemaName="defra_applicationline16" displayName="defra_applicationline16" solution="Active" />
         <Dependent key="5" type="1" schemaName="defra_applicationline" displayName="Application Line" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="79" type="61" schemaName="defra_applicationline32" displayName="defra_applicationline32" solution="Active" />
+        <Required key="82" type="61" schemaName="defra_applicationline32" displayName="defra_applicationline32" solution="Active" />
         <Dependent key="5" type="1" schemaName="defra_applicationline" displayName="Application Line" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="80" type="61" schemaName="msdyn_/RecordWall.htm" displayName="msdyn_/RecordWall.htm" solution="ActivityFeedsCore (8.2.0.0)" />
-        <Dependent key="81" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="82" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (8.2.0.0)" />
-        <Dependent key="81" type="60" displayName="Information" parentDisplayName="User" id="{c0d7d7dd-afd0-4675-85fe-1cc5a48be6df}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="83" type="61" schemaName="msdyn_/PersonalWall.htm" displayName="msdyn_/PersonalWall.htm" solution="ActivityFeedsCore (8.2.0.0)" />
-        <Dependent key="15" type="62" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="84" type="61" schemaName="msdyn_/Images/Wall_16.png" displayName="msdyn_/Images/Wall_16.png" solution="ActivityFeedsCore (8.2.0.0)" />
-        <Dependent key="15" type="62" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="85" type="61" schemaName="defra_application32" displayName="defra_application32" solution="Active" />
+        <Required key="83" type="61" schemaName="defra_application32" displayName="defra_application32" solution="Active" />
         <Dependent key="3" type="1" schemaName="defra_application" displayName="Application" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="86" type="61" schemaName="defra_application16" displayName="defra_application16" solution="Active" />
+        <Required key="84" type="61" schemaName="defra_application16" displayName="defra_application16" solution="Active" />
         <Dependent key="3" type="1" schemaName="defra_application" displayName="Application" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="85" type="61" schemaName="msdyn_/PersonalWall.htm" displayName="msdyn_/PersonalWall.htm" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Dependent key="15" type="62" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="86" type="61" schemaName="msdyn_/Images/Wall_16.png" displayName="msdyn_/Images/Wall_16.png" solution="ActivityFeedsCore (8.2.0.0)" />
+        <Dependent key="15" type="62" />
       </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
