@@ -22,6 +22,7 @@ namespace Defra.Lp.WastePermits.Plugins
     /// </summary>    
     public class ApplicationLineCreateWasteParams : PluginBase
     {
+
         private ITracingService _TracingService { get; set; }
         private IPluginExecutionContext _Context { get; set; }
         private IOrganizationService _Service { get; set; }
@@ -40,6 +41,7 @@ namespace Defra.Lp.WastePermits.Plugins
             { "defra_siteplanrequired", "defra_adequatesiteplan" },
             { "defra_siteconditionreport","defra_adequatesiteconditionreport" },
             { "defra_techcompetenceevreq","defra_adequatetechnicalability" },
+            { "defra_fireplanrequired","defra_fireplanadequate" },
         };
 
         //The Application Entity
