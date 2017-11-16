@@ -89,6 +89,7 @@ namespace Defra.Lp.Plugins
                         var suffix = autonumber["defra_suffix"];
                         var code = current.ToString("000");
                         entity["defra_name"] = string.Format("{0}{1}{2}", prefix, code, suffix);
+                        entity["defra_applicationnumber"] = entity["defra_name"];
 
                         autonumber["defra_currentnumber"] = next;
                         Service.Update(autonumber);
