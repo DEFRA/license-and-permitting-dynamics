@@ -114,6 +114,9 @@
                       <mcwc:SetAttributeValue DisplayName="SetAttributeValueStep1" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" />
                       <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;primaryEntity&quot;)]" Value="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" />
                     </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep3: Lock Payment Received">
+                      <mcwc:SetDisplayMode ControlId="defra_paymentreceived" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
               </mxswa:ActivityReference>
@@ -165,6 +168,9 @@
                       </mxswa:SetEntityProperty>
                       <mcwc:SetAttributeValue DisplayName="SetAttributeValueStep2" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" />
                       <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;primaryEntity&quot;)]" Value="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep4: Lock Payment Received">
+                      <mcwc:SetDisplayMode ControlId="defra_paymentreceived" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
