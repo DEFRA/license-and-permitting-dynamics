@@ -31,7 +31,7 @@
                       <labels>
                         <label description="Assigned To" languagecode="1033" />
                       </labels>
-                      <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" uniqueid="{5ce55d3c-5482-ab7b-4124-d3865bd8019b}" disabled="false">
+                      <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" uniqueid="{5ce55d3c-5482-ab7b-4124-d3865bd8019b}" disabled="true">
                         <parameters>
                           <AutoResolve>true</AutoResolve>
                           <DisableMru>false</DisableMru>
@@ -101,6 +101,14 @@
                         <label description="Source" languagecode="1033" />
                       </labels>
                       <control id="defra_source" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_source" disabled="true" uniqueid="{8a37cd07-ec88-a8d4-b9e0-416c5ca03ea9}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{4ce39935-17dd-0786-55e5-33cad8a3358d}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Submitted On" languagecode="1033" />
+                      </labels>
+                      <control id="defra_submittedon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="defra_submittedon" disabled="true" uniqueid="{5e21531b-c001-1453-05a8-089c8896cded}" />
                     </cell>
                   </row>
                 </rows>
@@ -623,6 +631,48 @@
           </column>
         </columns>
       </tab>
+      <tab name="tab_convictiona" id="{96991583-8de9-79ca-7085-e48320238052}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+        <labels>
+          <label description="CONVICTIONS" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="100%">
+            <sections>
+              <section name="tab_10_section_1" showlabel="false" showbar="false" locklevel="0" id="{13205089-c401-dc77-8d85-52b086ab4048}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                <labels>
+                  <label description="Section" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{43421099-5292-1415-958e-3b83e88c615d}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="BOXI Check Completed" languagecode="1033" />
+                      </labels>
+                      <control id="defra_boxicheckcompleted" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_boxicheckcompleted" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{91a85633-03e7-2925-e773-741478a22ad6}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Convictions Found" languagecode="1033" />
+                      </labels>
+                      <control id="defra_convictionsfound" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_convictionsfound" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{b71802d0-564b-498e-88a5-a8e3e9b663d8}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="RAGU Score" languagecode="1033" />
+                      </labels>
+                      <control id="defra_raguscore" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_raguscore" disabled="false" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
       <tab name="tab_determination" id="{0e5d665a-c3e5-c809-88bd-44618184cb58}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
         <labels>
           <label description="DETERMINATION" languagecode="1033" />
@@ -879,6 +929,32 @@
           </column>
         </columns>
       </tab>
+      <tab name="Hidden" id="{88bb5970-74d0-3696-bac1-da0048790b5c}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false" visible="false">
+        <labels>
+          <label description="Hidden" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="100%">
+            <sections>
+              <section name="tab_11_section_1" showlabel="false" showbar="false" locklevel="0" id="{d6bb33da-119d-6876-1b43-82e0dac9c332}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                <labels>
+                  <label description="Section" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{8d4cb0e7-1b80-6d04-de2a-42846ad7ca44}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Regime" languagecode="1033" />
+                      </labels>
+                      <control id="defra_regime" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_regime" disabled="false" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
     </tabs>
     <header id="{03d2701d-75cf-4d47-8686-a3aa32ea490c}" columns="111">
       <rows>
@@ -899,7 +975,7 @@
             <labels>
               <label description="Assigned To" languagecode="1033" />
             </labels>
-            <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" uniqueid="{9789542b-b0e0-26dd-d848-4cd6c1186a6e}">
+            <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="true" uniqueid="{9789542b-b0e0-26dd-d848-4cd6c1186a6e}">
               <parameters>
                 <AutoResolve>true</AutoResolve>
                 <DisableMru>false</DisableMru>
