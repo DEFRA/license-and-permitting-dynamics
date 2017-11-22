@@ -65,6 +65,9 @@
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
                       <mcwc:SetFieldRequiredLevel ControlId="defra_rejectedstatusreason" ControlType="standard" DisplayName="SetFieldRequiredLevelStep1" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" RequiredLevel="Required" />
                     </Sequence>
+                    <Sequence DisplayName="SetVisibilityStep_SetFieldRequiredLevelStep1_3: New Action">
+                      <mcwc:SetVisibility ControlId="defra_rejectedstatusreason" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" IsVisible="True" />
+                    </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
               </mxswa:ActivityReference>
@@ -91,10 +94,13 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                    <Sequence DisplayName="SetFieldRequiredLevelStep_ConditionBranchStep2_2: Make reason for return non mandatory">
+                    <Sequence DisplayName="SetFieldRequiredLevelStep2: Make reason for return non mandatory">
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;defra_dulymadechecklist&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
-                      <mcwc:SetFieldRequiredLevel ControlId="defra_rejectedstatusreason" ControlType="standard" DisplayName="SetFieldRequiredLevelStep_ConditionBranchStep2_2" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" RequiredLevel="None" />
+                      <mcwc:SetFieldRequiredLevel ControlId="defra_rejectedstatusreason" ControlType="standard" DisplayName="SetFieldRequiredLevelStep2" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" RequiredLevel="None" />
+                    </Sequence>
+                    <Sequence DisplayName="SetVisibilityStep_SetFieldRequiredLevelStep2_4: New Action">
+                      <mcwc:SetVisibility ControlId="defra_rejectedstatusreason" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" IsVisible="False" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
