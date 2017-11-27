@@ -89,7 +89,8 @@ function displayAddresses() {
             
 			$.each(addresses.results, function (i, results) {
 				if(results.address == addressSelected)
-                {
+				{
+				    window.parent.Xrm.Page.getAttribute("defra_uprn").setValue(results.uprn.toString());
 					window.parent.Xrm.Page.getAttribute("defra_premises").setValue(results.premises);   
                     window.parent.Xrm.Page.getAttribute("defra_street").setValue(results.street_address);
                     window.parent.Xrm.Page.getAttribute("defra_locality").setValue(results.locality);
@@ -103,7 +104,8 @@ function displayAddresses() {
     }
 }
 
-function ClearAll(){
+function ClearAll() {
+    window.parent.Xrm.Page.getAttribute("defra_uprn").setValue(null);
 	window.parent.Xrm.Page.getAttribute("defra_name").setValue(null);
 	window.parent.Xrm.Page.getAttribute("defra_premises").setValue(null);   
 	window.parent.Xrm.Page.getAttribute("defra_street").setValue(null);
