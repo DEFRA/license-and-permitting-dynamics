@@ -40,6 +40,14 @@
                     </cell>
                   </row>
                   <row>
+                    <cell id="{72843cb6-b8e2-e9db-6e26-b128b4b9e836}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Trading Name" languagecode="1033" />
+                      </labels>
+                      <control id="defra_tradingname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_tradingname" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
                     <cell id="{8b570561-0797-0064-bea0-8e48a13d4a86}" locklevel="0" showlabel="true">
                       <labels>
                         <label description="Email" languagecode="1033" />
@@ -79,7 +87,7 @@
                       <events>
                         <event name="setadditionalparams" active="true" application="true">
                           <InternalHandlers>
-                            <Handler passExecutionContext="true" enabled="true" handlerUniqueId="c5cc10db-58ac-4611-a529-c1ff599707b1" libraryName="AppCommon/Account/Account_main_system_library.js" functionName="AppCommon.Account.Instance.parentaccountid_setadditionalparams" />
+                            <Handler passExecutionContext="true" enabled="true" handlerUniqueId="c5cc10db-58ac-4611-a529-c1ff599707b1" libraryName="Account_main_system_library.js" functionName="Mscrm.parentaccountid_setadditionalparams" />
                           </InternalHandlers>
                         </event>
                       </events>
@@ -625,34 +633,18 @@
     <clientresources>
       <internalresources>
         <clientincludes>
-          <internaljscriptfile src="$webresource:AppCommon/Account/Account_main_system_library.js" />
+          <internaljscriptfile src="$webresource:Account_main_system_library.js" />
         </clientincludes>
       </internalresources>
     </clientresources>
     <Navigation>
       <NavBar>
-        <NavBarByRelationshipItem Id="navContracts" Area="Info" Sequence="10" RelationshipName="contract_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreContracts">
+        <NavBarByRelationshipItem Id="navAddresses" Area="Info" Sequence="10" RelationshipName="Account_CustomerAddress" Show="false">
           <Privileges>
             <Privilege Privilege="ReadActivity" Entity="" />
           </Privileges>
           <Titles>
-            <Title Text="Contract" LCID="1033" />
-          </Titles>
-        </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem Id="navInvoices" Area="Info" Sequence="10" RelationshipName="invoice_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreInvoices">
-          <Privileges>
-            <Privilege Privilege="ReadActivity" Entity="" />
-          </Privileges>
-          <Titles>
-            <Title Text="Invoice" LCID="1033" />
-          </Titles>
-        </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem Id="navOrders" Area="Info" Sequence="10" RelationshipName="order_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreOrders">
-          <Privileges>
-            <Privilege Privilege="ReadActivity" Entity="" />
-          </Privileges>
-          <Titles>
-            <Title Text="SalesOrder" LCID="1033" />
+            <Title Text="Addresses" LCID="1033" />
           </Titles>
         </NavBarByRelationshipItem>
         <NavBarByRelationshipItem Id="navQuotes" Area="Info" Sequence="10" RelationshipName="quote_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreQuotes">
@@ -671,12 +663,12 @@
             <Title Text="CustomerRelationship" LCID="1033" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem Id="navAddresses" Area="Info" Sequence="10" RelationshipName="Account_CustomerAddress" Show="false">
+        <NavBarByRelationshipItem Id="navInvoices" Area="Info" Sequence="10" RelationshipName="invoice_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreInvoices">
           <Privileges>
             <Privilege Privilege="ReadActivity" Entity="" />
           </Privileges>
           <Titles>
-            <Title Text="Addresses" LCID="1033" />
+            <Title Text="Invoice" LCID="1033" />
           </Titles>
         </NavBarByRelationshipItem>
         <NavBarByRelationshipItem Id="navSubAccts" Area="Info" Sequence="10" RelationshipName="account_parent_account" Show="false" TitleResourceId="Label_SubAccounts">
@@ -685,6 +677,27 @@
           </Privileges>
           <Titles>
             <Title Text="Accounts" LCID="1033" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem Id="navContracts" Area="Info" Sequence="10" RelationshipName="contract_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreContracts">
+          <Privileges>
+            <Privilege Privilege="ReadActivity" Entity="" />
+          </Privileges>
+          <Titles>
+            <Title Text="Contract" LCID="1033" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem Id="navOrders" Area="Info" Sequence="10" RelationshipName="order_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreOrders">
+          <Privileges>
+            <Privilege Privilege="ReadActivity" Entity="" />
+          </Privileges>
+          <Titles>
+            <Title Text="SalesOrder" LCID="1033" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem Id="navCampaignsInSFA" Area="Marketing" Sequence="20" RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navCampaignsInSFA" Show="false">
+          <Titles>
+            <Title Text="Campaigns" LCID="1033" />
           </Titles>
         </NavBarByRelationshipItem>
         <NavBarByRelationshipItem Id="navAsyncOperations" Area="ProcessCenter" Sequence="9500" RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navAsyncOperations" Show="false">
