@@ -74,7 +74,7 @@ namespace Defra.Lp.Plugins
                 if (entity.LogicalName == "activitymimeattachment")
                 {
                     tracingService.Trace("Start of MoveFile from activitymimeattachment");
-                    //azureInterface.MoveFile(entity.ToEntityReference(), "email", "rpa_relatedmetadataid");
+                    azureInterface.MoveFile(entity.ToEntityReference(), "email", "defra_applicationid");
                     tracingService.Trace("Email Processed Successfully");
                 }
                 //else if (entity.LogicalName == "annotation")

@@ -66,11 +66,40 @@ namespace Defra.Lp.Common
             var activityId = Guid.Empty;
             var permitNo = string.Empty;
             Entity annotationData = null;
+            Entity attachmentData = null;
 
             if (parentEntity == "email")
             {
                 // This will have been fired against the creation of the Activity Mime Attachment Record
-                
+                attachmentData = ReturnAttachmentData(recordIdentifier.Id);
+                if (attachmentData == null)
+                {
+                    throw new InvalidPluginExecutionException("No attachment data record returned from query");
+                }
+                else
+                {
+                    bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
+
+                    OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
+                    if (direction && statusCode.Value != 3)
+                    {
+                        //Outgoing email, do not send the attachment on create
+                        TracingService.Trace("Aborted creating attachment for outgoing email attachment that is not sent");
+                        return;
+                    }
+                }
+                //if (attachmentData.Contains("case.ticketnumber"))
+                //{
+                //    caseNo = (string)((AliasedValue)attachmentData.Attributes["case.ticketnumber"]).Value;
+                //}
+                if (attachmentData.Contains("parent.defra_name"))
+                {
+                    permitNo = (string)((AliasedValue)attachmentData.Attributes["parent.defra_name"]).Value;
+                }
+                activityId = AddInsertFileParametersToRequest(request, attachmentData, permitNo, parentEntity, parentLookup);
+
+                //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
+
             }
             else
             {
@@ -101,7 +130,10 @@ namespace Defra.Lp.Common
             if (data != null && !string.IsNullOrEmpty(data.SharePointId))
             {
                 TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
-                Service.Delete(annotationData.LogicalName, annotationData.Id);
+                if (annotationData != null)
+                    Service.Delete(annotationData.LogicalName, annotationData.Id);
+                else if (attachmentData != null)
+                    TracingService.Trace("Need to delete attachment");
             }
         }
 
@@ -205,6 +237,31 @@ namespace Defra.Lp.Common
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
         }
+
+        private Entity ReturnAttachmentData(Guid recordId)
+        {
+            string fetchXml = string.Format(@"<fetch top='1' >
+                                                          <entity name='activitymimeattachment' >
+                                                             <attribute name='filename' />
+                                                            <attribute name='body' />
+                                                        <filter>
+                                                        <condition attribute='activitymimeattachmentid' operator='eq' value='{0}' />
+                                                        </filter>
+                                                        <link-entity name='email' from='activityid' to='objectid' alias='email' link-type='inner' >
+                                                              <attribute name='directioncode' />
+                                                              <attribute name='activityid' />
+                                                              <attribute name='statuscode' />
+                                                              <attribute name='regardingobjectid' />
+                                                              <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
+                                                                <attribute name='defra_name' />
+                                                              </link-entity>
+                                                            </link-entity>
+                                                          </entity>
+                                                        </fetch>", recordId);
+
+            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+        }
+
 
         //private MetadataValues GenerateFileMetadata(Entity attachment)
         //{
