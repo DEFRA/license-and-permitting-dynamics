@@ -32,9 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Defra.Lp.Core.Workflows.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,10 +62,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\APIServiceBase.cs" />
+    <Compile Include="CompaniesHouseValidation.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseAddress.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseCompany.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseContact.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseDate.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseResultsDirectors.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseService.cs" />
+    <Compile Include="CompaniesHouse\CompaniesHouseServiceDynamics.cs" />
+    <Compile Include="OSPlaces\OSPlacesAddress.cs" />
+    <Compile Include="OSPlaces\OSPlacesDPA.cs" />
+    <Compile Include="OSPlaces\OSPlacesResults.cs" />
+    <Compile Include="OSPlaces\OSPlacesService.cs" />
     <Compile Include="WorkFlowActivityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Defra.Lp.Core.Workflows.snk" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
