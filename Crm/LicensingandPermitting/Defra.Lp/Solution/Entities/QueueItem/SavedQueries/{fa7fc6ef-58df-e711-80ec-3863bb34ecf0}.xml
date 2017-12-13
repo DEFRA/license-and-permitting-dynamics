@@ -6,12 +6,11 @@
   <isprivate>0</isprivate>
   <isdefault>0</isdefault>
   <returnedtypecode>2029</returnedtypecode>
-  <savedqueryid>{924fe1b7-4cc5-e711-80eb-3863bb34ecf0}</savedqueryid>
+  <savedqueryid>{fa7fc6ef-58df-e711-80ec-3863bb34ecf0}</savedqueryid>
   <layoutxml>
     <grid name="queueitems" object="2029" jump="title" select="1" icon="1" preview="1">
       <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="enteredon" width="140" />
-        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_penfolddate" width="100" disableSorting="1" />
         <cell name="title" width="300" />
         <cell name="objectid" width="100" />
         <cell name="queueid" width="150" />
@@ -33,16 +32,13 @@
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
           <condition attribute="workerid" operator="null" />
-          <condition attribute="objecttypecodename" operator="like" value="%Application%" />
+          <condition attribute="objecttypecodename" operator="not-like" value="%Application%" />
         </filter>
-        <link-entity alias="a_fdbe0726afc3e71180eb3863bb34fad0" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
-          <attribute name="defra_penfolddate" />
-        </link-entity>
       </entity>
     </fetch>
   </fetchxml>
-  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IntroducedVersion>1.1.55.0</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="Applications available to work on" languagecode="1033" />
+    <LocalizedName description="Work queue" languagecode="1033" />
   </LocalizedNames>
 </savedquery>
