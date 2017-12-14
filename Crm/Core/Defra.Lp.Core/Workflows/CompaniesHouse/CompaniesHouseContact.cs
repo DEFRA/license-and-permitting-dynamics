@@ -18,6 +18,9 @@
         public string appointed_on;
 
         [DataMember]
+        public string resigned_on;
+
+        [DataMember]
         public CompaniesHouseDate date_of_birth;
 
         [DataMember]

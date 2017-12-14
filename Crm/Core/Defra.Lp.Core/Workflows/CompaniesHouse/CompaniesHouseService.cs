@@ -84,6 +84,24 @@
 
                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(CompaniesHouseAddress));
                     this.Company.registered_office_address = (CompaniesHouseAddress)ser.ReadObject(stream1);
+
+                    // Check for nulls
+                    if (this.Company.registered_office_address.postal_code == null)
+                    {
+                        this.Company.registered_office_address.postal_code = string.Empty;
+                    }
+                    if (this.Company.registered_office_address.address_line_1 == null)
+                    {
+                        this.Company.registered_office_address.address_line_1 = string.Empty;
+                    }
+                    if (this.Company.registered_office_address.address_line_2 == null)
+                    {
+                        this.Company.registered_office_address.address_line_2 = string.Empty;
+                    }
+                    if (this.Company.registered_office_address.locality == null)
+                    {
+                        this.Company.registered_office_address.locality = string.Empty;
+                    }
                 }
             }
         }
