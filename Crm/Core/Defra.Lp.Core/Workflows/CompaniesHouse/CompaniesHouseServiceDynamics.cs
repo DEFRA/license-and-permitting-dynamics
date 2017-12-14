@@ -27,6 +27,8 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
         {
             if (Account.Id != Guid.Empty && !string.IsNullOrEmpty(this.CompanyRegistrationNumber))
             {
+                _crmTracing.Trace(string.Format("Validate Customer Account {0} with Company Registration Number {1}", Account.Id.ToString(), this.CompanyRegistrationNumber));
+
                 //Retrieve the account
                 Account = _crmService.Retrieve(Account.LogicalName, Account.Id, new ColumnSet("name", "defra_validatedwithcompanyhouse"));
 
