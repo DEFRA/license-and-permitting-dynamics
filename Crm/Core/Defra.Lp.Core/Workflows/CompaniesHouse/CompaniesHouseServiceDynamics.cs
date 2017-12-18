@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
@@ -31,7 +27,7 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 _crmTracing.Trace(string.Format("Validate Customer Account {0} with Company Registration Number {1}", Account.Id.ToString(), this.CompanyRegistrationNumber));
 
                 //Retrieve the account
-                Account = _crmService.Retrieve(Account.LogicalName, Account.Id, new ColumnSet("name", "defra_validatedwithcompanyhouse"));
+                Account = _crmService.Retrieve(Account.LogicalName, Account.Id, new ColumnSet("name", "defra_validatedwithcompanyhouse", "defra_companyhousestatus"));
 
                 //Get the company details
                 this.GetCompany();
@@ -49,11 +45,19 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                         //Create or update the contact details address
                         this.CreateOrUpdateRegisteredAddress(contactDetails);
 
+                    _crmTracing.Trace(string.Format("Company Status = {0}", this.Company.company_status.ToString()));
+
                     //Update the customer
                     bool accountToBeUpdated = false;
                     if (!Account.Attributes.Contains("name") || (string)Account["name"] != this.Company.company_name)
                     {
                         Account["name"] = this.Company.company_name;
+                        accountToBeUpdated = true;
+                    }
+                    if (!Account.Attributes.Contains("defra_companyhousestatus") 
+                        || (CompaniesHouseCompanyStatus)((OptionSetValue)Account["defra_companyhousestatus"]).Value != this.Company.company_status)
+                    {
+                        Account["defra_companyhousestatus"] = new OptionSetValue((int)this.Company.company_status);
                         accountToBeUpdated = true;
                     }
                     if (!(bool)Account["defra_validatedwithcompanyhouse"])
@@ -239,7 +243,11 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 //Create the non existing once
                 foreach (CompaniesHouseContact director in this.Directors.items)
                 {
-                    if (!string.IsNullOrEmpty(director.name))
+                    // Only interested in directors. Filtering here because the filter on the Companys House API
+                    // doesn't seem to work and returned all officers.
+                    _crmTracing.Trace(string.Format("Role is {0}", director.officer_role));
+
+                    if (!string.IsNullOrEmpty(director.name) && director.officer_role == "director")
                     {
                         bool exists = false;
 
@@ -255,7 +263,7 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                             if (dynamicsDirector.Attributes.Contains("defra_dobyearcompanieshouse") && dynamicsDirector.Attributes["defra_dobyearcompanieshouse"] != null)
                                 dynStr += ((int)dynamicsDirector["defra_dobyearcompanieshouse"]).ToString();
 
-                            if (dynStr == (director.firstname + director.lastname + director.date_of_birth.month.ToString() + director.date_of_birth.year.ToString()))
+                            if (dynStr.ToLower() == (director.firstname + director.lastname + director.date_of_birth.month.ToString() + director.date_of_birth.year.ToString()).ToLower())
                                 exists = true;
                         }
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
@@ -16,5 +12,15 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
 
         [DataMember]
         public CompaniesHouseAddress registered_office_address;
+
+        public CompaniesHouseCompanyStatus company_status;
+
+        [DataMember(Name = "company_status")]
+        public string CompanyStatusString
+        {
+            get { return Enum.GetName(typeof(CompaniesHouseCompanyStatus), this.company_status); }
+            // Removes hyphen and coverts string to enum which we can then map to a dynamics option set value
+            set { this.company_status = (CompaniesHouseCompanyStatus)Enum.Parse(typeof(CompaniesHouseCompanyStatus), value.Replace("-", string.Empty), true); }
+        }
     }
 }

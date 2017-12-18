@@ -36,6 +36,7 @@
                 if(this.name.Contains(", "))
                 {
                     return name.Substring(name.LastIndexOf(", ") + 2, name.Length - name.LastIndexOf(", ") - 2);
+                    //return name.Substring(name.IndexOf(',') + 1);
                 }
 
                 return string.Empty;

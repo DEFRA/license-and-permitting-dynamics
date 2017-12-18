@@ -1,12 +1,8 @@
 ﻿namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
-    using System;
-    using System.Text;
-    using System.Net.Http;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Json;
-    using System.IO;
     using Base;
+    using System.IO;
+    using System.Runtime.Serialization.Json;
 
     public class CompaniesHouseService : APIServiceBase
     {
@@ -21,8 +17,6 @@
         {
             this.CompanyRegistrationNumber = CompanyRegistrationNumber;
         }
-
-        
 
         public void GetCompany()
         {
@@ -110,6 +104,9 @@
         {
             using (this._httpclient)
             {
+                // Added register_view=true as docs say this is required to filter on directors. However, didn't seem
+                // to work at the time so we need to check befre creating contacts that it is a director
+                //string URL = string.Format("{0}/company/{1}/officers?register_type=directors&register_view=true", this.TargetURL, this.CompanyRegistrationNumber);
                 string URL = string.Format("{0}/company/{1}/officers?register_type=directors", this.TargetURL, this.CompanyRegistrationNumber);
 
                 var response = this._httpclient.GetAsync(URL).Result;
