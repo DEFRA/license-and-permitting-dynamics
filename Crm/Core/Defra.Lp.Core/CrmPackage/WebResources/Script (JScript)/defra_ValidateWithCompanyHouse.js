@@ -39,15 +39,15 @@ function CallCompaniesHouseAction()
             async: false,
             success: function (data) {
 			
-                alert(data);
+                //alert(data);
 				 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 
 				var responseText = JSON.stringify(jqXHR.responseText);
 				
-				alert(jqXHR.status);
-				alert(responseText);
+				//alert(jqXHR.status);
+				//alert(responseText);
 				
                 //var responseText = responseText.slice(161, 255)
                 if (jqXHR.status == 404) {
@@ -55,6 +55,9 @@ function CallCompaniesHouseAction()
                 }
                 if (jqXHR.status == 500) {
                     //window.parent.Xrm.Page.ui.setFormNotification("Invalid postcode entered. The postcode must contain a minimum of the sector plus 1 digit of the district e.g. SO1", "ERROR", "noAddress");
+                    //alert(responseText);
+                    var result = JSON.parse(jqXHR.responseText);
+                    alert(result.error.message);
                 }
             }
         });

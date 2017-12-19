@@ -267,7 +267,8 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                                 exists = true;
                         }
 
-                        if (!exists)
+                        // Don't create anyone that has resigned
+                        if (!exists && string.IsNullOrEmpty(director.resigned_on))
                         {
                             Entity newDirector = new Entity("contact");
                             newDirector["defra_fromcompanieshouse"] = true;
@@ -294,6 +295,13 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                                 }
                             }
                             newDirector.Id = _crmService.Create(newDirector);
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(director.resigned_on))
+                            {
+                                // Find the director that this relates to and update their status to resigned.
+                            }
                         }
                     }
                 }
