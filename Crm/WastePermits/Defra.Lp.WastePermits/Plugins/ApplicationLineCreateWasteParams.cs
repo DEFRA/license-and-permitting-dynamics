@@ -42,6 +42,9 @@ namespace Defra.Lp.WastePermits.Plugins
             { "defra_siteconditionreport","defra_adequatesiteconditionreport" },
             { "defra_techcompetenceevreq","defra_adequatetechnicalability" },
             { "defra_fireplanrequired","defra_fireplanadequate" },
+            { "defra_wasterecoveryplanreq","defra_wasterecoveryplanacceptable" },
+            { "defra_miningwastemanplanreq","defra_miningwastemanagementplanacceptable" },
+            { "defra_baselinereportreq","defra_baselinereportacceptable" },
         };
 
         //The Application Entity

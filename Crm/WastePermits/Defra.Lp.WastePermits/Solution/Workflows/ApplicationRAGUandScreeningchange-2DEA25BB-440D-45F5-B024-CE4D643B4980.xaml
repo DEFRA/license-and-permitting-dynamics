@@ -357,6 +357,62 @@
                       <mxswa:AssignEntity DisplayName="AssignStep11: Assign application to intelligence team" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityId="[InputEntities(&quot;primaryEntity&quot;).Id]" EntityName="defra_application" Owner="[DirectCast(AssignStep11_3, Microsoft.Xrm.Sdk.EntityReference)]" />
                       <Persist />
                     </Sequence>
+                    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep12: Move to Intelligence Check Stage">
+                      <mxswa:ActivityReference.Properties>
+                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
+                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_1" />
+                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_1_converted" />
+                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_2" />
+                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_2_converted" />
+                        </sco:Collection>
+                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "Application: Apply for a Waste Permit", "String" }]</InArgument>
+                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_1]</OutArgument>
+                            </mxswa:ActivityReference.Arguments>
+                          </mxswa:ActivityReference>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep12_1]</InArgument>
+                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_1_converted]</OutArgument>
+                            </mxswa:ActivityReference.Arguments>
+                          </mxswa:ActivityReference>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "Intelligence Checks", "String" }]</InArgument>
+                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_2]</OutArgument>
+                            </mxswa:ActivityReference.Arguments>
+                          </mxswa:ActivityReference>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep12_2]</InArgument>
+                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_2_converted]</OutArgument>
+                            </mxswa:ActivityReference.Arguments>
+                          </mxswa:ActivityReference>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.ChangeStageName, Defra.Lp.Workflows, Version=1.1.59.3, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep12: Move to Intelligence Check Stage">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="ProcessName">[DirectCast(CustomActivityStep12_1_converted, System.String)]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="StageName">[DirectCast(CustomActivityStep12_2_converted, System.String)]</InArgument>
+                            </mxswa:ActivityReference.Arguments>
+                          </mxswa:ActivityReference>
+                        </sco:Collection>
+                      </mxswa:ActivityReference.Properties>
+                    </mxswa:ActivityReference>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
               </mxswa:ActivityReference>
