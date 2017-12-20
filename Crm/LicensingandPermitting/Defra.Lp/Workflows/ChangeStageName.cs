@@ -56,6 +56,8 @@ namespace Defra.Lp.Workflows
             var service = crmWorkflowContext.OrganizationService;
             var ctx = crmWorkflowContext.WorkflowExecutionContext;
 
+            tracingService.Trace(string.Format("Moving {0} to Stage {1}", processName, stageName));
+
             try
             {
                 var fetchXml = string.Format(@"<fetch top='1' >
@@ -65,7 +67,7 @@ namespace Defra.Lp.Workflows
                                       <condition attribute='name' operator='eq' value='{0}' />
                                       <condition attribute='statecode' operator='eq' value='1' />
                                     </filter>
-                                    <link-entity name='processstage' from='processid' to='workflowid' >
+                                    <link-entity name='processstage' from='processid' to='workflowid' alias='stage' >
                                       <attribute name='processstageid' />
                                       <filter type='and' >
                                         <condition attribute='stagename' operator='eq' value='{1}' />
@@ -73,17 +75,23 @@ namespace Defra.Lp.Workflows
                                     </link-entity>
                                   </entity>
                                 </fetch>", processName, stageName);
+
+                tracingService.Trace(fetchXml);
+
                 var process = Query.QueryCRMForSingleEntity(service, fetchXml);
                 if (process == null)
                 {
                     throw new InvalidPluginExecutionException(string.Format("Process {0} or Stage {1} does not exist", processName, stageName));
                 }
 
+                tracingService.Trace("Got Process Entity");
+                tracingService.Trace(string.Format("Updating {0} with Id {1}", ctx.PrimaryEntityName, ctx.PrimaryEntityId.ToString()));
+
                 var update = new Entity(ctx.PrimaryEntityName)
                 {
                     Id = ctx.PrimaryEntityId
                 };
-                update["stageid"] = process.Id;
+                update["activestageid"] = process.Id;
                 update["processid"] = (Guid)(process.GetAttributeValue<AliasedValue>("stage.processstageid")).Value;
 
                 service.Update(update);

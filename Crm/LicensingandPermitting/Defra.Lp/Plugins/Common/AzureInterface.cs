@@ -47,7 +47,8 @@ namespace Defra.Lp.Common
             TracingService.Trace(string.Format("Application Name = {0}", applicationEntity["defra_name"].ToString()));
 
             request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            request.ListName = "Permit"; // Config.GetAttributeValue<string>(ConfigNames.SharePointPermitList); //"TestLibKal";
+            //request.ListName = "Permit"; // Config.GetAttributeValue<string>(ConfigNames.SharePointPermitList); //"TestLibKal";
+            request.ListName = ReturnDocumentSetName();
             request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_name");
 
             var stringContent = JsonConvert.SerializeObject(request);
@@ -88,10 +89,7 @@ namespace Defra.Lp.Common
                         return;
                     }
                 }
-                //if (attachmentData.Contains("case.ticketnumber"))
-                //{
-                //    caseNo = (string)((AliasedValue)attachmentData.Attributes["case.ticketnumber"]).Value;
-                //}
+
                 if (attachmentData.Contains("parent.defra_name"))
                 {
                     permitNo = (string)((AliasedValue)attachmentData.Attributes["parent.defra_name"]).Value;
@@ -131,7 +129,11 @@ namespace Defra.Lp.Common
             {
                 TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
                 if (annotationData != null)
-                    Service.Delete(annotationData.LogicalName, annotationData.Id);
+                {
+                    //Service.Delete(annotationData.LogicalName, annotationData.Id);
+                    annotationData["documentbody"] = string.Empty;
+                    Service.Update(annotationData);
+                }
                 else if (attachmentData != null)
                     TracingService.Trace("Need to delete attachment");
             }
@@ -184,7 +186,8 @@ namespace Defra.Lp.Common
             request.FileDescription = queryRecord.GetAttributeValue<string>("subject");
             //request.AttachmentId = queryRecord.Id;
             request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            request.ListName = "Permit";  // ToDo: This needs to come from the Config "TestLibKal"
+            //request.ListName = "Permit";  // ToDo: This needs to come from the Config "TestLibKal"
+            request.ListName = ReturnDocumentSetName();
             request.Operation = string.Empty;
 
             //if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
@@ -199,7 +202,7 @@ namespace Defra.Lp.Common
             return new Guid();
         }
 
-        private string ReturnDocumentSetName(Entity config)
+        private string ReturnDocumentSetName()
         {
             var documentSetName = string.Empty;
             var documentLocationRef = Config.GetAttributeValue<EntityReference>(ConfigNames.SharePointPermitList);
@@ -207,6 +210,10 @@ namespace Defra.Lp.Common
             if (entity != null)
             {
                 documentSetName = entity.GetAttributeValue<string>("name");
+            }
+            else
+            {
+                throw new InvalidPluginExecutionException("Unable to get Document Set Name from Configuration.");
             }
             return documentSetName;
         }
