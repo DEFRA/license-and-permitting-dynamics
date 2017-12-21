@@ -225,7 +225,9 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 //Retrieve the account directors from Dynamics
                 QueryExpression query = new QueryExpression("contact")
                 {
-                    ColumnSet = new ColumnSet("fullname", "firstname", "lastname", "defra_dobmonthcompanieshouse", "defra_dobyearcompanieshouse"),
+                    ColumnSet = new ColumnSet("fullname", "firstname", "lastname", 
+                                              "defra_dobmonthcompanieshouse", "defra_dobyearcompanieshouse", 
+                                              "defra_resignedoncompanieshouse"),
                     Criteria = new FilterExpression()
                     {
                         Conditions =
@@ -250,6 +252,7 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                     if (!string.IsNullOrEmpty(director.name) && director.officer_role == "director")
                     {
                         bool exists = false;
+                        Entity updateDirector = null;
 
                         foreach (Entity dynamicsDirector in results.Entities)
                         {
@@ -264,7 +267,10 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                                 dynStr += ((int)dynamicsDirector["defra_dobyearcompanieshouse"]).ToString();
 
                             if (dynStr.ToLower() == (director.firstname + director.lastname + director.date_of_birth.month.ToString() + director.date_of_birth.year.ToString()).ToLower())
+                            {
                                 exists = true;
+                                updateDirector = dynamicsDirector;
+                            }
                         }
 
                         // Don't create anyone that has resigned
@@ -296,12 +302,20 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                             }
                             newDirector.Id = _crmService.Create(newDirector);
                         }
-                        else
+
+                        // Update the resigned date of any existing directors
+                        if (exists && !string.IsNullOrEmpty(director.resigned_on))
                         {
-                            if (!string.IsNullOrEmpty(director.resigned_on))
+                            updateDirector["defra_fromcompanieshouse"] = true;
+                            try
                             {
-                                // Find the director that this relates to and update their status to resigned.
+                                updateDirector["defra_resignedoncompanieshouse"] = DateTime.ParseExact(director.resigned_on, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                             }
+                            catch (FormatException)
+                            {
+                                _crmTracing.Trace(string.Format("Resigned Date {0} is not in the correct format.", director.resigned_on));
+                            }
+                            _crmService.Update(updateDirector);
                         }
                     }
                 }

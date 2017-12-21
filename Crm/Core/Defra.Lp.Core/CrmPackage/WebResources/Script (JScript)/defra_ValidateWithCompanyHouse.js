@@ -1,7 +1,5 @@
 function validateWithCompanyHouse() 
 {
-    //Xrm.Page.ui.clearFormNotification("1");
-    //Xrm.Page.ui.setFormNotification("Customer Details Are Correct.", "INFORMATION", "1");
 	CallCompaniesHouseAction();
 }
 
@@ -26,7 +24,6 @@ function CallCompaniesHouseAction()
 	var uri = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/accounts(" + accountId + ")/Microsoft.Dynamics.CRM." + actionName;
 	
 	var requestdata = JSON.stringify({
-		//"Account": { "accountid" : "'{" + accountId + "}'", "@data.type" : "Microsoft.Dynamics.CRM.account" },
 		"CompanyRegistrationNumber": compRegNum.getValue() + ""
 	});
 
@@ -38,9 +35,7 @@ function CallCompaniesHouseAction()
             contentType: "application/json",
             async: false,
             success: function (data) {
-			
-                //alert(data);
-				 
+                //alert(data);				 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 
