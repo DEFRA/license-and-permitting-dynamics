@@ -84,21 +84,27 @@ namespace Defra.Lp.Workflows
                     throw new InvalidPluginExecutionException(string.Format("Process {0} or Stage {1} does not exist", processName, stageName));
                 }
 
-                tracingService.Trace("Got Process Entity");
-                tracingService.Trace(string.Format("Updating {0} with Id {1}", ctx.PrimaryEntityName, ctx.PrimaryEntityId.ToString()));
+                tracingService.Trace("bbGot Process Entity");
+                tracingService.Trace(string.Format("Updating {0} [Id={1}]", ctx.PrimaryEntityName, ctx.PrimaryEntityId.ToString()));
 
                 var update = new Entity(ctx.PrimaryEntityName)
                 {
                     Id = ctx.PrimaryEntityId
                 };
-                update["activestageid"] = process.Id;
-                update["processid"] = (Guid)(process.GetAttributeValue<AliasedValue>("stage.processstageid")).Value;
+
+                var stageString = ((Guid)(process.GetAttributeValue<AliasedValue>("stage.processstageid")).Value).ToString();
+                tracingService.Trace(string.Format("stageid={0} processid={1}", stageString, process.Id.ToString()));
+
+                update["stageid"] = (Guid)(process.GetAttributeValue<AliasedValue>("stage.processstageid")).Value;
+                update["processid"] = process.Id;
 
                 service.Update(update);
+
+                tracingService.Trace(string.Format("Moved process {0} to stage {1}", stageString, process.Id.ToString()));
             }
             catch (Exception ex)
             {
-                tracingService.Trace("ERROR. Change Stage Name Activity: {0} {1}", ex.Message, ex.StackTrace);
+                tracingService.Trace(string.Format("ERROR. Change Stage Name Activity: {0} {1}", ex.Message, ex.StackTrace));
                 throw new InvalidPluginExecutionException("An error occured while changing stage. Please ask an administrator for further actions.");
             }
         }
