@@ -12,9 +12,11 @@
       <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="enteredon" width="140" />
         <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_penfolddate" width="100" disableSorting="1" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.statuscode" width="100" disableSorting="1" />
         <cell name="title" width="300" />
         <cell name="objectid" width="100" />
         <cell name="queueid" width="150" />
+        <cell name="statuscode" width="100" />
         <cell name="queueitemid" ishidden="1" width="100" />
       </row>
     </grid>
@@ -35,8 +37,10 @@
           <condition attribute="workerid" operator="null" />
           <condition attribute="objecttypecodename" operator="like" value="%Application%" />
         </filter>
+        <attribute name="statuscode" />
         <link-entity alias="a_fdbe0726afc3e71180eb3863bb34fad0" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
           <attribute name="defra_penfolddate" />
+          <attribute name="statuscode" />
         </link-entity>
       </entity>
     </fetch>

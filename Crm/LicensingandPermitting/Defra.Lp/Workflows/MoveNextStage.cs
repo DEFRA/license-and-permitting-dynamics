@@ -23,7 +23,13 @@ namespace Defra.Lp.Workflows
     {
         [RequiredArgument]
         [Input("BPF Entity Logical Name")]
+        [Default("defra_applicationapplyforawastepermit")]
         public InArgument<string> BpfEntityName { get; set; }
+
+        [RequiredArgument]
+        [Input("Direction - next or previous")]
+        [Default("next")]
+        public InArgument<string> Direction { get; set; }
 
         /// <summary>
         /// Executes the WorkFlow.
@@ -49,6 +55,9 @@ namespace Defra.Lp.Workflows
             var bpfEntityName = this.BpfEntityName.Get<string>(executionContext);
             if (string.IsNullOrWhiteSpace(bpfEntityName)) return;
 
+            var direction = this.Direction.Get<string>(executionContext);
+            if (string.IsNullOrWhiteSpace(direction)) return;
+
             var tracingService = executionContext.GetExtension<ITracingService>();
             var service = crmWorkflowContext.OrganizationService;
             var ctx = crmWorkflowContext.WorkflowExecutionContext;
@@ -57,7 +66,7 @@ namespace Defra.Lp.Workflows
             tracingService.Trace(string.Format("Primary Entity '{0}' with id={1}", ctx.PrimaryEntityName, ctx.PrimaryEntityId.ToString()));
 
             try
-	        {
+            {
                 // Get the active Business Process Flow Instance
                 var processInstanceReq = new RetrieveProcessInstancesRequest();
                 processInstanceReq.EntityId = ctx.PrimaryEntityId;
@@ -69,11 +78,11 @@ namespace Defra.Lp.Workflows
                     // First record is the active process instance
                     activeProcessInstance = processInstanceResp.Processes.Entities[0];
 
-                    for (int i = 0; i < processInstanceResp.Processes.Entities.Count; i++)
-                    {
-                        var processInstance = processInstanceResp.Processes.Entities[i];
-                        tracingService.Trace(string.Format("Name={0} id={1}", processInstance.Attributes["name"].ToString(), processInstance.Id.ToString()));
-                    }
+                    //for (int i = 0; i < processInstanceResp.Processes.Entities.Count; i++)
+                    //{
+                    //    var processInstance = processInstanceResp.Processes.Entities[i];
+                    //    tracingService.Trace(string.Format("Name={0} id={1}", processInstance.Attributes["name"].ToString(), processInstance.Id.ToString()));
+                    //}
                 }
 
                 // Get the active Business Process Stage
@@ -91,6 +100,7 @@ namespace Defra.Lp.Workflows
 
                 var activeStagePosition = 0;
                 var activeStageName = string.Empty;
+                var lastStagePosition = pathResp.ProcessStages.Entities.Count - 1;
                 for (int i = 0; i < pathResp.ProcessStages.Entities.Count; i++)
                 {
                     tracingService.Trace(string.Format("Stage {0}: {1} (StageId: {2})", (i + 1).ToString(),
@@ -108,21 +118,38 @@ namespace Defra.Lp.Workflows
                 // Display the active stage name and Id
                 tracingService.Trace(string.Format("Stage {2} is active for the process instance: {0} (StageID: {1})", activeStageName, activeStageId, (activeStagePosition + 1).ToString()));
 
-                // Retrieve the stage ID of the next stage that you want to set as active
-                var nextStageId = (Guid)pathResp.ProcessStages.Entities[activeStagePosition + 1].Attributes["processstageid"];
+                if (activeStagePosition == lastStagePosition && direction == "next")
+                {
+                    tracingService.Trace("Already on last stage. Can't move to next stage.");
+                }
+                else if (activeStagePosition == 0 && direction == "previous")
+                {
+                    tracingService.Trace("Already on first stage. Can't move to first stage.");
+                }
+                else
+                {
+                    // Retrieve the stage ID of the next stage that you want to set as active
+                    var nextPosition = activeStagePosition + 1;
+                    if (direction == "previous")
+                    {
+                        nextPosition = activeStagePosition - 1;
+                    }
 
-                tracingService.Trace(string.Format("Stage {0} is next with id={1}", (activeStagePosition + 2).ToString(), nextStageId.ToString()));
+                    var nextStageId = (Guid)pathResp.ProcessStages.Entities[nextPosition].Attributes["processstageid"];
 
-                // Retrieve the process instance record to update its active stage
-                var cols1 = new ColumnSet();
-                cols1.AddColumn("activestageid");
-                var retrievedProcessInstance = service.Retrieve(bpfEntityName, activeProcessInstance.Id, cols1);
+                    tracingService.Trace(string.Format("Stage {0} is next with id={1}", (nextPosition + 1).ToString(), nextStageId.ToString()));
 
-                tracingService.Trace(string.Format("Active Stage Id is a lookup to {0}", pathResp.ProcessStages.Entities[activeStagePosition + 1].LogicalName));
+                    // Retrieve the process instance record to update its active stage
+                    var cols1 = new ColumnSet();
+                    cols1.AddColumn("activestageid");
+                    var retrievedProcessInstance = service.Retrieve(bpfEntityName, activeProcessInstance.Id, cols1);
 
-                // Set the next stage as the active stage
-                retrievedProcessInstance["activestageid"] = new EntityReference(pathResp.ProcessStages.Entities[activeStagePosition + 1].LogicalName, nextStageId);
-                service.Update(retrievedProcessInstance);
+                    tracingService.Trace(string.Format("Active Stage Id is a lookup to {0}", pathResp.ProcessStages.Entities[nextPosition].LogicalName));
+
+                    // Set the next stage as the active stage
+                    retrievedProcessInstance["activestageid"] = new EntityReference(pathResp.ProcessStages.Entities[nextPosition].LogicalName, nextStageId);
+                    service.Update(retrievedProcessInstance);
+                }
             }
             catch (Exception ex)
             {
