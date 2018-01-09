@@ -247,8 +247,7 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 {
                     // Only interested in directors. Filtering here because the filter on the Companys House API
                     // doesn't seem to work and returned all officers.
-                    _crmTracing.Trace(string.Format("Role is {0}", director.officer_role));
-
+                    //_crmTracing.Trace(string.Format("Role is {0}", director.officer_role));
                     if (!string.IsNullOrEmpty(director.name) && director.officer_role == "director")
                     {
                         bool exists = false;
