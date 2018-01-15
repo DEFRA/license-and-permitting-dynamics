@@ -41,20 +41,26 @@
     <steplabels id="{83fddd87-eeb8-491e-92cc-251525a7997c}">
       <label languagecode="1033" description="Area" />
     </steplabels>
-    <steplabels id="{c324cfe6-c324-4c6c-aed1-5366ca2f45d6}">
-      <label languagecode="1033" description="Screening" />
+    <steplabels id="{9f41a29e-6c57-4ce4-b349-49b047a17c55}">
+      <label languagecode="1033" description="Location Screening Required" />
     </steplabels>
-    <steplabels id="{d2f9e242-457e-494e-82c6-345556f522d6}">
-      <label languagecode="1033" description="Screening Result" />
+    <steplabels id="{c324cfe6-c324-4c6c-aed1-5366ca2f45d6}">
+      <label languagecode="1033" description="Location Screening" />
     </steplabels>
     <steplabels id="{57df9bea-b575-4e53-b245-013557c915d0}">
       <label languagecode="1033" description="NPS Determination" />
     </steplabels>
-    <steplabels id="{9c8d80dd-04b6-44a1-83c0-94c68bef4f68}">
-      <label languagecode="1033" description="Screening Date" />
+    <steplabels id="{d2f9e242-457e-494e-82c6-345556f522d6}">
+      <label languagecode="1033" description="Result" />
     </steplabels>
     <steplabels id="{6c48a9d8-51ac-4b0d-b0c4-246574001c6a}">
       <label languagecode="1033" description="Report Uploaded" />
+    </steplabels>
+    <steplabels id="{9c8d80dd-04b6-44a1-83c0-94c68bef4f68}">
+      <label languagecode="1033" description="Screening Date" />
+    </steplabels>
+    <steplabels id="{ce86f85a-aefa-4681-bba4-5a814c7a2107}">
+      <label languagecode="1033" description="Completed By" />
     </steplabels>
     <steplabels id="{fc98e038-a8d4-44af-a887-4f090f15358a}">
       <label languagecode="1033" description="Intelligence Checks" />
@@ -71,14 +77,17 @@
     <steplabels id="{944c2998-07f1-4b8e-a480-a13b0f68e155}">
       <label languagecode="1033" description="Duly Made Checklist" />
     </steplabels>
-    <steplabels id="{a79f4eb4-80b7-4280-8005-0cbfca317b29}">
-      <label languagecode="1033" description="Consultation Required" />
+    <steplabels id="{22987046-1564-44b0-bc2a-11ddb62c23e9}">
+      <label languagecode="1033" description="Determination Start Date" />
+    </steplabels>
+    <steplabels id="{8272d9f3-1652-4baf-bf99-67c0d00fe4d8}">
+      <label languagecode="1033" description="Completed Duly Made" />
     </steplabels>
     <steplabels id="{ecd1a41f-41e1-4f91-8f09-b7b71154fa16}">
       <label languagecode="1033" description="Status" />
     </steplabels>
-    <steplabels id="{22987046-1564-44b0-bc2a-11ddb62c23e9}">
-      <label languagecode="1033" description="Determination Start Date" />
+    <steplabels id="{a79f4eb4-80b7-4280-8005-0cbfca317b29}">
+      <label languagecode="1033" description="Consultation Required" />
     </steplabels>
     <steplabels id="{2923d1ec-c97e-4812-851e-c1ad2d1132c2}">
       <label languagecode="1033" description="Consultation" />
@@ -145,33 +154,32 @@
     </steplabels>
   </labels>
   <ProcessTriggers>
-    <ProcessTrigger processtriggerid="{ea5aa8d6-e9df-e711-80ec-3863bb357ff8}">
+    <ProcessTrigger processtriggerid="{98c09a05-10fa-e711-80f0-3863bb358f68}">
       <controltype>1</controltype>
-      <methodid>{c324cfe6-c324-4c6c-aed1-5366ca2f45d6}</methodid>
+      <methodid>{ff115809-c327-43a3-b516-69a70c58ca69}</methodid>
       <scope>1</scope>
-      <controlname>defra_screeningstatus</controlname>
+      <controlname>defra_locationscreeningrequired</controlname>
       <event>change</event>
       <pipelinestage>0</pipelinestage>
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>defra_application</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{eb5aa8d6-e9df-e711-80ec-3863bb357ff8}">
-      <controltype>1</controltype>
-      <methodid>{c324cfe6-c324-4c6c-aed1-5366ca2f45d6}</methodid>
-      <scope>1</scope>
-      <controlname>defra_reportuploaded</controlname>
-      <event>change</event>
-      <pipelinestage>0</pipelinestage>
-      <iscustomizable>1</iscustomizable>
-      <primaryentitytypecode>defra_application</primaryentitytypecode>
-    </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{ec5aa8d6-e9df-e711-80ec-3863bb357ff8}">
+    <ProcessTrigger processtriggerid="{99c09a05-10fa-e711-80f0-3863bb358f68}">
       <controltype>1</controltype>
       <methodid>{5cd8f8de-7a7f-4797-a2d2-9f6cc0ce6f7c}</methodid>
       <scope>1</scope>
       <controlname>defra_consultationrequired</controlname>
       <event>change</event>
       <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{9ac09a05-10fa-e711-80f0-3863bb358f68}">
+      <methodid>{c624e9c8-6997-41d9-bfcb-11be3c4d4f14}</methodid>
+      <scope>1</scope>
+      <controlname>ff115809-c327-43a3-b516-69a70c58ca69</controlname>
+      <event>STAGEEXIT</event>
+      <pipelinestage>20</pipelinestage>
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>defra_application</primaryentitytypecode>
     </ProcessTrigger>
