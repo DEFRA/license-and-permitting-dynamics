@@ -31,7 +31,7 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
 
                 //Get the company details
                 this.GetCompany();
-
+                
                 if (this.Company != null && !string.IsNullOrEmpty(this.Company.company_name))
                 {
                     //Create or fetch the Contact Details

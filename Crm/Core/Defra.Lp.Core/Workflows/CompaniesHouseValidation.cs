@@ -55,8 +55,8 @@ namespace Defra.Lp.Core.Workflows
                 throw new ArgumentNullException("crmWorkflowContext");
             }
 
-            //try
-            //{
+            try
+            {
                 var companyRegNumber = CompanyRegistrationNumber.Get(executionContext);
                 var account = new Entity(crmWorkflowContext.WorkflowExecutionContext.PrimaryEntityName) { Id = crmWorkflowContext.WorkflowExecutionContext.PrimaryEntityId };
 
@@ -69,18 +69,18 @@ namespace Defra.Lp.Core.Workflows
                     var osService = new OSPlacesService(OSTARGETURL, OSAPIKey);
 
                     //Companies House Service
-                    var CHTARGETURL = "https://api.companieshouse.gov.uk/";
+                    var CHTARGETURL = "https://api.companieshouse.gov.uk";
                     var CHAPIKey = "R63PBUpJhDM5_GrZ0XDN0Fe2aksMjSJU7EDj6DJ4";
 
                     var chService = new CompaniesHouseServiceDynamics(CHTARGETURL, CHAPIKey, companyRegNumber, crmWorkflowContext.OrganizationService, crmWorkflowContext.TracingService);
                     chService.ValidateCustomer(account, osService);
                 }
-            //}
-            //catch (FaultException<OrganizationServiceFault> e)
-            //{
+            }
+            catch (FaultException<OrganizationServiceFault> e)
+            {
                 // Handle the exception.
-            //    throw e;
-            //}
+                throw e;
+            }
         }
     }
 }

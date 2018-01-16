@@ -1,6 +1,7 @@
 ﻿namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
     using Base;
+    using Microsoft.Xrm.Sdk;
     using System.IO;
     using System.Runtime.Serialization.Json;
 
@@ -25,7 +26,6 @@
                 string URL = string.Format("{0}/company/{1}", this.TargetURL, this.CompanyRegistrationNumber);
 
                 var response = this._httpclient.GetAsync(URL).Result;
-
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = response.Content;
@@ -46,6 +46,10 @@
 
                     DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(CompaniesHouseCompany));
                     this.Company = (CompaniesHouseCompany)ser.ReadObject(stream1);
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException(string.Format("{0} - {1}. Error calling {2}.", ((int)response.StatusCode).ToString(), response.StatusCode.ToString(), URL));
                 }
             }
         }
