@@ -21,10 +21,14 @@
         <attribute name="fullname" />
         <order attribute="fullname" descending="false" />
         <link-entity name="teammembership" from="systemuserid" to="systemuserid" visible="false" intersect="true">
-          <link-entity name="team" from="teamid" to="teamid" alias="aa">
-            <filter type="and">
-              <condition attribute="teamid" operator="eq" uiname="Permitting Team Leads" uitype="team" value="{5AC1AA80-19D5-E711-80EA-1458D043C6C0}" />
-            </filter>
+          <link-entity name="team" from="teamid" to="teamid" alias="ab">
+            <link-entity name="teammembership" from="teamid" to="teamid" visible="false" intersect="true">
+              <link-entity name="systemuser" from="systemuserid" to="systemuserid" alias="ac">
+                <filter type="and">
+                  <condition attribute="systemuserid" operator="eq-userid" />
+                </filter>
+              </link-entity>
+            </link-entity>
           </link-entity>
         </link-entity>
         <attribute name="systemuserid" />
