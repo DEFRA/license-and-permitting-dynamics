@@ -45,15 +45,18 @@ namespace Defra.Lp.Workflows
                 throw new ArgumentNullException("crmWorkflowContext");
             }
 
-            try
-	        {
+            //try
+	       //{
                 var tracingService = executionContext.GetExtension<ITracingService>();
                 var service = crmWorkflowContext.OrganizationService;
 
                 var postcode = this.Postcode.Get(executionContext);
                 tracingService.Trace(string.Format("In GetAddressesForPostcode with PostCode = {0}", postcode));
 
-                var url = string.Format(Query.GetConfigurationValue(service, "AddressbaseFacadeUrl"), postcode);
+                var configuration = this.Configuration.Get(executionContext);
+                //var url = string.Format(Query.GetConfigurationValue(service, "AddressbaseFacadeUrl"), postcode);
+                var config = Query.RetrieveDataForEntityRef(service, new string[] { ConfigNames.AddressbaseFacadeUrl }, configuration);
+                var url = config.GetAttributeValue<string>(ConfigNames.AddressbaseFacadeUrl);
                 var addresses = string.Empty;
 
                 using (var httpclient = new HttpClient())
@@ -101,12 +104,17 @@ namespace Defra.Lp.Workflows
                 }
                 this.Addresses.Set(executionContext, addresses);
                 tracingService.Trace(string.Format("Returned addresses: {0}", addresses));
-            }
-	        catch (FaultException<OrganizationServiceFault> e)
-            { 
-                throw e;
-            }	  
+            //}
+	        //catch (FaultException<OrganizationServiceFault> e)
+            //{ 
+            //    throw e;
+            //}	  
         }
+
+        [RequiredArgument]
+        [Input("Configuration")]
+        [ReferenceTarget("defra_configuration")]
+        public InArgument<EntityReference> Configuration { get; set; }
 
         [RequiredArgument]
         [Input("Postcode")]
