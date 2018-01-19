@@ -46,7 +46,7 @@ namespace Defra.Lp.Workflows
             }
 
             //try
-	       //{
+	        //{
                 var tracingService = executionContext.GetExtension<ITracingService>();
                 var service = crmWorkflowContext.OrganizationService;
 
@@ -54,10 +54,31 @@ namespace Defra.Lp.Workflows
                 tracingService.Trace(string.Format("In GetAddressesForPostcode with PostCode = {0}", postcode));
 
                 var configuration = this.Configuration.Get(executionContext);
-                //var url = string.Format(Query.GetConfigurationValue(service, "AddressbaseFacadeUrl"), postcode);
+                var url = string.Empty;
                 var config = Query.RetrieveDataForEntityRef(service, new string[] { ConfigNames.AddressbaseFacadeUrl }, configuration);
-                var url = config.GetAttributeValue<string>(ConfigNames.AddressbaseFacadeUrl);
+                if (config != null)
+                {
+                    url = config.GetAttributeValue<string>(ConfigNames.AddressbaseFacadeUrl);
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        // url will be something like http://addressfacade.cloudapp.net/address-service/v1/addresses/postcode?key=client1&postcode={0}
+                        // so we need to substitute the postcode
+                        url = string.Format(url, postcode);
+                    }
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException("No config found with name Licensing and Permitting");
+                }
+
+                if (string.IsNullOrEmpty(url))
+                {
+                    throw new InvalidPluginExecutionException("No url entered in configuration for Addressbase Facade");
+                }
+
                 var addresses = string.Empty;
+
+                tracingService.Trace(url);
 
                 using (var httpclient = new HttpClient())
                 {
@@ -66,42 +87,42 @@ namespace Defra.Lp.Workflows
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     if (!response.IsSuccessStatusCode)
                     {
-                        if (response.StatusCode != HttpStatusCode.BadRequest)
-                        {
-                            // Throw exception if its not 400
-                            response.EnsureSuccessStatusCode();
-                        }
-                        else
-                        {
-                            // Handle error in body that was returned by address base facade 
-                            // and throw a new one with the error message in it so can be used
-                            // in web resource.
-
-                            var httpErrorObject = response.Content.ReadAsStringAsync().Result;
-                            tracingService.Trace(string.Format("Facacde Error: {0}", httpErrorObject));
-
-                            // Template for anonymous deserialisation
-                            var anonymousErrorObject = new
-                            {
-                                facade_status_code = 400,
-                                facade_error_message = string.Empty,
-                                facade_error_code = string.Empty,
-                                supplier_was_called = true,
-                                supplier_status_code = 400,
-                                supplier_response = new { error = new { statuscode = 400, message = string.Empty } }
-                            };
-                            var deserializedErrorObject = JsonConvert.DeserializeAnonymousType(httpErrorObject, anonymousErrorObject);
-
-                            var ex = new InvalidPluginExecutionException(deserializedErrorObject.supplier_response.error.message);
-                            tracingService.Trace(string.Format("Throwing exception for Facacde Error: {0}", deserializedErrorObject.supplier_response.error.message));
-                            throw ex;
-                        }
+                    if (response.StatusCode != HttpStatusCode.BadRequest)
+                    {
+                        // Throw exception if its not 400
+                        response.EnsureSuccessStatusCode();
                     }
                     else
                     {
-                        addresses = response.Content.ReadAsStringAsync().Result;
+                        // Handle error in body that was returned by address base facade 
+                        // and throw a new one with the error message in it so can be used
+                        // in web resource.
+
+                        var httpErrorObject = response.Content.ReadAsStringAsync().Result;
+                        tracingService.Trace(string.Format("Facacde Error: {0}", httpErrorObject));
+
+                        // Template for anonymous deserialisation
+                        var anonymousErrorObject = new
+                        {
+                            facade_status_code = 400,
+                            facade_error_message = string.Empty,
+                            facade_error_code = string.Empty,
+                            supplier_was_called = true,
+                            supplier_status_code = 400,
+                            supplier_response = new { error = new { statuscode = 400, message = string.Empty } }
+                        };
+                        var deserializedErrorObject = JsonConvert.DeserializeAnonymousType(httpErrorObject, anonymousErrorObject);
+
+                        var ex = new InvalidPluginExecutionException(deserializedErrorObject.supplier_response.error.message);
+                        tracingService.Trace(string.Format("Throwing exception for Facacde Error: {0}", deserializedErrorObject.supplier_response.error.message));
+                        throw ex;
                     }
                 }
+                else
+                {
+                    addresses = response.Content.ReadAsStringAsync().Result;
+                }
+            }
                 this.Addresses.Set(executionContext, addresses);
                 tracingService.Trace(string.Format("Returned addresses: {0}", addresses));
             //}

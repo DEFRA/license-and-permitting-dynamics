@@ -133,8 +133,15 @@ namespace Defra.Lp.Common
             retrieveRequest.ColumnSet = new ColumnSet(columns);
             retrieveRequest.Target = target;
             var retrieveResponse = (RetrieveResponse)service.Execute(retrieveRequest);
-            var entity = retrieveResponse.Entity as Entity;
-            return entity;
+            if (retrieveResponse != null)
+            {
+                var entity = retrieveResponse.Entity as Entity;
+                return entity;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

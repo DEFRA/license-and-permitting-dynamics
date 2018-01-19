@@ -38,12 +38,10 @@ namespace Defra.Lp.Workflows
                 tracingService.Trace(string.Format("In GetConfiguration with defra_name = {0}", configName));
 
                 var config = Query.GetConfigurationEntity(service, configName);
-
                 if (config != null)
                 {
                     this.Configuration.Set(executionContext, config.ToEntityReference());
                     tracingService.Trace(string.Format("Got Configuration with Id = {0}", config.Id.ToString()));
-                    //tracingService.Trace(string.Format("Got SharePointPermitList with Id = {0}", ((EntityReference)config["defra_sharepointpermitlist"]).Id.ToString()));
                 }
                 else
                 {
