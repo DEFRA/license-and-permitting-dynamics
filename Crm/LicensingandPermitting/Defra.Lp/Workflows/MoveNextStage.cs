@@ -78,11 +78,11 @@ namespace Defra.Lp.Workflows
                     // First record is the active process instance
                     activeProcessInstance = processInstanceResp.Processes.Entities[0];
 
-                    //for (int i = 0; i < processInstanceResp.Processes.Entities.Count; i++)
-                    //{
-                    //    var processInstance = processInstanceResp.Processes.Entities[i];
-                    //    tracingService.Trace(string.Format("Name={0} id={1}", processInstance.Attributes["name"].ToString(), processInstance.Id.ToString()));
-                    //}
+                    for (int i = 0; i < processInstanceResp.Processes.Entities.Count; i++)
+                    {
+                        var processInstance = processInstanceResp.Processes.Entities[i];
+                        tracingService.Trace(string.Format("Name={0} id={1}", processInstance.Attributes["name"].ToString(), processInstance.Id.ToString()));
+                    }
                 }
 
                 // Get the active Business Process Stage
