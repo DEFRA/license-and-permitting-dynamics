@@ -243,7 +243,7 @@ namespace Defra.Lp.WastePermits.Plugins
 
             //Retrieve the duly made record if exists
             _TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
-            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination"));
+            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired"));
 
             //Initiate the updated application entity
             this.UpdatedApplicationEntity = new Entity(ApplicationEntity.LogicalName) { Id = ApplicationEntity.Id };
@@ -269,11 +269,14 @@ namespace Defra.Lp.WastePermits.Plugins
             if (standardRuleER != null)
             {
                 _TracingService.Trace("Retrieving a Standard Rule with Id: " + standardRuleER.Id);
-                standardRuleEntity = _Service.Retrieve(standardRuleER.LogicalName, standardRuleER.Id, new ColumnSet("defra_wasteparametersid", "defra_npsdetermination", "defra_regulatedfacilitytype"));
+                standardRuleEntity = _Service.Retrieve(standardRuleER.LogicalName, standardRuleER.Id, new ColumnSet("defra_wasteparametersid", "defra_npsdetermination", "defra_regulatedfacilitytype", "defra_locationscreeningrequired"));
 
                 //Roll down the SR Fields
                 if (standardRuleEntity.Attributes.Contains("defra_npsdetermination"))
                     targetAppLine["defra_npsdetermination"] = standardRuleEntity["defra_npsdetermination"];
+
+                if (standardRuleEntity.Attributes.Contains("defra_locationscreeningrequired"))
+                    targetAppLine["defra_locationscreeningrequired"] = standardRuleEntity["defra_locationscreeningrequired"];
 
                 if (standardRuleEntity.Attributes.Contains("defra_regulatedfacilitytype"))
                     targetAppLine["defra_regulatedfacilitytype"] = standardRuleEntity["defra_regulatedfacilitytype"];
@@ -288,17 +291,21 @@ namespace Defra.Lp.WastePermits.Plugins
             if (this.UpdatedApplicationEntity == null || this.UpdatedApplicationEntity.Id == Guid.Empty)
                 return;
 
-            //Update the NPS Determination required flag to No only if no line is determined by NPS (all lines NPS determination is No) Note! Default value is Yes 
-            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination"))
+            // Update the NPS Determination required flag to No only if no line is determined by NPS (all lines NPS determination is No) Note! Default value is Yes 
+            // And update the Location Screening required flag to No only if no line has Location Screening required Note! Default value is Yes 
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination") && targetAppLine.Attributes.Contains("defra_locationscreeningrequired"))
             {
                 //Update the Application NPS Determination to No if all lines NPS Determination are No
                 bool allLinesNPSDetAreNo = (bool)targetAppLine["defra_npsdetermination"] == true ? false : true;
 
-                _TracingService.Trace("Retrieve the NPS determination flag for all Standard rules lines");
+                //Update the Application NPS Determination to No if all lines NPS Determination are No
+                bool allLinesLocationScreeningNo = (bool)targetAppLine["defra_locationscreeningrequired"] == true ? false : true;
+
+                _TracingService.Trace("Retrieve the NPS determination flag and Location Screening Required for all Standard rules lines");
 
                 QueryExpression AppLinesRulesQuery = new QueryExpression("defra_applicationline")
                 {
-                    ColumnSet = new ColumnSet("defra_npsdetermination"),
+                    ColumnSet = new ColumnSet("defra_npsdetermination", "defra_locationscreeningrequired"),
 
                     Criteria = new FilterExpression()
                     {
@@ -316,13 +323,23 @@ namespace Defra.Lp.WastePermits.Plugins
                 EntityCollection appLines = _Service.RetrieveMultiple(AppLinesRulesQuery);
 
                 foreach (Entity appLineRetrieved in appLines.Entities)
+                {
                     if (appLineRetrieved.Attributes.Contains("defra_npsdetermination") && (bool)appLineRetrieved["defra_npsdetermination"])
                         allLinesNPSDetAreNo = false;
+                    if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
+                        allLinesLocationScreeningNo = false;
+                }
 
                 if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_npsdetermination"])
                 {
                     _TracingService.Trace("Add to the Application upated entity the NPS Determination flag set to {0}", !allLinesNPSDetAreNo);
                     this.UpdatedApplicationEntity.Attributes.Add("defra_npsdetermination", !allLinesNPSDetAreNo);
+                }
+
+                if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_locationscreeningrequired"])
+                {
+                    _TracingService.Trace("Add to the Application upated entity the Location Screening Required flag set to {0}", !allLinesLocationScreeningNo);
+                    this.UpdatedApplicationEntity.Attributes.Add("defra_locationscreeningrequired", !allLinesLocationScreeningNo);
                 }
             }
 

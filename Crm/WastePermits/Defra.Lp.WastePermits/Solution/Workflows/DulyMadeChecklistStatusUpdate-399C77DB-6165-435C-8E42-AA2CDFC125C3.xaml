@@ -82,7 +82,34 @@
                             </Sequence.Variables>
                             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;defra_dulymadechecklist&quot;)]" />
                             <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
-                            <mxswa:GetEntityProperty Attribute="owninguser" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_2]">
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">RetrieveCurrentTime</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() {  }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_2]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep3_2 }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_1]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_completedon" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_1]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:GetEntityProperty Attribute="modifiedby" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_4]">
                               <mxswa:GetEntityProperty.TargetType>
                                 <InArgument x:TypeArguments="s:Type">
                                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -92,44 +119,17 @@
                             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                               <mxswa:ActivityReference.Arguments>
                                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep3_2 }]</InArgument>
-                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-                                </InArgument>
-                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_1]</OutArgument>
-                              </mxswa:ActivityReference.Arguments>
-                            </mxswa:ActivityReference>
-                            <mxswa:SetEntityProperty Attribute="defra_completedbyid" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_1]">
-                              <mxswa:SetEntityProperty.TargetType>
-                                <InArgument x:TypeArguments="s:Type">
-                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-                                </InArgument>
-                              </mxswa:SetEntityProperty.TargetType>
-                            </mxswa:SetEntityProperty>
-                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                              <mxswa:ActivityReference.Arguments>
-                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">RetrieveCurrentTime</InArgument>
-                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() {  }]</InArgument>
-                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
-                                </InArgument>
-                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_4]</OutArgument>
-                              </mxswa:ActivityReference.Arguments>
-                            </mxswa:ActivityReference>
-                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                              <mxswa:ActivityReference.Arguments>
-                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
                                 <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep3_4 }]</InArgument>
                                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                                 </InArgument>
                                 <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_3]</OutArgument>
                               </mxswa:ActivityReference.Arguments>
                             </mxswa:ActivityReference>
-                            <mxswa:SetEntityProperty Attribute="defra_completedon" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_3]">
+                            <mxswa:SetEntityProperty Attribute="defra_completedbyid" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_dulymadechecklist" Value="[UpdateStep3_3]">
                               <mxswa:SetEntityProperty.TargetType>
                                 <InArgument x:TypeArguments="s:Type">
-                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                                 </InArgument>
                               </mxswa:SetEntityProperty.TargetType>
                             </mxswa:SetEntityProperty>
