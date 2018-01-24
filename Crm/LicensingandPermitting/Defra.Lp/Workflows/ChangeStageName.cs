@@ -84,7 +84,7 @@ namespace Defra.Lp.Workflows
                     throw new InvalidPluginExecutionException(string.Format("Process {0} or Stage {1} does not exist", processName, stageName));
                 }
 
-                tracingService.Trace("bbGot Process Entity");
+                tracingService.Trace("Got Process Entity");
                 tracingService.Trace(string.Format("Updating {0} [Id={1}]", ctx.PrimaryEntityName, ctx.PrimaryEntityId.ToString()));
 
                 var update = new Entity(ctx.PrimaryEntityName)

@@ -13,6 +13,7 @@ using System.Activities;
 
 namespace Defra.Lp.Workflows
 {
+    using Common;
     using Microsoft.Crm.Sdk.Messages;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
@@ -26,10 +27,15 @@ namespace Defra.Lp.Workflows
         [Default("defra_applicationapplyforawastepermit")]
         public InArgument<string> BpfEntityName { get; set; }
 
+        //[RequiredArgument]
+        //[Input("Direction - next or previous")]
+        //[Default("next")]
+        //public InArgument<string> Direction { get; set; }
+
         [RequiredArgument]
-        [Input("Direction - next or previous")]
-        [Default("next")]
-        public InArgument<string> Direction { get; set; }
+        [Input("Stage Name to move to")]
+        [Default("Intelligence Checks")]
+        public InArgument<string> StageName { get; set; }
 
         /// <summary>
         /// Executes the WorkFlow.
@@ -55,8 +61,8 @@ namespace Defra.Lp.Workflows
             var bpfEntityName = this.BpfEntityName.Get<string>(executionContext);
             if (string.IsNullOrWhiteSpace(bpfEntityName)) return;
 
-            var direction = this.Direction.Get<string>(executionContext);
-            if (string.IsNullOrWhiteSpace(direction)) return;
+            var stageName = this.StageName.Get<string>(executionContext);
+            if (string.IsNullOrWhiteSpace(stageName)) return;
 
             var tracingService = executionContext.GetExtension<ITracingService>();
             var service = crmWorkflowContext.OrganizationService;
@@ -86,70 +92,97 @@ namespace Defra.Lp.Workflows
                 }
 
                 // Get the active Business Process Stage
-                var activeStageId = new Guid(activeProcessInstance.Attributes["processstageid"].ToString());
-                //var activeProcessName = (string)activeProcessInstance.Attributes["processstageid"];
+                //var activeStageId = new Guid(activeProcessInstance.Attributes["processstageid"].ToString());
+                ////var activeProcessName = (string)activeProcessInstance.Attributes["processstageid"];
 
-                tracingService.Trace(string.Format("Got active process instance id={1} with stage id={0}", activeProcessInstance.Attributes["processstageid"].ToString(), activeProcessInstance.Id.ToString()));
+                //tracingService.Trace(string.Format("Got active process instance id={1} with stage id={0}", activeProcessInstance.Attributes["processstageid"].ToString(), activeProcessInstance.Id.ToString()));
 
-                // Retrieve the process stages in the active path of the current process instance
-                var pathReq = new RetrieveActivePathRequest();
-                pathReq.ProcessInstanceId = activeProcessInstance.Id;
-                RetrieveActivePathResponse pathResp = (RetrieveActivePathResponse)service.Execute(pathReq);
+                //// Retrieve the process stages in the active path of the current process instance
+                //var pathReq = new RetrieveActivePathRequest();
+                //pathReq.ProcessInstanceId = activeProcessInstance.Id;
+                //RetrieveActivePathResponse pathResp = (RetrieveActivePathResponse)service.Execute(pathReq);
 
-                tracingService.Trace("Retrieved stages in the active path of the process instance:");
+                //tracingService.Trace("Retrieved stages in the active path of the process instance:");
 
-                var activeStagePosition = 0;
-                var activeStageName = string.Empty;
-                var lastStagePosition = pathResp.ProcessStages.Entities.Count - 1;
-                for (int i = 0; i < pathResp.ProcessStages.Entities.Count; i++)
+                //var activeStagePosition = 0;
+                //var activeStageName = string.Empty;
+                //var lastStagePosition = pathResp.ProcessStages.Entities.Count - 1;
+                //for (int i = 0; i < pathResp.ProcessStages.Entities.Count; i++)
+                //{
+                //    tracingService.Trace(string.Format("Stage {0}: {1} (StageId: {2})", (i + 1).ToString(),
+                //                            pathResp.ProcessStages.Entities[i].Attributes["stagename"].ToString(),
+                //                            pathResp.ProcessStages.Entities[i].Attributes["processstageid"].ToString()));
+
+                //    // Retrieve the active stage name and active stage position based on the activeStageId for the process instance
+                //    if (pathResp.ProcessStages.Entities[i].Attributes["processstageid"].ToString() == activeStageId.ToString())
+                //    {
+                //        activeStageName = pathResp.ProcessStages.Entities[i].Attributes["stagename"].ToString();
+                //        activeStagePosition = i;
+                //    }
+                //}
+
+                //// Display the active stage name and Id
+                //tracingService.Trace(string.Format("Stage {2} is active for the process instance: {0} (StageID: {1})", activeStageName, activeStageId, (activeStagePosition + 1).ToString()));
+
+                //                if (activeStagePosition == lastStagePosition && direction == "next")
+                //                {
+                //                    tracingService.Trace("Already on last stage. Can't move to next stage.");
+                //                }
+                //                else if (activeStagePosition == 0 && direction == "previous")
+                //                {
+                //                    tracingService.Trace("Already on first stage. Can't move to first stage.");
+                //                }
+                //                else
+                //                {
+                // Retrieve the stage ID of the next stage that you want to set as active
+                //                    var nextPosition = activeStagePosition + 1;
+                //                    if (direction == "previous")
+                //                    {
+                //                        nextPosition = activeStagePosition - 1;
+                //                    }
+
+                //                    var nextStageId = (Guid)pathResp.ProcessStages.Entities[nextPosition].Attributes["processstageid"];
+
+                //                    tracingService.Trace(string.Format("Stage {0} is next with id={1}", (nextPosition + 1).ToString(), nextStageId.ToString()));
+
+                var processName = activeProcessInstance.Attributes["name"].ToString();
+                var fetchXml = string.Format(@"<fetch top='1' >
+                                  <entity name='workflow' >
+                                    <attribute name='workflowid' />
+                                    <filter>
+                                      <condition attribute='name' operator='eq' value='{0}' />
+                                      <condition attribute='statecode' operator='eq' value='1' />
+                                    </filter>
+                                    <link-entity name='processstage' from='processid' to='workflowid' alias='stage' >
+                                      <attribute name='processstageid' />
+                                      <filter type='and' >
+                                        <condition attribute='stagename' operator='eq' value='{1}' />
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>", processName, stageName);
+
+                tracingService.Trace(fetchXml);
+
+                var process = Query.QueryCRMForSingleEntity(service, fetchXml);
+                if (process == null)
                 {
-                    tracingService.Trace(string.Format("Stage {0}: {1} (StageId: {2})", (i + 1).ToString(),
-                                            pathResp.ProcessStages.Entities[i].Attributes["stagename"].ToString(),
-                                            pathResp.ProcessStages.Entities[i].Attributes["processstageid"].ToString()));
-
-                    // Retrieve the active stage name and active stage position based on the activeStageId for the process instance
-                    if (pathResp.ProcessStages.Entities[i].Attributes["processstageid"].ToString() == activeStageId.ToString())
-                    {
-                        activeStageName = pathResp.ProcessStages.Entities[i].Attributes["stagename"].ToString();
-                        activeStagePosition = i;
-                    }
+                    throw new InvalidPluginExecutionException(string.Format("Process {0} or Stage {1} does not exist", processName, stageName));
                 }
+          
+                var nextStageId = (Guid)(process.GetAttributeValue<AliasedValue>("stage.processstageid")).Value;
 
-                // Display the active stage name and Id
-                tracingService.Trace(string.Format("Stage {2} is active for the process instance: {0} (StageID: {1})", activeStageName, activeStageId, (activeStagePosition + 1).ToString()));
-
-                if (activeStagePosition == lastStagePosition && direction == "next")
-                {
-                    tracingService.Trace("Already on last stage. Can't move to next stage.");
-                }
-                else if (activeStagePosition == 0 && direction == "previous")
-                {
-                    tracingService.Trace("Already on first stage. Can't move to first stage.");
-                }
-                else
-                {
-                    // Retrieve the stage ID of the next stage that you want to set as active
-                    var nextPosition = activeStagePosition + 1;
-                    if (direction == "previous")
-                    {
-                        nextPosition = activeStagePosition - 1;
-                    }
-
-                    var nextStageId = (Guid)pathResp.ProcessStages.Entities[nextPosition].Attributes["processstageid"];
-
-                    tracingService.Trace(string.Format("Stage {0} is next with id={1}", (nextPosition + 1).ToString(), nextStageId.ToString()));
-
-                    // Retrieve the process instance record to update its active stage
-                    var cols1 = new ColumnSet();
+                // Retrieve the process instance record to update its active stage
+                var cols1 = new ColumnSet();
                     cols1.AddColumn("activestageid");
                     var retrievedProcessInstance = service.Retrieve(bpfEntityName, activeProcessInstance.Id, cols1);
 
-                    tracingService.Trace(string.Format("Active Stage Id is a lookup to {0}", pathResp.ProcessStages.Entities[nextPosition].LogicalName));
+//                    tracingService.Trace(string.Format("Active Stage Id is a lookup to {0}", pathResp.ProcessStages.Entities[nextPosition].LogicalName));
 
                     // Set the next stage as the active stage
-                    retrievedProcessInstance["activestageid"] = new EntityReference(pathResp.ProcessStages.Entities[nextPosition].LogicalName, nextStageId);
+                    retrievedProcessInstance["activestageid"] = new EntityReference(bpfEntityName, nextStageId);
                     service.Update(retrievedProcessInstance);
-                }
+  //              }
             }
             catch (Exception ex)
             {
