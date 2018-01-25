@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{9e9ae17c-1b01-e811-80f0-1458d043c6c0}" Name="Lock Peer Reviewer after Peer and Area review is complete" Description="This is so a Peer Reviewer that is also a TL can't go back and change the Peer Reviewer and do the TL sign off themselves">
+  <XamlFileName>/Workflows/LockPeerReviewerafterPeerandAreareviewiscomplete-9E9AE17C-1B01-E811-80F0-1458D043C6C0.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>1.1.46.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>defra_application</PrimaryEntity>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{f93d08b5-1b01-e811-80f0-1458d043c6c0}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_peerreviewed</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{fa3d08b5-1b01-e811-80f0-1458d043c6c0}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{fb3d08b5-1b01-e811-80f0-1458d043c6c0}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_areasignoff</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{fc3d08b5-1b01-e811-80f0-1458d043c6c0}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>
