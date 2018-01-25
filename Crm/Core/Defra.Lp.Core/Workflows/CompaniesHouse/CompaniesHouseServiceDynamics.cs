@@ -136,11 +136,13 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 bool isDifferent = false;
                 if (address.Attributes.Contains("defra_postcode") && (string)address["defra_postcode"] != this.Company.registered_office_address.postal_code)
                     isDifferent = true;
-                if (address.Attributes.Contains("defra_premises") && (string)address["defra_premises"] != this.Company.registered_office_address.address_line_1)
+                if (address.Attributes.Contains("defra_premises") && (string)address["defra_premises"] != this.Company.registered_office_address.premises)
+                    isDifferent = true;
+                if (address.Attributes.Contains("defra_street") && (string)address["defra_street"] != this.Company.registered_office_address.address_line_1)
                     isDifferent = true;
                 if (address.Attributes.Contains("defra_towntext") && (string)address["defra_towntext"] != this.Company.registered_office_address.locality)
                     isDifferent = true;
-                if (address.Attributes.Contains("defra_street") && (string)address["defra_street"] != this.Company.registered_office_address.address_line_2)
+                if (address.Attributes.Contains("defra_locality") && (string)address["defra_locality"] != this.Company.registered_office_address.address_line_2)
                     isDifferent = true;
 
                 if (isDifferent)
@@ -186,9 +188,9 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                     Conditions =
                         {
                             new ConditionExpression("defra_postcode", ConditionOperator.Equal, this.Company.registered_office_address.postal_code),
-                            new ConditionExpression("defra_premises", ConditionOperator.Equal, this.Company.registered_office_address.address_line_1),
+                            new ConditionExpression("defra_street", ConditionOperator.Equal, this.Company.registered_office_address.address_line_1),
                             new ConditionExpression("defra_towntext", ConditionOperator.Equal, this.Company.registered_office_address.locality),
-                            new ConditionExpression("defra_street", ConditionOperator.Equal, this.Company.registered_office_address.address_line_2)
+                            new ConditionExpression("defra_locality", ConditionOperator.Equal, this.Company.registered_office_address.address_line_2)
                         }
                 }
             };
@@ -205,11 +207,15 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
         {
             Entity newAddress = new Entity("defra_address");
             newAddress["defra_fromcompanieshouse"] = true;
-            newAddress["defra_postcode"] = this.Company.registered_office_address.postal_code;
-            newAddress["defra_premises"] = this.Company.registered_office_address.address_line_1;
+
+            // The premises doesn't come back separately from Companies. We might want to look at parsing to pull out the number
+            // but there is also things like house and building name so this not particularly reliable ...
+            newAddress["defra_premises"] = this.Company.registered_office_address.premises;
+            newAddress["defra_street"] = this.Company.registered_office_address.address_line_1;
+            newAddress["defra_locality"] = this.Company.registered_office_address.address_line_2;
             newAddress["defra_towntext"] = this.Company.registered_office_address.locality;
-            newAddress["defra_street"] = this.Company.registered_office_address.address_line_2;
-            newAddress["defra_name"] = string.Format("{0}, {1}, {2}, {3}", this.Company.registered_office_address.address_line_1, this.Company.registered_office_address.address_line_2, this.Company.registered_office_address.locality, this.Company.registered_office_address.postal_code);
+            newAddress["defra_postcode"] = this.Company.registered_office_address.postal_code;
+            newAddress["defra_name"] = string.Format("{0}, {1}, {2}", this.Company.registered_office_address.address_line_1, this.Company.registered_office_address.locality, this.Company.registered_office_address.postal_code);
 
             newAddress.Id = _crmService.Create(newAddress);
 
