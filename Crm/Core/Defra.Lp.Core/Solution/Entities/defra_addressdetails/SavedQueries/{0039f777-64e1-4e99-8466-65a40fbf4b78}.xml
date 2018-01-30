@@ -8,23 +8,25 @@
   <returnedtypecode>10006</returnedtypecode>
   <savedqueryid>{0039f777-64e1-4e99-8466-65a40fbf4b78}</savedqueryid>
   <layoutxml>
-    <grid name="resultset" object="10006" jump="defra_name" select="1" icon="1" preview="1">
-      <row name="result" id="defra_addressdetailsid">
-        <cell name="defra_addresstype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_address" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_phone" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+    <grid name="resultset" preview="1" icon="1" select="1" jump="defra_name" object="10006">
+      <row id="defra_addressdetailsid" name="result">
+        <cell name="defra_addresstype" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="125" />
+        <cell name="defra_address" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="125" />
+        <cell name="defra_phone" imageproviderwebresource="$webresource:" imageproviderfunctionname="" width="125" />
+        <cell name="emailaddress" width="100" />
       </row>
     </grid>
   </layoutxml>
   <querytype>1</querytype>
   <fetchxml>
-    <fetch version="1.0" mapping="logical">
+    <fetch mapping="logical" version="1.0">
       <entity name="defra_addressdetails">
-        <order attribute="defra_address" descending="false" />
-        <order attribute="defra_addresstype" descending="false" />
+        <order descending="false" attribute="defra_address" />
+        <order descending="false" attribute="defra_addresstype" />
         <attribute name="defra_phone" />
         <attribute name="defra_addresstype" />
         <attribute name="defra_address" />
+        <attribute name="emailaddress" />
         <attribute name="defra_addressdetailsid" />
       </entity>
     </fetch>
