@@ -66,8 +66,6 @@ namespace Defra.Lp.WastePermits.Plugins
             : base(typeof(ApplicationLineCreateWasteParams))
         {
 
-            // TODO: Implement your custom configuration handling.
-
         }
 
 
@@ -336,7 +334,7 @@ namespace Defra.Lp.WastePermits.Plugins
                     this.UpdatedApplicationEntity.Attributes.Add("defra_npsdetermination", !allLinesNPSDetAreNo);
                 }
 
-                if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_locationscreeningrequired"])
+                if (!allLinesLocationScreeningNo != (bool)ApplicationEntity["defra_locationscreeningrequired"])
                 {
                     _TracingService.Trace("Add to the Application upated entity the Location Screening Required flag set to {0}", !allLinesLocationScreeningNo);
                     this.UpdatedApplicationEntity.Attributes.Add("defra_locationscreeningrequired", !allLinesLocationScreeningNo);
