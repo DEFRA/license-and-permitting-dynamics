@@ -1,4 +1,4 @@
-﻿// <copyright file="RecalculateRollupField.cs" company="">
+﻿// <copyright file="RecalculateRollup.cs" company="">
 // Copyright (c) 2017 All Rights Reserved
 // </copyright>
 // <author></author>
@@ -15,12 +15,12 @@ using Microsoft.Xrm.Sdk.Metadata.Query;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 
-namespace Defra.Lp.Core.Workflows
+namespace Defra.Lp.Workflows
 {
     /// <summary>
     /// Main Class
     /// </summary>
-    public class RecalculateRollupField : WorkFlowActivityBase
+    public class RecalculateRollup : WorkFlowActivityBase
     {
         /// <summary>
         /// Field name to be recalculated
