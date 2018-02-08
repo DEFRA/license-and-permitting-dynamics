@@ -40,8 +40,8 @@ function displayAddresses() {
                 
 				addresses = JSON.parse(data.addresses);
 				
-				if(addresses.totalMatches > 0) {
-					jQuery('#lkp_msg').html(addresses.totalMatches + " addresses found");
+				if(addresses.header.totalMatches > 0) {
+					jQuery('#lkp_msg').html(addresses.header.totalMatches + " addresses found");
 					
 					jQuery('#the_address').append(jQuery('<option></option').val(0).html("Please select an address"));
 
