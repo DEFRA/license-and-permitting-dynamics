@@ -64,7 +64,7 @@
                       <labels>
                         <label description="Customer" languagecode="1033" />
                       </labels>
-                      <control disabled="false" id="customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="customerid" />
+                      <control disabled="false" id="customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="customerid" uniqueid="{b40097bb-98ce-860b-5a98-4e70a8d2934a}" />
                     </cell>
                   </row>
                   <row>
@@ -104,7 +104,7 @@
               </section>
               <section id="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" IsUserDefined="0" labelid="{b4a7b1d0-5557-4c26-8680-437f52fd9c71}" columns="1" showlabel="true" showbar="true" locklevel="0" name="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
                 <labels>
-                  <label description="DESCRIPTION" languagecode="1033" />
+                  <label description="CATEGORY AND DESCRIPTION" languagecode="1033" />
                 </labels>
                 <rows>
                   <row>
@@ -117,18 +117,40 @@
                   </row>
                   <row />
                   <row />
-                  <row></row>
+                  <row />
                   <row />
                   <row />
                   <row />
                   <row>
-                    <cell id="{76d17ce6-ce11-da3c-aeee-e2886e506221}" labelid="{e65bac2b-8dd0-41ac-a540-1dc9a11ebd9d}" showlabel="true" locklevel="0" visible="false">
+                    <cell id="{bc05d908-0c24-ad00-bbe9-9be50d994086}" showlabel="false" colspan="1" auto="false" rowspan="5">
                       <labels>
-                        <label description="Communication channel" languagecode="1033" />
+                        <label description="Categories" languagecode="1033" />
                       </labels>
-                      <control id="caseorigincode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="caseorigincode" uniqueid="{12261b8e-3c0e-5014-a654-28b3a6ba1dec}" disabled="false" />
+                      <control id="request_categories" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{d82c82ac-b7da-238b-2250-a8b1e5ee7c3c}">
+                        <parameters>
+                          <ViewId>{CA383DE9-EC2A-4DC7-860E-BC86657E80F4}</ViewId>
+                          <IsUserView>false</IsUserView>
+                          <RelationshipName>defra_defra_requestcategory_incident</RelationshipName>
+                          <TargetEntityType>defra_requestcategory</TargetEntityType>
+                          <AutoExpand>Fixed</AutoExpand>
+                          <EnableQuickFind>false</EnableQuickFind>
+                          <EnableViewPicker>false</EnableViewPicker>
+                          <ViewIds>{CA383DE9-EC2A-4DC7-860E-BC86657E80F4}</ViewIds>
+                          <EnableJumpBar>false</EnableJumpBar>
+                          <ChartGridMode>Grid</ChartGridMode>
+                          <VisualizationId />
+                          <IsUserChart>false</IsUserChart>
+                          <EnableChartPicker>false</EnableChartPicker>
+                          <RecordsPerPage>3</RecordsPerPage>
+                          <RelationshipRoleOrdinal>2</RelationshipRoleOrdinal>
+                        </parameters>
+                      </control>
                     </cell>
                   </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
                 </rows>
               </section>
               <section id="{e493f95f-d913-4063-a929-e86a5d7b01a5}" name="Customer" IsUserDefined="0" labelid="{18c0b7d9-2c59-4026-a6fd-f0e06dc8d96e}" showlabel="false" labelwidth="90" showbar="false" locklevel="0" columns="11" celllabelalignment="Left" celllabelposition="Left" visible="false">
@@ -418,9 +440,17 @@
                   <row>
                     <cell id="{a683174b-1be5-61ed-2b12-8a5d7ceb9984}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Deadline" languagecode="1033" />
+                        <label description="Target Deadline" languagecode="1033" />
                       </labels>
                       <control id="defra_deadlineresponsedate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="defra_deadlineresponsedate" disabled="false" uniqueid="{18b83ade-7537-99de-c965-c3eca4bccbce}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{4e780b95-654b-d982-644e-1c2cac331e5b}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Deadline Started" languagecode="1033" />
+                      </labels>
+                      <control id="defra_deadlinestartdate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="defra_deadlinestartdate" disabled="true" uniqueid="{a3017a27-ab46-01c7-6ae9-e11ddc54ab1a}" />
                     </cell>
                   </row>
                   <row>
@@ -943,20 +973,20 @@
         </columns>
       </tab>
     </tabs>
-    <header id="{CF9CD80E-17E4-438D-9705-5575B9BDF2D1}" columns="1111" labelwidth="115" celllabelposition="Top">
+    <header id="{CF9CD80E-17E4-438D-9705-5575B9BDF2D1}" columns="1111" labelwidth="200" celllabelposition="Top" celllabelalignment="Left">
       <rows>
         <row>
           <cell id="{25066a4c-e591-0898-4c95-5acc7bcb335a}" showlabel="true" locklevel="0">
             <labels>
               <label description="Case Number" languagecode="1033" />
             </labels>
-            <control id="header_ticketnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ticketnumber" disabled="false" />
+            <control id="header_ticketnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ticketnumber" disabled="false" uniqueid="{71baa6a4-500c-95bc-a071-e9d1a4c54b4c}" />
           </cell>
           <cell id="{67c9b29b-c1b2-aa8e-6b95-5d295b76e224}" labelid="{2bc5422b-6396-4d9e-8e3c-8ce799e3869b}" showlabel="true">
             <labels>
               <label description="Created On" languagecode="1033" />
             </labels>
-            <control disabled="true" id="header_createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" />
+            <control disabled="true" id="header_createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" uniqueid="{680b21d5-24ac-397b-d3d9-98544d32a332}" />
           </cell>
           <cell id="{53dd311c-6ec7-4cde-b299-d39fe21c3dcf}" labelid="{de43a1b0-ddfa-426d-9513-4a0411b23ee7}" showlabel="true" locklevel="0">
             <labels>
