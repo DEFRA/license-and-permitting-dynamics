@@ -301,23 +301,39 @@
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{8864a061-63ca-ae75-a091-916744767413}" showlabel="false" colspan="1" auto="false" rowspan="6">
+                    <cell id="{e4440d48-8d9a-d8bd-6486-e03e142dc2d3}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Request for Informations (Application)" languagecode="1033" />
+                        <label description="RFI Pending" languagecode="1033" />
                       </labels>
-                      <control id="rfigrid" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                      <control id="defra_rfipending" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_rfipending" disabled="true" uniqueid="{e6561046-a16e-23dc-5699-06b175211e92}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{7c0272c4-3283-babc-4b5b-045d0453a619}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="RFI Count" languagecode="1033" />
+                      </labels>
+                      <control id="defra_rficount" classid="{C3EFE0C3-0EC6-42be-8349-CBD9079DFD8E}" datafieldname="defra_rficount" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{4d3edc09-383b-6b8d-dd9b-b0603d27bbcc}" showlabel="false" colspan="1" auto="false" rowspan="6">
+                      <labels>
+                        <label description="Application RFIs" languagecode="1033" />
+                      </labels>
+                      <control id="application_rfis" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
                         <parameters>
-                          <ViewId>{E49F0A28-001C-4D29-8A72-7CC5A8A48139}</ViewId>
+                          <ViewId>{009A735A-2908-E811-80F1-3863BB34ECF0}</ViewId>
                           <IsUserView>false</IsUserView>
-                          <RelationshipName>defra_application_defra_requestforinformation</RelationshipName>
-                          <TargetEntityType>defra_requestforinformation</TargetEntityType>
+                          <RelationshipName>defra_application_incident_application</RelationshipName>
+                          <TargetEntityType>incident</TargetEntityType>
                           <AutoExpand>Fixed</AutoExpand>
                           <EnableQuickFind>false</EnableQuickFind>
                           <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{E49F0A28-001C-4D29-8A72-7CC5A8A48139}</ViewIds>
+                          <ViewIds>{009A735A-2908-E811-80F1-3863BB34ECF0},{00000000-0000-0000-00AA-000010001028}</ViewIds>
                           <EnableJumpBar>false</EnableJumpBar>
                           <ChartGridMode>All</ChartGridMode>
-                          <VisualizationId />
+                          <VisualizationId>{4143B74E-4A07-4D01-9FFE-2CDCAA4208FD}</VisualizationId>
                           <IsUserChart>false</IsUserChart>
                           <EnableChartPicker>true</EnableChartPicker>
                           <RecordsPerPage>4</RecordsPerPage>
@@ -817,7 +833,7 @@
           </column>
         </columns>
       </tab>
-      <tab name="tab_determination" id="{0e5d665a-c3e5-c809-88bd-44618184cb58}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+      <tab name="tab_determination" id="{0e5d665a-c3e5-c809-88bd-44618184cb58}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
         <labels>
           <label description="DETERMINATION" languagecode="1033" />
         </labels>
@@ -829,36 +845,6 @@
                   <label description="Schedule 5" languagecode="1033" />
                 </labels>
                 <rows>
-                  <row>
-                    <cell id="{de57d904-4c31-5b1c-9aed-133855653877}" showlabel="false" colspan="1" auto="false" rowspan="6">
-                      <labels>
-                        <label description="Schedule 5s (Application)" languagecode="1033" />
-                      </labels>
-                      <control id="schedule5" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{ded4c435-5c70-d5ac-1a51-5eb42ed68b0b}">
-                        <parameters>
-                          <ViewId>{3BE2478C-92E0-40CA-8357-C2D8505F8BF0}</ViewId>
-                          <IsUserView>false</IsUserView>
-                          <RelationshipName>defra__application_defra_schedule5_applicationid</RelationshipName>
-                          <TargetEntityType>defra_schedule5</TargetEntityType>
-                          <AutoExpand>Fixed</AutoExpand>
-                          <EnableQuickFind>false</EnableQuickFind>
-                          <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{3BE2478C-92E0-40CA-8357-C2D8505F8BF0}</ViewIds>
-                          <EnableJumpBar>false</EnableJumpBar>
-                          <ChartGridMode>All</ChartGridMode>
-                          <VisualizationId />
-                          <IsUserChart>false</IsUserChart>
-                          <EnableChartPicker>true</EnableChartPicker>
-                          <RecordsPerPage>4</RecordsPerPage>
-                        </parameters>
-                      </control>
-                    </cell>
-                  </row>
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
                   <row>
                     <cell id="{890d299b-7422-5240-13d1-e7a6657e85cd}" showlabel="true" locklevel="0">
                       <labels>
@@ -1149,42 +1135,52 @@
     </header>
     <Navigation>
       <NavBar>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_application" Sequence="10001" Area="Info" Id="nav_defra_application_defra_application">
+        <NavBarByRelationshipItem RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navAudit" Sequence="1" Area="Info" Id="navAudit">
+          <Titles>
+            <Title LCID="1033" Text="Audit History" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem RelationshipName="defra_application_incident_application" Sequence="10001" Area="Info" Id="nav_defra_application_incident_application">
+          <Titles>
+            <Title LCID="1033" Text="Cases" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_applicationcontact_application" Sequence="10002" Area="Info" Id="nav_defra_application_defra_applicationcontact_application">
+          <Titles>
+            <Title LCID="1033" Text="Application Contacts" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_application" Sequence="10003" Area="Info" Id="nav_defra_application_defra_application">
           <Titles>
             <Title LCID="1033" Text="Applications" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_dulymadechecklist" Sequence="10002" Area="Info" Id="nav_defra_application_defra_dulymadechecklist">
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_dulymadechecklist" Sequence="10004" Area="Info" Id="nav_defra_application_defra_dulymadechecklist">
           <Titles>
             <Title LCID="1033" Text="Duly Made Checklists" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_preapplication_lastapplicationissuedid" Sequence="10003" Area="Info" Id="nav_defra_application_defra_preapplication_lastapplicationissuedid">
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_preapplication_lastapplicationissuedid" Sequence="10005" Area="Info" Id="nav_defra_application_defra_preapplication_lastapplicationissuedid">
           <Titles>
             <Title LCID="1033" Text="Pre-Applications" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_requestforinformation" Sequence="10004" Area="Info" Id="nav_defra_application_defra_requestforinformation">
-          <Titles>
-            <Title LCID="1033" Text="Request for Informations" />
-          </Titles>
-        </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="bpf_defra_application_defra_applicationapplyforawastepermit" Sequence="10005" Area="Info" Id="nav_bpf_defra_application_defra_applicationapplyforawastepermit">
+        <NavBarByRelationshipItem RelationshipName="bpf_defra_application_defra_applicationapplyforawastepermit" Sequence="10007" Area="Info" Id="nav_bpf_defra_application_defra_applicationapplyforawastepermit">
           <Titles>
             <Title LCID="1033" Text="defra_application" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra__application_defra_schedule5_applicationid" Sequence="10006" Area="Info" Id="nav_defra__application_defra_schedule5_applicationid">
+        <NavBarByRelationshipItem RelationshipName="defra__application_defra_schedule5_applicationid" Sequence="10008" Area="Info" Id="nav_defra__application_defra_schedule5_applicationid" Show="false">
           <Titles>
             <Title LCID="1033" Text="Schedule 5s" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_location" Sequence="10007" Area="Info" Id="nav_defra_application_defra_location">
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_location" Sequence="10009" Area="Info" Id="nav_defra_application_defra_location">
           <Titles>
             <Title LCID="1033" Text="Locations" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra_application_defra_applicationline" Sequence="10008" Area="Info" Id="nav_defra_application_defra_applicationline">
+        <NavBarByRelationshipItem RelationshipName="defra_application_defra_applicationline" Sequence="10010" Area="Info" Id="nav_defra_application_defra_applicationline">
           <Titles>
             <Title LCID="1033" Text="Regulated Facilities" />
           </Titles>
