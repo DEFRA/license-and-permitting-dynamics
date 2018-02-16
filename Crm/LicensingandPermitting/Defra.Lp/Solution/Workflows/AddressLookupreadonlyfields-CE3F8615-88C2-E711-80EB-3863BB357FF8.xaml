@@ -18,13 +18,17 @@
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
           <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep2_condition" />
-          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_1" />
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep2_1" />
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_2" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_3" />
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep2_4" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_5" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_6" />
           <Variable x:TypeArguments="x:Boolean" Default="False" Name="True" />
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep3_1" />
         </sco:Collection>
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <mxswa:GetEntityProperty Attribute="defra_fromaddresslookup" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" Value="[ConditionBranchStep2_1]">
+          <mxswa:GetEntityProperty Attribute="defra_fromaddresslookup" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" Value="[ConditionBranchStep2_2]">
             <mxswa:GetEntityProperty.TargetType>
               <InArgument x:TypeArguments="s:Type">
                 <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
@@ -40,14 +44,49 @@
               <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                 <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
               </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_2]</OutArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_3]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Equal</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep2_2 }]</InArgument>
-              <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep2_1]</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep2_3 }]</InArgument>
+              <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep2_2]</InArgument>
+              <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep2_1]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:GetEntityProperty Attribute="defra_fromcompanieshouse" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" Value="[ConditionBranchStep2_5]">
+            <mxswa:GetEntityProperty.TargetType>
+              <InArgument x:TypeArguments="s:Type">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
+                  <x:Null />
+                </mxswa:ReferenceLiteral>
+              </InArgument>
+            </mxswa:GetEntityProperty.TargetType>
+          </mxswa:GetEntityProperty>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Boolean, "1" }]</InArgument>
+              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_6]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Equal</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep2_6 }]</InArgument>
+              <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep2_5]</InArgument>
+              <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep2_4]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateLogicalCondition, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateLogicalCondition">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="mxsq:LogicalOperator" x:Key="LogicalOperator">Or</InArgument>
+              <InArgument x:TypeArguments="x:Boolean" x:Key="LeftOperand">[ConditionBranchStep2_1]</InArgument>
+              <InArgument x:TypeArguments="x:Boolean" x:Key="RightOperand">[ConditionBranchStep2_4]</InArgument>
               <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep2_condition]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
@@ -60,6 +99,9 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                    <Sequence DisplayName="SetDisplayModeStep9: Lock UPRN">
+                      <mcwc:SetDisplayMode ControlId="defra_uprn" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
+                    </Sequence>
                     <Sequence DisplayName="SetDisplayModeStep1: Name">
                       <mcwc:SetDisplayMode ControlId="defra_name" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
                     </Sequence>
@@ -69,17 +111,23 @@
                     <Sequence DisplayName="SetDisplayModeStep3: Street">
                       <mcwc:SetDisplayMode ControlId="defra_street" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
                     </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep13: Lock Locality">
+                      <mcwc:SetDisplayMode ControlId="defra_locality" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
+                    </Sequence>
                     <Sequence DisplayName="SetDisplayModeStep4: Town">
+                      <mcwc:SetDisplayMode ControlId="defra_town" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep15: Lock TownText">
                       <mcwc:SetDisplayMode ControlId="defra_towntext" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
                     </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep9: Lock UPRN">
-                      <mcwc:SetDisplayMode ControlId="defra_uprn" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
-                    </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep_SetDisplayModeStep9_11: Lock Country">
+                    <Sequence DisplayName="SetDisplayModeStep11: Lock Country">
                       <mcwc:SetDisplayMode ControlId="defra_country" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
                     </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep_SetDisplayModeStep9_11_13: Lock Locality">
-                      <mcwc:SetDisplayMode ControlId="defra_locality" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
+                    <Sequence DisplayName="SetDisplayModeStep17: Lock X">
+                      <mcwc:SetDisplayMode ControlId="defra_x" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep19: Lock Y">
+                      <mcwc:SetDisplayMode ControlId="defra_y" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="True" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
@@ -107,6 +155,9 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                    <Sequence DisplayName="SetDisplayModeStep10: Unlock UPRN">
+                      <mcwc:SetDisplayMode ControlId="defra_uprn" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
+                    </Sequence>
                     <Sequence DisplayName="SetDisplayModeStep5: Name">
                       <mcwc:SetDisplayMode ControlId="defra_name" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
                     </Sequence>
@@ -116,17 +167,23 @@
                     <Sequence DisplayName="SetDisplayModeStep7: Street">
                       <mcwc:SetDisplayMode ControlId="defra_street" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
                     </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep14: Unlock Locality">
+                      <mcwc:SetDisplayMode ControlId="defra_locality" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
+                    </Sequence>
                     <Sequence DisplayName="SetDisplayModeStep8: Town">
+                      <mcwc:SetDisplayMode ControlId="defra_town" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep16: Unlock Town Text">
                       <mcwc:SetDisplayMode ControlId="defra_towntext" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
                     </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep10: Unlock UPRN">
-                      <mcwc:SetDisplayMode ControlId="defra_uprn" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
-                    </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep_SetDisplayModeStep10_12: Unlock Country">
+                    <Sequence DisplayName="SetDisplayModeStep12: Unlock Country">
                       <mcwc:SetDisplayMode ControlId="defra_country" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
                     </Sequence>
-                    <Sequence DisplayName="SetDisplayModeStep_SetDisplayModeStep10_12_14: Unlock Locality">
-                      <mcwc:SetDisplayMode ControlId="defra_locality" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
+                    <Sequence DisplayName="SetDisplayModeStep18: Unlock X">
+                      <mcwc:SetDisplayMode ControlId="defra_x" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep20: Unlock Y">
+                      <mcwc:SetDisplayMode ControlId="defra_y" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_address" IsReadOnly="False" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
