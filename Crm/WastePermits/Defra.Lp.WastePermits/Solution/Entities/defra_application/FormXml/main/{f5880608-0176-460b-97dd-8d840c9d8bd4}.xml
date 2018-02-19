@@ -781,7 +781,7 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{b71802d0-564b-498e-88a5-a8e3e9b663d8}" showlabel="true" locklevel="0">
+                    <cell id="{b71802d0-564b-498e-88a5-a8e3e9b663d8}" showlabel="true" locklevel="1">
                       <labels>
                         <label description="RAGU Score" languagecode="1033" />
                       </labels>
@@ -1170,11 +1170,6 @@
             <Title LCID="1033" Text="defra_application" />
           </Titles>
         </NavBarByRelationshipItem>
-        <NavBarByRelationshipItem RelationshipName="defra__application_defra_schedule5_applicationid" Sequence="10008" Area="Info" Id="nav_defra__application_defra_schedule5_applicationid" Show="false">
-          <Titles>
-            <Title LCID="1033" Text="Schedule 5s" />
-          </Titles>
-        </NavBarByRelationshipItem>
         <NavBarByRelationshipItem RelationshipName="defra_application_defra_location" Sequence="10009" Area="Info" Id="nav_defra_application_defra_location">
           <Titles>
             <Title LCID="1033" Text="Locations" />
@@ -1220,8 +1215,12 @@
     </formLibraries>
     <events>
       <event name="onload" application="false" active="false">
+        <dependencies>
+          <dependency id="defra_raguscore" />
+        </dependencies>
         <Handlers>
           <Handler functionName="PaymentReceived" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{2c2a109e-ab69-41b2-4ad4-471176dab12a}" enabled="true" parameters="" passExecutionContext="false" />
+          <Handler functionName="IntelligenceCheck" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{6db2b26b-d249-625e-8c24-55c825cd7664}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
       <event name="onchange" application="false" active="false" attribute="defra_paymentreceived">
@@ -1232,6 +1231,14 @@
       <event name="onsave" application="false" active="false">
         <Handlers>
           <Handler functionName="PaymentReceived" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{39894b02-b20d-0d05-1758-01827534c75e}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+      <event name="onchange" application="false" active="false" attribute="defra_raguscore">
+        <dependencies>
+          <dependency id="defra_raguscore" />
+        </dependencies>
+        <Handlers>
+          <Handler functionName="IntelligenceCheck" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{2145e697-070d-b4e5-9c36-e89ce0092c87}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
     </events>
