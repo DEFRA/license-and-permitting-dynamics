@@ -95,6 +95,7 @@
       <RootComponent type="1" schemaName="defra_locationdetails" behavior="0" />
       <RootComponent type="1" schemaName="defra_managementsystem" behavior="0" />
       <RootComponent type="1" schemaName="defra_notification" behavior="0" />
+      <RootComponent type="1" schemaName="defra_payment" behavior="0" />
       <RootComponent type="1" schemaName="defra_permit" behavior="0" />
       <RootComponent type="1" schemaName="defra_preapplication" behavior="0" />
       <RootComponent type="1" schemaName="defra_requestcategory" behavior="0" />
@@ -120,7 +121,9 @@
       <RootComponent type="29" id="{0f27ad8e-a099-4a30-8394-f2c79cd11321}" behavior="0" />
       <RootComponent type="29" id="{0ffbcde4-61c1-4355-aa89-aa1d7b2b8792}" behavior="0" />
       <RootComponent type="29" id="{11220427-8b0d-e811-80f1-3863bb34ecf0}" behavior="0" />
+      <RootComponent type="29" id="{181481a0-2f13-e811-80f1-3863bb34b7d0}" behavior="0" />
       <RootComponent type="29" id="{1a9d2263-ddcd-e711-80eb-3863bb35fc90}" behavior="0" />
+      <RootComponent type="29" id="{20e7d0cd-2a18-4a8a-b3a1-bf823e6503b9}" behavior="0" />
       <RootComponent type="29" id="{24018e0b-be0b-4a2c-98b5-d74a97424ff1}" behavior="0" />
       <RootComponent type="29" id="{30ea3f57-a8db-41ff-9087-59e8384325ba}" behavior="0" />
       <RootComponent type="29" id="{39603485-880a-e811-80f1-3863bb34ecf0}" behavior="0" />
@@ -230,20 +233,20 @@
         <Dependent key="1" type="1" schemaName="systemuser" displayName="User" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="2" type="1" schemaName="defra_country" displayName="Country" solution="Active" />
-        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="2" type="1" schemaName="defra_addressdetails" displayName="Contact Details" solution="Active" />
+        <Dependent key="2" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="4" type="1" schemaName="defra_town" displayName="Town" solution="Active" />
-        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Required key="3" type="1" schemaName="defra_country" displayName="Country" solution="Active" />
+        <Dependent key="4" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="6" type="1" schemaName="defra_addressdetails" displayName="Contact Details" solution="Active" />
-        <Dependent key="6" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
+        <Required key="5" type="1" schemaName="defra_town" displayName="Town" solution="Active" />
+        <Dependent key="6" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
         <Required key="7" type="2" schemaName="defra_countryid" displayName="Country" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
-        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Dependent key="4" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
         <Required key="8" type="2" schemaName="defra_tradingname" displayName="Trading name" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
@@ -251,7 +254,7 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="10" type="2" schemaName="defra_townid" displayName="Town" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
-        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Dependent key="6" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
         <Required key="11" type="2" schemaName="emailaddress" displayName="Email Address" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
@@ -266,15 +269,15 @@
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="15" type="2" schemaName="defra_customer" displayName="Customer" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="15" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="16" type="2" schemaName="defra_fax" displayName="Fax" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="16" type="2" schemaName="defra_customer" displayName="Customer" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="17" type="2" schemaName="statuscode" displayName="Status Reason" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="17" type="2" schemaName="defra_fax" displayName="Fax" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
@@ -290,11 +293,11 @@
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="21" type="2" schemaName="defra_addresstype" displayName="Address Type" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="21" type="2" schemaName="defra_validfrom" displayName="Valid From" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="22" type="2" schemaName="defra_validfrom" displayName="Valid From" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="22" type="2" schemaName="defra_addresstype" displayName="Address Type" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
@@ -307,18 +310,26 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="25" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_town" parentDisplayName="Town" solution="Active" />
-        <Dependent key="5" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Dependent key="6" type="10" schemaName="defra_town_defra_address" displayName="defra_town_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
         <Required key="26" type="2" schemaName="defra_name" displayName="Name" parentSchemaName="defra_country" parentDisplayName="Country" solution="Active" />
-        <Dependent key="3" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
+        <Dependent key="4" type="10" schemaName="defra_country_defra_address" displayName="defra_country_defra_address" parentSchemaName="defra_address" parentDisplayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="27" type="2" schemaName="defra_companyhousestatus" displayName="Company house status" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
+        <Required key="27" type="2" schemaName="defra_draft" displayName="Is draft" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="29" type="2" schemaName="defra_validatedwithcompanyhouse" displayName="Validated with company house" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
+        <Required key="29" type="2" schemaName="defra_companyhouseid" displayName="Company number" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
+        <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="30" type="2" schemaName="defra_companyhousestatus" displayName="Company house status" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
+        <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="31" type="2" schemaName="defra_validatedwithcompanyhouse" displayName="Validated with company house" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
@@ -326,31 +337,23 @@
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="30" type="2" schemaName="defra_draft" displayName="Is draft" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
-        <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="31" type="2" schemaName="defra_companyhouseid" displayName="Company number" parentSchemaName="account" parentDisplayName="Account" solution="Active" />
-        <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
-      </MissingDependency>
-      <MissingDependency>
         <Required key="32" type="10" schemaName="defra_account_defra_addressdetails" displayName="defra_account_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="33" type="10" schemaName="defra_contact_defra_addressdetails" displayName="defra_contact_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
-        <Dependent key="34" type="60" displayName="Contact Quick View" parentDisplayName="Contact" id="{c82fe34b-a303-469b-86ad-1903e2c6c572}" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required key="35" type="10" schemaName="defra_address_defra_addressdetails" displayName="defra_address_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="33" type="10" schemaName="defra_address_defra_addressdetails" displayName="defra_address_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="12" type="60" displayName="L&amp;P Contact Details" parentDisplayName="Contact Details" id="{b74bc547-1be6-4009-b98c-e5291b5832ba}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="33" type="10" schemaName="defra_contact_defra_addressdetails" displayName="defra_contact_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Required key="34" type="10" schemaName="defra_contact_defra_addressdetails" displayName="defra_contact_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
+        <Dependent key="35" type="60" displayName="Contact Quick View" parentDisplayName="Contact" id="{c82fe34b-a303-469b-86ad-1903e2c6c572}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required key="34" type="10" schemaName="defra_contact_defra_addressdetails" displayName="defra_contact_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" />
         <Dependent key="36" type="60" displayName="DEFRA Contact" parentDisplayName="Contact" id="{256dfbb3-dbe6-4364-beae-f466047c3edb}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="6" type="1" schemaName="defra_addressdetails" displayName="Contact Details" solution="Active" />
+        <Required key="2" type="1" schemaName="defra_addressdetails" displayName="Contact Details" solution="Active" />
         <Dependent key="37" type="10" schemaName="defra_application_defra_addressdetails" displayName="defra_application_defra_addressdetails" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" />
       </MissingDependency>
       <MissingDependency>
@@ -359,7 +362,7 @@
       </MissingDependency>
       <MissingDependency>
         <Required key="38" type="26" schemaName="Active Address Details" displayName="Active Address Details" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" id="{2c8c0c11-f8e5-43ab-8885-4b4df09988d0}" />
-        <Dependent key="34" type="60" displayName="Contact Quick View" parentDisplayName="Contact" id="{c82fe34b-a303-469b-86ad-1903e2c6c572}" />
+        <Dependent key="35" type="60" displayName="Contact Quick View" parentDisplayName="Contact" id="{c82fe34b-a303-469b-86ad-1903e2c6c572}" />
       </MissingDependency>
       <MissingDependency>
         <Required key="38" type="26" schemaName="Active Address Details" displayName="Active Address Details" parentSchemaName="defra_addressdetails" parentDisplayName="Contact Details" solution="Active" id="{2c8c0c11-f8e5-43ab-8885-4b4df09988d0}" />
@@ -382,28 +385,28 @@
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="44" type="61" schemaName="defra_json2.js" displayName="defra_json2.js" solution="Active" />
+        <Required key="44" type="61" schemaName="defra_defra_account_form_events" displayName="defra_defra_account_form_events" solution="Active" />
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="45" type="61" schemaName="defra_defra_account_form_events" displayName="defra_defra_account_form_events" solution="Active" />
+        <Required key="45" type="61" schemaName="defra_json2.js" displayName="defra_json2.js" solution="Active" />
         <Dependent key="28" type="60" displayName="L&amp;P Customer Form" parentDisplayName="Account" id="{0a20b692-d233-48be-b9e6-9b14b8046b04}" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="46" type="61" schemaName="defra_address16" displayName="defra_address16" solution="Active" />
-        <Dependent key="47" type="1" schemaName="defra_address" displayName="Address" />
+        <Required key="46" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
+        <Dependent key="2" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="48" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
-        <Dependent key="47" type="1" schemaName="defra_address" displayName="Address" />
+        <Required key="47" type="61" schemaName="defra_addressdetails16" displayName="defra_addressdetails16" solution="Active" />
+        <Dependent key="2" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="48" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
-        <Dependent key="6" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
+        <Required key="48" type="61" schemaName="defra_address16" displayName="defra_address16" solution="Active" />
+        <Dependent key="49" type="1" schemaName="defra_address" displayName="Address" />
       </MissingDependency>
       <MissingDependency>
-        <Required key="49" type="61" schemaName="defra_addressdetails16" displayName="defra_addressdetails16" solution="Active" />
-        <Dependent key="6" type="1" schemaName="defra_addressdetails" displayName="Contact Details" />
+        <Required key="46" type="61" schemaName="defra_address32" displayName="defra_address32" solution="Active" />
+        <Dependent key="49" type="1" schemaName="defra_address" displayName="Address" />
       </MissingDependency>
       <MissingDependency>
         <Required key="39" type="61" schemaName="msdyn_/ActivityFeeds.Form.js" displayName="msdyn_/ActivityFeeds.Form.js" solution="ActivityFeedsCore (8.2.0.0)" />
