@@ -10,39 +10,52 @@
   <OrganizationSettings />
   <optionsets />
   <Slas>
-    <Sla SLAId="27a9871b-5907-e811-80f1-3863bb34ecf0" Name="RFI Deadline Management" PrimaryEntityOTC="112">
+    <Sla SLAId="27a9871b-5907-e811-80f1-3863bb34ecf0" Name="Request Management" PrimaryEntityOTC="112">
       <SLAId>{27a9871b-5907-e811-80f1-3863bb34ecf0}</SLAId>
       <ApplicableFrom>defra_informationrequestissuedate</ApplicableFrom>
-      <Name>RFI Deadline Management</Name>
+      <Name>Request Management</Name>
       <Description>SLA used to manage Request for Information (RFI) responses from applicants.</Description>
       <AllowPauseResume>1</AllowPauseResume>
       <SLAType>1</SLAType>
       <SlaItems>
-        <SlaItem slaitemid="28ff656c-5b07-e811-80f1-3863bb34ecf0" name="RFI Deadline SLA">
+        <SlaItem slaitemid="28ff656c-5b07-e811-80f1-3863bb34ecf0" name="RFI and Schedule 5 Deadline SLA">
           <slaid>27a9871b-5907-e811-80f1-3863bb34ecf0</slaid>
           <slaitemid>28ff656c-5b07-e811-80f1-3863bb34ecf0</slaitemid>
           <relatedfield>resolvebykpiid</relatedfield>
-          <name>RFI Deadline SLA</name>
+          <name>RFI and Schedule 5 Deadline SLA</name>
           <description></description>
-          <applicablewhenxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="casetypecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400000" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_deadlineresponsebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="0" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_requiredresponsedatebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="1" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_deadlineresponsedate"/&gt;&lt;column id="colOperator" value="not-null"/&gt;&lt;/condition&gt;&lt;/and&gt;</applicablewhenxml>
+          <applicablewhenxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="casetypecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400000&amp;#59;910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_deadlineresponsebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="0" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_requiredresponsedatebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="1" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_deadlineresponsedate"/&gt;&lt;column id="colOperator" value="not-null"/&gt;&lt;/condition&gt;&lt;/and&gt;</applicablewhenxml>
           <successconditionsxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_responsereceiveddate"/&gt;&lt;column id="colOperator" value="not-null"/&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="2&amp;#59;1" dataslugs="" /&gt;&lt;/condition&gt;&lt;/and&gt;</successconditionsxml>
           <sequencenumber>1</sequencenumber>
           <workflowid>8ed3aed7-66d3-4b5f-a5a8-a2802d507168</workflowid>
           <failureafter>2628000</failureafter>
           <warnafter>2626560</warnafter>
         </SlaItem>
-        <SlaItem slaitemid="b42a40da-860a-e811-80f1-3863bb34ecf0" name="RFI First Response SLA">
+        <SlaItem slaitemid="b42a40da-860a-e811-80f1-3863bb34ecf0" name="RFI and Schedule 5 First Response SLA">
           <slaid>27a9871b-5907-e811-80f1-3863bb34ecf0</slaid>
           <slaitemid>b42a40da-860a-e811-80f1-3863bb34ecf0</slaitemid>
           <relatedfield>firstresponsebykpiid</relatedfield>
-          <name>RFI First Response SLA</name>
+          <name>RFI and Schedule 5 First Response SLA</name>
           <description></description>
-          <applicablewhenxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="casetypecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400000" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_requiredresponsedatebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="0" dataslugs="" /&gt;&lt;/condition&gt;&lt;/and&gt;</applicablewhenxml>
+          <applicablewhenxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="casetypecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400000&amp;#59;910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_requiredresponsedatebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="0" dataslugs="" /&gt;&lt;/condition&gt;&lt;/and&gt;</applicablewhenxml>
           <successconditionsxml>&lt;or&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400002" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_responsereceived"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="1" dataslugs="" /&gt;&lt;/condition&gt;&lt;/or&gt;</successconditionsxml>
           <sequencenumber>2</sequencenumber>
           <workflowid>24018e0b-be0b-4a2c-98b5-d74a97424ff1</workflowid>
           <failureafter>14400</failureafter>
-          <warnafter>0</warnafter>
+          <warnafter>7200</warnafter>
+        </SlaItem>
+        <SlaItem slaitemid="02037a88-f316-e811-80f2-3863bb35fc90" name="deprecated">
+          <slaid>27a9871b-5907-e811-80f1-3863bb34ecf0</slaid>
+          <slaitemid>02037a88-f316-e811-80f2-3863bb35fc90</slaitemid>
+          <relatedfield>firstresponsebykpiid</relatedfield>
+          <name>deprecated</name>
+          <description></description>
+          <applicablewhenxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="casetypecode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="3" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400001" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_requiredresponsedatebreached"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="0" dataslugs="" /&gt;&lt;/condition&gt;&lt;/and&gt;</applicablewhenxml>
+          <successconditionsxml>&lt;and&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="statuscode"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="910400002" dataslugs="" /&gt;&lt;/condition&gt;&lt;condition&gt;&lt;column id="colEntity" value="incident" /&gt;&lt;column id="colAttribute" value="defra_responsereceived"/&gt;&lt;column id="colOperator" value="eq"/&gt;&lt;column id="colStaticValue" value="1" dataslugs="" /&gt;&lt;/condition&gt;&lt;/and&gt;</successconditionsxml>
+          <sequencenumber>3</sequencenumber>
+          <workflowid>b2f40ec9-3538-4eeb-980d-0d35b0d701f7</workflowid>
+          <failureafter>14400</failureafter>
+          <warnafter>14400</warnafter>
         </SlaItem>
       </SlaItems>
     </Sla>

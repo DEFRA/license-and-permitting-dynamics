@@ -54,7 +54,9 @@
   <ItemGroup>
     <!--<None Include="MetadataProjectBinPlace.targets" />-->
     <ResourceDefinition Include="WebResources.xml" />
-    <None Include="Microsoft.Crm.SolutionProjects.Metadata.targets" />
+    <None Include="Microsoft.Crm.SolutionProjects.Metadata.targets">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -170,6 +172,7 @@
     <Content Include="Entities\defra_application\Entity.xml" />
     <Content Include="Entities\defra_application\Formulas\defra_application-defra_regulatedfacilitiescount.xaml" />
     <Content Include="Entities\defra_application\Formulas\defra_application-defra_rficount.xaml" />
+    <Content Include="Entities\defra_application\Formulas\defra_application-defra_schedule5count.xaml" />
     <Content Include="Entities\defra_application\FormXml\card\{fecf41ac-b857-464f-af4c-63bdbd157f94}.xml" />
     <Content Include="Entities\defra_application\FormXml\mainInteractionCentric\{27c33e20-e915-400e-9ab2-57943a2e4ac6}.xml" />
     <Content Include="Entities\defra_application\FormXml\main\{c3f83426-4fa1-4491-add3-24b5b91a9b30}.xml" />
@@ -395,6 +398,7 @@
     <Content Include="Entities\Incident\SavedQueries\{00000000-0000-0000-00aa-000010001032}.xml" />
     <Content Include="Entities\Incident\SavedQueries\{009a735a-2908-e811-80f1-3863bb34ecf0}.xml" />
     <Content Include="Entities\Incident\SavedQueries\{51791265-a30d-e811-80f1-3863bb34ecf0}.xml" />
+    <Content Include="Entities\Incident\SavedQueries\{70dc50ee-2b16-e811-80f1-3863bb34ecf0}.xml" />
     <Content Include="Entities\Letter\Entity.xml" />
     <Content Include="Entities\Letter\FormXml\main\{d6784cb8-bc33-4fcc-a9a9-3dc5b46ea9c6}.xml" />
     <Content Include="Entities\Letter\RibbonDiff.xml" />
@@ -628,6 +632,16 @@
       <DisplayName>Application Line 32x32 icon</DisplayName>
       <WebResourceType>Png</WebResourceType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>True</IsCustomizable>
+      <CanBeDeleted>True</CanBeDeleted>
+      <IsHidden>False</IsHidden>
+    </Content>
+    <Content Include="WebResources\defra_case_form_events.jscript">
+      <WebResourceId>21f5ebf4-0f17-e811-80f2-3863bb34fad0</WebResourceId>
+      <Name>defra_case_form_events</Name>
+      <DisplayName>Case Form Events</DisplayName>
+      <WebResourceType>JScript</WebResourceType>
+      <IntroducedVersion>1.1.75.8</IntroducedVersion>
       <IsCustomizable>True</IsCustomizable>
       <CanBeDeleted>True</CanBeDeleted>
       <IsHidden>False</IsHidden>
@@ -876,6 +890,8 @@
     <Content Include="Workflows\CompaniesHousereadonlyfields-8DDBD001-15F5-E711-8113-70106FAA95F1.xaml.data.xml" />
     <Content Include="Workflows\EmailStatusUpdate-3E55F9F8-45D9-4BFE-BAE3-A1DF51143EED.xaml" />
     <Content Include="Workflows\EmailStatusUpdate-3E55F9F8-45D9-4BFE-BAE3-A1DF51143EED.xaml.data.xml" />
+    <Content Include="Workflows\EnsureTeamQueueisUsed-7AF0B269-E582-4985-882A-9C95BAB38E9E.xaml" />
+    <Content Include="Workflows\EnsureTeamQueueisUsed-7AF0B269-E582-4985-882A-9C95BAB38E9E.xaml.data.xml" />
     <Content Include="Workflows\Ifstatusiscompletedreturnedthenreasonforreturnmand-3E81CD8F-53C5-E711-80EB-3863BB34FAD0.xaml" />
     <Content Include="Workflows\Ifstatusiscompletedreturnedthenreasonforreturnmand-3E81CD8F-53C5-E711-80EB-3863BB34FAD0.xaml.data.xml" />
     <Content Include="Workflows\LockNotificationSentByPostonceSet-39603485-880A-E811-80F1-3863BB34ECF0.xaml" />
@@ -904,38 +920,48 @@
     <Content Include="Workflows\ProcessResponseReceivedDateChange-D45B8FF2-1908-E811-80F1-3863BB34ECF0.xaml.data.xml" />
     <Content Include="Workflows\RecalculateRollupField-F2C457EA-0AEE-446D-8160-67F85947C499.xaml" />
     <Content Include="Workflows\RecalculateRollupField-F2C457EA-0AEE-446D-8160-67F85947C499.xaml.data.xml" />
-    <Content Include="Workflows\RFI-CasecreateRFIactivityoncreate-FFCD66FF-B24F-42E4-AD05-B46AF37B6D3C.xaml" />
-    <Content Include="Workflows\RFI-CasecreateRFIactivityoncreate-FFCD66FF-B24F-42E4-AD05-B46AF37B6D3C.xaml.data.xml" />
     <Content Include="Workflows\RFI-ChildWorkflowProcessApplicationNextStatus-5CC2A978-3244-4C2A-A2B3-F639C07B44F7.xaml" />
     <Content Include="Workflows\RFI-ChildWorkflowProcessApplicationNextStatus-5CC2A978-3244-4C2A-A2B3-F639C07B44F7.xaml.data.xml" />
-    <Content Include="Workflows\RFI-Onbreachofdeadlinenotifyownerandteam-D122EE33-B5F7-4BDD-B293-6E09CDBA46E9.xaml" />
-    <Content Include="Workflows\RFI-Onbreachofdeadlinenotifyownerandteam-D122EE33-B5F7-4BDD-B293-6E09CDBA46E9.xaml.data.xml" />
-    <Content Include="Workflows\RFI-OnDeadlineDateChangeSetDeadlineStartDateclearb-7B44D1F5-5DCC-4C41-8D58-5C25715CCAB0.xaml" />
-    <Content Include="Workflows\RFI-OnDeadlineDateChangeSetDeadlineStartDateclearb-7B44D1F5-5DCC-4C41-8D58-5C25715CCAB0.xaml.data.xml" />
-    <Content Include="Workflows\RFI-OnE-mailtoContactsentsettheissueddate-B6E283C6-77C8-4777-814C-0F31D654C0CA.xaml" />
-    <Content Include="Workflows\RFI-OnE-mailtoContactsentsettheissueddate-B6E283C6-77C8-4777-814C-0F31D654C0CA.xaml.data.xml" />
-    <Content Include="Workflows\RFI-OnsettingofIssueDateensurethestatusissettoIssu-B554DEC2-2925-46FF-82F4-A98D34CABA7B.xaml" />
-    <Content Include="Workflows\RFI-OnsettingofIssueDateensurethestatusissettoIssu-B554DEC2-2925-46FF-82F4-A98D34CABA7B.xaml.data.xml" />
-    <Content Include="Workflows\RFI-OnSLAKPIInstanceCreateensuretheFailTimeissetco-05235C48-900C-4D13-97A1-F0CAC1A1136F.xaml" />
-    <Content Include="Workflows\RFI-OnSLAKPIInstanceCreateensuretheFailTimeissetco-05235C48-900C-4D13-97A1-F0CAC1A1136F.xaml.data.xml" />
-    <Content Include="Workflows\RFI-OnstatuschangepromptApplicationrecordtorecalcu-AD6C255A-3832-43C1-B17D-AD6F6A40A974.xaml" />
-    <Content Include="Workflows\RFI-OnstatuschangepromptApplicationrecordtorecalcu-AD6C255A-3832-43C1-B17D-AD6F6A40A974.xaml.data.xml" />
-    <Content Include="Workflows\RFI-PreventInvalidDeadlineDate-3F9AACEB-0EF4-4448-A37A-E0B5ABC80FB6.xaml" />
-    <Content Include="Workflows\RFI-PreventInvalidDeadlineDate-3F9AACEB-0EF4-4448-A37A-E0B5ABC80FB6.xaml.data.xml" />
-    <Content Include="Workflows\RFI-PreventInvalidResponseDate-30EA3F57-A8DB-41FF-9087-59E8384325BA.xaml" />
-    <Content Include="Workflows\RFI-PreventInvalidResponseDate-30EA3F57-A8DB-41FF-9087-59E8384325BA.xaml.data.xml" />
-    <Content Include="Workflows\RFI-Preventupdateofrequiredresponsedateifinvalid-DF68CEF3-66F9-4666-B63F-45F8E3866BA7.xaml" />
-    <Content Include="Workflows\RFI-Preventupdateofrequiredresponsedateifinvalid-DF68CEF3-66F9-4666-B63F-45F8E3866BA7.xaml.data.xml" />
-    <Content Include="Workflows\RFI-ProcessNotificationSentbyPostChange-B5430579-3F56-4E8D-99B5-73D1A914545C.xaml" />
-    <Content Include="Workflows\RFI-ProcessNotificationSentbyPostChange-B5430579-3F56-4E8D-99B5-73D1A914545C.xaml.data.xml" />
-    <Content Include="Workflows\RFI-UpdateSLAsonchangeofResponseRequiredorCaseStat-689613F8-5CEB-499B-91E6-8C95B64A6FC3.xaml" />
-    <Content Include="Workflows\RFI-UpdateSLAsonchangeofResponseRequiredorCaseStat-689613F8-5CEB-499B-91E6-8C95B64A6FC3.xaml.data.xml" />
-    <Content Include="Workflows\RFI-WhenRFIisIssuedsettheDefaultResponseDate-4EF552F2-2006-4C8E-914D-CC2541059934.xaml" />
-    <Content Include="Workflows\RFI-WhenRFIisIssuedsettheDefaultResponseDate-4EF552F2-2006-4C8E-914D-CC2541059934.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-Casecreateactivityoncreate-FFCD66FF-B24F-42E4-AD05-B46AF37B6D3C.xaml" />
+    <Content Include="Workflows\RFIandS5-Casecreateactivityoncreate-FFCD66FF-B24F-42E4-AD05-B46AF37B6D3C.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-Onbreachofdeadlinenotifyownerandteam-D122EE33-B5F7-4BDD-B293-6E09CDBA46E9.xaml" />
+    <Content Include="Workflows\RFIandS5-Onbreachofdeadlinenotifyownerandteam-D122EE33-B5F7-4BDD-B293-6E09CDBA46E9.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-OnDeadlineDateChangeSetDeadlineStartDatec-7B44D1F5-5DCC-4C41-8D58-5C25715CCAB0.xaml" />
+    <Content Include="Workflows\RFIandS5-OnDeadlineDateChangeSetDeadlineStartDatec-7B44D1F5-5DCC-4C41-8D58-5C25715CCAB0.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-OnE-mailtoContactsentsettheissueddate-B6E283C6-77C8-4777-814C-0F31D654C0CA.xaml" />
+    <Content Include="Workflows\RFIandS5-OnE-mailtoContactsentsettheissueddate-B6E283C6-77C8-4777-814C-0F31D654C0CA.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-OnsettingofIssueDateensurethestatusissett-B554DEC2-2925-46FF-82F4-A98D34CABA7B.xaml" />
+    <Content Include="Workflows\RFIandS5-OnsettingofIssueDateensurethestatusissett-B554DEC2-2925-46FF-82F4-A98D34CABA7B.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-OnSLAKPIInstanceCreateensuretheFailTimeis-05235C48-900C-4D13-97A1-F0CAC1A1136F.xaml" />
+    <Content Include="Workflows\RFIandS5-OnSLAKPIInstanceCreateensuretheFailTimeis-05235C48-900C-4D13-97A1-F0CAC1A1136F.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-OnstatuschangepromptApplicationrecordtore-AD6C255A-3832-43C1-B17D-AD6F6A40A974.xaml" />
+    <Content Include="Workflows\RFIandS5-OnstatuschangepromptApplicationrecordtore-AD6C255A-3832-43C1-B17D-AD6F6A40A974.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-PreventInvalidDeadlineDate-3F9AACEB-0EF4-4448-A37A-E0B5ABC80FB6.xaml" />
+    <Content Include="Workflows\RFIandS5-PreventInvalidDeadlineDate-3F9AACEB-0EF4-4448-A37A-E0B5ABC80FB6.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-PreventInvalidResponseDate-30EA3F57-A8DB-41FF-9087-59E8384325BA.xaml" />
+    <Content Include="Workflows\RFIandS5-PreventInvalidResponseDate-30EA3F57-A8DB-41FF-9087-59E8384325BA.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-Preventupdateofrequiredresponsedateifinva-DF68CEF3-66F9-4666-B63F-45F8E3866BA7.xaml" />
+    <Content Include="Workflows\RFIandS5-Preventupdateofrequiredresponsedateifinva-DF68CEF3-66F9-4666-B63F-45F8E3866BA7.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-ProcessNotificationSentbyPostChange-B5430579-3F56-4E8D-99B5-73D1A914545C.xaml" />
+    <Content Include="Workflows\RFIandS5-ProcessNotificationSentbyPostChange-B5430579-3F56-4E8D-99B5-73D1A914545C.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-UpdateSLAsonchangeofResponseRequiredorCas-689613F8-5CEB-499B-91E6-8C95B64A6FC3.xaml" />
+    <Content Include="Workflows\RFIandS5-UpdateSLAsonchangeofResponseRequiredorCas-689613F8-5CEB-499B-91E6-8C95B64A6FC3.xaml.data.xml" />
+    <Content Include="Workflows\RFIandS5-WhenCaseisIssuedsetDefaultResponseDateApp-4EF552F2-2006-4C8E-914D-CC2541059934.xaml" />
+    <Content Include="Workflows\RFIandS5-WhenCaseisIssuedsetDefaultResponseDateApp-4EF552F2-2006-4C8E-914D-CC2541059934.xaml.data.xml" />
     <Content Include="Workflows\RFIFirstSLA-24018E0B-BE0B-4A2C-98B5-D74A97424FF1.xaml" />
     <Content Include="Workflows\RFIFirstSLA-24018E0B-BE0B-4A2C-98B5-D74A97424FF1.xaml.data.xml" />
+    <Content Include="Workflows\S5-ChildWorkflowProcessApplicationNextStatus-42ABCDDE-1DE0-4D9B-8C1D-4F0BF5E277AD.xaml" />
+    <Content Include="Workflows\S5-ChildWorkflowProcessApplicationNextStatus-42ABCDDE-1DE0-4D9B-8C1D-4F0BF5E277AD.xaml.data.xml" />
     <Content Include="Workflows\S5-CreatePeerReviewerTask-20E7D0CD-2A18-4A8A-B3A1-BF823E6503B9.xaml" />
     <Content Include="Workflows\S5-CreatePeerReviewerTask-20E7D0CD-2A18-4A8A-B3A1-BF823E6503B9.xaml.data.xml" />
+    <Content Include="Workflows\S5-OnbreachofFirstResponseWarningTime-NotifyOwner-015BB02D-1C2B-4BCE-B633-07C34535995A.xaml" />
+    <Content Include="Workflows\S5-OnbreachofFirstResponseWarningTime-NotifyOwner-015BB02D-1C2B-4BCE-B633-07C34535995A.xaml.data.xml" />
+    <Content Include="Workflows\S5-OnPeerReviewStatuschangeSetCaseStatus-6647DA4A-2754-4AF9-A752-D90BC8B36447.xaml" />
+    <Content Include="Workflows\S5-OnPeerReviewStatuschangeSetCaseStatus-6647DA4A-2754-4AF9-A752-D90BC8B36447.xaml.data.xml" />
+    <Content Include="Workflows\S5-PreventEmailSendifnotApproved-5E2D653E-DD95-4FCE-B1CA-1B194EB3705C.xaml" />
+    <Content Include="Workflows\S5-PreventEmailSendifnotApproved-5E2D653E-DD95-4FCE-B1CA-1B194EB3705C.xaml.data.xml" />
+    <Content Include="Workflows\Schedule5FirstResponseSLA-B2F40EC9-3538-4EEB-980D-0D35B0D701F7.xaml" />
+    <Content Include="Workflows\Schedule5FirstResponseSLA-B2F40EC9-3538-4EEB-980D-0D35B0D701F7.xaml.data.xml" />
     <Content Include="Workflows\SetDefaultOrigin-8C8FD030-8F0A-E811-80F1-3863BB34ECF0.xaml" />
     <Content Include="Workflows\SetDefaultOrigin-8C8FD030-8F0A-E811-80F1-3863BB34ECF0.xaml.data.xml" />
     <Content Include="Workflows\SetMandatoryFields-0CD14AF8-2A08-E811-80F1-3863BB34ECF0.xaml" />
@@ -952,6 +978,8 @@
     <Content Include="Workflows\ShowHideLetterRelatedFields-737F51E4-8D0A-E811-80F1-3863BB34ECF0.xaml.data.xml" />
     <Content Include="Workflows\ShowHidePeerReviewField-5D1CB8AB-D810-E811-80F1-3863BB34B7D0.xaml" />
     <Content Include="Workflows\ShowHidePeerReviewField-5D1CB8AB-D810-E811-80F1-3863BB34B7D0.xaml.data.xml" />
+    <Content Include="Workflows\ShowHidePeerReviewRejectionNotes-5CD42C36-7315-E811-80F1-3863BB34FAD0.xaml" />
+    <Content Include="Workflows\ShowHidePeerReviewRejectionNotes-5CD42C36-7315-E811-80F1-3863BB34FAD0.xaml.data.xml" />
     <Content Include="Workflows\TaskTeamLeadSignOffandPeerReviewTaskCompletion-0F27AD8E-A099-4A30-8394-F2C79CD11321.xaml" />
     <Content Include="Workflows\TaskTeamLeadSignOffandPeerReviewTaskCompletion-0F27AD8E-A099-4A30-8394-F2C79CD11321.xaml.data.xml" />
     <Content Include="Workflows\UserCreateandupdateofdefaultteam-E2E6086C-77F3-48D0-9AAB-F4491502910C.xaml" />

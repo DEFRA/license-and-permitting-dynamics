@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery unmodified="1">
+<savedquery>
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>0</isdefault>
@@ -11,6 +11,7 @@
       <row name="result" id="incidentid">
         <cell name="title" width="300" />
         <cell name="ticketnumber" width="150" />
+        <cell name="casetypecode" width="100" />
         <cell name="prioritycode" width="150" />
         <cell name="caseorigincode" width="100" />
         <cell name="customerid" width="150" />
@@ -24,7 +25,6 @@
   <fetchxml>
     <fetch version="1.0" output-format="xml-platform" mapping="logical">
       <entity name="incident">
-        <attribute name="incidentid" />
         <attribute name="ticketnumber" />
         <attribute name="prioritycode" />
         <attribute name="title" />
@@ -37,6 +37,8 @@
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
         <order attribute="title" descending="false" />
+        <attribute name="casetypecode" />
+        <attribute name="incidentid" />
       </entity>
     </fetch>
   </fetchxml>

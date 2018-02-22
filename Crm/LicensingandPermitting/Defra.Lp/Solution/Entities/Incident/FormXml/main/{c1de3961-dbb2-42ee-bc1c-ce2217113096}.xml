@@ -20,7 +20,7 @@
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{8a63110e-c0c5-9973-38ea-cd04841d7247}" showlabel="true" locklevel="0">
+                    <cell id="{8a63110e-c0c5-9973-38ea-cd04841d7247}" showlabel="true" locklevel="1">
                       <labels>
                         <label description="Case Type" languagecode="1033" />
                       </labels>
@@ -101,24 +101,9 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{466b545e-09dd-2aed-8607-3a79cee73da9}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="Peer Reviewer" languagecode="1033" />
-                      </labels>
-                      <control id="defra_peerreviewer" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_peerreviewer" disabled="false" />
-                    </cell>
-                  </row>
-                </rows>
-              </section>
-              <section id="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" IsUserDefined="0" labelid="{b4a7b1d0-5557-4c26-8680-437f52fd9c71}" columns="1" showlabel="true" showbar="true" locklevel="0" name="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
-                <labels>
-                  <label description="CATEGORY AND DESCRIPTION" languagecode="1033" />
-                </labels>
-                <rows>
-                  <row>
                     <cell id="{2D8C61A2-7CFC-4DD8-A8AF-2CB82760E559}" labelid="{271c7712-6c4c-4af5-ab55-ffc07f97e003}" showlabel="true" locklevel="0" rowspan="7">
                       <labels>
-                        <label description="Enter the text you want to send to the applicant" languagecode="1033" />
+                        <label description="Text sent to contact" languagecode="1033" />
                       </labels>
                       <control disabled="false" id="description" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="description" uniqueid="{2b275904-19a2-5ed8-5b96-ae1ec0bb8a8e}" />
                     </cell>
@@ -159,6 +144,20 @@
                   <row />
                   <row />
                   <row />
+                </rows>
+              </section>
+              <section id="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" IsUserDefined="0" labelid="{b4a7b1d0-5557-4c26-8680-437f52fd9c71}" columns="1" showlabel="true" showbar="true" locklevel="0" name="{2335806E-F713-402F-A9BD-6BEEEC6B8645}" labelwidth="115" celllabelalignment="Left" celllabelposition="Top" visible="false">
+                <labels>
+                  <label description="CATEGORY AND DESCRIPTION" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{3e3c3b03-2507-bcc8-d54c-56e912a4994c}" showlabel="false">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                    </cell>
+                  </row>
                 </rows>
               </section>
               <section id="{e493f95f-d913-4063-a929-e86a5d7b01a5}" name="Customer" IsUserDefined="0" labelid="{18c0b7d9-2c59-4026-a6fd-f0e06dc8d96e}" showlabel="false" labelwidth="90" showbar="false" locklevel="0" columns="11" celllabelalignment="Left" celllabelposition="Left" visible="false">
@@ -377,6 +376,49 @@
           </column>
           <column width="33%">
             <sections>
+              <section name="peer_review_section" showlabel="true" showbar="true" locklevel="0" id="{c4b98d5d-6c73-a163-34b1-44769d0233b3}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" visible="false">
+                <labels>
+                  <label description="PEER REVIEW" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{14a336e1-7612-96ac-d058-d9344d5ae306}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Status Reason" languagecode="1033" />
+                      </labels>
+                      <control id="statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" disabled="false" uniqueid="{9616c3d5-75a7-a47b-3e06-6a8922c3b25a}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{466b545e-09dd-2aed-8607-3a79cee73da9}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Peer Reviewer" languagecode="1033" />
+                      </labels>
+                      <control id="defra_peerreviewer" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_peerreviewer" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{9d850413-e12d-18d5-b20a-29450884c5ea}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Peer Review Status" languagecode="1033" />
+                      </labels>
+                      <control id="defra_peerreviewstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_peerreviewstatus" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{e8197600-8952-ab5a-8a71-48936c678b93}" showlabel="true" locklevel="0" rowspan="5">
+                      <labels>
+                        <label description="Peer Review Rejection Notes" languagecode="1033" />
+                      </labels>
+                      <control id="defra_peerreviewrejectionnotes" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="defra_peerreviewrejectionnotes" disabled="false" uniqueid="{2a210bdd-0222-b06c-8378-57a388106d9e}" />
+                    </cell>
+                  </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                </rows>
+              </section>
               <section id="{bb13b0a3-13ee-4f84-9172-c1d89622b421}" name="Response Tracking" IsUserDefined="0" labelid="{c437ebc7-d77d-435e-9e25-93be202da011}" columns="1" showlabel="true" labelwidth="102" showbar="true" locklevel="0" celllabelposition="Left" celllabelalignment="Left">
                 <labels>
                   <label description="REQUEST ISSUE" languagecode="1033" />
@@ -385,9 +427,9 @@
                   <row>
                     <cell id="{63c17d58-a870-a94c-1204-6596ab76b2aa}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Notification Sent By Post" languagecode="1033" />
+                        <label description="Sent By Post" languagecode="1033" />
                       </labels>
-                      <control disabled="false" id="defra_notificationsentbypost" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_notificationsentbypost" />
+                      <control disabled="false" id="defra_notificationsentbypost" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_notificationsentbypost" uniqueid="{d11ce809-6c3d-b54a-cb53-c48d581e4ed4}" />
                     </cell>
                   </row>
                   <row>
@@ -1013,6 +1055,9 @@
     </header>
     <events>
       <event name="onload" application="true" active="true">
+        <dependencies>
+          <dependency id="casetypecode" />
+        </dependencies>
         <InternalHandlers>
           <Handler functionName="Mscrm.Form_onload" libraryName="Incident_main_system_library.js" handlerUniqueId="76e18454-eeba-47c3-8a9d-6d701c77fbcc" enabled="true">
             <dependencies>
@@ -1021,6 +1066,9 @@
             </dependencies>
           </Handler>
         </InternalHandlers>
+        <Handlers>
+          <Handler functionName="HideShowPeerReviewSection" libraryName="defra_case_form_events" handlerUniqueId="{83a0615e-8a18-9072-2c4a-52aba1351864}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
       </event>
       <event name="onchange" application="true" active="true" attribute="customerid">
         <InternalHandlers>
@@ -1072,6 +1120,14 @@
             </dependencies>
           </Handler>
         </InternalHandlers>
+      </event>
+      <event name="onchange" application="false" active="false" attribute="casetypecode">
+        <dependencies>
+          <dependency id="casetypecode" />
+        </dependencies>
+        <Handlers>
+          <Handler functionName="HideShowPeerReviewSection" libraryName="defra_case_form_events" handlerUniqueId="{47ce0912-ebc8-9792-d23d-4a459b670b51}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
       </event>
     </events>
     <clientresources>
@@ -1140,6 +1196,9 @@
       <data id="ResolveBySLAStatus" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" datafieldname="resolvebyslastatus" />
     </hiddencontrols>
     <controlDescriptions />
+    <formLibraries>
+      <Library name="defra_case_form_events" libraryUniqueId="{ec72b084-a477-8a2d-0075-2862c227d01b}" />
+    </formLibraries>
     <DisplayConditions FallbackForm="true" Order="2">
       <Everyone />
     </DisplayConditions>
@@ -1147,6 +1206,6 @@
   <IsCustomizable>1</IsCustomizable>
   <CanBeDeleted>1</CanBeDeleted>
   <LocalizedNames>
-    <LocalizedName description="RFI" languagecode="1033" />
+    <LocalizedName description="RFI and SCHEDULE 5" languagecode="1033" />
   </LocalizedNames>
 </systemform>
