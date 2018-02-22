@@ -27,6 +27,8 @@
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_7" />
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_8" />
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_9" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_10" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_11" />
           <Variable x:TypeArguments="x:Boolean" Default="False" Name="True" />
           <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep3_1" />
         </sco:Collection>
@@ -107,10 +109,30 @@
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_9]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.OptionSetValue, "910400005", "Status" }]</InArgument>
+              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_10]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.OptionSetValue, "910400006", "Status" }]</InArgument>
+              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep2_11]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Equal</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep2_6, ConditionBranchStep2_7, ConditionBranchStep2_8, ConditionBranchStep2_9 }]</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep2_6, ConditionBranchStep2_7, ConditionBranchStep2_8, ConditionBranchStep2_9, ConditionBranchStep2_10, ConditionBranchStep2_11 }]</InArgument>
               <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep2_5]</InArgument>
               <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep2_4]</OutArgument>
             </mxswa:ActivityReference.Arguments>
@@ -139,6 +161,9 @@
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;incident&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
                       <mcwc:SetFieldRequiredLevel ControlId="defra_peerreviewer" ControlType="standard" DisplayName="SetFieldRequiredLevelStep3" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" RequiredLevel="Required" />
+                    </Sequence>
+                    <Sequence DisplayName="SetVisibilityStep5: Show Peer Review Status">
+                      <mcwc:SetVisibility ControlId="defra_peerreviewstatus" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" IsVisible="True" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
@@ -173,6 +198,9 @@
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;incident&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
                       <mcwc:SetFieldRequiredLevel ControlId="defra_peerreviewer" ControlType="standard" DisplayName="SetFieldRequiredLevelStep4" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" RequiredLevel="None" />
+                    </Sequence>
+                    <Sequence DisplayName="SetVisibilityStep6: Hide Peer Review Status">
+                      <mcwc:SetVisibility ControlId="defra_peerreviewstatus" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" IsVisible="False" />
                     </Sequence>
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
