@@ -31,9 +31,10 @@ function CallCompaniesHouseAction() {
         contentType: "application/json",
         async: false,
         success: function (data) {
+            // Refresh page to get updated details
+            Xrm.Page.data.refresh(false);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-
             Xrm.Page.data.refresh(false);
 
             if (jqXHR.status === 404) {
@@ -48,8 +49,7 @@ function CallCompaniesHouseAction() {
                     Xrm.Page.ui.setFormNotification("Company number not found. Enter a valid company number.",
                         "WARNING");
                 } else {
-                    Xrm.Page.ui
-                        .setFormNotification("There was an error connecting to Companies House. Please contact your administrator referencing the following error message: " + result.error.message, "WARNING");
+                    Xrm.Page.ui.setFormNotification("There was an error connecting to Companies House. Please contact your administrator referencing the following error message: " + result.error.message, "WARNING");
                 }
             }
         }

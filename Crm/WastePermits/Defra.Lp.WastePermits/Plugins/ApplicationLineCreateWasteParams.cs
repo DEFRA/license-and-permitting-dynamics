@@ -129,6 +129,7 @@ namespace Defra.Lp.WastePermits.Plugins
                     this.UpdateApplication(targetAppLine, preImageEntity);
                 }
             }
+
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Defra.Lp.WastePermits.Plugins
 
                 QueryExpression AppLinesRulesQuery = new QueryExpression("defra_applicationline")
                 {
-                    ColumnSet = new ColumnSet("defra_npsdetermination", "defra_locationscreeningrequired"),
+                    ColumnSet = new ColumnSet("defra_npsdetermination", "defra_locationscreeningrequired", Model.Lp.Crm.Application.State),
 
                     Criteria = new FilterExpression()
                     {
@@ -320,12 +321,25 @@ namespace Defra.Lp.WastePermits.Plugins
 
                 EntityCollection appLines = _Service.RetrieveMultiple(AppLinesRulesQuery);
 
+                // If count = 1 entity count. use field defrta_activelines exist, pluygin when update and create and deactivate
+                // 
                 foreach (Entity appLineRetrieved in appLines.Entities)
                 {
                     if (appLineRetrieved.Attributes.Contains("defra_npsdetermination") && (bool)appLineRetrieved["defra_npsdetermination"])
                         allLinesNPSDetAreNo = false;
                     if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
                         allLinesLocationScreeningNo = false;
+                }
+
+                if (appLines.Entities.Count > 0)
+                {
+                    _TracingService.Trace("Setting the {0} field to YES", Model.Waste.Crm.Application.ActiveLinesExist);
+                    this.UpdatedApplicationEntity.Attributes.Add(Model.Waste.Crm.Application.ActiveLinesExist, 1);
+                }
+                else
+                {
+                    _TracingService.Trace("Setting the {0} field to NO", Model.Waste.Crm.Application.ActiveLinesExist);
+                    this.UpdatedApplicationEntity.Attributes.Add(Model.Waste.Crm.Application.ActiveLinesExist, 0);
                 }
 
                 if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_npsdetermination"])
