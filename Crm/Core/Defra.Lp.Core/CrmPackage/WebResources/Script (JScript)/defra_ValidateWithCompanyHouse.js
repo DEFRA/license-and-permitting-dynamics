@@ -7,7 +7,7 @@ function CallCompaniesHouseAction()
 {
 	if(Xrm.Page.data.entity.getIsDirty() == true)
 	{
-		alert("Please save the form first!", "ERROR", "formDirty");
+	    alert("Please save the record first and try again.", "ERROR", "formDirty");
 		return;
 	};
 	
@@ -17,7 +17,7 @@ function CallCompaniesHouseAction()
 	
 	if(compRegNum == null || compRegNum.getValue() == null)
 	{
-		alert("No company reg number");
+	    alert("Enter a company number.");
 		return;
 	}
 
@@ -34,25 +34,24 @@ function CallCompaniesHouseAction()
             dataType: 'json',
             contentType: "application/json",
             async: false,
-            success: function (data) {
-                //alert(data);				 
+            success: function (data) {	 
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                
-				var responseText = JSON.stringify(jqXHR.responseText);
 				
-				//alert(jqXHR.status);
-				//alert(responseText);
-				
-                //var responseText = responseText.slice(161, 255)
-                if (jqXHR.status == 404) {
-                    //window.parent.Xrm.Page.ui.setFormNotification("The URL requested wasn't valid. The server responded with a 404 error", "ERROR", "noAddress");
+                if (jqXHR.status === 404) {
+                    alert("There was an error connecting to Companies House. Please contact your administrator referencing the following error message: 404", "ERROR", "noAddress");
                 }
-                if (jqXHR.status == 500) {
-                    //window.parent.Xrm.Page.ui.setFormNotification("Invalid postcode entered. The postcode must contain a minimum of the sector plus 1 digit of the district e.g. SO1", "ERROR", "noAddress");
-                    //alert(responseText);
+
+                if (jqXHR.status === 500) {
+
                     var result = JSON.parse(jqXHR.responseText);
-                    alert(result.error.message);
+
+                    // Check if 404 error in message, this means Companies House could not find a company with the given co number
+                    if (result.error.message.substring(0, 3) === "404") {
+                        alert("Company number not found. Enter a valid company number.");
+                    } else {
+                        alert("There was an error connecting to Companies House. Please contact your administrator referencing the following error message: " + result.error.message);
+                    }
                 }
             }
         });
