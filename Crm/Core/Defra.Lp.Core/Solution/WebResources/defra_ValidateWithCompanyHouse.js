@@ -31,6 +31,7 @@ function CallCompaniesHouseAction() {
         contentType: "application/json",
         async: false,
         success: function (data) {
+            Xrm.Page.data.refresh(false);
         },
         error: function (jqXHR, textStatus, errorThrown) {
 
