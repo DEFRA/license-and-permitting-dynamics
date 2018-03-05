@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationLineCreateWasteParams.cs" />
+    <Compile Include="Common\ApplicationManager.cs" />
     <Compile Include="Common\OwnershipManager.cs" />
     <Compile Include="Common\OwnershipManagerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +102,14 @@
     <None Include="app.config" />
     <None Include="Defra.Waste.Plugins.snk" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Model.Waste\Crm\*.cs">
+      <Link>Model.Waste\Crm\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Crm\*.cs">
+      <Link>Model.Lp\Crm\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
