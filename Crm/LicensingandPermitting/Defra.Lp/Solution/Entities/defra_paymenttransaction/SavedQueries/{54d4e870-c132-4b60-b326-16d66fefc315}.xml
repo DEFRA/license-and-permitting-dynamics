@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <returnedtypecode>10034</returnedtypecode>
+  <savedqueryid>{54d4e870-c132-4b60-b326-16d66fefc315}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" object="10034" jump="defra_transactionref" select="1" icon="1" preview="1">
+      <row name="result" id="defra_paymenttransactionid">
+        <cell name="defra_transactionref" width="300" />
+        <cell name="createdon" width="125" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" mapping="logical">
+      <entity name="defra_paymenttransaction">
+        <attribute name="defra_paymenttransactionid" />
+        <attribute name="defra_transactionref" />
+        <attribute name="createdon" />
+        <order attribute="defra_transactionref" descending="false" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="1" />
+        </filter>
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Inactive Payment Transactions" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
