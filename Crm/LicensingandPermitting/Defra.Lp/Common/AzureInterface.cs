@@ -1,156 +1,154 @@
 ﻿using Defra.Lp.Common.ProxyClasses;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Defra.Lp.Common
 {
-    public enum AzureTarget : int
-    {
-        DocumentProcessorLogicApp = 0,
-        //MetadataAzureFunction = 1,
-        //AddUserToSharePointGroupAzureFunction = 2,
-        //RemoveUserFromSharePointGroupAzureFunction = 3
-    }
-
     internal class AzureInterface
     {
-        private IOrganizationService AdminService { get; set; }
+        private Entity Config { get; set; }
         private IOrganizationService Service { get; set; }
         private ITracingService TracingService { get; set; }
 
-        internal AzureInterface(IOrganizationService adminService, IOrganizationService service, ITracingService tracingService)
+        internal AzureInterface(EntityReference config, IOrganizationService service, ITracingService tracingService)
         {
-            AdminService = adminService;
+            Service = service;
+            TracingService = tracingService;
+            Config = Query.RetrieveDataForEntityRef(Service, new string[] { ConfigNames.SharePointLogicAppUrl,
+                                                                ConfigNames.SharePointPermitList,
+                                                                ConfigNames.AddressbaseFacadeUrl,
+                                                                ConfigNames.SharePointFolderContentType}, config);
+        }
+
+        internal AzureInterface(Entity config, IOrganizationService service, ITracingService tracingService)
+        {
+            Config = config;
             Service = service;
             TracingService = tracingService;
         }
 
-        internal void MoveFile(EntityReference recordIdentifier, bool initialCreation, string parentEntity, string parentLookup)
+        internal void CreateFolder(EntityReference application)
         {
-            TracingService.Trace(string.Format("In MoveFile with Entity Type {0} and Entity Id {1}. Initial Creation: {2} Parent Entity: {3} Lookup Name: {4}", recordIdentifier.LogicalName, recordIdentifier.Id, initialCreation, parentEntity, parentLookup));
+            TracingService.Trace(string.Format("In CreateFolder with Entity Type {0} and Entity Id {1}", application.LogicalName, application.Id));
+
+            var request = new MoveFileRequest();
+            var permitNo = string.Empty;
+
+            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name" }, application);
+
+            TracingService.Trace(string.Format("Application Name = {0}", applicationEntity["defra_name"].ToString()));
+
+            request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
+            //request.ListName = "Permit"; // Config.GetAttributeValue<string>(ConfigNames.SharePointPermitList); //"TestLibKal";
+            request.ListName = ReturnDocumentSetName();
+            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_name");
+
+            var stringContent = JsonConvert.SerializeObject(request);
+
+            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[ConfigNames.SharePointLogicAppUrl].ToString()));
+
+            var resultBody = SendRequest(Config[ConfigNames.SharePointLogicAppUrl].ToString(), stringContent);
+            var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+        }
+
+        internal void MoveFile(EntityReference recordIdentifier, string parentEntity, string parentLookup)
+        {
+            TracingService.Trace(string.Format("In MoveFile with Entity Type {0} and Entity Id {1}. Parent Entity: {2} Lookup Name: {3}", recordIdentifier.LogicalName, recordIdentifier.Id, parentEntity, parentLookup));
             
-            MoveFileRequest request = new MoveFileRequest();
+            var request = new MoveFileRequest();
+            var activityId = Guid.Empty;
+            var permitNo = string.Empty;
+            Entity annotationData = null;
+            Entity attachmentData = null;
 
-            string entityMetadataQuery = null;
-
-            Guid activityId = Guid.Empty;
-
-            if (initialCreation)
+            if (parentEntity == "email")
             {
-                string caseNo = string.Empty;
-                if (parentEntity == "email")
+                // This will have been fired against the creation of the Activity Mime Attachment Record
+                attachmentData = ReturnAttachmentData(recordIdentifier.Id);
+                if (attachmentData == null)
                 {
-                    //This will have been fired against the cration of the Activity Mime Attachment Record
-                    //Entity attachmentData = ReturnAttachmentData(recordIdentifier.Id);
-                    //if (attachmentData == null)
-                    //{
-                    //    throw new InvalidPluginExecutionException("No attachment data record returned from query");
-                    //}
-                    //else
-                    //{
-
-                    //    bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
-
-                    //    OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
-                    //    if (direction && statusCode.Value != 3)
-                    //    {
-                    //        //Outgoing email, do not send the attachment on create
-                    //        TracingService.Trace("Aborted creating attachment for outgoing email attachment that is not sent");
-                    //        return;
-                    //    }
-                    //}
-                    //if (attachmentData.Contains("case.ticketnumber"))
-                    //{
-                    //    caseNo = (string)((AliasedValue)attachmentData.Attributes["case.ticketnumber"]).Value;
-                    //}
-
-                    //activityId = AddInsertFileParametersToRequest(request, attachmentData, caseNo, parentEntity);
-
-                    //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
+                    throw new InvalidPluginExecutionException("No attachment data record returned from query");
                 }
                 else
                 {
+                    bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
 
-                    //This will have been fired against the cration of the Activity Mime Attachment Record
-                    Entity annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity);
-                    if (annotationData == null)
+                    OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
+                    if (direction && statusCode.Value != 3)
                     {
-                        throw new InvalidPluginExecutionException("No annotation data record returned from query");
+                        //Outgoing email, do not send the attachment on create
+                        TracingService.Trace("Aborted creating attachment for outgoing email attachment that is not sent");
+                        return;
                     }
-                    else
-                    {
-                        if (annotationData.Contains("case.ticketnumber"))
-                        {
-                            caseNo = (string)((AliasedValue)annotationData.Attributes["case.ticketnumber"]).Value;
-                        }
-
-                        activityId = AddInsertFileParametersToRequest(request, annotationData, caseNo, parentEntity);
-
-                       // entityMetadataQuery = ReturnCustomerNotificationMetadataQuery(activityId, parentEntity);
-
-                    }
-
                 }
 
+                if (attachmentData.Contains("parent.defra_name"))
+                {
+                    permitNo = (string)((AliasedValue)attachmentData.Attributes["parent.defra_name"]).Value;
+                }
+                activityId = AddInsertFileParametersToRequest(request, attachmentData, permitNo, parentEntity, parentLookup);
+
+                //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
+
             }
             else
             {
-                //This will have been fired against the cration of the Activity Metadata Record
-                //entityMetadataQuery = ReturnAMDQuery(recordIdentifier.Id, parentEntity, parentLookup);
+                //This will have been fired against the creation of the Attachment Record
+                annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
+                if (annotationData == null)
+                {
+                    throw new InvalidPluginExecutionException("No annotation data record returned from query");
+                }
+                else
+                {
+                    if (annotationData.Contains("parent.defra_name"))
+                    {
+                        permitNo = (string)((AliasedValue)annotationData.Attributes["parent.defra_name"]).Value;
+                    }
+                    activityId = AddInsertFileParametersToRequest(request, annotationData, permitNo, parentEntity, parentLookup);
+                }
             }
 
-            //TracingService.Trace(string.Format("Performing entity metadata query with query {0}", entityMetadataQuery));
-
-            Entity metadataQueryResult = Query.QueryCRMForSingleEntity(Service, entityMetadataQuery);
-
-            TracingService.Trace(string.Format("metadataQueryResult {0}", metadataQueryResult.Id.ToString()));
-            if (metadataQueryResult == null)
-            {
-                throw new Exception("No result returned for entity metadata query");
-            }
-
-            if (!initialCreation)
-            {
-                //activityId = AddMovementFileParametersToRequest(request, metadataQueryResult, parentEntity);
-            }
             TracingService.Trace(string.Format("activityId {0}", activityId.ToString()));
-            //request.Metadata = GenerateMetadata(metadataQueryResult, initialCreation, parentEntity);
 
-            string stringContent = JsonConvert.SerializeObject(request);
+            var stringContent = JsonConvert.SerializeObject(request);
+            var logicAppUrl = Config.GetAttributeValue<string>(ConfigNames.SharePointLogicAppUrl);
+            TracingService.Trace(string.Format("Sending data to Logic App URL {0}", logicAppUrl));
 
-
-            // TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", GetAzureLocationUrl(AzureTarget.DocumentProcessorLogicApp)));
-
-            string resultBody = SendRequest(GetAzureLocationUrl(AzureTarget.DocumentProcessorLogicApp), stringContent);
-
+            var resultBody = SendRequest(logicAppUrl, stringContent);
             MoveSharePointResult data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
-
-
-            if (initialCreation)
+            if (data != null && !string.IsNullOrEmpty(data.SharePointId))
             {
-                //CreateActivityMetadataRecord(data, activityId);
-            }
-            else
-            {
-                //UpdateActivityMetadataRecord(data, recordIdentifier.Id, activityId);
+                TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
+                if (annotationData != null)
+                {
+                    //Service.Delete(annotationData.LogicalName, annotationData.Id);
+                    annotationData["documentbody"] = string.Empty;
+                    Service.Update(annotationData);
+                }
+                else if (attachmentData != null)
+                    TracingService.Trace("Need to delete attachment");
             }
         }
 
-        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string caseNo, string parentEntityName)
+        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string permitNo, string parentEntityName, string parentLookup)
         {
-            TracingService.Trace(string.Format("In AddInsertFileParametersToRequest. CaseNo: {0}", caseNo));
+            TracingService.Trace(string.Format("In AddInsertFileParametersToRequest. PermitNo: {0}", permitNo));
 
-            string fileName = queryRecord.GetAttributeValue<string>("filename");
+            var fileName = queryRecord.GetAttributeValue<string>("filename");
 
-            string body = string.Empty;
+            TracingService.Trace(string.Format("Filename: {0}", fileName));
+            TracingService.Trace(string.Format("Logical Name: {0}", queryRecord.LogicalName));
+
+            var body = string.Empty;
             if (queryRecord.LogicalName == "activitymimeattachment")
             {
 
@@ -170,107 +168,142 @@ namespace Defra.Lp.Common
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
 
+            TracingService.Trace(string.Format("Requests: {0}", request));
+
             request.FileBody = body;
 
-            if (!string.IsNullOrEmpty(caseNo))
+            if (!string.IsNullOrEmpty(permitNo))
             {
-                request.CaseNo = caseNo;
+                request.PermitNo = permitNo;
             }
 
-            AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("email.activityid");
-            Guid activityId = (Guid)activityIdAliasedValue.Value;
-            request.ActivityId = activityId.ToString();
+            //AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("parent." + parentLookup);
+            //Guid activityId = (Guid)activityIdAliasedValue.Value;
+            //request.ActivityId = activityId.ToString();
             request.ActivityName = parentEntityName;
-            request.AttachmentType = queryRecord.LogicalName;
+            //request.AttachmentType = queryRecord.LogicalName;
             request.FileName = fileName;
-            request.AttachmentId = queryRecord.Id;
+            request.FileDescription = queryRecord.GetAttributeValue<string>("subject");
+            //request.AttachmentId = queryRecord.Id;
+            request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
+            //request.ListName = "Permit";  // ToDo: This needs to come from the Config "TestLibKal"
+            request.ListName = ReturnDocumentSetName();
+            request.Operation = string.Empty;
 
-            if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
-            {
+            //if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
+            //{
 
-                EntityReference documentType = (EntityReference)((AliasedValue)queryRecord.Attributes["email.rpa_documenttype"]).Value;
-                request.DocumentId = documentType.Name;
-            }
+            //    EntityReference documentType = (EntityReference)((AliasedValue)queryRecord.Attributes["email.rpa_documenttype"]).Value;
+            //    request.DocumentId = documentType.Name;
+            //}
 
-            return activityId;
+            //return activityId;
+
+            return new Guid();
         }
 
-        private Entity ReturnAnnotationData(Guid recordId, string parentEntityName)
+        private string ReturnDocumentSetName()
         {
-            string fetchXml = string.Format(@"<fetch top='1' >
-                                                          <entity name='annotation' >
-                                                            <attribute name='subject' />
-                                                            <attribute name='documentbody' />
-                                                            <attribute name='filename' />
-                                                            <attribute name='annotationid' />
-                                                            <order attribute='subject' descending='false' />
-                                                            <filter type='and' >
-                                                              <condition attribute='annotationid' operator='eq' uitype='annotation' value='{0}' />
-                                                            </filter>
-                                                            <link-entity name='{1}' from='activityid' to='objectid' alias='email' link-type='inner' >
-                                                              <attribute name='activityid' />
-                                                              <attribute name='statuscode' />
-                                                              <attribute name='regardingobjectid' />
-                                                              <filter type='and' >
-                                                                <condition attribute='statuscode' operator='not-null' />
-                                                              </filter>
-                                                              <link-entity name='incident' from='incidentid' to='regardingobjectid' alias='case' link-type='outer' >
-                                                                <attribute name='ticketnumber' />
-                                                                <filter type='and' >
-                                                                  <condition attribute='ticketnumber' operator='not-null' />
-                                                                </filter>
-                                                              </link-entity>
-                                                            </link-entity>
-                                                          </entity>
-                                                        </fetch>", recordId, parentEntityName);
+            var documentSetName = string.Empty;
+            var documentLocationRef = Config.GetAttributeValue<EntityReference>(ConfigNames.SharePointPermitList);
+            var entity = Query.RetrieveDataForEntityRef(Service, new string[] { "name" }, documentLocationRef);
+            if (entity != null)
+            {
+                documentSetName = entity.GetAttributeValue<string>("name");
+            }
+            else
+            {
+                throw new InvalidPluginExecutionException("Unable to get Document Set Name from Configuration.");
+            }
+            return documentSetName;
+        }
+
+
+        private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
+        {
+            var fetchXml = string.Format(@"<fetch top='1' >
+                                            <entity name='annotation' >
+                                            <attribute name='subject' />
+                                            <attribute name='documentbody' />
+                                            <attribute name='filename' />
+                                            <attribute name='annotationid' />
+                                            <order attribute='subject' descending='false' />
+                                            <filter type='and' >
+                                                <condition attribute='annotationid' operator='eq' uitype='annotation' value='{0}' />
+                                            </filter>
+                                            <link-entity name='{1}' from='{2}' to='objectid' alias='parent' link-type='inner' >
+                                                <attribute name='{2}' />
+                                                <attribute name='defra_name' />
+                                                <attribute name='statuscode' />
+                                                <filter type='and' >
+                                                <condition attribute='statuscode' operator='not-null' />
+                                                </filter>
+                                            </link-entity>
+                                            </entity>
+                                        </fetch>", recordId, parentEntityName, parentLookup);
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
         }
+
+        private Entity ReturnAttachmentData(Guid recordId)
+        {
+            string fetchXml = string.Format(@"<fetch top='1' >
+                                                          <entity name='activitymimeattachment' >
+                                                             <attribute name='filename' />
+                                                            <attribute name='body' />
+                                                        <filter>
+                                                        <condition attribute='activitymimeattachmentid' operator='eq' value='{0}' />
+                                                        </filter>
+                                                        <link-entity name='email' from='activityid' to='objectid' alias='email' link-type='inner' >
+                                                              <attribute name='directioncode' />
+                                                              <attribute name='activityid' />
+                                                              <attribute name='statuscode' />
+                                                              <attribute name='regardingobjectid' />
+                                                              <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
+                                                                <attribute name='defra_name' />
+                                                              </link-entity>
+                                                            </link-entity>
+                                                          </entity>
+                                                        </fetch>", recordId);
+
+            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+        }
+
+
+        //private MetadataValues GenerateFileMetadata(Entity attachment)
+        //{
+        //    TracingService.Trace("Start Generate Metadata");
+
+        //    MetadataValues returnValue = new MetadataValues();
+        //    returnValue.ListName = ConfigNames.SharePointPermitList;
+
+        //    PropertyGenerator propertyGenerator = new PropertyGenerator();
+        //    propertyGenerator.AddProperty<string>(returnValue.Fields, "filename", "Title", attachment);
+        //    propertyGenerator.AddProperty<string>(returnValue.Fields, "subject", "Description", attachment);
+
+        //    TracingService.Trace("End Generate Metadata");
+
+        //    return returnValue;
+        //}
 
         private string SendRequest(string url, string requestContent)
         {
             TracingService.Trace(string.Format("Sending request to {0}", url));
 
-            using (HttpClient httpclient = new HttpClient())
+            using (var httpclient = new HttpClient())
             {
-                HttpRequestMessage httpRequest = new HttpRequestMessage
+                var httpRequest = new HttpRequestMessage
                 {
                     RequestUri = new Uri(url),
                     Method = HttpMethod.Post,
                     Content = new StringContent(requestContent, Encoding.UTF8, "application/json"),
                 };
 
-                HttpResponseMessage response = httpclient.SendAsync(httpRequest).Result;
+                var response = httpclient.SendAsync(httpRequest).Result;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadAsStringAsync().Result;
             }
-        }
-
-        private string GetAzureLocationUrl(AzureTarget azureTarget)
-        {
-            string configName = "";
-
-            switch (azureTarget)
-            {
-                case AzureTarget.DocumentProcessorLogicApp:
-                    configName = "DocumentProcessorLogicAppUrl";
-                    break;
-                //case AzureTarget.MetadataAzureFunction:
-                //    configName = "MetadataAzureFunctionUrl";
-                //    break;
-                //case AzureTarget.AddUserToSharePointGroupAzureFunction:
-                //    configName = "AddUserToSharePointGroupAzureFunctionUrl";
-                //    break;
-                //case AzureTarget.RemoveUserFromSharePointGroupAzureFunction:
-                //    configName = "RemoveUserFromSharePointGroupAzureFunctionUrl";
-                //    break;
-                default:
-                    throw new Exception("Invalid Azure Target Specified");
-
-            }
-
-            return Query.GetConfigurationValue(AdminService, configName);
         }
     }
 }
