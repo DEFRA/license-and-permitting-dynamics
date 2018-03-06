@@ -47,10 +47,12 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                    <Sequence DisplayName="UpdateStep3: Set Default Team Queue">
+                    <Sequence DisplayName="UpdateStep3: Set Default Team Queue and email address">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="UpdateStep3_1" />
                         <Variable x:TypeArguments="x:Object" Name="UpdateStep3_2" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep3_3" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep3_4" />
                       </Sequence.Variables>
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;systemuser&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
@@ -78,6 +80,30 @@
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
+                      <mxswa:GetEntityProperty Attribute="emailaddress" Entity="[InputEntities(&quot;related_defra_defaultteam#team&quot;)]" EntityName="team" Value="[UpdateStep3_4]">
+                        <mxswa:GetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:GetEntityProperty.TargetType>
+                      </mxswa:GetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep3_4 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep3_3]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_defaultteamemailaddress" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="systemuser" Value="[UpdateStep3_3]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
                       <mxswa:UpdateEntity DisplayName="UpdateStep3" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="systemuser" />
                       <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;primaryEntity&quot;)]" Value="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" />
                     </Sequence>
@@ -97,9 +123,10 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                    <Sequence DisplayName="UpdateStep5: Clear Default Team Queue">
+                    <Sequence DisplayName="UpdateStep5: Clear Default Team Queue and email address">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="UpdateStep5_1" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep5_2" />
                       </Sequence.Variables>
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;systemuser&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
@@ -107,6 +134,13 @@
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:SetEntityProperty Attribute="defra_defaultteamemailaddress" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="systemuser" Value="[UpdateStep5_2]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
