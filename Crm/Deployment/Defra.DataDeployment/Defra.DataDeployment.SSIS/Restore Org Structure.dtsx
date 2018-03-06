@@ -1,0 +1,2315 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/14/2017 8:29:33 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="KAL-VM-VISIO"
+  DTS:CreatorName="KAL-VM-VISIO\Kal"
+  DTS:DTSID="{05AC97C4-22F3-4CE7-808D-CA56EBCC275D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.1000.169"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Restore Org Structure"
+  DTS:PackageType="5"
+  DTS:VersionBuild="134"
+  DTS:VersionGUID="{7AA6A490-AF83-45BF-AB76-684C0BEF0712}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9B7AAE6F-DEB4-46AE-82D0-77148162B1B4}"
+      DTS:ObjectName="(local).LPConfigDataMigration">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost\SQL2017;Initial Catalog=LPConfigDataMigration;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dynamics CRM Source]"
+      DTS:CreationName="DynamicsCRM"
+      DTS:DTSID="{C75EAE71-E31E-40EE-BD9F-A445931DCD8D}"
+      DTS:ObjectName="Dynamics CRM Source">
+      <DTS:ObjectData>
+        <CrmConnectionManager
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=EA-LP-CRM-DEVWASTE;CrmServerUrl=https://ea-lp-crm-devwaste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcFroJr4msUWFeILjt2JVgQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABLNGQgoDFMZJBHYn8PUxgc93WoCXo4PUwuPtXfvs75cAAAAAAOgAAAAAIAACAAAABJcPsxadm7gwkelwWDSMSm9UrEh2DIKLM5vXEKyK+ycSAAAABQ3j30F4svRsmp5FLSLN0F629KIuX/+uiESxi3aKmA90AAAAD2wPNFHlrwRkulAgAWr80l3W6XTSzwCVhLE3f49Mix+LWHJ7MQzPbEraCRXz8VxeFtsl2WlTWL4MDI52WuvYeT</Password>
+        </CrmConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dynamics CRM Target]"
+      DTS:CreationName="DynamicsCRM"
+      DTS:DTSID="{C899676D-2040-4714-B2D5-BBA28F040F4D}"
+      DTS:ObjectName="Dynamics CRM Target">
+      <DTS:ObjectData>
+        <CrmConnectionManager
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=EA-LP-CRM-DEVMASTEREVAL;CrmServerUrl=https://devmastereval.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcFroJr4msUWFeILjt2JVgQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABqZDhp2+pHJK0oYU6Dxpj6BuCxe+g3t4BaLq6dFpaN6AAAAAAOgAAAAAIAACAAAAADKKOJQwVWoQ1X6sAOxzCfNj+t6LoTRvoIoWkKeWxnwCAAAABx+cx+BbCZuUTleZ3UP7PgbmsJM+u27BCyIGPLSRBuo0AAAACv9QTzMWonAAA1iXT++66qOa5QjrVPv3or1pJ04hNibL4T/5eRZtmdIz0t136hUKAoflQp3Tj43Hr1htXN+hm0</Password>
+        </CrmConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\BU"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{A8BEFFF8-79F0-4D8E-9F2C-35BBFA88822D}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="BU">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\BU\Load BUs to the local DB"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{35E343AB-9238-4922-A7EE-C26FE95C2CB1}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load BUs to the local DB"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\BU\Load BUs to the local DB\Load BUs from source"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright 2011-2017 KingswaySoft Inc."
+                  description="Extract data from Microsoft Dynamics CRM."
+                  name="Load BUs from source"
+                  usesDispositions="true"
+                  version="2">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of source data from Microsoft Dynamics CRM."
+                      expressionType="Notify"
+                      name="SourceType"
+                      typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceType">1</property>
+                    <property
+                      dataType="System.String"
+                      description="Dynamics CRM entity to retrieve data from."
+                      expressionType="Notify"
+                      name="SourceEntity"></property>
+                    <property
+                      dataType="System.String"
+                      description="FetchXML statement."
+                      expressionType="Notify"
+                      name="FetchXML">&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+  &lt;entity name="businessunit"&gt;
+    &lt;attribute name="name" /&gt;
+    &lt;attribute name="businessunitid" /&gt;
+    &lt;attribute name="parentbusinessunitid" /&gt;
+    &lt;order attribute="name" descending="false" /&gt;
+    &lt;filter type="and"&gt;
+      &lt;condition attribute="isdisabled" operator="eq" value="0" /&gt;
+      &lt;condition attribute="parentbusinessunitid" operator="not-null" /&gt;
+    &lt;/filter&gt;
+  &lt;/entity&gt;
+&lt;/fetch&gt;</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the batch size of the query."
+                      expressionType="Notify"
+                      name="BatchSize">2000</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the maximum number of rows to be returned from the Dynamics 365/CRM server (Specify 0 to read all satisfying records)."
+                      expressionType="Notify"
+                      name="MaxRowsReturned">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="The caller to be used for CRM impersonation when reading from CRM server."
+                      expressionType="Notify"
+                      name="ImpersonateAs" />
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the output timezone for CRM datetime fields."
+                      expressionType="Notify"
+                      name="OutputTimezone"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceOutputTimezone" />
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceComponent</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\BU\Load BUs to the local DB\Load BUs from source.Connections[DynamicsCRM]"
+                      connectionManagerID="Package.ConnectionManagers[Dynamics CRM Source]"
+                      connectionManagerRefId="Package.ConnectionManagers[Dynamics CRM Source]"
+                      description="Dynamics CRM Connection Manager"
+                      name="DynamicsCRM" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output]"
+                      name="CRM Primary Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[businessunitid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[businessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[businessunitid]"
+                          name="businessunitid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[name]"
+                          length="160"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[name]"
+                          name="name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[parentbusinessunitid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[parentbusinessunitid]"
+                          name="parentbusinessunitid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[parentbusinessunitidname]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitidname]"
+                          length="160"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[parentbusinessunitidname]"
+                          name="parentbusinessunitidname"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[businessunitid]"
+                          dataType="guid"
+                          name="businessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[name]"
+                          dataType="wstr"
+                          length="160"
+                          name="name" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitid]"
+                          dataType="guid"
+                          name="parentbusinessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitidname]"
+                          dataType="wstr"
+                          length="160"
+                          name="parentbusinessunitidname" />
+                      </externalMetadataColumns>
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\BU\Load BUs to the local DB\Load root BUs from destination"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright 2011-2017 KingswaySoft Inc."
+                  description="Extract data from Microsoft Dynamics CRM."
+                  name="Load root BUs from destination"
+                  usesDispositions="true"
+                  version="2">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of source data from Microsoft Dynamics CRM."
+                      expressionType="Notify"
+                      name="SourceType"
+                      typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceType">1</property>
+                    <property
+                      dataType="System.String"
+                      description="Dynamics CRM entity to retrieve data from."
+                      expressionType="Notify"
+                      name="SourceEntity"></property>
+                    <property
+                      dataType="System.String"
+                      description="FetchXML statement."
+                      expressionType="Notify"
+                      name="FetchXML">&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+  &lt;entity name="businessunit"&gt;
+    &lt;attribute name="name" /&gt;
+    &lt;attribute name="businessunitid" /&gt;
+    &lt;attribute name="parentbusinessunitid" /&gt;
+    &lt;order attribute="name" descending="false" /&gt;
+    &lt;filter type="and"&gt;
+      &lt;condition attribute="parentbusinessunitid" operator="null" /&gt;
+    &lt;/filter&gt;
+  &lt;/entity&gt;
+&lt;/fetch&gt;</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the batch size of the query."
+                      expressionType="Notify"
+                      name="BatchSize">2000</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the maximum number of rows to be returned from the Dynamics 365/CRM server (Specify 0 to read all satisfying records)."
+                      expressionType="Notify"
+                      name="MaxRowsReturned">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="The caller to be used for CRM impersonation when reading from CRM server."
+                      expressionType="Notify"
+                      name="ImpersonateAs" />
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the output timezone for CRM datetime fields."
+                      expressionType="Notify"
+                      name="OutputTimezone"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceOutputTimezone" />
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceComponent</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Connections[DynamicsCRM]"
+                      connectionManagerID="Package.ConnectionManagers[Dynamics CRM Target]"
+                      connectionManagerRefId="Package.ConnectionManagers[Dynamics CRM Target]"
+                      description="Dynamics CRM Connection Manager"
+                      name="DynamicsCRM" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output]"
+                      name="CRM Primary Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[businessunitid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[businessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[businessunitid]"
+                          name="businessunitid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[name]"
+                          length="160"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[name]"
+                          name="name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[parentbusinessunitid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[parentbusinessunitid]"
+                          name="parentbusinessunitid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[parentbusinessunitidname]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitidname]"
+                          length="160"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[parentbusinessunitidname]"
+                          name="parentbusinessunitidname"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[businessunitid]"
+                          dataType="guid"
+                          name="businessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[name]"
+                          dataType="wstr"
+                          length="160"
+                          name="name" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitid]"
+                          dataType="guid"
+                          name="parentbusinessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].ExternalColumns[parentbusinessunitidname]"
+                          dataType="wstr"
+                          length="160"
+                          name="parentbusinessunitidname" />
+                      </externalMetadataColumns>
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\BU\Load BUs to the local DB\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[srcbusinessunit]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[businessunitid]"
+                          cachedDataType="guid"
+                          cachedName="businessunitid"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[businessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[businessunitid]" />
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[name]"
+                          cachedDataType="wstr"
+                          cachedLength="160"
+                          cachedName="name"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[name]" />
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[parentbusinessunitid]"
+                          cachedDataType="guid"
+                          cachedName="parentbusinessunitid"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output].Columns[parentbusinessunitid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[businessunitid]"
+                          dataType="guid"
+                          name="businessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                          dataType="wstr"
+                          length="200"
+                          name="name" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
+                          dataType="guid"
+                          name="parentbusinessunitid" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\BU\Load BUs to the local DB\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\BU\Load BUs to the local DB\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination 1"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[destbusinessunit]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[businessunitid]"
+                          cachedDataType="guid"
+                          cachedName="businessunitid"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[businessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[businessunitid]" />
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[name]"
+                          cachedDataType="wstr"
+                          cachedLength="160"
+                          cachedName="name"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[name]" />
+                        <inputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[parentbusinessunitid]"
+                          cachedDataType="guid"
+                          cachedName="parentbusinessunitid"
+                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
+                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output].Columns[parentbusinessunitid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[businessunitid]"
+                          dataType="guid"
+                          name="businessunitid" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                          dataType="wstr"
+                          length="200"
+                          name="name" />
+                        <externalMetadataColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
+                          dataType="guid"
+                          name="parentbusinessunitid" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\BU\Load BUs to the local DB.Paths[CRM Primary Output]"
+                  endId="Package\BU\Load BUs to the local DB\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="CRM Primary Output"
+                  startId="Package\BU\Load BUs to the local DB\Load BUs from source.Outputs[CRM Primary Output]" />
+                <path
+                  refId="Package\BU\Load BUs to the local DB.Paths[CRM Primary Output1]"
+                  endId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                  name="CRM Primary Output"
+                  startId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[CRM Primary Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\BU\Truncate BU Local table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{634B53A8-47BF-4856-8E28-F2C47216E399}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate BU Local table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9B7AAE6F-DEB4-46AE-82D0-77148162B1B4}"
+              SQLTask:SqlStatementSource="truncate table dbo.srcbusinessunit&#xA;truncate table dbo.destbusinessunit" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\BU.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{2C884B40-6813-4151-B39A-F99D118860B3}"
+          DTS:From="Package\BU\Truncate BU Local table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\BU\Load BUs to the local DB" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{91E87ABA-EB2F-455C-811B-7B8DF6A5F765}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Create role membership if not exist"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{30DBF690-A3DB-4AC8-86B1-B95CBEE9530A}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Create role membership if not exist"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright 2011-2017 KingswaySoft Inc."
+                  description="Populate data into Microsoft Dynamics CRM."
+                  name="Dynamics CRM Destination"
+                  usesDispositions="true"
+                  version="3">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Destination entity to write data."
+                      expressionType="Notify"
+                      name="DestinationEntity">teamroles</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how data is written to CRM server."
+                      name="ActionType"
+                      typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmDestinationActionType">1</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the values of CRM lookup fields should be removed if the reference records cannot be found. "
+                      expressionType="Notify"
+                      name="RemoveUnresolvableReferences">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether duplicate detection should be enabled when creating or updating CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in Microsoft Dynamics CRM."
+                      expressionType="Notify"
+                      name="EnableDuplicateDetection">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the matching criteria to be used when Upsert action is chosen."
+                      expressionType="Notify"
+                      name="UpsertMatchingCriteria"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmUpsertMatchingCriteria">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specify the matching fields to be used to determine the matching records that exist in CRM when Manually Specify option is chosen for Upsert action."
+                      expressionType="Notify"
+                      name="UpsertMatchingFields"></property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to ignore those NULL-valued fields."
+                      expressionType="Notify"
+                      name="IgnoreNullValuedFields">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                      expressionType="Notify"
+                      name="IgnoreUnchangedFields">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specify whether to remove those invalid characters before writing to CRM."
+                      expressionType="Notify"
+                      name="RemoveInvalidCharacters">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                      expressionType="Notify"
+                      name="ChangeFlagFields"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify what action will be taken when multiple matches are found with Upsert action."
+                      expressionType="Notify"
+                      name="HandlingOfMultipleMatches"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmUpsertHandlingOfMultipleMatches">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Workflow to be executed."
+                      expressionType="Notify"
+                      name="Workflow"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the number of records to be sent to Microsoft Dynamics 365/CRM server in each service call."
+                      expressionType="Notify"
+                      name="BatchSize">10</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the total number or concurrent threads to write to Dynamics 365/CRM server simultaneously. "
+                      expressionType="Notify"
+                      name="ConcurrentWritingThreadsInTotal">1</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether datetime values should be sent to CRM server in UTC format."
+                      expressionType="Notify"
+                      name="SendDateTimeInUtcFormat">false</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmDestinationComponent</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Connections[DynamicsCRM]"
+                      connectionManagerID="Package.ConnectionManagers[Dynamics CRM Target]"
+                      connectionManagerRefId="Package.ConnectionManagers[Dynamics CRM Target]"
+                      description="Dynamics CRM Connection Manager"
+                      name="DynamicsCRM" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].Columns[roleid]"
+                          cachedDataType="guid"
+                          cachedName="roleid"
+                          externalMetadataColumnId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].Columns[teamid]"
+                          cachedDataType="guid"
+                          cachedName="teamid"
+                          externalMetadataColumnId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="CrmFieldType">Uniqueidentifier</property>
+                            <property
+                              dataType="System.String"
+                              name="LookupTypes">role</property>
+                          </properties>
+                        </externalMetadataColumn>
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="CrmFieldType">Uniqueidentifier</property>
+                            <property
+                              dataType="System.String"
+                              name="LookupTypes">team</property>
+                          </properties>
+                        </externalMetadataColumn>
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Error Output"
+                      synchronousInputId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[CrmErrorMessage]"
+                          dataType="wstr"
+                          length="2048"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Error Output].Columns[CrmErrorMessage]"
+                          name="CrmErrorMessage" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Default Output]"
+                      exclusionGroup="1"
+                      name="Default Output"
+                      synchronousInputId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Default Output].Columns[CrmRecordId]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Default Output].Columns[CrmRecordId]"
+                          name="CrmRecordId" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Default Output].Columns[IsNew]"
+                          dataType="bool"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Outputs[Default Output].Columns[IsNew]"
+                          name="IsNew" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT dr.roleid, rm.teamid from srcrolemembership rm
+left join destrole as dr
+on dr.rolebusinessunitname = rm.rolebusinessunitname
+and dr.name = rm.rolename
+left join destrolemembership as drm
+on drm.roleid = dr.roleid and drm.teamid = rm.teamid
+where drm.teamroleid is null</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]"
+                          name="roleid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]"
+                          name="teamid"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[roleid]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[roleid]"
+                          name="roleid" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamid]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamid]"
+                          name="teamid" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container\Create role membership if not exist.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination.Inputs[Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container\Create role membership if not exist\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Delete role membership on dest"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5E26113B-B907-4CF6-A96D-A767B84B17EC}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Delete role membership on dest"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright 2011-2017 KingswaySoft Inc."
+                  description="Populate data into Microsoft Dynamics CRM."
+                  name="Dynamics CRM Destination"
+                  usesDispositions="true"
+                  version="3">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Destination entity to write data."
+                      expressionType="Notify"
+                      name="DestinationEntity">teamroles</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how data is written to CRM server."
+                      name="ActionType"
+                      typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmDestinationActionType">4</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the values of CRM lookup fields should be removed if the reference records cannot be found. "
+                      expressionType="Notify"
+                      name="RemoveUnresolvableReferences">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether duplicate detection should be enabled when creating or updating CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in Microsoft Dynamics CRM."
+                      expressionType="Notify"
+                      name="EnableDuplicateDetection">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the matching criteria to be used when Upsert action is chosen."
+                      expressionType="Notify"
+                      name="UpsertMatchingCriteria"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmUpsertMatchingCriteria">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specify the matching fields to be used to determine the matching records that exist in CRM when Manually Specify option is chosen for Upsert action."
+                      expressionType="Notify"
+                      name="UpsertMatchingFields"></property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to ignore those NULL-valued fields."
+                      expressionType="Notify"
+                      name="IgnoreNullValuedFields">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                      expressionType="Notify"
+                      name="IgnoreUnchangedFields">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specify whether to remove those invalid characters before writing to CRM."
+                      expressionType="Notify"
+                      name="RemoveInvalidCharacters">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                      expressionType="Notify"
+                      name="ChangeFlagFields"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify what action will be taken when multiple matches are found with Upsert action."
+                      expressionType="Notify"
+                      name="HandlingOfMultipleMatches"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmUpsertHandlingOfMultipleMatches">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Workflow to be executed."
+                      expressionType="Notify"
+                      name="Workflow"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the number of records to be sent to Microsoft Dynamics 365/CRM server in each service call."
+                      expressionType="Notify"
+                      name="BatchSize">10</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the total number or concurrent threads to write to Dynamics 365/CRM server simultaneously. "
+                      expressionType="Notify"
+                      name="ConcurrentWritingThreadsInTotal">1</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether datetime values should be sent to CRM server in UTC format."
+                      expressionType="Notify"
+                      name="SendDateTimeInUtcFormat">false</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmDestinationComponent</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Connections[DynamicsCRM]"
+                      connectionManagerID="Package.ConnectionManagers[Dynamics CRM Target]"
+                      connectionManagerRefId="Package.ConnectionManagers[Dynamics CRM Target]"
+                      description="Dynamics CRM Connection Manager"
+                      name="DynamicsCRM" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].Columns[roleid]"
+                          cachedDataType="guid"
+                          cachedName="roleid"
+                          externalMetadataColumnId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].Columns[teamid]"
+                          cachedDataType="guid"
+                          cachedName="teamid"
+                          externalMetadataColumnId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="CrmFieldType">Uniqueidentifier</property>
+                            <property
+                              dataType="System.String"
+                              name="LookupTypes">role</property>
+                          </properties>
+                        </externalMetadataColumn>
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="CrmFieldType">Uniqueidentifier</property>
+                            <property
+                              dataType="System.String"
+                              name="LookupTypes">team</property>
+                          </properties>
+                        </externalMetadataColumn>
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Error Output"
+                      synchronousInputId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[CrmErrorMessage]"
+                          dataType="wstr"
+                          length="2048"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Error Output].Columns[CrmErrorMessage]"
+                          name="CrmErrorMessage" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Default Output]"
+                      exclusionGroup="1"
+                      name="Default Output"
+                      synchronousInputId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Default Output].Columns[CrmRecordId]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Default Output].Columns[CrmRecordId]"
+                          name="CrmRecordId" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Default Output].Columns[IsNew]"
+                          dataType="bool"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Outputs[Default Output].Columns[IsNew]"
+                          name="IsNew" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select rm.teamroleid, rm.roleid, rm.teamid from destrolemembership as rm
+left join srclpteams as teams
+on teams.teamid = rm.teamid</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamroleid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamroleid]"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamroleid]"
+                          name="teamroleid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[roleid]"
+                          name="roleid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].Columns[teamid]"
+                          name="teamid"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamroleid]"
+                          dataType="guid"
+                          name="teamroleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamroleid]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamroleid]"
+                          name="teamroleid" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[roleid]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[roleid]"
+                          name="roleid" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamid]"
+                          dataType="guid"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[teamid]"
+                          name="teamid" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container\Delete role membership on dest.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination.Inputs[Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container\Delete role membership on dest\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Migrate Team Roles"
+          DTS:DTSID="{9673E971-BF2C-4F5D-AFB9-769332DDA2A7}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Roles from SRC and Dest to Local DB"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright 2011-2017 KingswaySoft Inc."
+                  description="Extract data from Microsoft Dynamics CRM."
+                  name="Dynamics CRM Source"
+                  usesDispositions="true"
+                  version="2">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of source data from Microsoft Dynamics CRM."
+                      expressionType="Notify"
+                      name="SourceType"
+                      typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceType">1</property>
+                    <property
+                      dataType="System.String"
+                      description="Dynamics CRM entity to retrieve data from."
+                      expressionType="Notify"
+                      name="SourceEntity"></property>
+                    <property
+                      dataType="System.String"
+                      description="FetchXML statement."
+                      expressionType="Notify"
+                      name="FetchXML">&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+  &lt;entity name="teamroles"&gt;
+    &lt;attribute name="roleid" /&gt;
+    &lt;attribute name="teamid" /&gt;
+    
+    &lt;link-entity name="team" from="teamid" to="teamid" link-type="outer" alias="team"&gt;
+      &lt;attribute name="name" /&gt;
+    &lt;/link-entity&gt;
+    &lt;link-entity name="role" from="roleid" to="roleid" link-type="outer" alias="role"&gt;
+      &lt;attribute name="name" /&gt;
+      &lt;attribute name="businessunitid" /&gt;
+      &lt;attribute name="businessunitidname" /&gt;
+    &lt;/link-entity&gt;
+  &lt;/entity&gt;
+&lt;/fetch&gt;</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the batch size of the query."
+                      expressionType="Notify"
+                      name="BatchSize">2000</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the maximum number of rows to be returned from the Dynamics 365/CRM server (Specify 0 to read all satisfying records)."
+                      expressionType="Notify"
+                      name="MaxRowsReturned">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="The caller to be used for CRM impersonation when reading from CRM server."
+                      expressionType="Notify"
+                      name="ImpersonateAs" />
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the output timezone for CRM datetime fields."
+                      expressionType="Notify"
+                      name="OutputTimezone"
+                      typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceOutputTimezone" />
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.CrmSourceComponent</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Connections[DynamicsCRM]"
+                      connectionManagerID="Package.ConnectionManagers[Dynamics CRM Source]"
+                      connectionManagerRefId="Package.ConnectionManagers[Dynamics CRM Source]"
+                      description="Dynamics CRM Connection Manager"
+                      name="DynamicsCRM" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output]"
+                      name="CRM Primary Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[roleid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[roleid]"
+                          name="roleid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamid]"
+                          name="teamid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamroleid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[teamroleid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamroleid]"
+                          name="teamroleid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.businessunitidname]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.businessunitidname]"
+                          length="160"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.businessunitidname]"
+                          name="role.businessunitidname"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.name]"
+                          length="100"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.name]"
+                          name="role.name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[team.name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[team.name]"
+                          length="160"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[team.name]"
+                          name="team.name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.businessunitid]"
+                          dataType="guid"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.businessunitid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.businessunitid]"
+                          name="role.businessunitid"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[teamroleid]"
+                          dataType="guid"
+                          name="teamroleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.businessunitidname]"
+                          dataType="wstr"
+                          length="160"
+                          name="role.businessunitidname" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.name]"
+                          dataType="wstr"
+                          length="100"
+                          name="role.name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[team.name]"
+                          dataType="wstr"
+                          length="160"
+                          name="team.name" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].ExternalColumns[role.businessunitid]"
+                          dataType="guid"
+                          name="role.businessunitid" />
+                      </externalMetadataColumns>
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination 1"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[srcrolemembership]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[roleid]"
+                          cachedDataType="guid"
+                          cachedName="roleid"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[roleid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[roleid]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[teamid]"
+                          cachedDataType="guid"
+                          cachedName="teamid"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[teamid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamid]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[teamroleid]"
+                          cachedDataType="guid"
+                          cachedName="teamroleid"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[teamroleid]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[teamroleid]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[role.businessunitidname]"
+                          cachedDataType="wstr"
+                          cachedLength="160"
+                          cachedName="role.businessunitidname"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[rolebusinessunitname]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.businessunitidname]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[role.name]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="role.name"
+                          externalMetadataColumnId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[rolename]"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[role.name]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[teamroleid]"
+                          dataType="guid"
+                          name="teamroleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[teamid]"
+                          dataType="guid"
+                          name="teamid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[roleid]"
+                          dataType="guid"
+                          name="roleid" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[rolebusinessunitname]"
+                          dataType="wstr"
+                          length="200"
+                          name="rolebusinessunitname" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[rolename]"
+                          dataType="wstr"
+                          length="200"
+                          name="rolename" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB.Paths[CRM Primary Output]"
+                  endId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                  name="CRM Primary Output"
+                  startId="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source.Outputs[CRM Primary Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Truncate Dest Rolemembership"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{03F5F8F2-F4BB-4C12-8369-BAB2FA27B4F3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate Dest Rolemembership"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9B7AAE6F-DEB4-46AE-82D0-77148162B1B4}"
+              SQLTask:SqlStatementSource="truncate table destrolemembership&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Truncate local DB"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A7C80C7C-41ED-4CE9-8681-A6CF1C1664E8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate local DB"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9B7AAE6F-DEB4-46AE-82D0-77148162B1B4}"
+              SQLTask:SqlStatementSource="truncate table dbo.destrole&#xA;truncate table dbo.srcrolemembership&#xA;truncate table destrolemembership&#xA;truncate table srclpteams" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{96A029DD-F25E-41A4-B6FF-C1B7536E8EE2}"
+          DTS:From="Package\Sequence Container\Load Roles from SRC and Dest to Local DB"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container\Delete role membership on dest" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{9CD3248B-90E0-4C56-9728-2D068980E43E}"
+          DTS:From="Package\Sequence Container\Delete role membership on dest"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container\Truncate Dest Rolemembership" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{98319BD4-3E78-48D8-9464-CF5E64AB8317}"
+          DTS:From="Package\Sequence Container\Truncate Dest Rolemembership"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\Sequence Container\Create role membership if not exist" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{384811A5-3A3E-43FF-B86C-6C61B1E72758}"
+      DTS:From="Package\BU"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence Container" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196,41.7142857142858"
+          Id="Package\BU\Load BUs to the local DB"
+          TopLeft="45.0000002724784,144.942857226204" />
+        <NodeLayout
+          Size="191.428571428572,41.7142857142858"
+          Id="Package\BU\Truncate BU Local table"
+          TopLeft="43.3673471834499,54.0521011075346" />
+        <EdgeLayout
+          Id="Package\BU.PrecedenceConstraints[Constraint]"
+          TopLeft="140.983673727964,95.6521011075348">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.2907561186688"
+              Start="0,0"
+              End="0,41.7907561186688">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.7907561186688" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="262.285714285715,434.857142857143"
+          Size="262.285714285715,477.714285714286"
+          Id="Package\BU"
+          TopLeft="848.183672501811,59.1680667243614" />
+        <NodeLayout
+          Size="244.571428571429,41.7142857142858"
+          Id="Package\Sequence Container\Create role membership if not exist"
+          TopLeft="223.93650490032,484.230066920995" />
+        <NodeLayout
+          Size="230.285714285715,41.7142857142858"
+          Id="Package\Sequence Container\Delete role membership on dest"
+          TopLeft="245.142859205908,305.129412004939" />
+        <NodeLayout
+          Size="280,41.7142857142858"
+          Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB"
+          TopLeft="217.761907653924,119.901276912613" />
+        <NodeLayout
+          Size="226.285714285715,41.7142857142858"
+          Id="Package\Sequence Container\Truncate Dest Rolemembership"
+          TopLeft="234.142854710014,392.588238640228" />
+        <NodeLayout
+          Size="161.714285714286,41.7142857142858"
+          Id="Package\Sequence Container\Truncate local DB"
+          TopLeft="271.897957768454,25.0000000000001" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          TopLeft="359.023812001344,161.615562626898">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,143.513849378041"
+              Start="0,0"
+              End="0,136.013849378041">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,136.013849378041" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          TopLeft="360.342859205908,346.729412004939">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.000004495894,45.8588266352889"
+              Start="0,0"
+              End="-13.000004495894,38.3588266352889">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.9294133176445" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.9294133176445"
+                    Point2="0,22.9294133176445"
+                    Point3="-4,22.9294133176445" />
+                  <mssgle:LineSegment
+                    End="-9.00000449589396,22.9294133176445" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.00000449589396,22.9294133176445"
+                    Point2="-13.000004495894,22.9294133176445"
+                    Point3="-13.000004495894,26.9294133176445" />
+                  <mssgle:LineSegment
+                    End="-13.000004495894,38.3588266352889" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 4]"
+          TopLeft="346.839679805167,434.188238640228">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.041828280767"
+              Start="0,0"
+              End="0,42.541828280767">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.541828280767" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="693.714285714286,683.428571428572"
+          Size="693.714285714286,726.285714285715"
+          Id="Package\Sequence Container"
+          TopLeft="0.285712826008535,38.3647055649015" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="848.183672501811,298.025209581504">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-154.183673961517,103.482353126254"
+              Start="0,0"
+              End="-146.683673961517,103.482353126254">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-73.0918369807584,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-73.0918369807584,0"
+                    Point2="-77.0918369807584,0"
+                    Point3="-77.0918369807584,4" />
+                  <mssgle:LineSegment
+                    End="-77.0918369807584,99.4823531262544" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-77.0918369807584,99.4823531262544"
+                    Point2="-77.0918369807584,103.482353126254"
+                    Point3="-81.0918369807584,103.482353126254" />
+                  <mssgle:LineSegment
+                    End="-146.683673961517,103.482353126254" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\BU\Load BUs to the local DB">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\BU\Load BUs to the local DB\OLE DB Destination"
+          TopLeft="346,378" />
+        <NodeLayout
+          Size="180,41.6"
+          Id="Package\BU\Load BUs to the local DB\OLE DB Destination 1"
+          TopLeft="751,339" />
+        <NodeLayout
+          Size="183.2,41.6"
+          Id="Package\BU\Load BUs to the local DB\Load BUs from source"
+          TopLeft="257,153" />
+        <NodeLayout
+          Size="225.6,41.6"
+          Id="Package\BU\Load BUs to the local DB\Load root BUs from destination"
+          TopLeft="734,87" />
+        <EdgeLayout
+          Id="Package\BU\Load BUs to the local DB.Paths[CRM Primary Output1]"
+          TopLeft="844,129">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,210"
+              Start="0,0"
+              End="0,202.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,202.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\BU\Load BUs to the local DB.Paths[CRM Primary Output]"
+          TopLeft="348.5,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="83,183"
+              Start="0,0"
+              End="83,175.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,87.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,87.5"
+                    Point2="0,91.5"
+                    Point3="4,91.5" />
+                  <mssgle:LineSegment
+                    End="79,91.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="79,91.5"
+                    Point2="83,91.5"
+                    Point3="83,95.5" />
+                  <mssgle:LineSegment
+                    End="83,175.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\BU\Load BUs to the local DB\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\BU\Load BUs to the local DB\OLE DB Destination 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Create role membership if not exist">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="205.142857142858,42.2857142857143"
+          Id="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination"
+          TopLeft="281,335" />
+        <NodeLayout
+          Size="149.714285714286,42.2857142857143"
+          Id="Package\Sequence Container\Create role membership if not exist\OLE DB Source"
+          TopLeft="147,80" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Create role membership if not exist.Paths[OLE DB Source Output]"
+          TopLeft="222,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="161.5,213"
+              Start="0,0"
+              End="161.5,205.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,102.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,102.5"
+                    Point2="0,106.5"
+                    Point3="4,106.5" />
+                  <mssgle:LineSegment
+                    End="157.5,106.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="157.5,106.5"
+                    Point2="161.5,106.5"
+                    Point3="161.5,110.5" />
+                  <mssgle:LineSegment
+                    End="161.5,205.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="72.75,111.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Create role membership if not exist\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Delete role membership on dest">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="204.8,41.6"
+          Id="Package\Sequence Container\Delete role membership on dest\Dynamics CRM Destination"
+          TopLeft="294,293" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Sequence Container\Delete role membership on dest\OLE DB Source"
+          TopLeft="318,135" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Delete role membership on dest.Paths[OLE DB Source Output]"
+          TopLeft="394.75,177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,116"
+              Start="0,0"
+              End="0,108.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,108.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Delete role membership on dest\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Load Roles from SRC and Dest to Local DB">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,42.2857142857143"
+          Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1"
+          TopLeft="592,333" />
+        <NodeLayout
+          Size="184,42.2857142857143"
+          Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\Dynamics CRM Source"
+          TopLeft="524,82" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB.Paths[CRM Primary Output]"
+          TopLeft="616,124">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="66,209"
+              Start="0,0"
+              End="66,201.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,100.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,100.5"
+                    Point2="0,104.5"
+                    Point3="4,104.5" />
+                  <mssgle:LineSegment
+                    End="62,104.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62,104.5"
+                    Point2="66,104.5"
+                    Point3="66,108.5" />
+                  <mssgle:LineSegment
+                    End="66,201.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Load Roles from SRC and Dest to Local DB\OLE DB Destination 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
