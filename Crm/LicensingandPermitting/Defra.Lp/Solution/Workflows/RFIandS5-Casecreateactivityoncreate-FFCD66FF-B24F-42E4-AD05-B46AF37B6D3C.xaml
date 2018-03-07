@@ -417,6 +417,7 @@
                                 <x:String>connection</x:String>
                                 <x:String>salesorderdetail</x:String>
                                 <x:String>defra_permit</x:String>
+                                <x:String>defra_applicationprice</x:String>
                                 <x:String>msdyn_wallsavedquery</x:String>
                                 <x:String>kbarticle</x:String>
                                 <x:String>routingruleitem</x:String>
@@ -1517,6 +1518,7 @@
                                 <x:String>connection</x:String>
                                 <x:String>salesorderdetail</x:String>
                                 <x:String>defra_permit</x:String>
+                                <x:String>defra_applicationprice</x:String>
                                 <x:String>msdyn_wallsavedquery</x:String>
                                 <x:String>kbarticle</x:String>
                                 <x:String>routingruleitem</x:String>
@@ -1713,7 +1715,7 @@
                                 <mxswa:ActivityReference.Properties>
                                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                                    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep22: Get Company Secretary Email Address Contact Detail record for sending the email to">
+                                    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep22: Get Company Secretary Email Address Contact Detail record">
                                       <mxswa:ActivityReference.Properties>
                                         <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
                                           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep22_1" />
@@ -1747,7 +1749,7 @@
                                               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep22_1_converted]</OutArgument>
                                             </mxswa:ActivityReference.Arguments>
                                           </mxswa:ActivityReference>
-                                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetCompanySecretaryEmail, Defra.Lp.Workflows, Version=1.1.75.1, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep22: Get Company Secretary Email Address Contact Detail record for sending the email to">
+                                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetCompanySecretaryEmail, Defra.Lp.Workflows, Version=1.1.75.1, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep22: Get Company Secretary Email Address Contact Detail record">
                                             <mxswa:ActivityReference.Arguments>
                                               <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep22_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
                                               <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="CompanySecretaryContactDetail">[CustomActivityStep22CompanySecretaryContactDetail_localParameter]</OutArgument>
@@ -1806,6 +1808,9 @@
                                         <Variable x:TypeArguments="x:Object" Name="CreateStep18_38" />
                                         <Variable x:TypeArguments="x:Object" Name="CreateStep18_39" />
                                         <Variable x:TypeArguments="x:Object" Name="CreateStep18_40" />
+                                        <Variable x:TypeArguments="x:Object" Name="CreateStep18_41" />
+                                        <Variable x:TypeArguments="x:Object" Name="CreateStep18_42" />
+                                        <Variable x:TypeArguments="x:Object" Name="CreateStep18_43" />
                                       </Sequence.Variables>
                                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" Value="[New Entity(&quot;email&quot;)]" />
                                       <mxswa:GetEntityProperty Attribute="defra_defaultteamqueue" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_2]">
@@ -1832,7 +1837,7 @@
                                           </InArgument>
                                         </mxswa:SetEntityProperty.TargetType>
                                       </mxswa:SetEntityProperty>
-                                      <mxswa:GetEntityProperty Attribute="responsiblecontactid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_4]">
+                                      <mxswa:GetEntityProperty Attribute="responsiblecontactid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_5]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityCollection" />
@@ -1842,7 +1847,34 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_4 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_5 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityCollection" />
+                                          </InArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_4]</OutArgument>
+                                        </mxswa:ActivityReference.Arguments>
+                                      </mxswa:ActivityReference>
+                                      <mxswa:GetEntityProperty Attribute="defra_addressdetailsid" Entity="[CreatedEntities(&quot;CustomActivityStep22CompanySecretaryContactDetail_entity&quot;)]" EntityName="defra_addressdetails" Value="[CreateStep18_7]">
+                                        <mxswa:GetEntityProperty.TargetType>
+                                          <InArgument x:TypeArguments="s:Type">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityCollection" />
+                                          </InArgument>
+                                        </mxswa:GetEntityProperty.TargetType>
+                                      </mxswa:GetEntityProperty>
+                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                        <mxswa:ActivityReference.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_7 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityCollection" />
+                                          </InArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_6]</OutArgument>
+                                        </mxswa:ActivityReference.Arguments>
+                                      </mxswa:ActivityReference>
+                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                        <mxswa:ActivityReference.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">Add</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_4, CreateStep18_6 }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityCollection" />
                                           </InArgument>
@@ -1863,10 +1895,10 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_5]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_8]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="subject" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_5]">
+                                      <mxswa:SetEntityProperty Attribute="subject" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_8]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1876,41 +1908,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;div style=&amp;#34;&amp;#34;width: 1664px; background-color: rgb(0&amp;#44; 0&amp;#44; 0);&amp;#34;&amp;#34;&amp;gt;&amp;lt;img width=&amp;#34;&amp;#34;179&amp;#34;&amp;#34; height=&amp;#34;&amp;#34;53&amp;#34;&amp;#34; alt=&amp;#34;&amp;#34;GOV.UK&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://hands-on.org.uk/gov-uk-logo.png&amp;#34;&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;p&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;img width=&amp;#34;&amp;#34;200&amp;#34;&amp;#34; height=&amp;#34;&amp;#34;57&amp;#34;&amp;#34; alt=&amp;#34;&amp;#34;Environment Agency&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://hands-on.org.uk/ea_logo_sm.png&amp;#34;&amp;#34;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;For the attention of a company director or the Company Secretary&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34; size=&amp;#34;&amp;#34;6&amp;#34;&amp;#34;&amp;gt;&amp;lt;b&amp;gt;We need more information about your permit application - see the attached official notice&amp;lt;/b&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Type:  ", "String" }]</InArgument>
-                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                                          </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_7]</OutArgument>
-                                        </mxswa:ActivityReference.Arguments>
-                                      </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="defra_applicationpermitdetails" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_9]">
-                                        <mxswa:GetEntityProperty.TargetType>
-                                          <InArgument x:TypeArguments="s:Type">
-                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                                          </InArgument>
-                                        </mxswa:GetEntityProperty.TargetType>
-                                      </mxswa:GetEntityProperty>
-                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                                        <mxswa:ActivityReference.Arguments>
-                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_9 }]</InArgument>
-                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                                          </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_8]</OutArgument>
-                                        </mxswa:ActivityReference.Arguments>
-                                      </mxswa:ActivityReference>
-                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                                        <mxswa:ActivityReference.Arguments>
-                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Site:  ", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;span&amp;gt;&amp;lt;div style=&amp;#34;&amp;#34;width: 1664px; background-color: rgb(0&amp;#44; 0&amp;#44; 0);&amp;#34;&amp;#34;&amp;gt;&amp;lt;img width=&amp;#34;&amp;#34;179&amp;#34;&amp;#34; height=&amp;#34;&amp;#34;53&amp;#34;&amp;#34; alt=&amp;#34;&amp;#34;GOV.UK&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://hands-on.org.uk/gov-uk-logo.png&amp;#34;&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;p&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;&amp;lt;img width=&amp;#34;&amp;#34;200&amp;#34;&amp;#34; height=&amp;#34;&amp;#34;57&amp;#34;&amp;#34; alt=&amp;#34;&amp;#34;Environment Agency&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://hands-on.org.uk/ea_logo_sm.png&amp;#34;&amp;#34;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;For the attention of a company director or the Company Secretary&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34; size=&amp;#34;&amp;#34;6&amp;#34;&amp;#34;&amp;gt;&amp;lt;b&amp;gt;We need more information about your permit application - see the attached official notice&amp;lt;/b&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Type:&amp;amp;nbsp; ", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_10]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="defra_applicationsitedetails" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_12]">
+                                      <mxswa:GetEntityProperty Attribute="defra_applicationpermitdetails" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_12]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1930,14 +1935,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Operator:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Site:  ", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_13]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="name" Entity="[InputEntities(&quot;related_customerid#account&quot;)]" EntityName="account" Value="[CreateStep18_15]">
+                                      <mxswa:GetEntityProperty Attribute="defra_applicationsitedetails" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_15]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1957,14 +1962,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Application reference:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Operator:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_16]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="defra_applicationnumber" Entity="[InputEntities(&quot;related_defra_application#defra_application&quot;)]" EntityName="defra_application" Value="[CreateStep18_18]">
+                                      <mxswa:GetEntityProperty Attribute="name" Entity="[InputEntities(&quot;related_customerid#account&quot;)]" EntityName="account" Value="[CreateStep18_18]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1984,14 +1989,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Received:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Application reference:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_19]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;related_defra_application#defra_application&quot;)]" EntityName="defra_application" Value="[CreateStep18_21]">
+                                      <mxswa:GetEntityProperty Attribute="defra_applicationnumber" Entity="[InputEntities(&quot;related_defra_application#defra_application&quot;)]" EntityName="defra_application" Value="[CreateStep18_21]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -2011,14 +2016,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;I attach a notice that asks for more information about your permit application.&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;If we don&amp;#8217;t get the information by&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif; color: fuchsia;&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;deadline-date&amp;amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;then we may treat your application as if you had withdrawn it. If this happens you will lose your application fee.&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;If you have any questions please contact&amp;amp;nbsp;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;font face=&amp;#34;&amp;#34;Arial&amp;#34;&amp;#34;&amp;gt;Received:&amp;amp;nbsp;&amp;amp;nbsp;", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_22]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="systemuserid" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_24]">
+                                      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;related_defra_application#defra_application&quot;)]" EntityName="defra_application" Value="[CreateStep18_24]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -2038,14 +2043,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;amp;nbsp;on&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;font color=&amp;#34;&amp;#34;#ff00ff&amp;#34;&amp;#34; face=&amp;#34;&amp;#34;Arial&amp;#44; sans-serif&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;Enter phone number&amp;amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;amp;nbsp;or email  ", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;/font&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;I attach a notice that asks for more information about your permit application.&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;If we don&amp;#8217;t get the information by&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif; color: fuchsia;&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;deadline-date&amp;amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-size: 12pt; font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;then we may treat your application as if you had withdrawn it. If this happens you will lose your application fee.&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;If you have any questions please contact&amp;amp;nbsp;", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_25]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="defra_defaultteamemailaddress" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_27]">
+                                      <mxswa:GetEntityProperty Attribute="systemuserid" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_27]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -2065,14 +2070,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, ".&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt; ", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;amp;nbsp;on&amp;amp;nbsp;&amp;lt;/span&amp;gt;&amp;lt;font color=&amp;#34;&amp;#34;#ff00ff&amp;#34;&amp;#34; face=&amp;#34;&amp;#34;Arial&amp;#44; sans-serif&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;Enter phone number&amp;amp;gt;&amp;lt;/font&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;amp;nbsp;or email  ", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_28]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:GetEntityProperty Attribute="systemuserid" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_30]">
+                                      <mxswa:GetEntityProperty Attribute="defra_defaultteamemailaddress" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_30]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -2092,31 +2097,58 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;color: rgb(255&amp;#44; 0&amp;#44; 255); font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;Permitting Support Advisor/Permitting Officer&amp;amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, ".&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;font-family: Arial;&amp;#34;&amp;#34;&amp;gt; ", "String" }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_31]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
+                                      <mxswa:GetEntityProperty Attribute="systemuserid" Entity="[InputEntities(&quot;related_owninguser#systemuser&quot;)]" EntityName="systemuser" Value="[CreateStep18_33]">
+                                        <mxswa:GetEntityProperty.TargetType>
+                                          <InArgument x:TypeArguments="s:Type">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                          </InArgument>
+                                        </mxswa:GetEntityProperty.TargetType>
+                                      </mxswa:GetEntityProperty>
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
-                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">Add</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_7, CreateStep18_8, CreateStep18_10, CreateStep18_11, CreateStep18_13, CreateStep18_14, CreateStep18_16, CreateStep18_17, CreateStep18_19, CreateStep18_20, CreateStep18_22, CreateStep18_23, CreateStep18_25, CreateStep18_26, CreateStep18_28, CreateStep18_29, CreateStep18_31 }]</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_33 }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_6]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_32]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="description" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_6]">
+                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                        <mxswa:ActivityReference.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " &amp;lt;br&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;span style=&amp;#34;&amp;#34;color: rgb(255&amp;#44; 0&amp;#44; 255); font-family: Arial&amp;#44; sans-serif;&amp;#34;&amp;#34;&amp;gt;&amp;amp;lt;Permitting Support Advisor/Permitting Officer&amp;amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;", "String" }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                          </InArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_34]</OutArgument>
+                                        </mxswa:ActivityReference.Arguments>
+                                      </mxswa:ActivityReference>
+                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                        <mxswa:ActivityReference.Arguments>
+                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">Add</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_10, CreateStep18_11, CreateStep18_13, CreateStep18_14, CreateStep18_16, CreateStep18_17, CreateStep18_19, CreateStep18_20, CreateStep18_22, CreateStep18_23, CreateStep18_25, CreateStep18_26, CreateStep18_28, CreateStep18_29, CreateStep18_31, CreateStep18_32, CreateStep18_34 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                          </InArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_9]</OutArgument>
+                                        </mxswa:ActivityReference.Arguments>
+                                      </mxswa:ActivityReference>
+                                      <mxswa:SetEntityProperty Attribute="description" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_9]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                           </InArgument>
                                         </mxswa:SetEntityProperty.TargetType>
                                       </mxswa:SetEntityProperty>
-                                      <mxswa:GetEntityProperty Attribute="incidentid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_33]">
+                                      <mxswa:GetEntityProperty Attribute="incidentid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_36]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -2126,14 +2158,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_33 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_36 }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_32]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_35]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="regardingobjectid" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_32]">
+                                      <mxswa:SetEntityProperty Attribute="regardingobjectid" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_35]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -2147,10 +2179,10 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_34]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_37]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="deliveryprioritycode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_34]">
+                                      <mxswa:SetEntityProperty Attribute="deliveryprioritycode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_37]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
@@ -2164,10 +2196,10 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_35]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_38]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="directioncode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_35]">
+                                      <mxswa:SetEntityProperty Attribute="directioncode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_38]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
@@ -2181,10 +2213,10 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_36]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_39]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="followemailuserpreference" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_36]">
+                                      <mxswa:SetEntityProperty Attribute="followemailuserpreference" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_39]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
@@ -2198,17 +2230,17 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_37]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_40]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="notifications" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_37]">
+                                      <mxswa:SetEntityProperty Attribute="notifications" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_40]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                                           </InArgument>
                                         </mxswa:SetEntityProperty.TargetType>
                                       </mxswa:SetEntityProperty>
-                                      <mxswa:GetEntityProperty Attribute="ownerid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_39]">
+                                      <mxswa:GetEntityProperty Attribute="ownerid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep18_42]">
                                         <mxswa:GetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -2218,14 +2250,14 @@
                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                         <mxswa:ActivityReference.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_39 }]</InArgument>
+                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep18_42 }]</InArgument>
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_38]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_41]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="ownerid" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_38]">
+                                      <mxswa:SetEntityProperty Attribute="ownerid" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_41]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -2239,10 +2271,10 @@
                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                                           </InArgument>
-                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_40]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep18_43]</OutArgument>
                                         </mxswa:ActivityReference.Arguments>
                                       </mxswa:ActivityReference>
-                                      <mxswa:SetEntityProperty Attribute="prioritycode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_40]">
+                                      <mxswa:SetEntityProperty Attribute="prioritycode" Entity="[CreatedEntities(&quot;CreateStep18_localParameter#Temp&quot;)]" EntityName="email" Value="[CreateStep18_43]">
                                         <mxswa:SetEntityProperty.TargetType>
                                           <InArgument x:TypeArguments="s:Type">
                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />

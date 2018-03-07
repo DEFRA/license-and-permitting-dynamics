@@ -30,6 +30,11 @@ namespace Model.Lp.Crm
         /// Lookup to the Application record
         /// </summary>
         public const string ApplicationId = "defra_applicationid";
+
+        /// <summary>
+        /// Line Cost
+        /// </summary>
+        public const string Value = "defra_value";
     }
 
     /// <summary>
