@@ -15,5 +15,10 @@ namespace Model.Waste.Crm
         /// Location Screening Required Boolean field
         /// </summary>
         public const string LocationScreeningRequired = "defra_locationscreeningrequired";
+
+        /// <summary>
+        /// App Type OptionSet
+        /// </summary>
+        public const string ApplicationType = "defra_applicationtype";
     }
 }

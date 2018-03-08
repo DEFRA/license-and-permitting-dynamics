@@ -35,6 +35,11 @@ namespace Model.Lp.Crm
         /// Line Cost
         /// </summary>
         public const string Value = "defra_value";
+
+        /// <summary>
+        /// Lookup
+        /// </summary>
+        public static string StandardRule = "defra_standardruleid";
     }
 
     /// <summary>

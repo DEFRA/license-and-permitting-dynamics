@@ -14,6 +14,7 @@ using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
+using DAL;
 using Microsoft.Crm.Sdk.Messages;
 using Model.Lp.Crm;
 
@@ -129,6 +130,9 @@ namespace Defra.Lp.WastePermits.Plugins
                                 _TracingService.Trace("Calling RetrieveStandardRule");
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
 
+                                // Update Application Line Amount
+                                this.UpdateApplicationLinePrice(targetAppLine);
+
                                 //Create the Parameters record based on the Standard Rule Parameteres record
                                 _TracingService.Trace("Calling CrateApplicationLineParameters");
                                 this.CrateApplicationLineParameters(targetAppLine, preImageEntity);
@@ -136,6 +140,8 @@ namespace Defra.Lp.WastePermits.Plugins
                                 //Create the Duly Made record (if bespoke it will only create the record if it does not exist
                                 _TracingService.Trace("Calling UpdateDulyMadeChecklist");
                                 this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
+
+                               
                             }
 
                             //Update the Application
@@ -189,6 +195,15 @@ namespace Defra.Lp.WastePermits.Plugins
                     break;
 
             }
+        }
+
+        private void UpdateApplicationLinePrice(Entity targetAppLine)
+        {
+            OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
+            EntityReference standardRuleEntityReference = targetAppLine[ApplicationLine.StandardRule] as EntityReference;
+            Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference);
+            _TracingService.Trace("Setting Application Price to {0}", price);
+            targetAppLine[ApplicationLine.Value] = price;
         }
 
         private void UpdateApplicationOnStatusChange(ApplicationLineStates newApplicationLineState)
@@ -567,7 +582,7 @@ namespace Defra.Lp.WastePermits.Plugins
             this.ApplicationEntity = _Service.Retrieve(
                 Application.EntityLogicalName,
                 applicationId.Value,
-                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ActiveLinesExist));
+                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ActiveLinesExist, Model.Waste.Crm.Application.ApplicationType));
 
             //Initiate the updated application entity
             _TracingService.Trace("Application with Id {0} retrieved", applicationId);

@@ -20,5 +20,10 @@ namespace Model.Lp.Crm
         /// Nps Determination fiels
         /// </summary>
         public const string NpsDetermination = "defra_npsdetermination";
+
+        /// <summary>
+        /// Application Type OptionSet
+        /// </summary>
+        public const string ApplicationType = "defra_applicationtype";
     }
 }
