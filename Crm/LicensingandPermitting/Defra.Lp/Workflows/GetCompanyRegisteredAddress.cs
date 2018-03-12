@@ -71,7 +71,7 @@ namespace Defra.Lp.Workflows
         }
 
         /// <summary>
-        /// Gets the first contact detail recorde for the specified application.
+        /// Gets the first contact detail record for the specified application.
         /// </summary>
         /// <param name="application">The application to get the Company Address for</param>
         /// <returns>premises, street, locality, towntext, postcode concatenated together as a single string</returns>
