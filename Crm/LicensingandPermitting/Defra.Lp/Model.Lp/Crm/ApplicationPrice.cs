@@ -4,7 +4,7 @@ namespace Model.Lp.Crm
     /// <summary>
     /// CRM Application Price entity model
     /// </summary>
-    public partial class ApplicationPrice
+    public class ApplicationPrice
     {
         /// <summary>
         /// Logical name for Application Price entity
