@@ -5,13 +5,15 @@
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>1</isdefault>
-  <returnedtypecode>10044</returnedtypecode>
   <savedqueryid>{88cbeed7-c04e-4641-963d-0f70028fb2a6}</savedqueryid>
   <layoutxml>
-    <grid name="resultset" object="10044" jump="defra_name" select="1" icon="1" preview="1">
+    <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_standardruletypeid">
-        <cell name="defra_name" width="300" />
+        <cell name="defra_name" width="100" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_category" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="ownerid" width="100" />
         <cell name="createdon" width="125" />
+        <cell name="modifiedon" width="100" />
       </row>
     </grid>
   </layoutxml>
@@ -19,13 +21,16 @@
   <fetchxml>
     <fetch version="1.0" mapping="logical">
       <entity name="defra_standardruletype">
-        <attribute name="defra_standardruletypeid" />
         <attribute name="defra_name" />
         <attribute name="createdon" />
         <order attribute="defra_name" descending="false" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
+        <attribute name="ownerid" />
+        <attribute name="defra_category" />
+        <attribute name="modifiedon" />
+        <attribute name="defra_standardruletypeid" />
       </entity>
     </fetch>
   </fetchxml>

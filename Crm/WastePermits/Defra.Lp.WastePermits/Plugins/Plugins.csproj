@@ -55,16 +55,16 @@
     <AssemblyOriginatorKeyFile>Defra.Waste.Plugins.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.8.2.0.2\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.8.2.0.2\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.8.2.0.2\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
@@ -104,11 +104,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Model.Waste\Crm\*.cs">
-      <Link>Model.Waste\Crm\%(RecursiveDir)%(FileName)</Link>
+    <Compile Include="..\Model\Crm\*.cs">
+      <Link>Model\WastePermits\Crm\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Crm\*.cs">
-      <Link>Model.Lp\Crm\%(RecursiveDir)%(FileName)</Link>
+      <Link>Model\Lp\Crm\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\*.cs">
+      <Link>DataAccess\WastePermits\%(RecursiveDir)%(FileName)</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -122,16 +125,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DAL\WastePermits.DataAccess.csproj">
-      <Project>{2E42211D-6F04-466C-85D0-B7CC6A2BC41F}</Project>
-      <Name>WastePermits.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Model.Waste\WastePermits.Model.csproj">
-      <Project>{83B2D24A-D1B4-40FE-BEEA-864E39D94D4C}</Project>
-      <Name>WastePermits.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

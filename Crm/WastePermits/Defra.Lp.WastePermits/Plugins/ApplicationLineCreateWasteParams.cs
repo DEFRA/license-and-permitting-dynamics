@@ -15,6 +15,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
 using DAL;
+// using DAL;
 using Microsoft.Crm.Sdk.Messages;
 using Model.Lp.Crm;
 
@@ -29,6 +30,9 @@ namespace Defra.Lp.WastePermits.Plugins
         private ITracingService _TracingService { get; set; }
         private IPluginExecutionContext _Context { get; set; }
         private IOrganizationService _Service { get; set; }
+
+        private IOrganizationService _AdminService { get; set; }
+
         /// <summary>
         /// Alias of the image registered for the snapshot of the
         /// primary entity's attributes before the core platform operation executes.
@@ -98,13 +102,12 @@ namespace Defra.Lp.WastePermits.Plugins
             _Context = localContext.PluginExecutionContext;
             _Service = localContext.OrganizationService;
 
-            // TODO: Implement your custom Plug-in business logic.
+            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
+            _AdminService = serviceFactory.CreateOrganizationService(null);
 
             //The pre Image 
             Entity preImageEntity = (_Context.PreEntityImages != null && _Context.PreEntityImages.Contains(PreImageAlias))
                     ? _Context.PreEntityImages[PreImageAlias] : null;
-
-
 
             switch (_Context.MessageName)
             {
@@ -131,7 +134,7 @@ namespace Defra.Lp.WastePermits.Plugins
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
 
                                 // Update Application Line Amount
-                                this.UpdateApplicationLinePrice(targetAppLine);
+                                // this.UpdateApplicationLinePrice(targetAppLine);
 
                                 //Create the Parameters record based on the Standard Rule Parameteres record
                                 _TracingService.Trace("Calling CrateApplicationLineParameters");
@@ -197,6 +200,7 @@ namespace Defra.Lp.WastePermits.Plugins
             }
         }
 
+        
         private void UpdateApplicationLinePrice(Entity targetAppLine)
         {
             OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
@@ -205,6 +209,7 @@ namespace Defra.Lp.WastePermits.Plugins
             _TracingService.Trace("Setting Application Price to {0}", price);
             targetAppLine[ApplicationLine.Value] = price;
         }
+        
 
         private void UpdateApplicationOnStatusChange(ApplicationLineStates newApplicationLineState)
         {
@@ -463,17 +468,19 @@ namespace Defra.Lp.WastePermits.Plugins
                 }
             }
 
+            // This is now done via a separate code activity GetActiveApplicationLines
             // Set the Active Lines field in the application if appropriate
-            bool activeLinesExist = DoActiveLinesExist(targetAppLine, newApplicationLineState, appLines);
-            this.UpdatedApplicationEntity.Attributes.Add(Model.Waste.Crm.Application.ActiveLinesExist, activeLinesExist);
+            //bool activeLinesExist = DoActiveLinesExist(targetAppLine, newApplicationLineState, appLines);
+            //this.UpdatedApplicationEntity.Attributes.Add(Model.Waste.Crm.Application.ActiveLinesExist, activeLinesExist);
 
             if (this.UpdatedApplicationEntity.Attributes.Count > 0)
             {
                 _TracingService.Trace("Update the application with id {0}", this.UpdatedApplicationEntity.Id);
-                _Service.Update(this.UpdatedApplicationEntity);
+                _AdminService.Update(this.UpdatedApplicationEntity);
             }
         }
 
+        /* 
         /// <summary>
         /// 
         /// </summary>
@@ -530,7 +537,7 @@ namespace Defra.Lp.WastePermits.Plugins
             _TracingService.Trace("DoActiveLinesExist() no active lines found");
             return false;
         }
-
+        */
 
         private EntityCollection GetApplicationLines(Guid applicationId, Guid? excludeApplicationLineId = null)
         {
@@ -582,7 +589,7 @@ namespace Defra.Lp.WastePermits.Plugins
             this.ApplicationEntity = _Service.Retrieve(
                 Application.EntityLogicalName,
                 applicationId.Value,
-                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ActiveLinesExist, Model.Waste.Crm.Application.ApplicationType));
+                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ApplicationType));
 
             //Initiate the updated application entity
             _TracingService.Trace("Application with Id {0} retrieved", applicationId);
