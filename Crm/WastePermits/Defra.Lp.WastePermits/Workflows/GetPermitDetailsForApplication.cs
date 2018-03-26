@@ -98,8 +98,16 @@ namespace Defra.Lp.WastePermits.Workflows
             {
                 for (int i = 0; i < results.Entities.Count; i++)
                 {
-                    var code = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_name").Value;
-                    var name = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_rulesnamegovuk").Value;
+                    var code = string.Empty;
+                    var name = string.Empty;
+                    if (results.Entities[i].Contains("permit.defra_name"))
+                    {
+                        code = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_name").Value;
+                    }
+                    if (results.Entities[i].Contains("permit.defra_rulesnamegovuk"))
+                    {
+                        name = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_rulesnamegovuk").Value;
+                    }
                     var permit = string.Format("{0} - {1}", code, name);
                     returnData = (i == 0) ? returnData + permit : returnData + "; " + permit;
                 }
