@@ -68,9 +68,11 @@ namespace Defra.Lp.Workflows
             TracingService.Trace("Getting Company Secretary Email contact details for application: {0}", application.Id.ToString());
 
             var contactDetail = GetContactDetailsForApplication(application, "910400006");
-            CompanySecretaryContactDetail.Set(executionContext, contactDetail);
-
-            TracingService.Trace("Returning entity ref for Company Secretary Email contact detail: {0}", contactDetail.Id.ToString());
+            if (contactDetail != null)
+            {
+                CompanySecretaryContactDetail.Set(executionContext, contactDetail);
+                TracingService.Trace("Returning entity ref for Company Secretary Email contact detail: {0}", contactDetail.Id.ToString());
+            }
         }
 
         private EntityReference GetContactDetailsForApplication(EntityReference application, string addressType)
@@ -92,13 +94,13 @@ namespace Defra.Lp.Workflows
             var entity = Query.QueryCRMForSingleEntity(Service, fetchXml);
             if (entity != null)
             {
-                var id = entity.GetAttributeValue<AliasedValue>("contactdetail.defra_addressdetailsid");
-                return new EntityReference(id.EntityLogicalName, (Guid)id.Value);
+                if (entity.Contains("contactdetail.defra_addressdetailsid"))
+                {
+                    var id = entity.GetAttributeValue<AliasedValue>("contactdetail.defra_addressdetailsid");
+                    return new EntityReference(id.EntityLogicalName, (Guid)id.Value);
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }
