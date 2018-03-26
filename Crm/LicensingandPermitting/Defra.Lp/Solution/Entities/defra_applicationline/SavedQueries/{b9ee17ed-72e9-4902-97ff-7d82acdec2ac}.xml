@@ -5,12 +5,14 @@
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>1</isdefault>
-  <returnedtypecode>10013</returnedtypecode>
   <savedqueryid>{b9ee17ed-72e9-4902-97ff-7d82acdec2ac}</savedqueryid>
   <layoutxml>
-    <grid name="" object="10013" jump="defra_name" select="1" icon="1" preview="1">
+    <grid name="" jump="defra_name" select="1" icon="1" preview="1">
       <row name="defra_applicationline" id="defra_applicationlineid">
-        <cell name="defra_name" width="300" />
+        <cell name="defra_value" width="100" />
+        <cell name="defra_permittype" width="100" />
+        <cell name="defra_name" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="statuscode" width="100" />
         <cell name="createdon" width="125" />
       </row>
     </grid>
@@ -19,13 +21,16 @@
   <fetchxml>
     <fetch version="1.0" mapping="logical">
       <entity name="defra_applicationline">
-        <attribute name="defra_applicationlineid" />
         <attribute name="defra_name" />
         <attribute name="createdon" />
         <order attribute="defra_name" descending="false" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
+        <attribute name="defra_value" />
+        <attribute name="statuscode" />
+        <attribute name="defra_permittype" />
+        <attribute name="defra_applicationlineid" />
       </entity>
     </fetch>
   </fetchxml>
