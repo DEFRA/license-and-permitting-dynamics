@@ -4,7 +4,7 @@
   <IntroducedVersion>1.1.75.5</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
   <FormActivationState>1</FormActivationState>
-  <form>
+  <form shownavigationbar="true" showImage="false" maxWidth="1920">
     <tabs>
       <tab verticallayout="true" id="{4244ceba-92f6-45c4-b7ad-dd56e03c525c}" IsUserDefined="1" name="{4244ceba-92f6-45c4-b7ad-dd56e03c525c}" locklevel="0" expanded="true" showlabel="true">
         <labels>
@@ -19,19 +19,36 @@
                 </labels>
                 <rows>
                   <row>
+                    <cell id="{d902abe9-675a-b766-338d-0ae5d5d9adbe}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Reference Number" languagecode="1033" />
+                      </labels>
+                      <control id="defra_reference_number" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_reference_number" disabled="true" uniqueid="{85ca67c3-64c1-78d0-0366-d96985a2aacb}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{e3866b5e-8571-5188-01ab-b9382d51653b}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Payment Transaction" languagecode="1033" />
+                      </labels>
+                      <control id="defra_payment_transaction" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_payment_transaction" disabled="false" uniqueid="{0209a30e-972d-5918-bdd3-104757d8a5d9}">
+                        <parameters>
+                          <AutoResolve>false</AutoResolve>
+                          <DisableMru>true</DisableMru>
+                          <DisableQuickFind>false</DisableQuickFind>
+                          <DisableViewPicker>false</DisableViewPicker>
+                          <DefaultViewId>{D71D64F3-D01A-4BD4-A22A-7AC546A10464}</DefaultViewId>
+                          <AllowFilterOff>false</AllowFilterOff>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row>
                     <cell id="{851594f7-a5f0-4a3d-8bfc-a58b96475242}">
                       <labels>
                         <label description="Name" languagecode="1033" />
                       </labels>
                       <control id="defra_title" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_title" />
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{802e791b-0eb4-48a0-a58e-fdf819ced636}">
-                      <labels>
-                        <label description="Owner" languagecode="1033" />
-                      </labels>
-                      <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
                     </cell>
                   </row>
                   <row>
@@ -42,7 +59,7 @@
                       <control id="defra_description" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="defra_description" disabled="false" uniqueid="{510a6486-9bcd-1a0a-12ca-ae24011b2551}" />
                     </cell>
                   </row>
-                  <row></row>
+                  <row />
                   <row>
                     <cell id="{128645cd-1775-1876-0661-6ce22186e315}" showlabel="true" locklevel="0">
                       <labels>
@@ -285,6 +302,9 @@
       </NavBarAreas>
     </Navigation>
     <controlDescriptions />
+    <formLibraries>
+      <Library name="defra_/payments/payment_form_events.js" libraryUniqueId="{cc7d4e94-de54-9b1c-ecbc-96431778de1d}" />
+    </formLibraries>
   </form>
   <IsCustomizable>1</IsCustomizable>
   <CanBeDeleted>1</CanBeDeleted>

@@ -379,6 +379,18 @@
     <Content Include="Entities\defra_requestcategory\SavedQueries\{c7fdc0b1-7c0d-e811-80f1-3863bb34ecf0}.xml" />
     <Content Include="Entities\defra_requestcategory\SavedQueries\{ca383de9-ec2a-4dc7-860e-bc86657e80f4}.xml" />
     <Content Include="Entities\defra_requestcategory\SavedQueries\{e5f0f09a-3285-4276-a52f-6489bbfcad45}.xml" />
+    <Content Include="Entities\defra_saveandreturn\Entity.xml" />
+    <Content Include="Entities\defra_saveandreturn\FormXml\card\{9109384e-fe34-42f2-b18f-f61df7d9a30a}.xml" />
+    <Content Include="Entities\defra_saveandreturn\FormXml\main\{5bcefa8d-40af-4f13-af19-0b98265653ff}.xml" />
+    <Content Include="Entities\defra_saveandreturn\FormXml\quick\{28d1a255-08c6-4143-99e5-09937c2d6629}.xml" />
+    <Content Include="Entities\defra_saveandreturn\RibbonDiff.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{698bae39-4312-4212-9dc2-70c0a9ec5334}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{75af89ea-8813-485e-8080-782a928e1ecb}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{bb307850-6232-e811-a952-000d3a233e06}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{bd8c8417-fa68-4b41-9887-d39b74a9944a}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{cb2ef8e9-f2b6-4954-a94e-7416c37a4894}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{cb36a32f-aeec-40fc-9592-fbed56d3cbc8}.xml" />
+    <Content Include="Entities\defra_saveandreturn\SavedQueries\{f1b89716-29e0-4d59-960a-68ebf75f703a}.xml" />
     <Content Include="Entities\Email\Entity.xml" />
     <Content Include="Entities\Email\FormXml\main\{0d1e47ff-12b2-4f53-9090-bee951b98cb4}.xml" />
     <Content Include="Entities\Email\FormXml\main\{1d5ad078-3edb-4edc-98c6-c0c21e3125e3}.xml" />
@@ -436,6 +448,7 @@
     <Content Include="OptionSets\defra_dulymadechecklist2.xml" />
     <Content Include="OptionSets\defra_permittype.xml" />
     <Content Include="OptionSets\defra_raguscore.xml" />
+    <Content Include="OptionSets\defra_regulatedfacilitytype.xml" />
     <Content Include="OptionSets\incident_caseorigincode.xml" />
     <Content Include="Other\Customizations.xml" />
     <Content Include="Other\EntityMaps.xml" />
@@ -462,9 +475,11 @@
     <Content Include="Other\Relationships\defra_location.xml" />
     <Content Include="Other\Relationships\defra_managementsystem.xml" />
     <Content Include="Other\Relationships\defra_payment.xml" />
+    <Content Include="Other\Relationships\defra_paymenttransaction.xml" />
     <Content Include="Other\Relationships\defra_permit.xml" />
     <Content Include="Other\Relationships\defra_preapplication.xml" />
     <Content Include="Other\Relationships\defra_requestcategory.xml" />
+    <Content Include="Other\Relationships\defra_saveandreturn.xml" />
     <Content Include="Other\Relationships\defra_town.xml" />
     <Content Include="Other\Relationships\Email.xml" />
     <Content Include="Other\Relationships\Entitlement.xml" />
@@ -914,7 +929,7 @@
     <Content Include="WebResources\defra_\payments\redirect_to_payment_portal.html">
       <WebResourceId>c4832f6e-cd30-e811-a951-000d3a206976</WebResourceId>
       <Name>defra_/payments/redirect_to_payment_portal.htm</Name>
-      <DisplayName>redirect_to_payment_portal.htm</DisplayName>
+      <DisplayName>payments_redirect_to_payment_portal.htm</DisplayName>
       <WebResourceType>Html</WebResourceType>
       <IntroducedVersion>1.2.0.4</IntroducedVersion>
       <IsCustomizable>True</IsCustomizable>
@@ -924,9 +939,29 @@
     <Content Include="WebResources\defra_\payments\redirect_to_payment_portal.js">
       <WebResourceId>760e4150-cd30-e811-a951-000d3a206976</WebResourceId>
       <Name>defra_/payments/redirect_to_payment_portal.js</Name>
-      <DisplayName>redirect_to_payment_portal.js</DisplayName>
+      <DisplayName>payments_redirect_to_payment_portal.js</DisplayName>
       <WebResourceType>JScript</WebResourceType>
       <IntroducedVersion>1.2.0.4</IntroducedVersion>
+      <IsCustomizable>True</IsCustomizable>
+      <CanBeDeleted>True</CanBeDeleted>
+      <IsHidden>False</IsHidden>
+    </Content>
+    <Content Include="WebResources\defra_\payments\return_from_portal.html">
+      <WebResourceId>56bdce2a-f530-e811-a951-000d3a206976</WebResourceId>
+      <Name>defra_/payments/return_from_portal.htm</Name>
+      <DisplayName>payments_return_from_portal.htm</DisplayName>
+      <WebResourceType>Html</WebResourceType>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>True</IsCustomizable>
+      <CanBeDeleted>True</CanBeDeleted>
+      <IsHidden>False</IsHidden>
+    </Content>
+    <Content Include="WebResources\defra_\payments\return_from_portal.js">
+      <WebResourceId>c53113ba-f630-e811-a951-000d3a206976</WebResourceId>
+      <Name>defra_/payments/return_from_portal.js</Name>
+      <DisplayName>payments_return_from_portal.js</DisplayName>
+      <WebResourceType>JScript</WebResourceType>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>True</IsCustomizable>
       <CanBeDeleted>True</CanBeDeleted>
       <IsHidden>False</IsHidden>
@@ -1035,6 +1070,8 @@
     <Content Include="Workflows\S5-OnPeerReviewStatuschangeSetCaseStatus-6647DA4A-2754-4AF9-A752-D90BC8B36447.xaml.data.xml" />
     <Content Include="Workflows\S5-PreventEmailSendifnotApproved-5E2D653E-DD95-4FCE-B1CA-1B194EB3705C.xaml" />
     <Content Include="Workflows\S5-PreventEmailSendifnotApproved-5E2D653E-DD95-4FCE-B1CA-1B194EB3705C.xaml.data.xml" />
+    <Content Include="Workflows\SaveandReturnEmail-A40E0573-BC3B-426C-8E15-4DDEA32EE7A6.xaml" />
+    <Content Include="Workflows\SaveandReturnEmail-A40E0573-BC3B-426C-8E15-4DDEA32EE7A6.xaml.data.xml" />
     <Content Include="Workflows\Schedule5FirstResponseSLA-B2F40EC9-3538-4EEB-980D-0D35B0D701F7.xaml" />
     <Content Include="Workflows\Schedule5FirstResponseSLA-B2F40EC9-3538-4EEB-980D-0D35B0D701F7.xaml.data.xml" />
     <Content Include="Workflows\SetDefaultOrigin-8C8FD030-8F0A-E811-80F1-3863BB34ECF0.xaml" />
