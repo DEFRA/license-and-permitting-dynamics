@@ -134,7 +134,7 @@ namespace Defra.Lp.WastePermits.Plugins
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
 
                                 // Update Application Line Amount
-                                // this.UpdateApplicationLinePrice(targetAppLine);
+                                this.UpdateApplicationLinePrice(targetAppLine);
 
                                 //Create the Parameters record based on the Standard Rule Parameteres record
                                 _TracingService.Trace("Calling CrateApplicationLineParameters");
@@ -203,11 +203,24 @@ namespace Defra.Lp.WastePermits.Plugins
         
         private void UpdateApplicationLinePrice(Entity targetAppLine)
         {
-            OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
-            EntityReference standardRuleEntityReference = targetAppLine[ApplicationLine.StandardRule] as EntityReference;
-            Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference);
-            _TracingService.Trace("Setting Application Price to {0}", price);
-            targetAppLine[ApplicationLine.Value] = price;
+            _TracingService.Trace("UpdateApplicationLinePrice()");
+
+            // Only update the price if the standard rule has changed and its not null.
+            if (targetAppLine.Contains(ApplicationLine.StandardRule) && targetAppLine.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule) != null)
+            {
+                OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
+                EntityReference standardRuleEntityReference = targetAppLine[ApplicationLine.StandardRule] as EntityReference;
+                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference);
+                if (price != null)
+                {
+                    _TracingService.Trace("Setting Application Price to {0}", price);
+                    targetAppLine[ApplicationLine.Value] = price;
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException("No price found for Standard Rule");
+                }
+            }
         }
         
 
@@ -412,19 +425,20 @@ namespace Defra.Lp.WastePermits.Plugins
             if (this.UpdatedApplicationEntity == null || this.UpdatedApplicationEntity.Id == Guid.Empty)
                 return;
 
+            // If application line type is not regulated facility then don't want to update the application
+            if (targetAppLine.Attributes.Contains("defra_linetype") && targetAppLine.GetAttributeValue<OptionSetValue>("defra_linetype").Value != (int)ApplicationLineTypeValues.RegulatedFacility)
+               return;
+
             EntityCollection appLines = GetApplicationLines(this.ApplicationEntity.Id);
 
             // Update the NPS Determination required flag to No only if no line is determined by NPS (all lines NPS determination is No) Note! Default value is Yes 
             // And update the Location Screening required flag to No only if no line has Location Screening required Note! Default value is Yes 
-            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination") && targetAppLine.Attributes.Contains("defra_locationscreeningrequired"))
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination"))
             {
                 //Update the Application NPS Determination to No if all lines NPS Determination are No
                 bool allLinesNPSDetAreNo = (bool)targetAppLine["defra_npsdetermination"] == true ? false : true;
 
-                //Update the Application NPS Determination to No if all lines NPS Determination are No
-                bool allLinesLocationScreeningNo = (bool)targetAppLine["defra_locationscreeningrequired"] == true ? false : true;
-
-                _TracingService.Trace("Retrieve the NPS determination flag and Location Screening Required for all Standard rules lines");
+                _TracingService.Trace("Retrieve the NPS determination flag for all Standard rules lines");
                 foreach (Entity appLineRetrieved in appLines.Entities)
                 {
                     if (appLineRetrieved.Id == targetAppLine.Id)
@@ -449,8 +463,6 @@ namespace Defra.Lp.WastePermits.Plugins
 
                     if (appLineRetrieved.Attributes.Contains("defra_npsdetermination") && (bool)appLineRetrieved["defra_npsdetermination"])
                         allLinesNPSDetAreNo = false;
-                    if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
-                        allLinesLocationScreeningNo = false;
                 }
 
                 _TracingService.Trace("UpdateApplication() ApplicationEntity.Contains([defra_npsdetermination)={0}", ApplicationEntity.Contains("defra_npsdetermination"));
@@ -458,6 +470,39 @@ namespace Defra.Lp.WastePermits.Plugins
                 {
                     _TracingService.Trace("Add to the Application upated entity the NPS Determination flag set to {0}", !allLinesNPSDetAreNo);
                     this.UpdatedApplicationEntity.Attributes.Add("defra_npsdetermination", !allLinesNPSDetAreNo);
+                }
+            }
+
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_locationscreeningrequired"))
+            {
+                //Update the Application Location Screening Required to No if all lines Location Screening Required are No
+                bool allLinesLocationScreeningNo = (bool)targetAppLine["defra_locationscreeningrequired"] == true ? false : true;
+
+                _TracingService.Trace("Retrieve the Location Screening Required for all Standard rules lines");
+                foreach (Entity appLineRetrieved in appLines.Entities)
+                {
+                    if (appLineRetrieved.Id == targetAppLine.Id)
+                    {
+                        // Only handle the current app line under certain conditions
+                        if (_Context.MessageName == PluginMessages.Update || _Context.MessageName == PluginMessages.Delete)
+                        {
+                            // We are not using the retrieved record from DB on Update or Delete
+                            _TracingService.Trace("UpdateApplication() We are not using the retrieved record from DB on Update or Delete");
+                            continue;
+                        }
+
+                        if ((_Context.MessageName == PluginMessages.SetState ||
+                             _Context.MessageName == PluginMessages.SetStateDynamicEntity)
+                            && newApplicationLineState.HasValue && newApplicationLineState == ApplicationLineStates.Inactive)
+                        {
+                            // Target App line has been deactivated, ignore it.
+                            _TracingService.Trace("UpdateApplication() Target App line has been deactivated, ignore it.");
+                            continue;
+                        }
+                    }
+
+                    if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
+                        allLinesLocationScreeningNo = false;
                 }
 
                 _TracingService.Trace("UpdateApplication() ApplicationEntity.Contains([defra_locationscreeningrequired)={0}", ApplicationEntity.Contains("defra_locationscreeningrequired"));
@@ -548,14 +593,16 @@ namespace Defra.Lp.WastePermits.Plugins
                     new ColumnSet(
                         ApplicationLine.NpsDetermination,
                         Model.Waste.Crm.ApplicationLine.LocationScreeningRequired,
-                        ApplicationLine.State),
+                        ApplicationLine.State,
+                        ApplicationLine.LineType),
                 Criteria = new FilterExpression()
                 {
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
                         new ConditionExpression(ApplicationLine.ApplicationId, ConditionOperator.Equal, applicationId),
-                        new ConditionExpression(ApplicationLine.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active)
+                        new ConditionExpression(ApplicationLine.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
+                        new ConditionExpression(ApplicationLine.LineType, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
                     }
                 }
             };
