@@ -30,8 +30,8 @@ namespace DAL
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(ApplicationPrice.ApplicationType, ConditionOperator.Equal, applicationType),
-                        new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule),
+                        new ConditionExpression(ApplicationPrice.ApplicationType, ConditionOperator.Equal, applicationType.Value),
+                        new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule.Id),
                         new ConditionExpression(ApplicationPrice.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active)
                     }
                 }

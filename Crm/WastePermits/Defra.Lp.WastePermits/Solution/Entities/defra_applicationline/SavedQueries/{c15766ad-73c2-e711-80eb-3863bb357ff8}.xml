@@ -9,14 +9,12 @@
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
       <row name="result" id="defra_applicationlineid">
-        <cell name="defra_name" width="150" />
-        <cell name="defra_permittype" width="100" />
+        <cell name="defra_linetype" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_value" width="100" />
         <cell name="defra_standardruleid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="statecode" width="100" />
         <cell name="defra_npsdetermination" width="100" />
         <cell name="defra_locationscreeningrequired" width="100" />
-        <cell name="defra_facilityid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_regulatedfacilitytype" width="100" />
-        <cell name="defra_parametersid" width="100" />
       </row>
     </grid>
   </layoutxml>
@@ -24,15 +22,13 @@
   <fetchxml>
     <fetch version="1.0" output-format="xml-platform" mapping="logical">
       <entity name="defra_applicationline">
-        <attribute name="defra_name" />
-        <order attribute="defra_name" descending="false" />
+        <order attribute="defra_linetype" descending="false" />
         <attribute name="defra_standardruleid" />
-        <attribute name="defra_permittype" />
-        <attribute name="defra_parametersid" />
-        <attribute name="defra_facilityid" />
         <attribute name="defra_npsdetermination" />
-        <attribute name="defra_regulatedfacilitytype" />
         <attribute name="defra_locationscreeningrequired" />
+        <attribute name="defra_value" />
+        <attribute name="defra_linetype" />
+        <attribute name="statecode" />
         <attribute name="defra_applicationlineid" />
       </entity>
     </fetch>

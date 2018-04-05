@@ -40,6 +40,11 @@ namespace Model.Lp.Crm
         /// Lookup
         /// </summary>
         public static string StandardRule = "defra_standardruleid";
+
+        /// <summary>
+        /// Application Line Type
+        /// </summary>
+        public const string LineType = "defra_linetype";
     }
 
     /// <summary>
@@ -49,5 +54,15 @@ namespace Model.Lp.Crm
     {
         Active = 0,
         Inactive = 1
+    }
+
+    /// <summary>
+    /// Possible option set values for Lien Type
+    /// </summary>
+    public enum ApplicationLineTypeValues
+    {
+        RegulatedFacility = 910400000,
+        PositiveAdjustment = 910400001,
+        NegativeAdjustment = 910400002
     }
 }
