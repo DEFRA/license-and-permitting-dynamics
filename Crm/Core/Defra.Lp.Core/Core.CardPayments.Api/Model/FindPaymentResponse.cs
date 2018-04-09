@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CardPayments.Model
 {
-    public class FindPaymentResponse : CreatePaymentResponse
+    public class FindPaymentResponse : BasePaymentResponse
     {
     }
 }

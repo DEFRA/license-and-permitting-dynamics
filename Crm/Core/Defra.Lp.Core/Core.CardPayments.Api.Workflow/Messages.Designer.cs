@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Defra.Lp.Core.Core.CardPayments.Workflow {
+namespace Defra.Lp.Core.CardPayments.Workflow {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Defra.Lp.Core.Core.CardPayments.Workflow {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Defra.Lp.Core.Core.CardPayments.Workflow.Messages", typeof(Messages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Defra.Lp.Core.CardPayments.Workflow.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,15 +66,6 @@ namespace Defra.Lp.Core.Core.CardPayments.Workflow {
         internal static string InvalidArgument {
             get {
                 return ResourceManager.GetString("InvalidArgument", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The Secure Configuration record with key {0} has an invalid value, please check the Secure Configuration record.
-        /// </summary>
-        internal static string InvalidSecureConfiguration {
-            get {
-                return ResourceManager.GetString("InvalidSecureConfiguration", resourceCulture);
             }
         }
     }

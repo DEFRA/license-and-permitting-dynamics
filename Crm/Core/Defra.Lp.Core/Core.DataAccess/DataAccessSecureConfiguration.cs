@@ -1,4 +1,5 @@
-﻿using Core.Model;
+﻿using System.Collections.Generic;
+using Core.Model;
 using Core.Model.Entities;
 
 namespace Core.Configuration
@@ -41,6 +42,39 @@ namespace Core.Configuration
             }
 
             return results[0][SecureConfiguration.ValueField] as string;
+        }
+
+        public static IDictionary<string,string> GetConfigurationStringValues(this IOrganizationService service, params string[] keys)
+        {
+
+            // Get the config record matching the key
+            IDictionary<string, string> retVal = new Dictionary<string, string>();
+            FilterExpression filterExpression = new FilterExpression(LogicalOperator.Or);
+
+            foreach (string key in keys)
+            {
+                filterExpression.Conditions.Add(new ConditionExpression(SecureConfiguration.KeyField, ConditionOperator.Equal, key));
+            }
+
+            QueryExpression priceQuery = new QueryExpression(SecureConfiguration.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(SecureConfiguration.KeyField, SecureConfiguration.ValueField),
+                Criteria = filterExpression
+            };
+
+            EntityCollection results = service.RetrieveMultiple(priceQuery);
+
+            foreach (Entity result in results.Entities)
+            {
+                string key = result[SecureConfiguration.KeyField] as string;
+                if (key == null)
+                {
+                    continue;
+                }
+                retVal.Add(key, result[SecureConfiguration.ValueField] as string);
+            }
+
+            return retVal;
         }
     }
 }

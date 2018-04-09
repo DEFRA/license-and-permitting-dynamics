@@ -1,12 +1,13 @@
 ﻿
+using System.Text;
+using CardPayments;
+using CardPayments.Model;
+
 namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
     using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
-    using System.Web.Script.Serialization;
-    using CardPayments;
-    using CardPayments.Model;
     using System.IO;
     using System.Runtime.Serialization.Json;
 
@@ -66,10 +67,14 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
 
         private static ByteArrayContent PrepareRequest<T>(T request)
         {
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            string json = js.Serialize(request);
-
-            var buffer = System.Text.Encoding.UTF8.GetBytes(json);
+            string parameter1 = "";
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+                serializer.WriteObject(memoryStream, request);
+                parameter1 = Encoding.Default.GetString(memoryStream.ToArray());
+            }
+            var buffer = System.Text.Encoding.UTF8.GetBytes(parameter1);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return byteContent;

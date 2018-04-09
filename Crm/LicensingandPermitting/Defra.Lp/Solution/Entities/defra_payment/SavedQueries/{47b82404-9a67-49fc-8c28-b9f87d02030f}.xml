@@ -5,12 +5,14 @@
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>1</isdefault>
-  <returnedtypecode>10023</returnedtypecode>
   <savedqueryid>{47b82404-9a67-49fc-8c28-b9f87d02030f}</savedqueryid>
   <layoutxml>
-    <grid name="" object="10023" jump="defra_title" select="1" icon="1" preview="1">
+    <grid name="" jump="defra_title" select="1" icon="1" preview="1">
       <row name="defra_payment" id="defra_paymentid">
-        <cell name="defra_title" width="300" />
+        <cell name="defra_paymentvalue" width="75" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_paymentcategory" width="75" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="statuscode" width="100" />
+        <cell name="defra_title" width="100" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="createdon" width="125" />
       </row>
     </grid>
@@ -19,13 +21,16 @@
   <fetchxml>
     <fetch version="1.0" mapping="logical">
       <entity name="defra_payment">
-        <attribute name="defra_paymentid" />
         <attribute name="defra_title" />
         <attribute name="createdon" />
         <order attribute="defra_title" descending="false" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
+        <attribute name="statuscode" />
+        <attribute name="defra_paymentvalue" />
+        <attribute name="defra_paymentcategory" />
+        <attribute name="defra_paymentid" />
       </entity>
     </fetch>
   </fetchxml>

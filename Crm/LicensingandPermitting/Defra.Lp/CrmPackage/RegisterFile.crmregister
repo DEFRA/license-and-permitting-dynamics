@@ -52,8 +52,16 @@
         <WorkflowType FriendlyName="BasicCurrencyMath" Name="BasicCurrencyMath" Description="Currency Math Calculations" WorkflowActivityGroupName="Common" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.BasicCurrencyMath" />
       </WorkflowTypes>
     </Solution>
+    <Solution Assembly="Defra.Lp.Core.CardPayments.Workflow.dll" Id="0f9d36bb-5d68-4a6c-862d-cddd86088e75" IsolationMode="Sandbox" SourceType="Database">
+      <WorkflowTypes>
+        <clear />
+        <WorkflowType FriendlyName="Create Payment" Name="CreatePayment" Description="Create Payment Request in Gov Pay Portal" WorkflowActivityGroupName="Payments" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Core.CardPayments.Workflow.CodeActivities.CreatePayment" />
+        <WorkflowType FriendlyName="Find Payment" Name="FindPayment" Description="Returns the payment status" WorkflowActivityGroupName="Payments" WorkflowActivityProjectName="Core.CardPayments.Api.Workflow" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Core.CardPayments.Workflow.CodeActivities.FindPayment" />
+      </WorkflowTypes>
+    </Solution>
   </Solutions>
   <XamlWorkflows>
     <XamlWorkflowSolution Assembly="Defra.Lp.Workflows.dll" />
+    <XamlWorkflowSolution Assembly="Defra.Lp.Core.CardPayments.Workflow.dll" />
   </XamlWorkflows>
 </Register>

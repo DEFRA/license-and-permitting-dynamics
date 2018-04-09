@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="WebResources\Cascading Stylesheet %28CSS%29\" />
     <Folder Include="WebResources\PNG format\" />
     <Folder Include="WebResources\Script %28JScript%29\" />
     <Folder Include="WebResources\Web Page %28HTML%29\" />
@@ -46,6 +47,12 @@
     <Folder Include="WebResources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Defra.Lp.Core\Core.CardPayments.Api.Workflow\Core.CardPayments.Api.Workflow.csproj">
+      <Name>Core.CardPayments.Api.Workflow</Name>
+      <Project>{fe90926f-62c7-48d0-998c-3122c4e92e2d}</Project>
+      <Private>True</Private>
+      <SilverlightApplication>False</SilverlightApplication>
+    </ProjectReference>
     <ProjectReference Include="..\..\SiteMap\SiteMap.csproj">
       <Name>SiteMap</Name>
       <Project>{a4fc9061-6ba3-49f7-bbf0-f026828c5486}</Project>
@@ -72,6 +79,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <CRMWebResource Include="WebResources\Cascading Stylesheet %28CSS%29\Common.css">
+      <DisplayName>Common</DisplayName>
+      <UniqueName>new_Common</UniqueName>
+      <WebResourceType>CascadingStylesheet</WebResourceType>
+    </CRMWebResource>
     <CRMWebResource Include="WebResources\PNG format\defra_application16.png">
       <DisplayName>Application 16x16 icon</DisplayName>
       <UniqueName>defra_application16</UniqueName>
@@ -231,11 +243,21 @@
       <UniqueName>defra_/addresslookup/json2.js</UniqueName>
       <WebResourceType>Script</WebResourceType>
     </CRMWebResource>
+    <CRMWebResource Include="WebResources\Script %28JScript%29\payment_form_events.js">
+      <DisplayName>payment_form_events.js</DisplayName>
+      <UniqueName>defra_/payments/payment_form_events.js</UniqueName>
+      <WebResourceType>Script</WebResourceType>
+    </CRMWebResource>
     <CRMWebResource Include="WebResources\Script %28JScript%29\postcodeOnchange.js">
       <DisplayName>Address Lookup defra_postcodeOnChange.js</DisplayName>
       <UniqueName>defra_/addresslookup/postcodeOnchange.js</UniqueName>
       <WebResourceType>Script</WebResourceType>
       <Description>Handler for when postcode is populated.</Description>
+    </CRMWebResource>
+    <CRMWebResource Include="WebResources\Script %28JScript%29\return_from_portal.js">
+      <DisplayName>payments_return_from_portal.js</DisplayName>
+      <UniqueName>defra_/payments/return_from_portal.js</UniqueName>
+      <WebResourceType>Script</WebResourceType>
     </CRMWebResource>
     <CRMWebResource Include="WebResources\Web Page %28HTML%29\addressui.html.htm">
       <DisplayName>Address Lookup addressui.html</DisplayName>
@@ -245,6 +267,11 @@
     <CRMWebResource Include="WebResources\Web Page %28HTML%29\addressuiblank.html.htm">
       <DisplayName>Address Lookup blank form</DisplayName>
       <UniqueName>defra_defra_/addresslookup/addressuiblank.html</UniqueName>
+      <WebResourceType>WebPage</WebResourceType>
+    </CRMWebResource>
+    <CRMWebResource Include="WebResources\Web Page %28HTML%29\return_from_portal.htm">
+      <DisplayName>payments_return_from_portal.htm</DisplayName>
+      <UniqueName>defra_/payments/return_from_portal.htm</UniqueName>
       <WebResourceType>WebPage</WebResourceType>
     </CRMWebResource>
   </ItemGroup>
