@@ -59,6 +59,12 @@ namespace Defra.Lp.Workflows
             // 3. If we have a user, it means we need to switch the queue item to use a team queue
             if (user != null)
             {
+                if (!user.Attributes.ContainsKey(Model.User.DefaultTeamQueue))
+                {
+                    // The user does not have a default team queue set, cannot change to use a team queue
+                    return;
+                }
+
                 var queueToUse = user[Model.User.DefaultTeamQueue] as EntityReference;
                 var target = queueItem[Model.QueueItem.Target] as EntityReference;
 
@@ -100,6 +106,7 @@ namespace Defra.Lp.Workflows
         /// <returns>The user record if a user's default queue was passed in</returns>
         private static Entity GetUserForQueue(LocalWorkflowContext crmWorkflowContext, EntityReference queue)
         {
+            // Get users that have this queue as the default queue
             QueryExpression query = new QueryExpression
             {
                 EntityName = Model.User.LogicalName,

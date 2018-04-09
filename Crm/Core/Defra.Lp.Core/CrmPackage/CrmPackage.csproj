@@ -35,7 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="WebResources\Cascading Stylesheet %28CSS%29\" />
     <Folder Include="WebResources\Script %28JScript%29\" />
+    <Folder Include="WebResources\Web Page %28HTML%29\" />
     <RegisterPlugin Include="RegisterFile.crmregister">
       <DisplayName>RegisterFile</DisplayName>
       <UniqueName>defra_RegisterFile</UniqueName>
@@ -47,6 +49,12 @@
     <ProjectReference Include="..\..\SiteMap\SiteMap.csproj">
       <Name>SiteMap</Name>
       <Project>{7c056e21-f9e9-4bea-8a3e-af980e13e8ff}</Project>
+      <Private>True</Private>
+      <SilverlightApplication>False</SilverlightApplication>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.CardPayments.Api.Workflow\Core.CardPayments.Api.Workflow.csproj">
+      <Name>Core.CardPayments.Api.Workflow</Name>
+      <Project>{fe90926f-62c7-48d0-998c-3122c4e92e2d}</Project>
       <Private>True</Private>
       <SilverlightApplication>False</SilverlightApplication>
     </ProjectReference>
@@ -70,6 +78,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <CRMWebResource Include="WebResources\Cascading Stylesheet %28CSS%29\defra_core.css">
+      <DisplayName>defra_core</DisplayName>
+      <UniqueName>defra_defra_core</UniqueName>
+      <WebResourceType>CascadingStylesheet</WebResourceType>
+    </CRMWebResource>
     <CRMWebResource Include="WebResources\Script %28JScript%29\defra_account_form_events.js">
       <DisplayName>defra_account_form_events</DisplayName>
       <UniqueName>defra_defra_account_form_events</UniqueName>
@@ -85,10 +98,32 @@
       <UniqueName>defra_json2.js</UniqueName>
       <WebResourceType>Script</WebResourceType>
     </CRMWebResource>
+    <CRMWebResource Include="WebResources\Script %28JScript%29\defra_payments.js">
+      <DisplayName>defra_payments.js</DisplayName>
+      <UniqueName>defra_payments.js</UniqueName>
+      <WebResourceType>Script</WebResourceType>
+      <Description>Javascript file used to redirect users to the payment portal.</Description>
+    </CRMWebResource>
+    <CRMWebResource Include="WebResources\Script %28JScript%29\defra_payments_complete.js">
+      <DisplayName>defra_payments_complete.js</DisplayName>
+      <UniqueName>defra_payments_complete.js</UniqueName>
+      <WebResourceType>Script</WebResourceType>
+    </CRMWebResource>
     <CRMWebResource Include="WebResources\Script %28JScript%29\defra_ValidateWithCompanyHouse.js">
       <DisplayName>ValidateWithCompanyHouse.js</DisplayName>
       <UniqueName>defra_ValidateWithCompanyHouse.js</UniqueName>
       <WebResourceType>Script</WebResourceType>
+    </CRMWebResource>
+    <CRMWebResource Include="WebResources\Web Page %28HTML%29\defra_payments.html.htm">
+      <DisplayName>defra_payments.html</DisplayName>
+      <UniqueName>defra_payments.html</UniqueName>
+      <WebResourceType>WebPage</WebResourceType>
+      <Description>Page used to redirect user to Payment Portal.</Description>
+    </CRMWebResource>
+    <CRMWebResource Include="WebResources\Web Page %28HTML%29\defra_payments_complete.html.htm">
+      <DisplayName>defra_payments_complete.html</DisplayName>
+      <UniqueName>defra_payments_complete.html</UniqueName>
+      <WebResourceType>WebPage</WebResourceType>
     </CRMWebResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

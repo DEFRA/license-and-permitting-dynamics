@@ -14,6 +14,10 @@ using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
+using DAL;
+// using DAL;
+using Microsoft.Crm.Sdk.Messages;
+using Model.Lp.Crm;
 
 namespace Defra.Lp.WastePermits.Plugins
 {
@@ -26,6 +30,9 @@ namespace Defra.Lp.WastePermits.Plugins
         private ITracingService _TracingService { get; set; }
         private IPluginExecutionContext _Context { get; set; }
         private IOrganizationService _Service { get; set; }
+
+        private IOrganizationService _AdminService { get; set; }
+
         /// <summary>
         /// Alias of the image registered for the snapshot of the
         /// primary entity's attributes before the core platform operation executes.
@@ -95,40 +102,168 @@ namespace Defra.Lp.WastePermits.Plugins
             _Context = localContext.PluginExecutionContext;
             _Service = localContext.OrganizationService;
 
-            // TODO: Implement your custom Plug-in business logic.
+            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
+            _AdminService = serviceFactory.CreateOrganizationService(null);
 
             //The pre Image 
             Entity preImageEntity = (_Context.PreEntityImages != null && _Context.PreEntityImages.Contains(PreImageAlias))
                     ? _Context.PreEntityImages[PreImageAlias] : null;
 
-
-            if (_Context.InputParameters.Contains("Target") && _Context.InputParameters["Target"] is Entity)
+            switch (_Context.MessageName)
             {
-                Entity targetAppLine = (Entity)_Context.InputParameters["Target"];
+                case PluginMessages.Create:
+                case PluginMessages.Update:
 
-                //Run only if Application Line
-                if (targetAppLine.LogicalName == "defra_applicationline")
-                {
-                    //Retrieve the Application
-                    this.RetrieveApplicationEntity(targetAppLine, preImageEntity);
-
-                    //Run only if the standard rule is updated
-                    if (targetAppLine.Attributes.Contains("defra_standardruleid"))
+                    if (_Context.InputParameters.Contains("Target") && _Context.InputParameters["Target"] is Entity)
                     {
-                        //Retrieve the Standard Rule
-                        this.RetrieveStandardRule(targetAppLine, preImageEntity);
+                        Entity targetAppLine = (Entity)_Context.InputParameters["Target"];
 
-                        //Create the Parameters record based on the Standard Rule Parameteres record
-                        this.CrateApplicationLineParameters(targetAppLine, preImageEntity);
+                        //Run only if Application Line
+                        if (targetAppLine != null && targetAppLine.LogicalName == ApplicationLine.EntityLogicalName)
+                        {
+                            //Retrieve the Application
+                            Guid? applicationId = this.GetApplicationId(preImageEntity, targetAppLine);
+                            this.GetApplication(applicationId);
 
-                        //Create the Duly Made record (if bespoke it will only create the record if it does not exist
-                        this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
+                            //Run only if the standard rule is updated
+                            _TracingService.Trace("Checking for defra_standardruleid");
+                            if (targetAppLine.Contains("defra_standardruleid"))
+                            {
+                                //Retrieve the Standard Rule
+                                _TracingService.Trace("Calling RetrieveStandardRule");
+                                this.RetrieveStandardRule(targetAppLine, preImageEntity);
+
+                                // Update Application Line Amount
+                                this.UpdateApplicationLinePrice(targetAppLine);
+
+                                //Create the Parameters record based on the Standard Rule Parameteres record
+                                _TracingService.Trace("Calling CrateApplicationLineParameters");
+                                this.CrateApplicationLineParameters(targetAppLine, preImageEntity);
+
+                                //Create the Duly Made record (if bespoke it will only create the record if it does not exist
+                                _TracingService.Trace("Calling UpdateDulyMadeChecklist");
+                                this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
+
+                               
+                            }
+
+                            //Update the Application
+                            this.UpdateApplication(targetAppLine, null);
+                        }
+                        else
+                        {
+                            _TracingService.Trace("targetAppLine not of type defra_applicationline");
+                        }
                     }
+                    else
+                    {
+                        _TracingService.Trace("Context.InputParameters does not contain entity");
+                    }
+                    break;
 
-                    //Update the Application
-                    this.UpdateApplication(targetAppLine, preImageEntity);
+                case PluginMessages.Delete:
+                    UpdateApplicationOnStatusChange(ApplicationLineStates.Inactive);
+                    break;
+                case PluginMessages.SetState:
+                case PluginMessages.SetStateDynamicEntity:
+
+                    // Check if Quote Entity is activated
+                    if (_Context.InputParameters.Contains("EntityMoniker") &&
+                        _Context.InputParameters["EntityMoniker"] is EntityReference &&
+                        ((EntityReference)_Context.InputParameters["EntityMoniker"]).LogicalName ==
+                        ApplicationLine.EntityLogicalName)
+                    {
+
+                        if (_Context.InputParameters.Contains(PluginInputParams.State))
+                        {
+                            ApplicationLineStates newApplicationLineState;
+                            // Check if User has Activated the line
+                            if (((OptionSetValue)_Context.InputParameters[PluginInputParams.State]).Value ==
+                                (int)ApplicationLineStates.Active)
+                            {
+                                _TracingService.Trace("Application Line Activated");
+                                newApplicationLineState = ApplicationLineStates.Active;
+
+                            }
+                            else
+                            {
+                                _TracingService.Trace("Application Line Deactivated");
+                                // Deactivated
+                                newApplicationLineState = ApplicationLineStates.Inactive;
+                            }
+
+                            UpdateApplicationOnStatusChange(newApplicationLineState);
+                        }
+                    }
+                    break;
+
+            }
+        }
+
+        
+        private void UpdateApplicationLinePrice(Entity targetAppLine)
+        {
+            _TracingService.Trace("UpdateApplicationLinePrice()");
+
+            // Only update the price if the standard rule has changed and its not null.
+            if (targetAppLine.Contains(ApplicationLine.StandardRule) && targetAppLine.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule) != null)
+            {
+                OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
+                EntityReference standardRuleEntityReference = targetAppLine[ApplicationLine.StandardRule] as EntityReference;
+                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference);
+                if (price != null)
+                {
+                    _TracingService.Trace("Setting Application Price to {0}", price);
+                    targetAppLine[ApplicationLine.Value] = price;
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException("No price found for Standard Rule");
                 }
             }
+        }
+        
+
+        private void UpdateApplicationOnStatusChange(ApplicationLineStates newApplicationLineState)
+        {
+            _TracingService.Trace("UpdateApplicationOnStatusChange() newApplicationLineState {0}", newApplicationLineState);
+
+            // Get the application line
+            Entity applicationLine = this.GetApplicationLine(_Service, _Context.PrimaryEntityId);
+
+            if (applicationLine == null)
+            {
+                // Without an app line, we can't update the app
+                _TracingService.Trace("Application Line {0} Does not exist",
+                    _Context.PrimaryEntityId);
+                return;
+            }
+
+            // Get the application id
+            EntityReference applicationEntityReference = applicationLine.Contains(ApplicationLine.ApplicationId)
+                ? (EntityReference)applicationLine[ApplicationLine.ApplicationId]
+                : null;
+
+            if (applicationEntityReference == null)
+            {
+                // Without an app line, we can't update the app
+                _TracingService.Trace("Application for Line {0} Does not exist", _Context.PrimaryEntityId);
+                return;
+            }
+
+            // Get the application, stores them in class variables
+            this.GetApplication(applicationEntityReference.Id);
+
+            if (this.ApplicationEntity == null)
+            {
+                // Without an app line, we can't update the app
+                _TracingService.Trace("Application for Line {0} Retrieve Failed",
+                    _Context.PrimaryEntityId);
+                return;
+            }
+
+            // Update the application if required
+            this.UpdateApplication(applicationLine, newApplicationLineState);
         }
 
         /// <summary>
@@ -284,68 +419,250 @@ namespace Defra.Lp.WastePermits.Plugins
         /// <summary>
         /// Updates the Application entity
         /// </summary>
-        private void UpdateApplication(Entity targetAppLine, Entity preImage)
+        private void UpdateApplication(Entity targetAppLine, ApplicationLineStates? newApplicationLineState)
         {
+            _TracingService.Trace("UpdateApplication() newApplicationLineState {0}", newApplicationLineState);
             if (this.UpdatedApplicationEntity == null || this.UpdatedApplicationEntity.Id == Guid.Empty)
                 return;
 
+            // If application line type is not regulated facility then don't want to update the application
+            if (targetAppLine.Attributes.Contains("defra_linetype") && targetAppLine.GetAttributeValue<OptionSetValue>("defra_linetype").Value != (int)ApplicationLineTypeValues.RegulatedFacility)
+               return;
+
+            EntityCollection appLines = GetApplicationLines(this.ApplicationEntity.Id);
+
             // Update the NPS Determination required flag to No only if no line is determined by NPS (all lines NPS determination is No) Note! Default value is Yes 
             // And update the Location Screening required flag to No only if no line has Location Screening required Note! Default value is Yes 
-            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination") && targetAppLine.Attributes.Contains("defra_locationscreeningrequired"))
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_npsdetermination"))
             {
                 //Update the Application NPS Determination to No if all lines NPS Determination are No
                 bool allLinesNPSDetAreNo = (bool)targetAppLine["defra_npsdetermination"] == true ? false : true;
 
-                //Update the Application NPS Determination to No if all lines NPS Determination are No
-                bool allLinesLocationScreeningNo = (bool)targetAppLine["defra_locationscreeningrequired"] == true ? false : true;
-
-                _TracingService.Trace("Retrieve the NPS determination flag and Location Screening Required for all Standard rules lines");
-
-                QueryExpression AppLinesRulesQuery = new QueryExpression("defra_applicationline")
-                {
-                    ColumnSet = new ColumnSet("defra_npsdetermination", "defra_locationscreeningrequired"),
-
-                    Criteria = new FilterExpression()
-                    {
-                        Conditions =
-                        {
-                            new ConditionExpression("defra_applicationid", ConditionOperator.Equal, this.ApplicationEntity.Id)
-                        }
-                    }
-                };
-
-                if (_Context.MessageName == "Update")
-                    AppLinesRulesQuery.Criteria.Conditions.Add(new ConditionExpression("defra_applicationlineid", ConditionOperator.NotEqual, _Context.PrimaryEntityId));
-
-
-                EntityCollection appLines = _Service.RetrieveMultiple(AppLinesRulesQuery);
-
+                _TracingService.Trace("Retrieve the NPS determination flag for all Standard rules lines");
                 foreach (Entity appLineRetrieved in appLines.Entities)
                 {
+                    if (appLineRetrieved.Id == targetAppLine.Id)
+                    {
+                        // Only handle the current app line under certain conditions
+                        if (_Context.MessageName == PluginMessages.Update || _Context.MessageName == PluginMessages.Delete)
+                        {
+                            // We are not using the retrieved record from DB on Update or Delete
+                            _TracingService.Trace("UpdateApplication() We are not using the retrieved record from DB on Update or Delete");
+                            continue;
+                        }
+
+                        if ((_Context.MessageName == PluginMessages.SetState ||
+                             _Context.MessageName == PluginMessages.SetStateDynamicEntity)
+                            && newApplicationLineState.HasValue && newApplicationLineState == ApplicationLineStates.Inactive)
+                        {
+                            // Target App line has been deactivated, ignore it.
+                            _TracingService.Trace("UpdateApplication() Target App line has been deactivated, ignore it.");
+                            continue;
+                        }
+                    }
+
                     if (appLineRetrieved.Attributes.Contains("defra_npsdetermination") && (bool)appLineRetrieved["defra_npsdetermination"])
                         allLinesNPSDetAreNo = false;
-                    if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
-                        allLinesLocationScreeningNo = false;
                 }
 
+                _TracingService.Trace("UpdateApplication() ApplicationEntity.Contains([defra_npsdetermination)={0}", ApplicationEntity.Contains("defra_npsdetermination"));
                 if (!allLinesNPSDetAreNo != (bool)ApplicationEntity["defra_npsdetermination"])
                 {
                     _TracingService.Trace("Add to the Application upated entity the NPS Determination flag set to {0}", !allLinesNPSDetAreNo);
                     this.UpdatedApplicationEntity.Attributes.Add("defra_npsdetermination", !allLinesNPSDetAreNo);
                 }
+            }
 
-                if (!allLinesLocationScreeningNo != (bool)ApplicationEntity["defra_locationscreeningrequired"])
+            if (targetAppLine != null && targetAppLine.Attributes.Contains("defra_locationscreeningrequired"))
+            {
+                //Update the Application Location Screening Required to No if all lines Location Screening Required are No
+                bool allLinesLocationScreeningNo = (bool)targetAppLine["defra_locationscreeningrequired"] == true ? false : true;
+
+                _TracingService.Trace("Retrieve the Location Screening Required for all Standard rules lines");
+                foreach (Entity appLineRetrieved in appLines.Entities)
+                {
+                    if (appLineRetrieved.Id == targetAppLine.Id)
+                    {
+                        // Only handle the current app line under certain conditions
+                        if (_Context.MessageName == PluginMessages.Update || _Context.MessageName == PluginMessages.Delete)
+                        {
+                            // We are not using the retrieved record from DB on Update or Delete
+                            _TracingService.Trace("UpdateApplication() We are not using the retrieved record from DB on Update or Delete");
+                            continue;
+                        }
+
+                        if ((_Context.MessageName == PluginMessages.SetState ||
+                             _Context.MessageName == PluginMessages.SetStateDynamicEntity)
+                            && newApplicationLineState.HasValue && newApplicationLineState == ApplicationLineStates.Inactive)
+                        {
+                            // Target App line has been deactivated, ignore it.
+                            _TracingService.Trace("UpdateApplication() Target App line has been deactivated, ignore it.");
+                            continue;
+                        }
+                    }
+
+                    if (appLineRetrieved.Attributes.Contains("defra_locationscreeningrequired") && (bool)appLineRetrieved["defra_locationscreeningrequired"])
+                        allLinesLocationScreeningNo = false;
+                }
+
+                _TracingService.Trace("UpdateApplication() ApplicationEntity.Contains([defra_locationscreeningrequired)={0}", ApplicationEntity.Contains("defra_locationscreeningrequired"));
+                if (!ApplicationEntity.Contains("defra_locationscreeningrequired") || !allLinesLocationScreeningNo != (bool)ApplicationEntity["defra_locationscreeningrequired"])
                 {
                     _TracingService.Trace("Add to the Application upated entity the Location Screening Required flag set to {0}", !allLinesLocationScreeningNo);
                     this.UpdatedApplicationEntity.Attributes.Add("defra_locationscreeningrequired", !allLinesLocationScreeningNo);
                 }
             }
 
+            // This is now done via a separate code activity GetActiveApplicationLines
+            // Set the Active Lines field in the application if appropriate
+            //bool activeLinesExist = DoActiveLinesExist(targetAppLine, newApplicationLineState, appLines);
+            //this.UpdatedApplicationEntity.Attributes.Add(Model.Waste.Crm.Application.ActiveLinesExist, activeLinesExist);
+
             if (this.UpdatedApplicationEntity.Attributes.Count > 0)
             {
                 _TracingService.Trace("Update the application with id {0}", this.UpdatedApplicationEntity.Id);
-                _Service.Update(this.UpdatedApplicationEntity);
+                _AdminService.Update(this.UpdatedApplicationEntity);
             }
         }
+
+        /* 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetAppLine"></param>
+        /// <param name="newApplicationLineState"></param>
+        /// <param name="appLines"></param>
+        /// <returns></returns>
+        private bool DoActiveLinesExist(Entity targetAppLine, ApplicationLineStates? newApplicationLineState, EntityCollection appLines)
+        {
+            _TracingService.Trace("DoActiveLinesExist() newApplicationLineState {0}", newApplicationLineState);
+            // True if there at least one active application line for the application
+            if (newApplicationLineState.HasValue && newApplicationLineState.Value == ApplicationLineStates.Active)
+            {
+                _TracingService.Trace("DoActiveLinesExist() newApplicationLineState is active");
+                // Target app line is active, that's all we need
+                return true;
+            }
+
+            // If we've created a new app line
+            if (_Context.MessageName == PluginMessages.Create)
+            {
+                _TracingService.Trace("DoActiveLinesExist() Create - we have app lines");
+                return true;
+            }
+
+            // We don't know if the current app line is active, so check the DB lines
+            foreach (Entity appLineRetrieved in appLines.Entities)
+            {
+                _TracingService.Trace("DoActiveLinesExist() checking retrieved active lines");
+
+                // Retrieved app line is the same as the plugin target?
+                if (targetAppLine != null
+                    && appLineRetrieved.Id == targetAppLine.Id
+                    && (_Context.MessageName == PluginMessages.Update || _Context.MessageName == PluginMessages.Delete || _Context.MessageName == PluginMessages.SetState || _Context.MessageName == PluginMessages.SetStateDynamicEntity))
+                {
+                    // Depending on plugin message, we have to handle it differently
+                    _TracingService.Trace("DoActiveLinesExist() we are not using the retrieved record from DB on Update or Delete or State Change");
+                    continue;
+                }
+
+                // If any of the retrieved application lines are active...
+                if (appLineRetrieved.Attributes.Contains(ApplicationLine.State) &&
+                    appLineRetrieved.GetAttributeValue<OptionSetValue>(ApplicationLine.State).Value ==
+                    (int)ApplicationLineStates.Active)
+                {
+                    // We have at least one active application line
+                    _TracingService.Trace("DoActiveLinesExist() Target App line is active");
+                    return true;
+                }
+
+                _TracingService.Trace("DoActiveLinesExist() Target App line not active, State attribute retrieved={0}", appLineRetrieved.Attributes.Contains(ApplicationLine.State));
+            }
+
+            _TracingService.Trace("DoActiveLinesExist() no active lines found");
+            return false;
+        }
+        */
+
+        private EntityCollection GetApplicationLines(Guid applicationId, Guid? excludeApplicationLineId = null)
+        {
+            // Get all the other application lines linked to the same application
+            QueryExpression appLinesRulesQuery = new QueryExpression(ApplicationLine.EntityLogicalName)
+            {
+                ColumnSet =
+                    new ColumnSet(
+                        ApplicationLine.NpsDetermination,
+                        Model.Waste.Crm.ApplicationLine.LocationScreeningRequired,
+                        ApplicationLine.State,
+                        ApplicationLine.LineType),
+                Criteria = new FilterExpression()
+                {
+                    FilterOperator = LogicalOperator.And,
+                    Conditions =
+                    {
+                        new ConditionExpression(ApplicationLine.ApplicationId, ConditionOperator.Equal, applicationId),
+                        new ConditionExpression(ApplicationLine.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
+                        new ConditionExpression(ApplicationLine.LineType, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
+                    }
+                }
+            };
+
+            if (excludeApplicationLineId.HasValue)
+            {
+                appLinesRulesQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationLine.ApplicationLineId,
+                    ConditionOperator.NotEqual, _Context.PrimaryEntityId));
+            }
+
+            return _Service.RetrieveMultiple(appLinesRulesQuery);
+        }
+
+        private Entity GetApplicationLine(IOrganizationService _Service, Guid applicationLineId)
+        {
+            return _Service.Retrieve(ApplicationLine.EntityLogicalName, applicationLineId, new ColumnSet(ApplicationLine.State, ApplicationLine.ApplicationId));
+        }
+
+        /// <summary>
+        /// Retrieves the Application entity
+        /// </summary>
+        private void GetApplication(Guid? applicationId)
+        {
+            if (!applicationId.HasValue)
+            {
+                return;
+            }
+
+            //Retrieve the duly made record if exists
+            _TracingService.Trace("Application with Id {0} is being retrieved", applicationId);
+            this.ApplicationEntity = _Service.Retrieve(
+                Application.EntityLogicalName,
+                applicationId.Value,
+                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ApplicationType));
+
+            //Initiate the updated application entity
+            _TracingService.Trace("Application with Id {0} retrieved", applicationId);
+            this.UpdatedApplicationEntity = new Entity(Application.EntityLogicalName) { Id = applicationId.Value };
+        }
+
+        private Guid? GetApplicationId(Entity preImageEntity, Entity targetAppLine)
+        {
+            EntityReference applicationEr = null;
+
+            if (_Context.MessageName == "Update" && preImageEntity != null &&
+                preImageEntity.Attributes.Contains("defra_applicationid"))
+            {
+                applicationEr = (EntityReference)preImageEntity["defra_applicationid"];
+            }
+            if (targetAppLine.Attributes.Contains("defra_applicationid"))
+            {
+                applicationEr = (EntityReference)targetAppLine["defra_applicationid"];
+            }
+
+            if (applicationEr != null)
+            {
+                return applicationEr.Id;
+            }
+            return null;
+        }
+
     }
 }
