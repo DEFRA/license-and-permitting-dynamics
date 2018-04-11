@@ -76,8 +76,11 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core.Model\Entities\*.cs">
+      <Compile Include="..\Core.Model\Entities\*.cs">
       <Link>Linked\Model\Core\Entities\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Core.CardPayments.Model\*.cs">
+      <Link>Linked\Model\CardPayments\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Core.DataAccess\*.cs">
       <Link>Linked\DataAccess\Core\Crm\%(RecursiveDir)%(FileName)</Link>
@@ -94,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeActivities\Abstract\PaymentWorkflowActivityBase.cs" />
+    <Compile Include="CodeActivities\GetPaymentTransaction.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="Constants\CardPaymentServiceSecureConfigurationKeys.cs" />
     <Compile Include="CodeActivities\CreatePayment.cs" />

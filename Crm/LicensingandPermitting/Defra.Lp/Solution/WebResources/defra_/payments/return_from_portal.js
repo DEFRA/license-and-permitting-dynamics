@@ -1,31 +1,38 @@
+// ------------------------------------------------------
+// File: return_from_portal.js
+// JavaScript responsible for processing the return from
+// GovPay payment page. 
+// Queries CRM for the payment reference and calls a
+// CRM action to check if the payment was successful
+// ------------------------------------------------------
+
 var Payments = {
 
+    // The CRM Payment reference number
     PaymentRef: '',
+
+    // The GovPay payment status
     PaymentStatus: '',
+
+    // The CRM Payment entity
     PaymentRecord: '',
 
+    // Triggered when the HTML package loads
     OnLoad: function () {
 
-        // 1. Retrieve payment number from querystirng
-        Payments.PaymentRef = Payments.getDataParam();
+        // 1. Retrieve payment number from querystring passed back by portal
+        Payments.PaymentRef = Payments.GetDataParam();
 
-        // 4. Set-up return button
-        Payments.GetPayment(Payments.PaymentRef);
+        // 2. Get the Payment Record for the given payment ref
+        //Payments.GetPayment(Payments.PaymentRef);
 
-        // 2. Call CRM Action to check payment status
-        Payments.GetCardPaymentStatus(Payments.PaymentRef);
-
-
-
-        // 3. Display Result
-        //Payments.DisplayResult(status, PaymentRef);
-
-
-
-
-
+        // 3. Call CRM Action to check payment status
+        Payments.ProcessCardPaymentStatus(Payments.PaymentRef);
     },
-
+    
+    // Function queries CRM with the given Payment Reference number
+    // and retries the Payment Record and Payment Transaction record
+    // Thenb 
     GetPayment: function (paymentRefNum) {
 
 
@@ -52,8 +59,8 @@ var Payments = {
 
                     }
                     Payments.PaymentRecord = results.value[0];
-                    var paymentLink = Payments.GetApplicationRecordUrl(Payments.PaymentRecord.id);
-                    Payments.SetReturnLink(paymentLink);
+                    //var paymentLink = Payments.GetApplicationRecordUrl(Payments.PaymentRecord.id);
+                    //Payments.SetReturnLink(paymentLink);
                 } else {
                     Xrm.Utility.alertDialog(this.statusText);
                 }
@@ -64,58 +71,52 @@ var Payments = {
 
     },
 
+    // Functions calls the Get Payment Status CRM Action to check the status
+    // of the payment, then displayes the payment status
+    ProcessCardPaymentStatus: function (paymentRefNumber) {
 
-    GetCardPaymentStatus: function (paymentRefNumber) {
 
-
+        // Set-up Action Parameters
         var parameters = {};
         parameters.LookupByPaymentReference = paymentRefNumber;
 
+        // Set-up the Get Payment Status CRM Action request
         var req = new XMLHttpRequest();
         req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v8.2/defra_get_payment_status", true);
         req.setRequestHeader("OData-MaxVersion", "4.0");
         req.setRequestHeader("OData-Version", "4.0");
         req.setRequestHeader("Accept", "application/json");
         req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+
+        // Process result handler
         req.onreadystatechange = function () {
             if (this.readyState === 4) {
                 req.onreadystatechange = null;
+
                 if (this.status === 200) {
+                    // On Successful result, display the payment status
                     var results = JSON.parse(this.response);
                     Payments.PaymentStatus = results.Status;
                     Payments.DisplayResult();
                 } else {
+                    // Error
                     Xrm.Utility.alertDialog(this.statusText);
                 }
+
+                // Prompt payment form to refresh
+                Payments.SendMessageToPayment();
             }
         };
+
+        // Call the Action
         req.send(JSON.stringify(parameters));
-
-        /*
-        req.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                req.onreadystatechange = null;
-
-                // handle success
-                if (this.status === 200) {
-                    result = JSON.parse(this.response);
-                } else {
-                    // Error
-                    var error = JSON.parse(this.response).error;
-                    Xrm.Page.ui.setFormNotification("ERROR: " + error.message, "ERROR");
-                }
-            }
-        }
-        */
-
     },
 
-
+    // Generates an href pointing to the CRM Payment record, used to create a hyperlink
     GetApplicationRecordUrl: function (paymentGuid) {
 
         // var entityTypeCode = Mscrm.EntityPropUtil.EntityTypeName2CodeMap[entityName];
         var entityTypeCode = Payments.GetObjectTypeCode("defra_payment");
-
 
         // https://<orgname>.crm.dynamics.com/main.aspx?etc=<objecttypecode>&id=%7b<EntityRecordID>%7d&pagetype=entityrecord
         var serverUrl = Xrm.Page.context.getServerUrl();
@@ -123,64 +124,8 @@ var Payments = {
     },
 
 
-
-    ActivateAction: function (actionName, actionParams) {
-        var result = null;
-        // set endpoint
-        var endpoint = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/"; // Constants.ODATA_ENDPOINT_URI;
-
-        var req = new XMLHttpRequest();
-        req.open("POST", endpoint + actionName, false);
-        req.setRequestHeader("OData-MaxVersion", "4.0");
-        req.setRequestHeader("OData-Version", "4.0");
-        req.setRequestHeader("Accept", "application/json");
-        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-
-
-        req.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                req.onreadystatechange = null;
-
-                // handle success
-                if (this.status === 200) {
-                    result = JSON.parse(this.response);
-                } else {
-                    // Error
-                    var error = JSON.parse(this.response).error;
-                    Xrm.Page.ui.setFormNotification("ERROR: " + error.message, "ERROR");
-                }
-            }
-        }
-
-        req.send(window.JSON.stringify(actionParams));
-        return result;
-    },
-
-
-
-    CallAction: function (actionUrl, jsonData) {
-        actionUrl = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/" + actionUrl;
-        $.ajax({
-            url: actionUrl,
-            async: false,
-            type: "POST",
-            data: jsonData,
-            dataType: "json",
-            beforeSend: function (x) {
-                if (x && x.overrideMimeType) {
-                    x.overrideMimeType("application/j-son;charset=UTF-8");
-                }
-            },
-            success: function (result) {
-                alert(result);
-            },
-            error: function (err) {
-                var result = JSON.parse(err.responseText);
-                alert(result.error.message);
-            }
-        });
-    },
-
+    // Function returns a CRM Entity Type code for a given entity name,
+    // Used when generating CRM hyperlinks
     GetObjectTypeCode: function (entityName) {
         try {
             var lookupService = new RemoteCommand("LookupService", "RetrieveTypeCode");
@@ -199,18 +144,9 @@ var Payments = {
         }
     },
 
-    GetReturnUrl: function (paymentReference) {
-        Xrm.Page.context
-            .getClientUrl() +
-            "/WebResources/defra_/payments/return_from_portal.htm?ref=" +
-            paymentReference;
-    },
-
-
-
-    getDataParam: function () {
-        //Get the any query string parameters and load them
-        //into the vals array
+    // Function parses the return URL querystring for the Data parameter
+    // which holds the Payment Reference
+    GetDataParam: function () {
 
         var vals = new Array();
         if (location.search != "") {
@@ -237,55 +173,6 @@ var Payments = {
         return null;
     },
 
-    parseDataValue: function (datavalue) {
-        if (datavalue != "") {
-            var vals = new Array();
-
-            var message = document.createElement("p");
-            setText(message, "These are the data parameters values that were passed to this page:");
-            return message;
-
-
-            document.body.appendChild(message);
-
-            vals = decodeURIComponent(datavalue).split("&");
-            for (var i in vals) {
-                vals[i] = vals[i].replace(/\+/g, " ").split("=");
-            }
-
-            //Create a table and header using the DOM
-            var oTable = document.createElement("table");
-            var oTHead = document.createElement("thead");
-            var oTHeadTR = document.createElement("tr");
-            var oTHeadTRTH1 = document.createElement("th");
-            setText(oTHeadTRTH1, "Parameter");
-            var oTHeadTRTH2 = document.createElement("th");
-            setText(oTHeadTRTH2, "Value");
-            oTHeadTR.appendChild(oTHeadTRTH1);
-            oTHeadTR.appendChild(oTHeadTRTH2);
-            oTHead.appendChild(oTHeadTR);
-            oTable.appendChild(oTHead);
-            var oTBody = document.createElement("tbody");
-            //Loop through vals and create rows for the table
-            for (var i in vals) {
-                var oTRow = document.createElement("tr");
-                var oTRowTD1 = document.createElement("td");
-                setText(oTRowTD1, vals[i][0]);
-                var oTRowTD2 = document.createElement("td");
-                setText(oTRowTD2, vals[i][1]);
-
-                oTRow.appendChild(oTRowTD1);
-                oTRow.appendChild(oTRowTD2);
-                oTBody.appendChild(oTRow);
-            }
-
-            oTable.appendChild(oTBody);
-            document.body.appendChild(oTable);
-        }
-        else {
-            noParams();
-        }
-    },
 
     noParams: function () {
         var message = document.createElement("p");
@@ -297,8 +184,14 @@ var Payments = {
     DisplayResult: function() {
         $('#paymentStatus').text(Payments.PaymentStatus);
     },
-    SetReturnLink: function() {
-        $("a").attr("href", Payments.PaymentRef);
+    SetReturnLink: function () {
+        // TODO: Complete return URL.
+        //$("a").attr("href", Payments.PaymentRef);
+    },
+    
+    SendMessageToPayment: function () {
+        alert('Posting message with ref: ' + Payments.PaymentRef);
+        window.opener.postMessage(Payments.PaymentRef, window.location.origin);
     }
 }
 

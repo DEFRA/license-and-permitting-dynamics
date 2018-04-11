@@ -21,6 +21,9 @@ namespace CardPayments.Model
         public RefundSummary refund_summary { get; set; }
         public SettlementSummary settlement_summary { get; set; }
         public Links _links { get; set; }
+
+        // Not part of GovPay response, used to set the HTTP error
+        public string error_message { get; set; }
     }
 
     /// <summary>

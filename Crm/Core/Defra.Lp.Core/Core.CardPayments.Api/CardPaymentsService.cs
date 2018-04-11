@@ -36,8 +36,17 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 }
                 else
                 {
+                    return new CreatePaymentResponse
+                    {
+                        error_message = result.Content?.ReadAsStringAsync().Result,
+                        state = new State
+                        {
+                            status = "error"
+                        }
+                    };
+
                     //4. Handle Errors
-                    throw new ApplicationException(string.Format(Messages.ServiceResponseError, CardServiceConstants.CreatePaymentCommand, result.StatusCode, result.StatusCode));
+                    //throw new ApplicationException($"There was an error calling the api {CardServiceConstants.CreatePaymentCommand}: {result.StatusCode} - {result.ReasonPhrase}");
                 }
             }
         }
@@ -60,7 +69,8 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 else
                 {
                     //4. Handle Errors
-                    throw new ApplicationException(string.Format(Messages.ServiceResponseError, CardServiceConstants.CreatePaymentCommand, result.StatusCode, result.StatusCode));
+                    throw new ApplicationException($"There was an error calling the api {CardServiceConstants.FindPaymentCommand}: {result.StatusCode} - {result.StatusCode}");
+
                 }
             }
         }

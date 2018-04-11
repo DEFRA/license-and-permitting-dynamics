@@ -121,7 +121,7 @@
     </x:Property>
     <x:Property Name="Reference" Type="InArgument(x:String)">
       <x:Property.Attributes>
-        <mxsw:ArgumentRequiredAttribute Value="True" />
+        <mxsw:ArgumentRequiredAttribute Value="False" />
         <mxsw:ArgumentTargetAttribute Value="False" />
         <mxsw:ArgumentDescriptionAttribute Value="New Argument" />
         <mxsw:ArgumentDirectionAttribute Value="Input" />
@@ -339,7 +339,7 @@
             <mxswa:CreateEntity EntityId="{x:Null}" DisplayName="CreateStep4: Create payment transaction record" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
           </Sequence>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep12: Check Payment">
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep12: If Payment record was passed in, link the Payment to the newly created Payment Transaction">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
             </mxswa:ActivityReference.Arguments>
@@ -409,6 +409,87 @@
                             <mxswa:UpdateEntity DisplayName="UpdateStep14" Entity="[CreatedEntities(&quot;PaymentRecord#defra_payment#Temp&quot;)]" EntityName="defra_payment" />
                             <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;PaymentRecord#defra_payment&quot;)]" Value="[CreatedEntities(&quot;PaymentRecord#defra_payment#Temp&quot;)]" />
                           </Sequence>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep24: If reference number not set, set it">
+                            <mxswa:ActivityReference.Arguments>
+                              <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
+                            </mxswa:ActivityReference.Arguments>
+                            <mxswa:ActivityReference.Properties>
+                              <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
+                                <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep25_condition" />
+                                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep25_1" />
+                              </sco:Collection>
+                              <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                                <mxswa:GetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[ConditionBranchStep25_1]">
+                                  <mxswa:GetEntityProperty.TargetType>
+                                    <InArgument x:TypeArguments="s:Type">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
+                                        <x:Null />
+                                      </mxswa:ReferenceLiteral>
+                                    </InArgument>
+                                  </mxswa:GetEntityProperty.TargetType>
+                                </mxswa:GetEntityProperty>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Null</InArgument>
+                                    <x:Null x:Key="Parameters" />
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep25_1]</InArgument>
+                                    <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep25_condition]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep25">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">[ConditionBranchStep25_condition]</InArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                  <mxswa:ActivityReference.Properties>
+                                    <mxswa:ActivityReference x:Key="Then" AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep25">
+                                      <mxswa:ActivityReference.Properties>
+                                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
+                                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                                          <Sequence DisplayName="UpdateStep26: Set Transaction ref to the Payment Ref Number">
+                                            <Sequence.Variables>
+                                              <Variable x:TypeArguments="x:Object" Name="UpdateStep26_1" />
+                                              <Variable x:TypeArguments="x:Object" Name="UpdateStep26_2" />
+                                            </Sequence.Variables>
+                                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_paymenttransaction&quot;)]" />
+                                            <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;).Id]" Value="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" />
+                                            <mxswa:GetEntityProperty Attribute="defra_reference_number" Entity="[InputEntities(&quot;PaymentRecord#defra_payment&quot;)]" EntityName="defra_payment" Value="[UpdateStep26_2]">
+                                              <mxswa:GetEntityProperty.TargetType>
+                                                <InArgument x:TypeArguments="s:Type">
+                                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                                </InArgument>
+                                              </mxswa:GetEntityProperty.TargetType>
+                                            </mxswa:GetEntityProperty>
+                                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                              <mxswa:ActivityReference.Arguments>
+                                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep26_2 }]</InArgument>
+                                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                                </InArgument>
+                                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep26_1]</OutArgument>
+                                              </mxswa:ActivityReference.Arguments>
+                                            </mxswa:ActivityReference>
+                                            <mxswa:SetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep26_1]">
+                                              <mxswa:SetEntityProperty.TargetType>
+                                                <InArgument x:TypeArguments="s:Type">
+                                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                                </InArgument>
+                                              </mxswa:SetEntityProperty.TargetType>
+                                            </mxswa:SetEntityProperty>
+                                            <mxswa:UpdateEntity DisplayName="UpdateStep26" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
+                                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
+                                          </Sequence>
+                                        </sco:Collection>
+                                      </mxswa:ActivityReference.Properties>
+                                    </mxswa:ActivityReference>
+                                    <x:Null x:Key="Else" />
+                                    <x:Null x:Key="Description" />
+                                  </mxswa:ActivityReference.Properties>
+                                </mxswa:ActivityReference>
+                              </sco:Collection>
+                              <x:Boolean x:Key="ContainsElseBranch">False</x:Boolean>
+                            </mxswa:ActivityReference.Properties>
+                          </mxswa:ActivityReference>
                         </sco:Collection>
                       </mxswa:ActivityReference.Properties>
                     </mxswa:ActivityReference>
@@ -469,16 +550,13 @@
                     <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_1_converted]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Reference }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:GetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[CustomActivityStep9_4]">
+                  <mxswa:GetEntityProperty.TargetType>
+                    <InArgument x:TypeArguments="s:Type">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                     </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_4]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
+                  </mxswa:GetEntityProperty.TargetType>
+                </mxswa:GetEntityProperty>
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
@@ -605,7 +683,7 @@
               </sco:Collection>
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
-          <Sequence DisplayName="UpdateStep23: Save Portal Transaction Id">
+          <Sequence DisplayName="UpdateStep23: Save Portal Transaction Id and other portal response parameters">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Object" Name="UpdateStep23_1" />
               <Variable x:TypeArguments="x:Object" Name="UpdateStep23_2" />
@@ -757,102 +835,6 @@
             <mxswa:UpdateEntity DisplayName="UpdateStep23" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
           </Sequence>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep15: Success?">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
-            </mxswa:ActivityReference.Arguments>
-            <mxswa:ActivityReference.Properties>
-              <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
-                <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep16_condition" />
-                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep16_1" />
-              </sco:Collection>
-              <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "success", "String" }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep16_1]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Equal</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep16_1 }]</InArgument>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Operand">[CustomActivityStep9PaymentStatus_localParameter]</InArgument>
-                    <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep16_condition]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep16">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">[ConditionBranchStep16_condition]</InArgument>
-                  </mxswa:ActivityReference.Arguments>
-                  <mxswa:ActivityReference.Properties>
-                    <mxswa:ActivityReference x:Key="Then" AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep16">
-                      <mxswa:ActivityReference.Properties>
-                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
-                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                          <mxswa:SetState DisplayName="SetStateStep20" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityId="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" EntityName="defra_paymenttransaction">
-                            <mxswa:SetState.State>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="0" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.State>
-                            <mxswa:SetState.Status>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="910400002" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.Status>
-                          </mxswa:SetState>
-                        </sco:Collection>
-                      </mxswa:ActivityReference.Properties>
-                    </mxswa:ActivityReference>
-                    <x:Null x:Key="Else" />
-                    <x:Null x:Key="Description" />
-                  </mxswa:ActivityReference.Properties>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep18">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">True</InArgument>
-                  </mxswa:ActivityReference.Arguments>
-                  <mxswa:ActivityReference.Properties>
-                    <mxswa:ActivityReference x:Key="Then" AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep18">
-                      <mxswa:ActivityReference.Properties>
-                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
-                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                          <mxswa:SetState DisplayName="SetStateStep21: Update Payment Transaction Status with Error" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityId="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" EntityName="defra_paymenttransaction">
-                            <mxswa:SetState.State>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="0" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.State>
-                            <mxswa:SetState.Status>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="910400003" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.Status>
-                          </mxswa:SetState>
-                        </sco:Collection>
-                      </mxswa:ActivityReference.Properties>
-                    </mxswa:ActivityReference>
-                    <x:Null x:Key="Else" />
-                    <x:Null x:Key="Description" />
-                  </mxswa:ActivityReference.Properties>
-                </mxswa:ActivityReference>
-              </sco:Collection>
-              <x:Boolean x:Key="ContainsElseBranch">True</x:Boolean>
-            </mxswa:ActivityReference.Properties>
-          </mxswa:ActivityReference>
         </sco:Collection>
       </mxswa:ActivityReference.Properties>
     </mxswa:ActivityReference>
@@ -860,7 +842,7 @@
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <Sequence DisplayName="AssignOutputArgumentStep11: Next Url Href">
+          <Sequence DisplayName="AssignOutputArgumentStep11: Return Next Url Href">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep11_1" />
               <Variable x:TypeArguments="x:String" Default="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="TypeName" />
@@ -877,7 +859,7 @@
             </mxswa:ActivityReference>
             <Assign x:TypeArguments="x:String" To="[PaymentNextUrlHref]" Value="[AssignOutputArgumentStep11_1.ToString()]" />
           </Sequence>
-          <Sequence DisplayName="AssignOutputArgumentStep22: Status">
+          <Sequence DisplayName="AssignOutputArgumentStep22: Return Status">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep22_1" />
               <Variable x:TypeArguments="x:String" Default="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="TypeName" />

@@ -16,7 +16,7 @@ using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 
-namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
+namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities.Abstract
 {
     public abstract class WorkFlowActivityBase : CodeActivity
     {
@@ -107,37 +107,8 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
             // Construct the Local plug-in context.
             LocalWorkflowContext localcontext = new LocalWorkflowContext(context);
 
-            //localcontext.Trace(string.Format(CultureInfo.InvariantCulture, "Entered {0}.Execute()", this.ChildClassName));
-
             try
             {
-                //// Iterate over all of the expected registered events to ensure that the plugin
-                //// has been invoked by an expected event
-                //// For any given plug-in event at an instance in time, we would expect at most 1 result to match.
-                //Action<LocalWorkflowContext> entityAction =
-                //    (from a in this.RegisteredEvents
-                //     where (
-                //     a.Item1 == localcontext.PluginExecutionContext.Stage &&
-                //     a.Item2 == localcontext.PluginExecutionContext.MessageName &&
-                //     (string.IsNullOrWhiteSpace(a.Item3) ? true : a.Item3 == localcontext.PluginExecutionContext.PrimaryEntityName)
-                //     )
-                //     select a.Item4).FirstOrDefault();
-
-                //if (entityAction != null)
-                //{
-                //    localcontext.Trace(string.Format(
-                //        CultureInfo.InvariantCulture,
-                //        "{0} is firing for Entity: {1}, Message: {2}",
-                //        this.ChildClassName,
-                //        localcontext.PluginExecutionContext.PrimaryEntityName,
-                //        localcontext.PluginExecutionContext.MessageName));
-
-                //    entityAction.Invoke(localcontext);
-
-                //    // now exit - if the derived plug-in has incorrectly registered overlapping event registrations,
-                //    // guard against multiple executions.
-                //    return;
-                //}
                 ExecuteCRMWorkFlowActivity(context, localcontext);
 
             }
@@ -160,156 +131,12 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
         }
 
 
-
-
-
-        //public IWorkflowContext ParentContext
-        //{
-        //  get { throw new NotImplementedException(); }
-        //}
-
-        //public string StageName
-        //{
-        //      get { throw new NotImplementedException(); }
-        // }
-
-        //public int WorkflowCategory
-        //{
-        //     get { throw new NotImplementedException(); }
-        // }
-
-        //public int WorkflowMode
-        //{
-        //     get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid BusinessUnitId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid CorrelationId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public int Depth
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid InitiatingUserId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public ParameterCollection InputParameters
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public bool IsExecutingOffline
-        //{
-        //   get { throw new NotImplementedException(); }
-        //}
-
-        //public bool IsInTransaction
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public bool IsOfflinePlayback
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public int IsolationMode
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public string MessageName
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public int Mode
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public DateTime OperationCreatedOn
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid OperationId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid OrganizationId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public string OrganizationName
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public ParameterCollection OutputParameters
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public EntityReference OwningExtension
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public EntityImageCollection PostEntityImages
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public EntityImageCollection PreEntityImages
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid PrimaryEntityId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public string PrimaryEntityName
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid? RequestId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public string SecondaryEntityName
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public ParameterCollection SharedVariables
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-
-        //public Guid UserId
-        //{
-        //    get { throw new NotImplementedException(); }
-        //}
-        //protected override void Execute(CodeActivityContext context)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        protected static void ValidateNotNull(object crmWorkflowContext)
+        {
+            if (crmWorkflowContext == null)
+            {
+                throw new ArgumentNullException(nameof(crmWorkflowContext));
+            }
+        }
     }
 }

@@ -273,7 +273,7 @@
           <Type>ntext</Type>
           <Name>defra_description</Name>
           <LogicalName>defra_description</LogicalName>
-          <RequiredLevel>none</RequiredLevel>
+          <RequiredLevel>required</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -659,7 +659,7 @@
           <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
           <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
           <IsDataSourceSecret>0</IsDataSourceSecret>
-          <AutoNumberFormat>PAY-{SEQNUM:10}-{RANDSTRING:6}</AutoNumberFormat>
+          <AutoNumberFormat>P{SEQNUM:8}-{RANDSTRING:3}</AutoNumberFormat>
           <Format>text</Format>
           <MaxLength>150</MaxLength>
           <Length>300</Length>
@@ -711,7 +711,9 @@
           <RequiredLevel>none</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
           <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
           <IsCustomField>1</IsCustomField>
           <IsAuditEnabled>0</IsAuditEnabled>
           <IsSecured>0</IsSecured>
@@ -1300,6 +1302,7 @@
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>1</ValidForUpdateApi>
           <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
           <IsCustomField>0</IsCustomField>
           <IsAuditEnabled>1</IsAuditEnabled>
           <IsSecured>0</IsSecured>
@@ -1326,7 +1329,7 @@
               <Description description="Status of the Payment" languagecode="1033" />
             </Descriptions>
             <states>
-              <state value="0" defaultstatus="910400000" invariantname="Active">
+              <state value="0" defaultstatus="910400005" invariantname="Active">
                 <labels>
                   <label description="Active" languagecode="1033" />
                 </labels>
@@ -1381,32 +1384,42 @@
               <Description description="Reason for the status of the Payment" languagecode="1033" />
             </Descriptions>
             <statuses>
-              <status value="1" state="0" TransitionData="" Color="#0000ff">
+              <status value="1" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;1&quot; tostatusid=&quot;910400000&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;1&quot; tostatusid=&quot;910400003&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;1&quot; tostatusid=&quot;2&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
+                <labels>
+                  <label description="Refund Draft" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="910400000" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400000&quot; tostatusid=&quot;2&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;910400000&quot; tostatusid=&quot;910400001&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
+                <labels>
+                  <label description="Refund Approved" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="910400001" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400001&quot; tostatusid=&quot;2&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
+                <labels>
+                  <label description="Refund Issued" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="910400002" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400002&quot; tostatusid=&quot;2&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
+                <labels>
+                  <label description="Payment Complete" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="910400003" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400003&quot; tostatusid=&quot;2&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
+                <labels>
+                  <label description="Refund Rejected" languagecode="1033" />
+                </labels>
+              </status>
+              <status value="910400005" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400005&quot; tostatusid=&quot;2&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;910400005&quot; tostatusid=&quot;910400004&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;910400005&quot; tostatusid=&quot;1&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;910400005&quot; tostatusid=&quot;910400002&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
                 <labels>
                   <label description="Draft" languagecode="1033" />
                 </labels>
               </status>
-              <status value="910400000" state="0" TransitionData="" Color="#0000ff">
+              <status value="910400004" state="0" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;910400004&quot; tostatusid=&quot;2&quot; /&gt;&lt;allowedtransition sourcestatusid=&quot;910400004&quot; tostatusid=&quot;910400002&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
                 <labels>
-                  <label description="Approved" languagecode="1033" />
+                  <label description="Payment Pending" languagecode="1033" />
                 </labels>
               </status>
-              <status value="910400001" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Issued" languagecode="1033" />
-                </labels>
-              </status>
-              <status value="910400002" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Complete" languagecode="1033" />
-                </labels>
-              </status>
-              <status value="910400003" state="0" TransitionData="" Color="#0000ff">
-                <labels>
-                  <label description="Rejected" languagecode="1033" />
-                </labels>
-              </status>
-              <status value="2" state="1" TransitionData="" Color="#0000ff">
+              <status value="2" state="1" TransitionData="&lt;allowedtransitions xmlns=&quot;http://schemas.microsoft.com/crm/2009/WebServices&quot;&gt;&lt;allowedtransition sourcestatusid=&quot;2&quot; tostatusid=&quot;910400005&quot; /&gt;&lt;/allowedtransitions&gt;" Color="#0000ff">
                 <labels>
                   <label description="Cancelled" languagecode="1033" />
                 </labels>
@@ -1578,7 +1591,7 @@
       <CanCreateViews>1</CanCreateViews>
       <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
       <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
-      <EnforceStateTransitions>0</EnforceStateTransitions>
+      <EnforceStateTransitions>1</EnforceStateTransitions>
       <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
       <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
       <ChangeTrackingEnabled>0</ChangeTrackingEnabled>

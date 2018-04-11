@@ -112,15 +112,5 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities.Abstract
             };
             return config;
         }
-
-
-
-        protected static void ValidateNotNull(object crmWorkflowContext)
-        {
-            if (crmWorkflowContext == null)
-            {
-                throw new ArgumentNullException(nameof(crmWorkflowContext));
-            }
-        }
     }
 }

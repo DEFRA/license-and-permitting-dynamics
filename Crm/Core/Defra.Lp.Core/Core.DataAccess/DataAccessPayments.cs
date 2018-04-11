@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.CardPayments.Model;
 using Core.Model;
 using Core.Model.Entities;
 using Microsoft.Xrm.Sdk.Messages;
@@ -61,6 +62,37 @@ namespace Core.Configuration
 
             }
             return null;
+        }
+
+
+        /// <summary>
+        /// Returns a Payment Transation record for the given Payment reference
+        /// </summary>
+        /// <param name="service">CRM Org Service</param>
+        /// <param name="paymentReferenceNum">Payment Reference Number used to lookup a Payment Transaction</param>
+        /// <returns>Payment Transaction entity reference or null</returns>
+        public static EntityReference GetPaymentTransaction(this IOrganizationService service, string paymentReferenceNum, ITracingService tracingService)
+        {
+            // Get the config record matching the key
+            QueryExpression query = new QueryExpression(Payment.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(Payment.PaymentTransactionField),
+                Criteria = new FilterExpression()
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(Payment.ReferenceNumberField, ConditionOperator.Equal, paymentReferenceNum)
+                    }
+                }
+            };
+
+            EntityCollection results = service.RetrieveMultiple(query);
+            if (results == null || results.TotalRecordCount == 0)
+            {
+                return null;
+            }
+
+            return results[0][Payment.PaymentTransactionField] as EntityReference;
         }
     }
 }
