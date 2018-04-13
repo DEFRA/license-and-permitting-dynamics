@@ -65,7 +65,7 @@ var Payments = {
 
             // Redirect to GovPay next url
             var nextUrl = actionResult.PaymentNextUrlHref;
-            window.open(nextUrl, 'GovPay', 'width=600,height=600');
+            Payments.PopupCenter(nextUrl, 'GovPay', 750, 700);
         } else {
 
             // Display error message
@@ -112,7 +112,7 @@ var Payments = {
     GetReturnUrl: function (paymentReference) {
         return Xrm.Page.context.getClientUrl() + "/WebResources/defra_/payments/return_from_portal.htm?Data=" + paymentReference;
     },
-  
+
     // Function listens for messages that the payment has been updated
     ReceivedPostMessage: function (event) {
 
@@ -127,5 +127,55 @@ var Payments = {
             // Refresh the form
             Xrm.Page.data.refresh();
         }
-    }
+    },
+
+    PopupCenter: function (url, title, w, h) {
+        // Fixes dual-screen position
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+        if (h < height) {
+            h = height - 20;
+        }
+
+        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        // Puts focus on the newWindow
+        if (window.focus) {
+            newWindow.focus();
+        }
+    },
+
+    // Function sets the payment description based on fields in form
+    UpdateDescriptionField: function () {
+
+        // Get the Payment Type
+        var paymentType = Xrm.Page.getAttribute("defra_type").getText();
+
+        // Get the Payment Category
+        var paymentCategory = Xrm.Page.getAttribute("defra_paymentcategory").getText();
+
+        // Get the Application Name
+        var lookupObj = Xrm.Page.getAttribute("defra_applicationid");
+
+        var applicationName = '';
+        if (lookupObj != null) {
+            var lookupObjValue = lookupObj.getValue(); //Check for Lookup Value
+            if (lookupObjValue != null && lookupObjValue[0].name != null && lookupObjValue[0].name != 'null') {
+                applicationName = lookupObjValue[0].name;
+            }
+        }
+
+        // Set the Description Field
+        var newDescription = paymentCategory ? paymentCategory + ' ' : '';
+        newDescription = newDescription + (paymentType ? paymentType + ' ' : '');
+        newDescription = newDescription + (applicationName ? 'for application "' + applicationName + '"' : '');
+
+        Xrm.Page.getAttribute("defra_description").setValue(newDescription);
+    },
 }

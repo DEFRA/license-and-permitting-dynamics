@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<systemform unmodified="1">
+<systemform>
   <formid>{7ba7fac1-1418-4335-935f-f7f8dfd73fcc}</formid>
   <IntroducedVersion>6.0.0.0</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
@@ -52,6 +52,14 @@
                         <label description="Team Type" languagecode="1033" />
                       </labels>
                       <control id="teamtype" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="teamtype" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{520e1d7d-ddb5-860b-9d41-e1017469e8a0}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Maximum Write-off Allowed" languagecode="1033" />
+                      </labels>
+                      <control id="defra_maximum_writeoff_allowed" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_maximum_writeoff_allowed" disabled="false" />
                     </cell>
                   </row>
                 </rows>
@@ -156,9 +164,6 @@
         </row>
       </rows>
     </header>
-    <DisplayConditions FallbackForm="true" Order="2">
-      <Everyone />
-    </DisplayConditions>
     <events>
       <event name="onload" application="true" active="true">
         <InternalHandlers>
@@ -171,6 +176,39 @@
         </InternalHandlers>
       </event>
     </events>
+    <Navigation>
+      <NavBar></NavBar>
+      <NavBarAreas>
+        <NavBarArea Id="Info">
+          <Titles>
+            <Title LCID="1033" Text="Common" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Sales">
+          <Titles>
+            <Title LCID="1033" Text="Sales" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Service">
+          <Titles>
+            <Title LCID="1033" Text="Service" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Marketing">
+          <Titles>
+            <Title LCID="1033" Text="Marketing" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="ProcessCenter">
+          <Titles>
+            <Title LCID="1033" Text="Process Sessions" />
+          </Titles>
+        </NavBarArea>
+      </NavBarAreas>
+    </Navigation>
+    <DisplayConditions FallbackForm="true" Order="2">
+      <Everyone />
+    </DisplayConditions>
   </form>
   <LocalizedNames>
     <LocalizedName description="Team" languagecode="1033" />

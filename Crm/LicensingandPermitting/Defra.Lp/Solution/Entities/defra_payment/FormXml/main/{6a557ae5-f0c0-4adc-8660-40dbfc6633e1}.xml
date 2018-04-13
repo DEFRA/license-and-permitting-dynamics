@@ -60,7 +60,7 @@
                       <labels>
                         <label description="Payment Category" languagecode="1033" />
                       </labels>
-                      <control id="defra_paymentcategory" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_paymentcategory" disabled="false" />
+                      <control id="defra_paymentcategory" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_paymentcategory" disabled="false" uniqueid="{b13b92ba-0c0c-8cd4-1e58-5c8dc3d3e67e}" />
                     </cell>
                     <cell id="{34c1c9a0-eaa0-d54e-6767-645012ec6137}" showlabel="true" locklevel="0">
                       <labels>
@@ -83,7 +83,7 @@
                       <labels>
                         <label description="Payment Type" languagecode="1033" />
                       </labels>
-                      <control id="defra_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_type" disabled="false" />
+                      <control id="defra_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_type" disabled="false" uniqueid="{cab1103e-12e0-0627-98c7-86458d2aeb7b}" />
                     </cell>
                     <cell id="{8d364245-4b03-30bb-7a81-9463891ae241}" showlabel="true" locklevel="0">
                       <labels>
@@ -359,6 +359,21 @@
       <event name="onload" application="false" active="false">
         <Handlers>
           <Handler functionName="Payments.OnLoad" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{40e80ea8-59ba-33da-a034-a83d3ab4c25c}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+      <event name="onchange" application="false" active="false" attribute="defra_paymentcategory">
+        <Handlers>
+          <Handler functionName="Payments.UpdateDescriptionField" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{dc2a588a-5713-0035-59a2-9c08628681a9}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+      <event name="onchange" application="false" active="false" attribute="defra_type">
+        <Handlers>
+          <Handler functionName="Payments.UpdateDescriptionField" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{d7dd0014-6790-42e2-5843-0c9ea9436bdb}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+      <event name="onchange" application="false" active="false" attribute="defra_applicationid">
+        <Handlers>
+          <Handler functionName="Payments.UpdateDescriptionField" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{d58359b2-4364-35b4-a02b-277c89d006a2}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
     </events>
