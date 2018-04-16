@@ -62,7 +62,7 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
                 ValidateNotNull(crmWorkflowContext);
 
                 // 2. Prepare API Request
-                tracingService.Trace("Calling PrepareCardPaymentRequest...");
+                tracingService.Trace("Calling PrepareFindPaymentRequest...");
                 FindPaymentRequest apiRequest = this.PrepareFindPaymentRequest(executionContext, crmWorkflowContext, tracingService);
 
                 // 3. Retrieve Configuration
@@ -74,7 +74,7 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
                 CardPaymentService cardPaymentService = new CardPaymentService(cardServiceConfiguration);
 
                 // 5. Call the API
-                tracingService.Trace("Calling GovPay CreatePayment...");
+                tracingService.Trace("Calling GovPay FindPayment...");
                 FindPaymentResponse apiResponse = cardPaymentService.FindPayment(apiRequest);
 
                 // 6. Return the response
