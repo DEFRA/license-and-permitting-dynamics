@@ -17,6 +17,9 @@ var Payments = {
     // The CRM Payment entity
     PaymentRecord: '',
 
+    // The GovPay payment error message
+    PaymentError: '',
+
     // Triggered when the HTML package loads
     OnLoad: function () {
 
@@ -62,7 +65,7 @@ var Payments = {
                     //var paymentLink = Payments.GetApplicationRecordUrl(Payments.PaymentRecord.id);
                     //Payments.SetReturnLink(paymentLink);
                 } else {
-                    Xrm.Utility.alertDialog(this.statusText);
+                    alert(this.statusText);
                 }
             }
         };
@@ -97,12 +100,14 @@ var Payments = {
                     // On Successful result, display the payment status
                     var results = JSON.parse(this.response);
                     Payments.PaymentStatus = results.Status;
-                    Payments.DisplayResult();
+                    
                 } else {
                     // Error
-                    Xrm.Utility.alertDialog(this.statusText);
+                    Payments.PaymentStatus = 'Error';
+                    payments.PaymentError = this.statusText;
                 }
-
+                // Display message to user
+                Payments.DisplayResult();
                 // Prompt payment form to refresh
                 Payments.SendMessageToPayment();
             }
@@ -175,28 +180,38 @@ var Payments = {
 
 
     noParams: function () {
-        var message = document.createElement("p");
-        setText(message, "No data parameter was passed to this page");
-
-
-        document.body.appendChild(message);
+        PaymentError = "No data parameter was passed to this page";
+        Payments.DisplayResult();
     },
     DisplayResult: function() {
         $('#paymentStatus').text(Payments.PaymentStatus);
+        if (Payments.PaymentStatus == 'success') {
+            $('#paymentStatus')
+                .html('The payment with reference <strong>' + Payments.PaymentRef + '</strong> was <strong>successful</strong>. <br/>Please close this popup and review the Payment record.');
+        }
+        else if (Payments.PaymentStatus == 'error') {
+            $('#paymentStatus')
+                .html('There was an <strong>error</strong> processing the payment. <br/>Please close this popup window and retry the payment.');
+        }
+        else if (Payments.PaymentStatus == 'fail') {
+            $('#paymentStatus')
+                .html('The payment was not successful. <br/>Please close this popup window and retry the payment using another card.');
+        } else {
+            $('#paymentStatus')
+               .html('The payment provider reported the transaction status of "' + Payments.PaymentStatus + '". <br/>Please close this popup window and retry the payment if appropriate.');
+        }
+        $('#errormessage').text(Payments.PaymentError);
     },
     SetReturnLink: function () {
         // TODO: Complete return URL.
         //$("a").attr("href", Payments.PaymentRef);
     },
     
+    // Alert Payment form of change
     SendMessageToPayment: function () {
-        alert('Posting message with ref: ' + Payments.PaymentRef);
         window.opener.postMessage(Payments.PaymentRef, window.location.origin);
     }
 }
-
-
-
 
 document.onreadystatechange = function () {
     if (document.readyState === "complete") {

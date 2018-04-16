@@ -165,7 +165,13 @@ namespace Defra.Lp.Workflows
             // Do nothing. 
         }
 
-
+        protected static void ValidateNotNull(object crmWorkflowContext)
+        {
+            if (crmWorkflowContext == null)
+            {
+                throw new ArgumentNullException(nameof(crmWorkflowContext));
+            }
+        }
 
 
 

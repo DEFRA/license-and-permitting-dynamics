@@ -1,16 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FieldSecurityProfiles>
-  <FieldSecurityProfile name="Finance Field Security" description="Locks finance specific fields" fieldsecurityprofileid="{dc96c935-142d-e811-a957-000d3a23443b}">
-    <FieldPermissions>
-      <FieldPermission>
-        <EntityName>defra_application</EntityName>
-        <AttributeName>defra_writeoffamount</AttributeName>
-        <CanRead>4</CanRead>
-        <CanUpdate>4</CanUpdate>
-        <CanCreate>4</CanCreate>
-      </FieldPermission>
-    </FieldPermissions>
-  </FieldSecurityProfile>
   <FieldSecurityProfile name="Senior Permitting Officer Sign Off" fieldsecurityprofileid="{82f7f95f-ba2d-e811-a951-000d3a206976}">
     <FieldPermissions>
       <FieldPermission>
@@ -26,6 +15,28 @@
         <CanRead>4</CanRead>
         <CanUpdate>4</CanUpdate>
         <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="Write-Off Full Access Field Security" description="Locks finance specific fields" fieldsecurityprofileid="{dc96c935-142d-e811-a957-000d3a23443b}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>team</EntityName>
+        <AttributeName>defra_maximum_writeoff_allowed</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="Write-Off Read Access Field Security" fieldsecurityprofileid="{803af9a9-5c3e-e811-a954-000d3a206976}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>team</EntityName>
+        <AttributeName>defra_maximum_writeoff_allowed</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
       </FieldPermission>
     </FieldPermissions>
   </FieldSecurityProfile>

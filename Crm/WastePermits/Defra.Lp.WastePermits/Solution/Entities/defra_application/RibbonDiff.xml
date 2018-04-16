@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RibbonDiffXml>
   <CustomActions>
+    <CustomAction Id="defra.defra_application.Button.WriteOffBalance.CustomAction" Location="Mscrm.Form.defra_application.MainTab.Save.Controls._children" Sequence="63">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:defra.defra_application.Button.WriteOffBalance.Alt" Command="defra.defra_application.Command.WriteOffBalance" CommandValueId="WritOffBalance" Id="defra.defra_application.Button.WriteOffBalance" Image32by32="$webresource:ProductManagement/_imgs/ribbon/Revise_32.png" Image16by16="$webresource:ProductManagement/_imgs/ribbon/Revise_16.png" LabelText="$LocLabels:defra.defra_application.Button.WriteOffBalance.LabelText" Sequence="63" TemplateAlias="o2" ToolTipTitle="$LocLabels:defra.defra_application.Button.WriteOffBalance.ToolTipTitle" ToolTipDescription="$LocLabels:defra.defra_application.Button.WriteOffBalance.ToolTipDescription" ModernImage="" />
+      </CommandUIDefinition>
+    </CustomAction>
     <CustomAction Id="defra.defra_permit.generateScreeningReport.CustomAction" Location="Mscrm.Form.defra_application.MainTab.Save.Controls._children" Sequence="65">
       <CommandUIDefinition>
         <Button Alt="$LocLabels:defra.defra_permit.generateScreeningReport.Alt" Command="defra.defra_application.generateScreeningReport.CustomAction" Id="defra.defra_permit.generateScreeningReport" LabelText="$LocLabels:defra.defra_permit.generateScreeningReport.LabelText" Sequence="65" TemplateAlias="o2" ToolTipTitle="$LocLabels:defra.defra_permit.generateScreeningReport.ToolTipTitle" ToolTipDescription="$LocLabels:defra.defra_permit.generateScreeningReport.ToolTipDescription" />
@@ -11,6 +16,15 @@
     <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
   </Templates>
   <CommandDefinitions>
+    <CommandDefinition Id="defra.defra_application.Command.WriteOffBalance">
+      <EnableRules />
+      <DisplayRules>
+        <DisplayRule Id="defra.defra_application.DisplayRule.WriteOffButton" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="Applications.WriteOffBalance" Library="$webresource:defra_/applications/application_form_events.js" />
+      </Actions>
+    </CommandDefinition>
     <CommandDefinition Id="defra.defra_application.generateScreeningReport.CustomAction">
       <EnableRules />
       <DisplayRules />
@@ -21,10 +35,34 @@
   </CommandDefinitions>
   <RuleDefinitions>
     <TabDisplayRules />
-    <DisplayRules />
+    <DisplayRules>
+      <DisplayRule Id="defra.defra_application.DisplayRule.WriteOffButton">
+        <ValueRule Field="defra_balance" Value="0" Default="true" InvertResult="true" />
+      </DisplayRule>
+    </DisplayRules>
     <EnableRules />
   </RuleDefinitions>
   <LocLabels>
+    <LocLabel Id="defra.defra_application.Button.WriteOffBalance.Alt">
+      <Titles>
+        <Title description="Write Off Balance" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_application.Button.WriteOffBalance.LabelText">
+      <Titles>
+        <Title description="Write Off" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_application.Button.WriteOffBalance.ToolTipDescription">
+      <Titles>
+        <Title description="Write Off Balance" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_application.Button.WriteOffBalance.ToolTipTitle">
+      <Titles>
+        <Title description="Write Off Balance" languagecode="1033" />
+      </Titles>
+    </LocLabel>
     <LocLabel Id="defra.defra_permit.generateScreeningReport.Alt">
       <Titles>
         <Title description="Generate Screening Report" languagecode="1033" />

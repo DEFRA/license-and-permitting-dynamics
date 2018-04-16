@@ -4,7 +4,7 @@
   <IntroducedVersion>1.0.0.0</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
   <FormActivationState>1</FormActivationState>
-  <form>
+  <form shownavigationbar="true" showImage="false" maxWidth="1920">
     <tabs>
       <tab id="{bca068a4-5707-4114-9524-fb1c241761c8}" name="{bca068a4-5707-4114-9524-fb1c241761c8}" verticallayout="true" IsUserDefined="1" showlabel="true" locklevel="0" expanded="true">
         <labels>
@@ -24,6 +24,22 @@
                         <label description="Application Number" languagecode="1033" />
                       </labels>
                       <control id="defra_applicationnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_applicationnumber" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{99d5e6cd-0be9-d8d7-a43d-e3c03040ca60}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Applicant type" languagecode="1033" />
+                      </labels>
+                      <control id="defra_applicant_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_applicant_type" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{92a07dab-ccdb-1960-ab91-36c87c58a291}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Application Organisation Type" languagecode="1033" />
+                      </labels>
+                      <control id="defra_applicant_organisation_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_applicant_organisation_type" disabled="false" uniqueid="{8357d81a-ba0b-d7cc-0500-ed9aac42d14a}" />
                     </cell>
                   </row>
                   <row>
@@ -122,14 +138,6 @@
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{6c86b09c-2429-213a-e541-0773eed61c76}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="Total Amount" languagecode="1033" />
-                      </labels>
-                      <control id="defra_totalamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_totalamount" disabled="true" uniqueid="{595ca214-0cc0-921c-95c6-69d9265a4ee4}" />
-                    </cell>
-                  </row>
-                  <row>
                     <cell id="{bca62553-7020-dc46-46a6-771ac211a0e4}" showlabel="true" locklevel="0">
                       <labels>
                         <label description="Balance" languagecode="1033" />
@@ -162,19 +170,11 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{b4447705-460c-eedc-cee6-9070111a52ce}" showlabel="true" locklevel="0">
+                    <cell id="{dde29b87-8334-949c-6910-d44b7d900986}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Net Total Paid" languagecode="1033" />
+                        <label description="Last Payment" languagecode="1033" />
                       </labels>
-                      <control id="defra_nettotalpaid" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_nettotalpaid" disabled="true" uniqueid="{649d3779-6639-4a38-64d3-5e51821e7eb7}" />
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{0a84d4d2-cb98-75e1-901c-05e5bd4ca396}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="WriteOffAmount" languagecode="1033" />
-                      </labels>
-                      <control id="defra_writeoffamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_writeoffamount" disabled="false" uniqueid="{e668709d-da1e-24c9-e4e3-6d5a7a35c421}" />
+                      <control id="defra_lastpaymentid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_lastpaymentid" disabled="false" />
                     </cell>
                   </row>
                 </rows>
@@ -464,6 +464,9 @@
       </NavBarAreas>
     </Navigation>
     <controlDescriptions />
+    <formLibraries>
+      <Library name="defra_/applications/application_form_events.js" libraryUniqueId="{b6e1670c-9083-7b90-486d-9828c154a4da}" />
+    </formLibraries>
     <DisplayConditions FallbackForm="true">
       <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
       <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />

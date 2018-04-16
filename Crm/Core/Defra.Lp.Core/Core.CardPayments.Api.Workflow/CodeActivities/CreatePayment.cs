@@ -104,10 +104,11 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
 
         private CreatePaymentRequest PrepareCardPaymentRequest(CodeActivityContext executionContext)
         {
+            string description = Description.Get(executionContext);
             CreatePaymentRequest apiRequest = new CreatePaymentRequest
             {
                 amount = (int) (Amount.Get(executionContext).Value*100),
-                description = Description.Get(executionContext),
+                description = description?.Replace("<", "'").Replace(">", "'").Replace("\"", "'"),
                 reference = Reference.Get(executionContext),
                 return_url = ReturnUrl.Get(executionContext),
             };
