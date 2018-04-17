@@ -41,16 +41,17 @@ namespace Defra.Lp.Workflows
                 // 1. Validation
                 ValidateNotNull(crmWorkflowContext);
                 EntityReference user = this.User.Get<EntityReference>(executionContext);
-                //ValidateNotNull(user);
                 if (user == null || user.Id == Guid.Empty)
                 {
                     // Get the user from the context
                     user = new EntityReference(Model.User.LogicalName, crmWorkflowContext.WorkflowExecutionContext.UserId);
                 }
 
-                // 2. Query CRM for maximum write off user can make
+                // 2. Query CRM for maximum write off user can make, but use eleveted rights to read Team records
                 tracingService.Trace("Calling GetMaximumUserCanWriteOff...");
-                Money maxWriteOff = crmWorkflowContext.OrganizationService.GetMaximumUserCanWriteOff(user.Id);
+                IOrganizationServiceFactory factory = (IOrganizationServiceFactory)executionContext.GetExtension<IOrganizationServiceFactory>();
+                IOrganizationService service = factory.CreateOrganizationService(null);
+                Money maxWriteOff = service.GetMaximumUserCanWriteOff(user.Id);
 
                 // 3. Return the response
                 tracingService.Trace("maxWriteOff={0}", maxWriteOff);
@@ -62,7 +63,7 @@ namespace Defra.Lp.Workflows
             {
                 // Todo: Log the Error
                 tracingService.Trace("Exception: " + ex);
-                throw ex;
+                throw;
             }
         }
     }
