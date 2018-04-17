@@ -27,10 +27,9 @@ namespace Defra.Lp.Workflows
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
 
-        [RequiredArgument]
-        [Input("Label text")]
-        [Default("Site:")]
-        public InArgument<string> LabelText { get; set; }
+        //[Input("Label text")]
+        //[Default("Site:")]
+        //public InArgument<string> LabelText { get; set; }
 
         [Output("Site details")]
         public OutArgument<string> SiteDetails { get; set; }
@@ -68,7 +67,8 @@ namespace Defra.Lp.Workflows
             var application = this.Application.Get(executionContext);
             if (application == null) return;
 
-            var labelText = this.LabelText.Get(executionContext);
+            //var labelText = this.LabelText.Get(executionContext);
+            var labelText = "Site:";
 
             TracingService.Trace("Getting site name and address for application: {0}", application.Id.ToString());
 
