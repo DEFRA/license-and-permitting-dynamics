@@ -18,6 +18,9 @@ var Payments = {
             //ie
             window.attachEvent('onmessage', Payments.ReceivedPostMessage);
         }
+
+        // Remove the Write-off option
+        Xrm.Page.getControl("defra_type").removeOption("910400010");
     },
 
     // Function called when user presses the Take Card Payment button from within CRM
