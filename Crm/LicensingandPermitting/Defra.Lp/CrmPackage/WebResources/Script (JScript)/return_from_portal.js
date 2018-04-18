@@ -183,17 +183,19 @@ var Payments = {
         PaymentError = "No data parameter was passed to this page";
         Payments.DisplayResult();
     },
+
+
     DisplayResult: function() {
         $('#paymentStatus').text(Payments.PaymentStatus);
-        if (Payments.PaymentStatus == 'success') {
+        if (Payments.PaymentStatus === 'success') {
             $('#paymentStatus')
                 .html('The payment with reference <strong>' + Payments.PaymentRef + '</strong> was <strong>successful</strong>. <br/>Please close this popup and review the Payment record.');
         }
-        else if (Payments.PaymentStatus == 'error') {
+        else if (Payments.PaymentStatus === 'error') {
             $('#paymentStatus')
                 .html('There was an <strong>error</strong> processing the payment. <br/>Please close this popup window and retry the payment.');
         }
-        else if (Payments.PaymentStatus == 'fail') {
+        else if (Payments.PaymentStatus === 'fail') {
             $('#paymentStatus')
                 .html('The payment was not successful. <br/>Please close this popup window and retry the payment using another card.');
         } else {
