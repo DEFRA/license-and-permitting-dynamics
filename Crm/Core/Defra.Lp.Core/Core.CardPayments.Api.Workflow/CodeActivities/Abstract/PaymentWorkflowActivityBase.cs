@@ -81,15 +81,18 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities.Abstract
             PaymentProvider.Set(executionContext, apiResponse.payment_provider);
         }
 
-        protected RestServiceConfiguration RetrieveCardPaymentServiceConfiguration(IOrganizationService organizationService, string configurationPrefix)
+        protected RestServiceConfiguration RetrieveCardPaymentServiceConfiguration(CodeActivityContext executionContext, string configurationPrefix)
         {
             if (string.IsNullOrWhiteSpace(configurationPrefix))
             {
                 configurationPrefix = String.Empty;
             }
 
+            IOrganizationServiceFactory factory = (IOrganizationServiceFactory)executionContext.GetExtension<IOrganizationServiceFactory>();
+            IOrganizationService service = factory.CreateOrganizationService(null);
+
             // Read the settings
-            IDictionary<string, string> configSettings = organizationService.GetConfigurationStringValues(
+            IDictionary<string, string> configSettings = service.GetConfigurationStringValues(
                  $"{configurationPrefix}{CardPaymentServiceSecureConfigurationKeys.ApiKey}",
                  $"{configurationPrefix}{CardPaymentServiceSecureConfigurationKeys.TargetUrl}",
                  $"{configurationPrefix}{CardPaymentServiceSecureConfigurationKeys.TargetHost}",

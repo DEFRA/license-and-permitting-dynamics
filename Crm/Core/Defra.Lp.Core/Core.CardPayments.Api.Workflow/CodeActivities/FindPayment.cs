@@ -67,7 +67,7 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
 
                 // 3. Retrieve Configuration
                 tracingService.Trace("Calling RetrieveCardPaymentServiceConfiguration...");
-                RestServiceConfiguration cardServiceConfiguration = this.RetrieveCardPaymentServiceConfiguration(crmWorkflowContext.OrganizationService, ConfigurationPrefix.Get(executionContext));
+                RestServiceConfiguration cardServiceConfiguration = this.RetrieveCardPaymentServiceConfiguration(executionContext, ConfigurationPrefix.Get(executionContext));
 
                 // 4. Set-up the Api Service
                 tracingService.Trace("Instantiating CardPaymentService...");
