@@ -1,7 +1,5 @@
 ﻿using Defra.Lp.Common.ProxyClasses;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -40,16 +38,14 @@ namespace Defra.Lp.Common
             TracingService.Trace(string.Format("In CreateFolder with Entity Type {0} and Entity Id {1}", application.LogicalName, application.Id));
 
             var request = new MoveFileRequest();
-            var permitNo = string.Empty;
+            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, application);
 
-            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name" }, application);
-
-            TracingService.Trace(string.Format("Application Name = {0}", applicationEntity["defra_name"].ToString()));
+            TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity["defra_permitnumber"].ToString(), applicationEntity["defra_applicationnumber"].ToString()));
 
             request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            //request.ListName = "Permit"; // Config.GetAttributeValue<string>(ConfigNames.SharePointPermitList); //"TestLibKal";
             request.ListName = ReturnDocumentSetName();
-            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_name");
+            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+            request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
 
             var stringContent = JsonConvert.SerializeObject(request);
 
@@ -65,7 +61,6 @@ namespace Defra.Lp.Common
             
             var request = new MoveFileRequest();
             var activityId = Guid.Empty;
-            var permitNo = string.Empty;
             Entity annotationData = null;
             Entity attachmentData = null;
 
@@ -90,11 +85,8 @@ namespace Defra.Lp.Common
                     }
                 }
 
-                if (attachmentData.Contains("parent.defra_name"))
-                {
-                    permitNo = (string)((AliasedValue)attachmentData.Attributes["parent.defra_name"]).Value;
-                }
-                activityId = AddInsertFileParametersToRequest(request, attachmentData, permitNo, parentEntity, parentLookup);
+
+                activityId = AddInsertFileParametersToRequest(request, attachmentData, parentEntity, parentLookup);
 
                 //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
 
@@ -109,11 +101,7 @@ namespace Defra.Lp.Common
                 }
                 else
                 {
-                    if (annotationData.Contains("parent.defra_name"))
-                    {
-                        permitNo = (string)((AliasedValue)annotationData.Attributes["parent.defra_name"]).Value;
-                    }
-                    activityId = AddInsertFileParametersToRequest(request, annotationData, permitNo, parentEntity, parentLookup);
+                    activityId = AddInsertFileParametersToRequest(request, annotationData, parentEntity, parentLookup);
                 }
             }
 
@@ -139,28 +127,34 @@ namespace Defra.Lp.Common
             }
         }
 
-        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string permitNo, string parentEntityName, string parentLookup)
+        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string parentEntityName, string parentLookup)
         {
-            TracingService.Trace(string.Format("In AddInsertFileParametersToRequest. PermitNo: {0}", permitNo));
+            TracingService.Trace("In AddInsertFileParametersToRequest()");
+
+            var permitNo = string.Empty;
+            var applicationNo = string.Empty;
+            if (queryRecord.Contains("parent.defra_permitnumber"))
+            {
+                permitNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_permitnumber"]).Value;
+            }
+            if (queryRecord.Contains("parent.defra_applicationnumber"))
+            {
+                applicationNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_applicationnumber"]).Value;
+                applicationNo = applicationNo.Replace('/', '_');
+            }
+
+            TracingService.Trace("Permit No: {0}", permitNo);
+            TracingService.Trace("Application No: {0}", applicationNo);
 
             var fileName = queryRecord.GetAttributeValue<string>("filename");
 
-            TracingService.Trace(string.Format("Filename: {0}", fileName));
-            TracingService.Trace(string.Format("Logical Name: {0}", queryRecord.LogicalName));
+            TracingService.Trace("Filename: {0}", fileName);
+            TracingService.Trace("Logical Name: {0}", queryRecord.LogicalName);
 
             var body = string.Empty;
             if (queryRecord.LogicalName == "activitymimeattachment")
             {
-
-                fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
-                var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
-                fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
-                fileName = Regex.Replace(fileName, @"\s", "");
-                if (fileName.Length >= 101)
-                {
-                    fileName = fileName.Remove(100);
-                }
-
+                fileName = SpRemoveIllegalChars(fileName);
                 body = queryRecord.GetAttributeValue<string>("body");
             }
             else
@@ -171,11 +165,8 @@ namespace Defra.Lp.Common
             TracingService.Trace(string.Format("Requests: {0}", request));
 
             request.FileBody = body;
-
-            if (!string.IsNullOrEmpty(permitNo))
-            {
-                request.PermitNo = permitNo;
-            }
+            request.PermitNo = permitNo;
+            request.ApplicationNo = applicationNo;
 
             //AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("parent." + parentLookup);
             //Guid activityId = (Guid)activityIdAliasedValue.Value;
@@ -234,6 +225,8 @@ namespace Defra.Lp.Common
                                             <link-entity name='{1}' from='{2}' to='objectid' alias='parent' link-type='inner' >
                                                 <attribute name='{2}' />
                                                 <attribute name='defra_name' />
+                                                <attribute name='defra_permitnumber' />
+                                                <attribute name='defra_applicationnumber' />
                                                 <attribute name='statuscode' />
                                                 <filter type='and' >
                                                 <condition attribute='statuscode' operator='not-null' />
@@ -261,6 +254,8 @@ namespace Defra.Lp.Common
                                                               <attribute name='regardingobjectid' />
                                                               <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
                                                                 <attribute name='defra_name' />
+                                                                <attribute name='defra_permitnumber' />
+                                                                <attribute name='defra_applicationnumber' />
                                                               </link-entity>
                                                             </link-entity>
                                                           </entity>
@@ -304,6 +299,19 @@ namespace Defra.Lp.Common
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadAsStringAsync().Result;
             }
+        }
+
+        private string SpRemoveIllegalChars(string fileName)
+        {
+            fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
+            var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
+            fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
+            fileName = Regex.Replace(fileName, @"\s", "");
+            if (fileName.Length >= 101)
+            {
+                fileName = fileName.Remove(100);
+            }
+            return fileName;
         }
     }
 }
