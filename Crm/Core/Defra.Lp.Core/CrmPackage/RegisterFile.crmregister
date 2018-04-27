@@ -2,16 +2,20 @@
 <Register xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/crm/2011/tools/pluginregistration">
   <Solutions>
     <Solution Assembly="Defra.Lp.Core.Plugins.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />
-    <Solution Assembly="Defra.Lp.Core.Workflows.dll" Id="6b924c77-0048-42ae-9c99-754e645f29b9" IsolationMode="Sandbox" SourceType="Database">
+    <Solution Assembly="Defra.Lp.Core.Workflows.dll" Id="8ef1348d-e276-456d-a190-683dce8508f3" IsolationMode="Sandbox" SourceType="Database">
       <WorkflowTypes>
         <clear />
-        <WorkflowType FriendlyName="Companies House Validation" Name="CompaniesHouseValidation" Description="Companies House Validation" WorkflowActivityGroupName="CompaniesHouse" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Core.Workflows.CompaniesHouseValidation" />
       </WorkflowTypes>
     </Solution>
-    <Solution Assembly="Defra.Lp.Core.Core.CardPayments.Workflow.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />
+    <Solution Assembly="Defra.Lp.Core.CompaniesHouse.Workflow.dll" Id="1bae3ccd-42ac-458b-8a29-9afdc8bd95bd" IsolationMode="Sandbox" SourceType="Database">
+      <WorkflowTypes>
+        <clear />
+        <WorkflowType FriendlyName="CompaniesHouseValidation" Name="CompaniesHouseValidation" Description="CompaniesHouseValidation" WorkflowActivityGroupName="CompaniesHouse" WorkflowActivityProjectName="Core.CompaniesHouse.Api.Workflow" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Core.CompaniesHouse.Workflow.CompaniesHouseValidation" />
+      </WorkflowTypes>
+    </Solution>
   </Solutions>
   <XamlWorkflows>
     <XamlWorkflowSolution Assembly="Defra.Lp.Core.Workflows.dll" />
-    <XamlWorkflowSolution Assembly="Defra.Lp.Core.Core.CardPayments.Workflow.dll" />
+    <XamlWorkflowSolution Assembly="Defra.Lp.Core.CompaniesHouse.Workflow.dll" />
   </XamlWorkflows>
 </Register>
