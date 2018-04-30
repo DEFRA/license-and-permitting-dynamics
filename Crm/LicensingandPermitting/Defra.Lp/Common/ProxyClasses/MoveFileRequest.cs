@@ -16,6 +16,7 @@ namespace Defra.Lp.Common.ProxyClasses
         public string ContentTypeName { get; internal set; }
         public string DocumentId { get; internal set; }
         public string PermitNo { get; internal set; }
+        public string ApplicationNo { get; internal set; }
         public object FileBody { get; internal set; }
         public string FileDescription { get; internal set; }
         public string FileName { get; internal set; }
