@@ -11,25 +11,31 @@
       <row name="result" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="queueitemid" ishidden="1" width="150" />
         <cell name="createdon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.from" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.subject" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.description" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.from" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.subject" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.description" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
       </row>
     </grid>
   </layoutxml>
   <querytype>0</querytype>
   <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical">
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
         <attribute name="queueitemid" />
-        <order attribute="queueitemid" descending="false" />
-        <link-entity alias="a_42d6e490105b4c0abfe4f864eaeb77ee" name="email" from="activityid" to="objectid" link-type="outer" visible="false">
+        <attribute name="createdon" />
+        <attribute name="objecttypecode" />
+        <order attribute="createdon" descending="true" />
+        <filter type="and">
+          <condition attribute="queueid" operator="eq" uiname="PSC Payments" uitype="queue" value="{6E8C878F-8C41-E811-A958-000D3A20838A}" />
+        </filter>
+        <link-entity name="email" from="activityid" to="objectid" alias="a_42d6e490105b4c0abfe4f864eaeb77ee">
           <attribute name="from" />
           <attribute name="description" />
           <attribute name="subject" />
+          <filter type="and">
+            <condition attribute="directioncode" operator="eq" value="0" />
+          </filter>
         </link-entity>
-        <attribute name="createdon" />
-        <attribute name="objecttypecode" />
         <attribute name="objectid" />
       </entity>
     </fetch>
