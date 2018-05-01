@@ -288,9 +288,9 @@ namespace Defra.Lp.WastePermits.Plugins
                 foreach (string attribute in wasteParamEntity.Attributes.Keys)
                     if (attribute != ("defra_wasteparamsid") && attribute.Contains("_"))
                     {
-                        _TracingService.Trace("Attribute of source record:" + wasteParamEntity[attribute]);
+                        //_TracingService.Trace("Attribute of source record:" + wasteParamEntity[attribute]);
                         this.WasteParameters[attribute] = wasteParamEntity[attribute];
-                        _TracingService.Trace("Attribute of new record:" + this.WasteParameters[attribute]);
+                        //_TracingService.Trace("Attribute of new record:" + this.WasteParameters[attribute]);
                     }
 
                 //Set the name
