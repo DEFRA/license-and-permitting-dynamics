@@ -19,8 +19,11 @@ var Payments = {
             window.attachEvent('onmessage', Payments.ReceivedPostMessage);
         }
 
-        // Remove the Write-off option
+        // Remove the Write-off option from payment type
         Xrm.Page.getControl("defra_type").removeOption("910400010");
+
+        // Remove the Online Payment option from payment type
+        Xrm.Page.getControl("defra_type").removeOption("910400000");
     },
 
     // Function called when user presses the Take Card Payment button from within CRM
@@ -63,9 +66,6 @@ var Payments = {
 
         // 4. Redirect to GovPay Portal using the url provided 
         if (actionResult) {
-
-            // Todo: Check for errors
-
             // Redirect to GovPay next url
             var nextUrl = actionResult.PaymentNextUrlHref;
             Payments.PopupCenter(nextUrl, 'GovPay', 750, 700);
@@ -130,6 +130,9 @@ var Payments = {
             // Refresh the form
             Xrm.Page.data.refresh();
         }
+
+        // Let the parent know
+        Payments.SendMessageToApplication();
     },
 
     PopupCenter: function (url, title, w, h) {
@@ -180,5 +183,42 @@ var Payments = {
         newDescription = newDescription + (applicationName ? 'for application "' + applicationName + '"' : '');
 
         Xrm.Page.getAttribute("defra_description").setValue(newDescription);
+    },
+
+    // Function sets the payment description based on fields in form
+    PaymentCategoryChanged: function () {
+
+        var paymentCategory = Xrm.Page.getAttribute("defra_paymentcategory").getValue();
+
+        // If Inbound
+        if (paymentCategory === 910400000) {
+            // Inbound
+
+            // Remove refund, reversal, manual refund, manual reversal, writeoff
+            Xrm.Page.getControl("defra_type").removeOption("910400006");
+            Xrm.Page.getControl("defra_type").removeOption("910400007");
+            Xrm.Page.getControl("defra_type").removeOption("910400008");
+            Xrm.Page.getControl("defra_type").removeOption("910400009");
+
+            // Change labels
+            Xrm.Page.getControl('defra_payment_received_date').setLabel('Postal Code');
+        }
+        else if (paymentCategory === 910400001){
+            // Outbound
+
+            // Remove inbound options
+            Xrm.Page.getControl("defra_type").removeOption("910400001");
+            Xrm.Page.getControl("defra_type").removeOption("910400002");
+            Xrm.Page.getControl("defra_type").removeOption("910400003");
+            Xrm.Page.getControl("defra_type").removeOption("910400004");
+            Xrm.Page.getControl("defra_type").removeOption("910400005");
+
+
+        }
+    },
+
+    // Alert Application form of change
+    SendMessageToApplication: function () {
+        window.parent.parent.postMessage(Payments.PaymentRef, window.location.origin);
     }
 }
