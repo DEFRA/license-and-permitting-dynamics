@@ -35,19 +35,19 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{7db0275a-711e-dc14-c023-9c2c779775d1}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="Payment Type" languagecode="1033" />
-                      </labels>
-                      <control id="defra_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_type" disabled="false" uniqueid="{cab1103e-12e0-0627-98c7-86458d2aeb7b}" />
-                    </cell>
-                  </row>
-                  <row>
                     <cell id="{128645cd-1775-1876-0661-6ce22186e315}" showlabel="true" locklevel="0">
                       <labels>
                         <label description="Payment Category" languagecode="1033" />
                       </labels>
                       <control id="defra_paymentcategory" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_paymentcategory" disabled="false" uniqueid="{b13b92ba-0c0c-8cd4-1e58-5c8dc3d3e67e}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{7db0275a-711e-dc14-c023-9c2c779775d1}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Payment Type" languagecode="1033" />
+                      </labels>
+                      <control id="defra_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_type" disabled="false" uniqueid="{cab1103e-12e0-0627-98c7-86458d2aeb7b}" />
                     </cell>
                   </row>
                   <row>
@@ -65,7 +65,7 @@
                       <labels>
                         <label description="Application" languagecode="1033" />
                       </labels>
-                      <control id="defra_applicationid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_applicationid" disabled="true" uniqueid="{876470c2-eee4-8992-5b9d-37a517c8b3ad}">
+                      <control id="defra_applicationid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_applicationid" disabled="false" uniqueid="{876470c2-eee4-8992-5b9d-37a517c8b3ad}">
                         <parameters>
                           <AutoResolve>true</AutoResolve>
                           <DisableMru>false</DisableMru>
@@ -106,6 +106,23 @@
                 </labels>
                 <rows>
                   <row>
+                    <cell id="{36e35b63-dcd2-e250-22d2-772aec1d01e3}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Issued By" languagecode="1033" />
+                      </labels>
+                      <control id="defra_issued_by" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_issued_by" disabled="true" uniqueid="{7bd18269-0a1d-656a-2e96-01048b884a75}">
+                        <parameters>
+                          <AutoResolve>true</AutoResolve>
+                          <DisableMru>false</DisableMru>
+                          <DisableQuickFind>false</DisableQuickFind>
+                          <DisableViewPicker>false</DisableViewPicker>
+                          <DefaultViewId>{E88CA999-0B16-4AE9-B6A9-9EDC840D42D8}</DefaultViewId>
+                          <AllowFilterOff>false</AllowFilterOff>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row>
                     <cell id="{90989d83-6b3e-4157-cb6e-7d7690137663}" showlabel="true" locklevel="0">
                       <labels>
                         <label description="Status" languagecode="1033" />
@@ -116,7 +133,7 @@
                   <row>
                     <cell id="{e01ea225-9817-592e-02e0-31ad1d67440a}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Payment Received Date" languagecode="1033" />
+                        <label description="Completion Date" languagecode="1033" />
                       </labels>
                       <control id="defra_payment_received_date" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="defra_payment_received_date" disabled="false" />
                     </cell>
@@ -416,6 +433,7 @@
       <event name="onchange" application="false" active="false" attribute="defra_paymentcategory">
         <Handlers>
           <Handler functionName="Payments.UpdateDescriptionField" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{dc2a588a-5713-0035-59a2-9c08628681a9}" enabled="true" parameters="" passExecutionContext="false" />
+          <Handler functionName="Payments.PaymentCategoryChanged" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{57dbbb27-4235-83a3-7588-342e688c67ae}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
       <event name="onchange" application="false" active="false" attribute="defra_type">
@@ -426,6 +444,11 @@
       <event name="onchange" application="false" active="false" attribute="defra_applicationid">
         <Handlers>
           <Handler functionName="Payments.UpdateDescriptionField" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{d58359b2-4364-35b4-a02b-277c89d006a2}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+      <event name="onsave" application="false" active="false">
+        <Handlers>
+          <Handler functionName="Payments.SendMessageToApplication" libraryName="defra_/payments/payment_form_events.js" handlerUniqueId="{14b09a18-599c-a93d-e67b-217bbe73e209}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
     </events>

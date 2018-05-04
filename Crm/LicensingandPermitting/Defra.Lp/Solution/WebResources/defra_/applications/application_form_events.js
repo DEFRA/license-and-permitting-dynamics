@@ -127,17 +127,15 @@ var Applications = {
     // Function listens for messages that the record has been updated
     ReceivedPostMessage: function (event) {
 
+        alert('refreshing');
+
         if (event.origin !== window.location.origin) {
             return;
         }
 
-        // Refresh the  form if this is the record that has been updated
-        var receivedId = event.data;
-        var thisId = Xrm.Page.data.entity.getId().replace('{', '').replace('}', '');
-        if (receivedId === thisId) {
-            // Refresh the form
-            Xrm.Page.data.refresh();
-        }
+        // Refresh the form
+        
+        Xrm.Page.data.refresh();
     }
 
 }
