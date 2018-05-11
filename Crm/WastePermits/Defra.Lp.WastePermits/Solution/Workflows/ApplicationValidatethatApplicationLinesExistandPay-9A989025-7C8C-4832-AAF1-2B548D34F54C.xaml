@@ -174,60 +174,16 @@
                     <Sequence DisplayName="StopWorkflowStep7: Display Payment Required Message">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep7_1" />
-                        <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep7_2" />
-                        <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep7_3" />
-                        <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep7_4" />
-                        <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep7_5" />
+                        <Variable x:TypeArguments="x:String" Default="361eb7c1-2930-426c-a71c-4bac3a902878" Name="stepLabelLabelId" />
+                        <Variable x:TypeArguments="x:String" Default="A payment is required to proceed. Please take a payment and try again. " Name="stepLabelDescription" />
+                        <Variable x:TypeArguments="x:Int32" Default="1033" Name="stepLabelLanguageCode" />
                       </Sequence.Variables>
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "A payment of £", "String" }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "A payment is required to proceed. Please take a payment and try again. ", "String" }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                          </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[StopWorkflowStep7_2]</OutArgument>
-                        </mxswa:ActivityReference.Arguments>
-                      </mxswa:ActivityReference>
-                      <mxswa:GetEntityProperty Attribute="defra_balance" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[StopWorkflowStep7_4]">
-                        <mxswa:GetEntityProperty.TargetType>
-                          <InArgument x:TypeArguments="s:Type">
-                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
-                              <x:Null />
-                            </mxswa:ReferenceLiteral>
-                          </InArgument>
-                        </mxswa:GetEntityProperty.TargetType>
-                      </mxswa:GetEntityProperty>
-                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                        <mxswa:ActivityReference.Arguments>
-                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { StopWorkflowStep7_4 }]</InArgument>
-                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
-                              <x:Null />
-                            </mxswa:ReferenceLiteral>
-                          </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[StopWorkflowStep7_3]</OutArgument>
-                        </mxswa:ActivityReference.Arguments>
-                      </mxswa:ActivityReference>
-                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                        <mxswa:ActivityReference.Arguments>
-                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, " is required to proceed. Please take a payment and try again. ", "String" }]</InArgument>
-                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                          </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[StopWorkflowStep7_5]</OutArgument>
-                        </mxswa:ActivityReference.Arguments>
-                      </mxswa:ActivityReference>
-                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                        <mxswa:ActivityReference.Arguments>
-                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">Add</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { StopWorkflowStep7_2, StopWorkflowStep7_3, StopWorkflowStep7_5 }]</InArgument>
-                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
-                              <x:Null />
-                            </mxswa:ReferenceLiteral>
                           </InArgument>
                           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[StopWorkflowStep7_1]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
