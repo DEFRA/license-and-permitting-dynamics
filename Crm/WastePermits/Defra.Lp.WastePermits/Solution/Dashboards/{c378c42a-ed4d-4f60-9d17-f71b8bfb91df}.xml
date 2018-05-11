@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <LocalizedNames>
+    <LocalizedName description="Server-Side Synchronization Monitoring" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Shows the overview of server-side synchronization including mailbox status, performance, and health. This information is useful for troubleshooting." languagecode="1033" />
+  </Descriptions>
+  <FormId>{c378c42a-ed4d-4f60-9d17-f71b8bfb91df}</FormId>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="false" verticallayout="true" id="{65774a27-1901-47c3-aae1-119eae10ea73}" locklevel="0" name="{c15baa3b-bd64-4e2f-9d34-e3b027c24503}">
+            <labels>
+              <label description="OOB SSS Health" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="111" id="{D4D09445-C27F-49DA-BDF9-73881311F121}" locklevel="0" labelwidth="115" name="{F6A57BF8-DEF6-477F-AD0C-FB2D862BFCB0}">
+                    <labels>
+                      <label description="SSS Health" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{B7D95F39-AFB5-4B6F-9AFF-0C34294F50E7}">
+                          <labels>
+                            <label description="Mailbox Status Report" languagecode="1033" />
+                          </labels>
+                          <control id="ssshealthwall" classid="{fd2a7985-3187-444e-908d-6624b21f69c0}">
+                            <parameters>
+                              <Url>/Dashboards/mailboxdashboard.aspx</Url>
+                              <PassParameters>false</PassParameters>
+                              <Security>false</Security>
+                              <Preload>true</Preload>
+                              <Scrolling>auto</Scrolling>
+                              <Border>true</Border>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{FD813E3D-6BF1-48EC-A2D3-984A5A1A64B8}" auto="false">
+                          <labels>
+                            <label description="System-disabled mailboxes that previously synced properly" languagecode="1033" />
+                          </labels>
+                          <control id="Grid1" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mailbox</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <ViewId>{3203499b-6f48-43da-865e-78a689911f70}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds></ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableChartPicker>true</EnableChartPicker>
+                              <RelationshipName></RelationshipName>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{F7AFC7F5-F33D-4D78-A67A-6D59C77DAAB5}" auto="false">
+                          <labels>
+                            <label description="Mailboxes Errors" languagecode="1033" />
+                          </labels>
+                          <control id="Grid2" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>tracelog</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <ViewId>{8F4E1B8E-E2ED-41F9-B7D0-9DCDB02E278F}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds></ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{21532A89-91EE-4736-8069-DCFB34DE6C72}</VisualizationId>
+                              <EnableChartPicker>true</EnableChartPicker>
+                              <RelationshipName></RelationshipName>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{9ED05D18-6F4F-4E24-849E-D36FAA3FC585}" auto="false">
+                          <labels>
+                            <label description="Status of Mailboxes by Email Server Profile" languagecode="1033" />
+                          </labels>
+                          <control id="Chart1" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mailbox</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <ViewId>{FA994277-1DAB-46CE-BC58-81F2D9706C3B}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds></ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{84097F3B-1227-4CB8-8318-9CAD474D65E6}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName></RelationshipName>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{2CD17219-8014-4B1F-98BB-A2AE7FDD57BB}" auto="false">
+                          <labels>
+                            <label description="Mailboxes taking more than 15 minutes to test" languagecode="1033" />
+                          </labels>
+                          <control id="Grid3" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mailbox</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <ViewId>{A2ADE5CE-1719-4739-A9B3-C9FC55AAA856}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds></ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName></RelationshipName>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{1DC178B3-322B-4A39-AC9E-57A84C5B06A0}" auto="false">
+                          <labels>
+                            <label description="Test and Enable Failed" languagecode="1033" />
+                          </labels>
+                          <control id="Grid4" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mailbox</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>true</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <ViewId>{A16FF798-4AD1-4876-A375-B533ACAE8AD6}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds></ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableChartPicker>true</EnableChartPicker>
+                              <RelationshipName></RelationshipName>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                      <row></row>
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <DisplayConditions FallbackForm="true">
+          <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+          <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+        </DisplayConditions>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>7.1.0.0</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>
