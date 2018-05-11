@@ -13,6 +13,7 @@ using System;
 using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Common.PermitNumbering;
 
 namespace Defra.Lp.Plugins
 {
@@ -82,12 +83,10 @@ namespace Defra.Lp.Plugins
 
                         tracing.Trace("Retrieve the next permit number");
 
-                        //Execute the Get Next Permit Number Action
-                        OrganizationRequest PermitNumberRequest = new OrganizationRequest("defra_GetNextPermitNumber");
-                        //req["Target"] = new EntityReference("entity", entity.Id);
-                        OrganizationResponse PermitNumberResponse = service.Execute(PermitNumberRequest);
+                        //Get the next permit number
+                        PermitNumbering permitAutoNumbering = new PermitNumbering(context, tracing, service);
+                        string PermitNumber = permitAutoNumbering.GetNextPermitNumber(); 
 
-                        string PermitNumber = (string)PermitNumberResponse.Results["PermitNumber"];
                         tracing.Trace("Next permit number {0} hes been retrieved", PermitNumber);
 
                         //Update the permit number field
@@ -132,16 +131,9 @@ namespace Defra.Lp.Plugins
 
                 tracing.Trace("Retrieve the next application number");
 
-                //Execute the Get Next Permit Application Number Action
-                OrganizationRequest PermitApplicationNumberRequest = new OrganizationRequest("defra_GetNextPermitApplicationNumber")
-                {
-                    ["PermitNumber"] = (string)target["defra_permitnumber"],
-                    ["ApplicationType"] = applicationTypeStr
-                };
+                PermitApplicationNumbering pAppAutonumbering = new PermitApplicationNumbering(context, tracing, service, (string)target["defra_permitnumber"], applicationTypeStr);
 
-                OrganizationResponse PermitApplicationNumberResponse = service.Execute(PermitApplicationNumberRequest);
-
-                string PermitApplicationNumber = (string)PermitApplicationNumberResponse.Results["ApplicationNumber"];
+                string PermitApplicationNumber = pAppAutonumbering.GetNextPermitApplicationNumber();
 
                 tracing.Trace("Next application number {0} hes been retrieved", PermitApplicationNumber);
 
