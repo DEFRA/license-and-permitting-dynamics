@@ -11,22 +11,27 @@
   </this:XrmWorkflow9bde917adb344852857ba776011cad70.CreatedEntities>
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <mxswa:Workflow>
-    <mxswa:Workflow.Variables>
-      <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep1Configuration_localParameter" />
-    </mxswa:Workflow.Variables>
-    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep1: Get Licensing and Permitting Config">
+    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep1: Create Permit Folder and Application Document Set in SharePoint">
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_1" />
+          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_2" />
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_1_converted" />
         </sco:Collection>
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+          <mxswa:GetEntityProperty Attribute="defra_applicationid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CustomActivityStep1_2]">
+            <mxswa:GetEntityProperty.TargetType>
+              <InArgument x:TypeArguments="s:Type">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+              </InArgument>
+            </mxswa:GetEntityProperty.TargetType>
+          </mxswa:GetEntityProperty>
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
             <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "Licensing and Permitting", "String" }]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep1_2 }]</InArgument>
               <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
               </InArgument>
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep1_1]</OutArgument>
             </mxswa:ActivityReference.Arguments>
@@ -35,95 +40,14 @@
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep1_1]</InArgument>
               <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
               </InArgument>
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep1_1_converted]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetConfiguration, Defra.Lp.Workflows, Version=1.1.75.13, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep1: Get Licensing and Permitting Config">
+          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.ApplicationCreateFolderInSharePoint, Defra.Lp.Workflows, Version=1.1.75.25, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep1: Create Permit Folder and Application Document Set in SharePoint">
             <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ConfigName">[DirectCast(CustomActivityStep1_1_converted, System.String)]</InArgument>
-              <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="Configuration">[CustomActivityStep1Configuration_localParameter]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
-          <If Condition="[Microsoft.VisualBasic.IsNothing(CustomActivityStep1Configuration_localParameter)]">
-            <If.Then>
-              <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CustomActivityStep1Configuration_entity&quot;)]" Value="[New Entity()]" />
-            </If.Then>
-            <If.Else>
-              <mxswa:RetrieveEntity Attributes="{x:Null}" Entity="[CreatedEntities(&quot;CustomActivityStep1Configuration_entity&quot;)]" EntityId="[DirectCast(CustomActivityStep1Configuration_localParameter.Id, System.Guid)]" EntityName="defra_configuration" ThrowIfNotExists="False" />
-            </If.Else>
-          </If>
-        </sco:Collection>
-      </mxswa:ActivityReference.Properties>
-    </mxswa:ActivityReference>
-    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep2: Create Document Set in SharePoint">
-      <mxswa:ActivityReference.Properties>
-        <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_1" />
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_2" />
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_1_converted" />
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_3" />
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_4" />
-          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep2_3_converted" />
-        </sco:Collection>
-        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <mxswa:GetEntityProperty Attribute="defra_applicationid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CustomActivityStep2_2]">
-            <mxswa:GetEntityProperty.TargetType>
-              <InArgument x:TypeArguments="s:Type">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-            </mxswa:GetEntityProperty.TargetType>
-          </mxswa:GetEntityProperty>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep2_2 }]</InArgument>
-              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep2_1]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep2_1]</InArgument>
-              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep2_1_converted]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
-          <mxswa:GetEntityProperty Attribute="defra_configurationid" Entity="[CreatedEntities(&quot;CustomActivityStep1Configuration_entity&quot;)]" EntityName="defra_configuration" Value="[CustomActivityStep2_4]">
-            <mxswa:GetEntityProperty.TargetType>
-              <InArgument x:TypeArguments="s:Type">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-            </mxswa:GetEntityProperty.TargetType>
-          </mxswa:GetEntityProperty>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep2_4 }]</InArgument>
-              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep2_3]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep2_3]</InArgument>
-              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
-              </InArgument>
-              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep2_3_converted]</OutArgument>
-            </mxswa:ActivityReference.Arguments>
-          </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.ApplicationCreateFolderInSharePoint, Defra.Lp.Workflows, Version=1.1.75.13, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep2: Create Document Set in SharePoint">
-            <mxswa:ActivityReference.Arguments>
-              <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep2_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
-              <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Configuration">[DirectCast(CustomActivityStep2_3_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
+              <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep1_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
         </sco:Collection>
