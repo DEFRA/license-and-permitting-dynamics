@@ -11,9 +11,6 @@
   </this:XrmWorkfloweebfddff3e7e4ab0a31cc0b8d492c920.CreatedEntities>
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <mxswa:Workflow>
-    <mxswa:Workflow.Variables>
-      <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep7Configuration_localParameter" />
-    </mxswa:Workflow.Variables>
     <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep1: If  Team Leader signs off and there is no Permit linked">
       <mxswa:ActivityReference.Arguments>
         <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
@@ -581,63 +578,26 @@
                       </mxswa:SetEntityProperty>
                       <mxswa:SendEmail EntityId="{x:Null}" DisplayName="SendEmailStep5: Send email to the Application Primary Contact" Entity="[CreatedEntities(&quot;SendEmailStep5_localParameter#Temp&quot;)]" />
                     </Sequence>
-                    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep7: Get Configuration for Licensing and Permitting">
-                      <mxswa:ActivityReference.Properties>
-                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
-                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep7_1" />
-                          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep7_1_converted" />
-                        </sco:Collection>
-                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                            <mxswa:ActivityReference.Arguments>
-                              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "Licensing and Permitting", "String" }]</InArgument>
-                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                              </InArgument>
-                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep7_1]</OutArgument>
-                            </mxswa:ActivityReference.Arguments>
-                          </mxswa:ActivityReference>
-                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                            <mxswa:ActivityReference.Arguments>
-                              <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep7_1]</InArgument>
-                              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                              </InArgument>
-                              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep7_1_converted]</OutArgument>
-                            </mxswa:ActivityReference.Arguments>
-                          </mxswa:ActivityReference>
-                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetConfiguration, Defra.Lp.Workflows, Version=1.1.75.13, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep7: Get Configuration for Licensing and Permitting">
-                            <mxswa:ActivityReference.Arguments>
-                              <InArgument x:TypeArguments="x:String" x:Key="ConfigName">[DirectCast(CustomActivityStep7_1_converted, System.String)]</InArgument>
-                              <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="Configuration">[CustomActivityStep7Configuration_localParameter]</OutArgument>
-                            </mxswa:ActivityReference.Arguments>
-                          </mxswa:ActivityReference>
-                          <If Condition="[Microsoft.VisualBasic.IsNothing(CustomActivityStep7Configuration_localParameter)]">
-                            <If.Then>
-                              <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CustomActivityStep7Configuration_entity&quot;)]" Value="[New Entity()]" />
-                            </If.Then>
-                            <If.Else>
-                              <mxswa:RetrieveEntity Attributes="{x:Null}" Entity="[CreatedEntities(&quot;CustomActivityStep7Configuration_entity&quot;)]" EntityId="[DirectCast(CustomActivityStep7Configuration_localParameter.Id, System.Guid)]" EntityName="defra_configuration" ThrowIfNotExists="False" />
-                            </If.Else>
-                          </If>
-                        </sco:Collection>
-                      </mxswa:ActivityReference.Properties>
-                    </mxswa:ActivityReference>
-                    <Sequence DisplayName="CreateStep6: Create Document Location to Permit Folder in SharePoint">
+                    <Sequence DisplayName="CreateStep10: Create Permit SP Document Location">
                       <Sequence.Variables>
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_1" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_2" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_3" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_4" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_5" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_6" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_7" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_8" />
-                        <Variable x:TypeArguments="x:Object" Name="CreateStep6_9" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_1" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_2" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_3" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_4" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_5" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_6" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_7" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_8" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_9" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_10" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_11" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_12" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_13" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_14" />
+                        <Variable x:TypeArguments="x:Object" Name="CreateStep10_15" />
                       </Sequence.Variables>
-                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" Value="[New Entity(&quot;sharepointdocumentlocation&quot;)]" />
-                      <mxswa:GetEntityProperty Attribute="name" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_2]">
+                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" Value="[New Entity(&quot;sharepointdocumentlocation&quot;)]" />
+                      <mxswa:GetEntityProperty Attribute="name" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_2]">
                         <mxswa:GetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -647,21 +607,21 @@
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep6_2 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_2 }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep6_1]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_1]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="name" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_1]">
+                      <mxswa:SetEntityProperty Attribute="name" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_1]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
-                      <mxswa:GetEntityProperty Attribute="defra_sharepointpermitlist" Entity="[CreatedEntities(&quot;CustomActivityStep7Configuration_entity&quot;)]" EntityName="defra_configuration" Value="[CreateStep6_4]">
+                      <mxswa:GetEntityProperty Attribute="ownerid" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_4]">
                         <mxswa:GetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -671,21 +631,21 @@
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep6_4 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_4 }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep6_3]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_3]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="parentsiteorlocation" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_3]">
+                      <mxswa:SetEntityProperty Attribute="ownerid" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_3]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
-                      <mxswa:GetEntityProperty Attribute="relativeurl" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_6]">
+                      <mxswa:GetEntityProperty Attribute="description" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_6]">
                         <mxswa:GetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -695,21 +655,45 @@
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep6_6 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_6 }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep6_5]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_5]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="relativeurl" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_5]">
+                      <mxswa:SetEntityProperty Attribute="description" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_5]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
-                      <mxswa:GetEntityProperty Attribute="defra_permitid" Entity="[InputEntities(&quot;related_defra_permitid#defra_permit&quot;)]" EntityName="defra_permit" Value="[CreateStep6_8]">
+                      <mxswa:GetEntityProperty Attribute="absoluteurl" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_8]">
+                        <mxswa:GetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:GetEntityProperty.TargetType>
+                      </mxswa:GetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_8 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_7]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="absoluteurl" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_7]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:GetEntityProperty Attribute="parentsiteorlocation" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_10]">
                         <mxswa:GetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -719,14 +703,62 @@
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep6_8 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_10 }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep6_7]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_9]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="regardingobjectid" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_7]">
+                      <mxswa:SetEntityProperty Attribute="parentsiteorlocation" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_9]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:GetEntityProperty Attribute="relativeurl" Entity="[InputEntities(&quot;related_defra_permitdocumentlocation#sharepointdocumentlocation&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_12]">
+                        <mxswa:GetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:GetEntityProperty.TargetType>
+                      </mxswa:GetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_12 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_11]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="relativeurl" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_11]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:GetEntityProperty Attribute="defra_permitid" Entity="[CreatedEntities(&quot;CreateStep3_localParameter&quot;)]" EntityName="defra_permit" Value="[CreateStep10_14]">
+                        <mxswa:GetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                          </InArgument>
+                        </mxswa:GetEntityProperty.TargetType>
+                      </mxswa:GetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep10_14 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_13]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="regardingobjectid" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_13]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -740,27 +772,27 @@
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep6_9]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep10_15]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="locationtype" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep6_9]">
+                      <mxswa:SetEntityProperty Attribute="locationtype" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" Value="[CreateStep10_15]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
-                      <mxswa:CreateEntity EntityId="{x:Null}" DisplayName="CreateStep6: Create Document Location to Permit Folder in SharePoint" Entity="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" />
-                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep6_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep6_localParameter#Temp&quot;)]" />
+                      <mxswa:CreateEntity EntityId="{x:Null}" DisplayName="CreateStep10: Create Permit SP Document Location" Entity="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" EntityName="sharepointdocumentlocation" />
+                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep10_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep10_localParameter#Temp&quot;)]" />
                     </Sequence>
-                    <Sequence DisplayName="UpdateStep8: Set Permit Document Location">
+                    <Sequence DisplayName="UpdateStep11: Update Permit Document Location Lookup">
                       <Sequence.Variables>
-                        <Variable x:TypeArguments="x:Object" Name="UpdateStep8_1" />
-                        <Variable x:TypeArguments="x:Object" Name="UpdateStep8_2" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep11_1" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep11_2" />
                       </Sequence.Variables>
                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" Value="[New Entity(&quot;defra_permit&quot;)]" />
                       <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;).Id]" Value="[InputEntities(&quot;related_defra_permitid#defra_permit&quot;).Id]" />
-                      <mxswa:GetEntityProperty Attribute="sharepointdocumentlocationid" Entity="[CreatedEntities(&quot;CreateStep6_localParameter&quot;)]" EntityName="sharepointdocumentlocation" Value="[UpdateStep8_2]">
+                      <mxswa:GetEntityProperty Attribute="sharepointdocumentlocationid" Entity="[CreatedEntities(&quot;CreateStep10_localParameter&quot;)]" EntityName="sharepointdocumentlocation" Value="[UpdateStep11_2]">
                         <mxswa:GetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -770,21 +802,21 @@
                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                         <mxswa:ActivityReference.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep8_2 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep11_2 }]</InArgument>
                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                           </InArgument>
-                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep8_1]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep11_1]</OutArgument>
                         </mxswa:ActivityReference.Arguments>
                       </mxswa:ActivityReference>
-                      <mxswa:SetEntityProperty Attribute="defra_permitdocumentlocation" Entity="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" EntityName="defra_permit" Value="[UpdateStep8_1]">
+                      <mxswa:SetEntityProperty Attribute="defra_permitdocumentlocation" Entity="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" EntityName="defra_permit" Value="[UpdateStep11_1]">
                         <mxswa:SetEntityProperty.TargetType>
                           <InArgument x:TypeArguments="s:Type">
                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                           </InArgument>
                         </mxswa:SetEntityProperty.TargetType>
                       </mxswa:SetEntityProperty>
-                      <mxswa:UpdateEntity DisplayName="UpdateStep8" Entity="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" EntityName="defra_permit" />
+                      <mxswa:UpdateEntity DisplayName="UpdateStep11" Entity="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" EntityName="defra_permit" />
                       <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;related_defra_permitid#defra_permit&quot;)]" Value="[CreatedEntities(&quot;related_defra_permitid#defra_permit#Temp&quot;)]" />
                     </Sequence>
                     <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="InvokeSdkMessageStep9: Progress to next state on action PERMIT_ISSUED">
