@@ -81,8 +81,29 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\DataAccessSecureConfiguration.cs">
+      <Link>Linked\DataAccess\Core\DataAccessSecureConfiguration.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Model\Entities\*.cs">
       <Link>Linked\Model\Core\Entities\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Common\SharePoint\AzureInterfaceConstants.cs">
+      <Link>Common\SharePoint\AzureInterfaceConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\SharePoint\DocumentRelayRequest.cs">
+      <Link>Common\SharePoint\DocumentRelayRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\SharePoint\MetaDataRequest.cs">
+      <Link>Common\SharePoint\MetaDataRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\SharePoint\SharePointSecureConfigurationKeys.cs">
+      <Link>Common\SharePoint\SharePointSecureConfigurationKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Lp.DataAccess\DataAccessApplication.cs">
+      <Link>Linked\DataAccess\Lp\DataAccessApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\Lp.DataAccess\Query.cs">
+      <Link>Linked\DataAccess\Lp\Query.cs</Link>
     </Compile>
     <Compile Include="..\Model.lp\Crm\*.cs">
       <Link>Linked\Model\Lp\%(FileName)</Link>
@@ -92,32 +113,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Common\AzureInterface.cs">
-      <Link>Common\AzureInterface.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ConfigNames.cs">
-      <Link>Common\ConfigNames.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\PropertyGenerator.cs">
-      <Link>Common\PropertyGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ProxyClasses\FieldMetaData.cs">
-      <Link>Common\ProxyClasses\FieldMetaData.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ProxyClasses\MetadataRequest.cs">
-      <Link>Common\ProxyClasses\MetadataRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ProxyClasses\MetadataValues.cs">
-      <Link>Common\ProxyClasses\MetadataValues.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ProxyClasses\MoveFileRequest.cs">
-      <Link>Common\ProxyClasses\MoveFileRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\ProxyClasses\MoveSharePointResult.cs">
-      <Link>Common\ProxyClasses\MoveSharePointResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\Query.cs">
-      <Link>Common\Query.cs</Link>
+    <Compile Include="..\Common\SharePoint\AzureInterface.cs">
+      <Link>Common\SharePoint\AzureInterface.cs</Link>
     </Compile>
     <Compile Include="..\Newtonsoft.Json\Bson\BsonBinaryType.cs">
       <Link>Newtonsoft.Json\Bson\BsonBinaryType.cs</Link>
@@ -730,7 +727,6 @@
     <Compile Include="GetAddressesForPostcode.cs" />
     <Compile Include="GetCompanyRegisteredAddress.cs" />
     <Compile Include="GetCompanySecretaryEmail.cs" />
-    <Compile Include="GetConfiguration.cs" />
     <Compile Include="GetMaximumUserWriteOff.cs" />
     <Compile Include="GetNextPermitApplicationNumber.cs" />
     <Compile Include="GetNextPermitNumber.cs" />
@@ -744,6 +740,7 @@
     <Compile Include="ProcessAttachmentsOnEmailSend.cs" />
     <Compile Include="RecalculateRollup.cs" />
     <Compile Include="SetSlaKpiDates.cs" />
+    <Compile Include="UpdateSharePointMetadata.cs" />
     <Compile Include="UploadIndividualAttachmentToSharePoint.cs" />
     <Compile Include="CopyApplicationDataToPermit.cs" />
     <Compile Include="CopyPermitDataToApplication.cs" />
@@ -755,7 +752,6 @@
     <None Include="Defra.Lp.Workflows.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

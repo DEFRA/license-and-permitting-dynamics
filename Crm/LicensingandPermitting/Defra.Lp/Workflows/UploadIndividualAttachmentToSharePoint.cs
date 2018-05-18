@@ -1,4 +1,4 @@
-﻿using Defra.Lp.Common;
+﻿using Defra.Lp.Common.SharePoint;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
@@ -19,7 +19,9 @@ namespace Defra.Lp.Workflows
             {
                 var tracingService = executionContext.GetExtension<ITracingService>();
                 var context = executionContext.GetExtension<IWorkflowContext>();
+                var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
                 var service = crmWorkflowContext.OrganizationService;
+                var adminService = serviceFactory.CreateOrganizationService(null);
 
                 tracingService.Trace("In UploadIndividualAttachmentToSharePoint.");
 
@@ -28,10 +30,8 @@ namespace Defra.Lp.Workflows
 
                 tracingService.Trace(string.Format("Parent Entity = {0}; Parent Lookup = {1}", parentEntityName, parentLookupName));
 
-                var configuration = this.Configuration.Get(executionContext);
-
-                AzureInterface azureInterface = new AzureInterface(configuration, service, tracingService);
-                azureInterface.MoveFile(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), parentEntityName, parentLookupName);
+                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                azureInterface.UploadFile(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), parentEntityName, parentLookupName);
             }
             catch (Exception ex)
             {
@@ -46,10 +46,5 @@ namespace Defra.Lp.Workflows
         [RequiredArgument]
         [Input("Parent Lookup Name")]
         public InArgument<string> Parent_Lookup_Name { get; set; }
-
-        [RequiredArgument]
-        [Input("Configuration")]
-        [ReferenceTarget("defra_configuration")]
-        public InArgument<EntityReference> Configuration { get; set; }
     }
 }

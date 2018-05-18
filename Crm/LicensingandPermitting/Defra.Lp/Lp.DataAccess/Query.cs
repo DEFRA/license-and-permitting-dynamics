@@ -5,7 +5,7 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Linq;
 
-namespace Defra.Lp.Common
+namespace Lp.DataAccess
 {
     public static class Query
     {
@@ -59,54 +59,54 @@ namespace Defra.Lp.Common
             return ((RetrieveMultipleResponse)service.Execute(fetchRequest)).EntityCollection;
         }
 
-        public static string GetConfigurationValue(IOrganizationService adminService, string name)
-        {
-            string query = string.Format(@"<fetch>
-                                 <entity name='defra_configuration'>
-                                     <attribute name='defra_value' />
-                                     <filter>
-                                        <condition attribute='defra_name' operator= 'eq' value='{0}' />
-                                    </filter>
-                                 </entity>
-                            </fetch>", name);
+        //public static string GetConfigurationValue(IOrganizationService adminService, string name)
+        //{
+        //    string query = string.Format(@"<fetch>
+        //                         <entity name='defra_configuration'>
+        //                             <attribute name='defra_value' />
+        //                             <filter>
+        //                                <condition attribute='defra_name' operator= 'eq' value='{0}' />
+        //                            </filter>
+        //                         </entity>
+        //                    </fetch>", name);
 
-            Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
+        //    Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
 
-            if (configRecord == null || !configRecord.Attributes.Contains("defra_value"))
-            {
-                throw new InvalidPluginExecutionException(string.Format("Configuration value {0} not found or has not been set", name));
-            }
-            else
-            {
-                return (string)configRecord["defra_value"];
-            }
-        }
+        //    if (configRecord == null || !configRecord.Attributes.Contains("defra_value"))
+        //    {
+        //        throw new InvalidPluginExecutionException(string.Format("Configuration value {0} not found or has not been set", name));
+        //    }
+        //    else
+        //    {
+        //        return (string)configRecord["defra_value"];
+        //    }
+        //}
 
-        public static Entity GetConfigurationEntity(IOrganizationService adminService, string name)
-        {
-            string query = string.Format(@"<fetch>
-                                 <entity name='defra_configuration'>
-                                     <attribute name='defra_addressbasefacadeurl' />
-                                     <attribute name='defra_sharepointlogicappurl' />
-                                     <attribute name='defra_sharepointpermitlist' />
-                                     <attribute name='defra_sharepointfoldercontenttype' />
-                                     <filter>
-                                        <condition attribute='defra_name' operator= 'eq' value='{0}' />
-                                    </filter>
-                                 </entity>
-                            </fetch>", name);
+        //public static Entity GetConfigurationEntity(IOrganizationService adminService, string name)
+        //{
+        //    string query = string.Format(@"<fetch>
+        //                         <entity name='defra_configuration'>
+        //                             <attribute name='defra_addressbasefacadeurl' />
+        //                             <attribute name='defra_sharepointlogicappurl' />
+        //                             <attribute name='defra_sharepointpermitlist' />
+        //                             <attribute name='defra_sharepointfoldercontenttype' />
+        //                             <filter>
+        //                                <condition attribute='defra_name' operator= 'eq' value='{0}' />
+        //                            </filter>
+        //                         </entity>
+        //                    </fetch>", name);
 
-            Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
+        //    Entity configRecord = Query.QueryCRMForSingleEntity(adminService, query);
 
-            if (configRecord == null || configRecord.Attributes.Count == 0)
-            {
-                throw new InvalidPluginExecutionException(string.Format("Configuration record {0} not found or has not been set", name));
-            }
-            else
-            {
-                return configRecord;
-            }
-        }
+        //    if (configRecord == null || configRecord.Attributes.Count == 0)
+        //    {
+        //        throw new InvalidPluginExecutionException(string.Format("Configuration record {0} not found or has not been set", name));
+        //    }
+        //    else
+        //    {
+        //        return configRecord;
+        //    }
+        //}
 
         public static string GetCRMOptionsetText(IOrganizationService service, string entityName, string attributeName, int optionSetValue)
         {

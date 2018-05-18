@@ -10,8 +10,9 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 using Defra.Lp.Common;
+using Defra.Lp.Common.SharePoint;
+using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
@@ -27,6 +28,7 @@ namespace Defra.Lp.Workflows
         private IWorkflowContext Context { get; set; }
         private IOrganizationServiceFactory ServiceFactory { get; set; }
         private IOrganizationService Service { get; set; }
+        private IOrganizationService AdminService { get; set; }
 
         protected override void Execute(CodeActivityContext executionContext)
         {
@@ -34,30 +36,22 @@ namespace Defra.Lp.Workflows
             Context = executionContext.GetExtension<IWorkflowContext>();
             ServiceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
             Service = ServiceFactory.CreateOrganizationService(Context.UserId);
+            AdminService = ServiceFactory.CreateOrganizationService(null);
 
-            var configuration = this.Configuration.Get(executionContext);
-            ProcessAttachments(configuration);
+            ProcessAttachments();
         }
 
-        private void ProcessAttachments(EntityReference configuration)
+        private void ProcessAttachments()
         {   
-            var azureInterface = new AzureInterface(configuration, Service, TracingService);
+            var azureInterface = new AzureInterface(AdminService, Service, TracingService);
             var results = Query.QueryCRMForMultipleRecords(Service, ReturnAttachmentsFetchXML(Context.PrimaryEntityId));
 
             TracingService.Trace(string.Format("Processing {0} attachments.", results.Entities.Count.ToString()));
 
             foreach (Entity attachment in results.Entities)
             {
-                //var update = new UpdateRequest();
-                //var updatedEntity = new Entity(attachment.LogicalName, attachment.Id);
-                //updatedEntity["activitymimeattachmentid"] = attachment["activitymimeattachmentid"];
-
-                //update.Target = updatedEntity;
-
-                //Service.Update(updatedEntity);
-
-                TracingService.Trace("Start of MoveFile from activitymimeattachment");
-                azureInterface.MoveFile(attachment.ToEntityReference(), "email", "defra_applicationid");
+                TracingService.Trace("Start of UploadFile from activitymimeattachment");
+                azureInterface.UploadFile(attachment.ToEntityReference(), "email", "defra_applicationid");
                 TracingService.Trace("Attachment Processed Successfully");
             }
         }
@@ -74,11 +68,5 @@ namespace Defra.Lp.Workflows
                                     </entity>
                                 </fetch>", emailId);
         }
-
-        [RequiredArgument]
-        [Input("Configuration")]
-        [ReferenceTarget("defra_configuration")]
-        public InArgument<EntityReference> Configuration { get; set; }
-
     }
 }

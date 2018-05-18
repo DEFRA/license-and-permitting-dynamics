@@ -9,6 +9,7 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 using Defra.Lp.Common;
+using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;

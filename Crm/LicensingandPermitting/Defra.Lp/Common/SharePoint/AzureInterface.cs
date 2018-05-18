@@ -1,65 +1,87 @@
-﻿using Defra.Lp.Common.ProxyClasses;
+﻿using Core.Configuration;
+using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Defra.Lp.Common
+namespace Defra.Lp.Common.SharePoint
 {
     internal class AzureInterface
     {
-        private Entity Config { get; set; }
+        private IDictionary<string, string> Config { get; set; }
         private IOrganizationService Service { get; set; }
+        private IOrganizationService AdminService { get; set; }
         private ITracingService TracingService { get; set; }
 
-        internal AzureInterface(EntityReference config, IOrganizationService service, ITracingService tracingService)
+        internal AzureInterface(IOrganizationService adminService, IOrganizationService service, ITracingService tracingService)
         {
+            AdminService = adminService;
             Service = service;
             TracingService = tracingService;
-            Config = Query.RetrieveDataForEntityRef(Service, new string[] { ConfigNames.SharePointLogicAppUrl,
-                                                                ConfigNames.SharePointPermitList,
-                                                                ConfigNames.AddressbaseFacadeUrl,
-                                                                ConfigNames.SharePointFolderContentType}, config);
-        }
 
-        internal AzureInterface(Entity config, IOrganizationService service, ITracingService tracingService)
-        {
-            Config = config;
-            Service = service;
-            TracingService = tracingService;
+            // Read the settings
+            try
+            {
+                Config = adminService.GetConfigurationStringValues(
+                     $"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}",
+                     $"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}",
+                     $"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}",
+                     $"{SharePointSecureConfigurationKeys.PermitFolderContentType}",
+                     $"{SharePointSecureConfigurationKeys.PermitListName}");
+
+                // Try to access - error if we need to configure
+                var appFolderContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
+                var documentRelayLogicApp = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
+                var metadataLogicApp = Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"];
+                var permitFolderContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
+                var permitListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
+            }
+            catch (Exception exc)
+            {
+                throw new InvalidPluginExecutionException("The Sharepoint integration needs to be configured.");
+            }
         }
 
         internal void CreateFolder(EntityReference application)
         {
             TracingService.Trace(string.Format("In CreateFolder with Entity Type {0} and Entity Id {1}", application.LogicalName, application.Id));
 
-            var request = new MoveFileRequest();
+            var request = new DocumentRelayRequest();
             var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, application);
 
             TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity["defra_permitnumber"].ToString(), applicationEntity["defra_applicationnumber"].ToString()));
 
-            request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            request.ListName = ReturnDocumentSetName();
-            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+            request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
             request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
+            request.FileBody = string.Empty;
+            request.FileDescription = string.Empty;
+            request.FileName = string.Empty;
+            request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
+            request.PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
+            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+            request.Customer = string.Empty;
+            request.SiteDetails = string.Empty;
+            request.PermitDetails = string.Empty;
 
             var stringContent = JsonConvert.SerializeObject(request);
 
-            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[ConfigNames.SharePointLogicAppUrl].ToString()));
+            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"]));
 
-            var resultBody = SendRequest(Config[ConfigNames.SharePointLogicAppUrl].ToString(), stringContent);
-            var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
+            //var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
         }
 
-        internal void MoveFile(EntityReference recordIdentifier, string parentEntity, string parentLookup)
+        internal void UploadFile(EntityReference recordIdentifier, string parentEntity, string parentLookup)
         {
-            TracingService.Trace(string.Format("In MoveFile with Entity Type {0} and Entity Id {1}. Parent Entity: {2} Lookup Name: {3}", recordIdentifier.LogicalName, recordIdentifier.Id, parentEntity, parentLookup));
+            TracingService.Trace(string.Format("In UploadFile with Entity Type {0} and Entity Id {1}. Parent Entity: {2} Lookup Name: {3}", recordIdentifier.LogicalName, recordIdentifier.Id, parentEntity, parentLookup));
             
-            var request = new MoveFileRequest();
+            var request = new DocumentRelayRequest();
             var activityId = Guid.Empty;
             Entity annotationData = null;
             Entity attachmentData = null;
@@ -86,7 +108,7 @@ namespace Defra.Lp.Common
                 }
 
 
-                activityId = AddInsertFileParametersToRequest(request, attachmentData, parentEntity, parentLookup);
+                activityId = AddInsertFileParametersToRequest(request, attachmentData);
 
                 //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
 
@@ -101,21 +123,22 @@ namespace Defra.Lp.Common
                 }
                 else
                 {
-                    activityId = AddInsertFileParametersToRequest(request, annotationData, parentEntity, parentLookup);
+                    activityId = AddInsertFileParametersToRequest(request, annotationData);
                 }
             }
 
             TracingService.Trace(string.Format("activityId {0}", activityId.ToString()));
 
             var stringContent = JsonConvert.SerializeObject(request);
-            var logicAppUrl = Config.GetAttributeValue<string>(ConfigNames.SharePointLogicAppUrl);
+            var logicAppUrl = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
             TracingService.Trace(string.Format("Sending data to Logic App URL {0}", logicAppUrl));
 
             var resultBody = SendRequest(logicAppUrl, stringContent);
-            MoveSharePointResult data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
-            if (data != null && !string.IsNullOrEmpty(data.SharePointId))
+            //MoveSharePointResult data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+            //if (data != null && !string.IsNullOrEmpty(data.SharePointId))
+            if (resultBody!= null)
             {
-                TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
+                //TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
                 if (annotationData != null)
                 {
                     //Service.Delete(annotationData.LogicalName, annotationData.Id);
@@ -127,7 +150,62 @@ namespace Defra.Lp.Common
             }
         }
 
-        private Guid AddInsertFileParametersToRequest(MoveFileRequest request, Entity queryRecord, string parentEntityName, string parentLookup)
+        internal void UpdateMetaData(EntityReference entity)
+        {
+            TracingService.Trace("In UpdateMetaData with Entity Type {0} and Entity Id {1}", entity.LogicalName, entity.Id.ToString());
+
+            var request = new MetaDataRequest();
+
+            if (entity.LogicalName == "defra_application")
+            {
+                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, entity);
+                if (applicationEntity != null)
+                {
+                    TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity["defra_permitnumber"].ToString(), applicationEntity["defra_applicationnumber"].ToString()));
+
+                    request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
+                    request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
+                    request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+                    request.Customer = string.Empty;
+                    request.SiteDetails = string.Empty;
+                    request.PermitDetails = string.Empty;
+                    request.UpdateType = AzureInterfaceConstants.MetaDataApplicationUpdateType;
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException(string.Format("No Application exists for entity reference {0}", entity.Id.ToString()));
+                }
+            }
+            else if (entity.LogicalName == "defra_permit")
+            {
+                var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, entity);
+                if (permitEntity != null)
+                {
+                    TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", permitEntity["defra_permitnumber"].ToString(), permitEntity["defra_applicationnumber"].ToString()));
+
+                    request.ApplicationNo = string.Empty;
+                    request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
+                    request.PermitNo = permitEntity.GetAttributeValue<string>("defra_permitnumber");
+                    request.Customer = string.Empty;
+                    request.SiteDetails = string.Empty;
+                    request.PermitDetails = string.Empty;
+                    request.UpdateType = AzureInterfaceConstants.MetaDataPermitUpdateType;
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException(string.Format("No Permit exists for entity reference {0}", entity.Id.ToString()));
+                }
+            }
+
+            var stringContent = JsonConvert.SerializeObject(request);
+
+            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"]));
+
+            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"], stringContent);
+            //var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+        }
+
+        private Guid AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
         {
             TracingService.Trace("In AddInsertFileParametersToRequest()");
 
@@ -162,53 +240,22 @@ namespace Defra.Lp.Common
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
 
-            TracingService.Trace(string.Format("Requests: {0}", request));
-
-            request.FileBody = body;
-            request.PermitNo = permitNo;
+            request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
             request.ApplicationNo = applicationNo;
-
-            //AliasedValue activityIdAliasedValue = queryRecord.GetAttributeValue<AliasedValue>("parent." + parentLookup);
-            //Guid activityId = (Guid)activityIdAliasedValue.Value;
-            //request.ActivityId = activityId.ToString();
-            request.ActivityName = parentEntityName;
-            //request.AttachmentType = queryRecord.LogicalName;
-            request.FileName = fileName;
+            request.FileBody = body;
             request.FileDescription = queryRecord.GetAttributeValue<string>("subject");
-            //request.AttachmentId = queryRecord.Id;
-            request.ContentTypeName = Config.GetAttributeValue<string>(ConfigNames.SharePointFolderContentType);
-            //request.ListName = "Permit";  // ToDo: This needs to come from the Config "TestLibKal"
-            request.ListName = ReturnDocumentSetName();
-            request.Operation = string.Empty;
+            request.FileName = fileName;
+            request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
+            request.PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
+            request.PermitNo = permitNo;
+            request.Customer = string.Empty;
+            request.SiteDetails = string.Empty;
+            request.PermitDetails = string.Empty;
 
-            //if (queryRecord.Attributes.Contains("email.rpa_documenttype"))
-            //{
-
-            //    EntityReference documentType = (EntityReference)((AliasedValue)queryRecord.Attributes["email.rpa_documenttype"]).Value;
-            //    request.DocumentId = documentType.Name;
-            //}
-
-            //return activityId;
+            TracingService.Trace(string.Format("Requests: {0}", request));
 
             return new Guid();
         }
-
-        private string ReturnDocumentSetName()
-        {
-            var documentSetName = string.Empty;
-            var documentLocationRef = Config.GetAttributeValue<EntityReference>(ConfigNames.SharePointPermitList);
-            var entity = Query.RetrieveDataForEntityRef(Service, new string[] { "name" }, documentLocationRef);
-            if (entity != null)
-            {
-                documentSetName = entity.GetAttributeValue<string>("name");
-            }
-            else
-            {
-                throw new InvalidPluginExecutionException("Unable to get Document Set Name from Configuration.");
-            }
-            return documentSetName;
-        }
-
 
         private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
         {
@@ -263,23 +310,6 @@ namespace Defra.Lp.Common
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
         }
-
-
-        //private MetadataValues GenerateFileMetadata(Entity attachment)
-        //{
-        //    TracingService.Trace("Start Generate Metadata");
-
-        //    MetadataValues returnValue = new MetadataValues();
-        //    returnValue.ListName = ConfigNames.SharePointPermitList;
-
-        //    PropertyGenerator propertyGenerator = new PropertyGenerator();
-        //    propertyGenerator.AddProperty<string>(returnValue.Fields, "filename", "Title", attachment);
-        //    propertyGenerator.AddProperty<string>(returnValue.Fields, "subject", "Description", attachment);
-
-        //    TracingService.Trace("End Generate Metadata");
-
-        //    return returnValue;
-        //}
 
         private string SendRequest(string url, string requestContent)
         {
