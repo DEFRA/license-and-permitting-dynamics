@@ -14,6 +14,7 @@ using System.Activities;
 namespace Defra.Lp.Workflows
 {
     using Common;
+    using global::Lp.DataAccess;
     using Microsoft.Crm.Sdk.Messages;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;

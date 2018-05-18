@@ -1,4 +1,4 @@
-﻿namespace Defra.Lp.Common.ProxyClasses
+﻿namespace Defra.Lp.Common.SharePoint
 {
     public class MoveSharePointResult
     {
