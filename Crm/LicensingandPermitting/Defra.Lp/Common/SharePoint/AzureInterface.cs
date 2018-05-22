@@ -150,7 +150,7 @@ namespace Defra.Lp.Common.SharePoint
             }
         }
 
-        internal void UpdateMetaData(EntityReference entity)
+        internal void UpdateMetaData(EntityReference entity, string customer, string siteDetails, string permitDetails)
         {
             TracingService.Trace("In UpdateMetaData with Entity Type {0} and Entity Id {1}", entity.LogicalName, entity.Id.ToString());
 
@@ -166,9 +166,9 @@ namespace Defra.Lp.Common.SharePoint
                     request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
                     request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
-                    request.Customer = string.Empty;
-                    request.SiteDetails = string.Empty;
-                    request.PermitDetails = string.Empty;
+                    request.Customer = customer;
+                    request.SiteDetails = siteDetails;
+                    request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataApplicationUpdateType;
                 }
                 else

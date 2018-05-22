@@ -46,7 +46,7 @@
     },
     "sharepointonline_1_Connection_Name": {
       "type": "string",
-      "defaultValue": "sharepointonline-2"
+      "defaultValue": "sharepointonline"
     },
     "sharepointonline_1_Connection_DisplayName": {
       "type": "string",
@@ -72,12 +72,10 @@
               "expression": {
                 "and": [
                   {
-                    "not": {
-                      "equals": [
-                        "@coalesce(triggerBody()?['FileBody'])",
-                        "Empty"
-                      ]
-                    }
+                    "equals": [
+                      "@empty(triggerBody()?['FileBody'])",
+                      false
+                    ]
                   }
                 ]
               },

@@ -27,6 +27,18 @@ namespace Defra.Lp.Workflows
         [RequiredArgument]
         [Input("Parent Lookup Name")]
         public InArgument<string> Parent_Lookup_Name { get; set; }
+
+        [RequiredArgument]
+        [Input("Customer Name")]
+        public InArgument<string> Customer { get; set; }
+
+        [RequiredArgument]
+        [Input("Site Name and Location")]
+        public InArgument<string> SiteDetails { get; set; }
+
+        [RequiredArgument]
+        [Input("Permit Details")]
+        public InArgument<string> PermitDetails { get; set; }
         #endregion
 
         /// <summary>
@@ -63,10 +75,30 @@ namespace Defra.Lp.Workflows
                 var parentEntityName = Parent_Entity_Name.Get(executionContext);
                 var parentLookupName = Parent_Lookup_Name.Get(executionContext);
 
-                tracingService.Trace(string.Format("Parent Entity = {0}; Parent Lookup = {1}", parentEntityName, parentLookupName));
+                tracingService.Trace("Parent Entity = {0}; Parent Lookup = {1}", parentEntityName, parentLookupName);
 
+                var customer = Customer.Get(executionContext);
+                if (string.IsNullOrEmpty(customer))
+                {
+                    customer = string.Empty;
+                    tracingService.Trace("No customer details passed to workflow");
+                }
+                var siteDetails = SiteDetails.Get(executionContext);
+                if (string.IsNullOrEmpty(siteDetails))
+                {
+                    siteDetails = string.Empty;
+                    tracingService.Trace("No site details details passed to workflow");
+                }
+                var permitDetails = PermitDetails.Get(executionContext);
+                if (string.IsNullOrEmpty(permitDetails))
+                {
+                    permitDetails = string.Empty;
+                    tracingService.Trace("No permit details passed to workflow");
+                }
+                tracingService.Trace("Customer = {0}; Site = {1}; Permit = {2}", customer, siteDetails, permitDetails);
+                
                 AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
-                azureInterface.UpdateMetaData(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId));
+                azureInterface.UpdateMetaData(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), customer, siteDetails, permitDetails);
             }
             catch (Exception ex)
             {

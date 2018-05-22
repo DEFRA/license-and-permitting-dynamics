@@ -9,14 +9,9 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 
-using System;
-using System.ServiceModel;
+using Common.PermitNumbering;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Common.PermitNumbering;
-using Lp.DataAccess;
-using Defra.Lp.Common.SharePoint;
-using Core.Configuration;
 
 namespace Defra.Lp.Plugins
 {
@@ -67,9 +62,6 @@ namespace Defra.Lp.Plugins
             IOrganizationService service = localContext.OrganizationService;
             IPluginExecutionContext context = localContext.PluginExecutionContext;
             ITracingService tracing = localContext.TracingService;
-            // Admin rights required to get configuration
-            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
-            var adminService = serviceFactory.CreateOrganizationService(null);
 
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
@@ -146,32 +138,6 @@ namespace Defra.Lp.Plugins
                 //Update the permit number field
                 target["defra_applicationnumber"] = PermitApplicationNumber;
                 target["defra_name"] = PermitApplicationNumber;
-
-                // Now create the sharepointdocumentlocations for the permit and application
-                // so that the default location create functionality is suppressed
-
-                tracing.Trace("Getting Default Site and Permit List sharePointdocumentlocations ...");
-                var Config = adminService.GetConfigurationStringValues($"{SharePointSecureConfigurationKeys.PermitListName}");
-                var permitListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-                var defaultSiteRef = service.FindDefaultSharePointSite();
-                var permitListRef = service.FindPermitListInSharePoint(defaultSiteRef.Id.ToString(), permitListName);
-
-                // For a new application create a document location for both Permit and Application
-                if (applicationType.Value == 910400000)
-                {
-                    tracing.Trace("Creating sharePointdocumentlocation for Permit (new application)");
-                    var permitLocation = service.CreatePermitDocumentLocation((string)target["defra_permitnumber"], permitListRef, target.ToEntityReference());
-                    if (permitLocation != null)
-                    {
-                        tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
-                        service.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation, target.ToEntityReference());
-                    }
-                }
-                else
-                {
-                    //tracing.Trace("Creating sharePointdocumentlocation for Application (not a new application)");
-                    //service.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitListRef, target.ToEntityReference());
-                }
             }
 
             //throw new InvalidPluginExecutionException("DEBUG");
