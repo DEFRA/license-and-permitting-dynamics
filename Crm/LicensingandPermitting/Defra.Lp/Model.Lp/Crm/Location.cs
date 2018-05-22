@@ -1,15 +1,15 @@
-﻿// Application entity model at the L&P Organisation Level
+﻿// Location entity model at the L&P Organisation Level
 namespace Model.Lp.Crm
 {
     /// <summary>
     /// CRM Application entity model
     /// </summary>
-    public partial class Application
+    public partial class Location
     {
         /// <summary>
         /// Logical name for Application entity
         /// </summary>
-        public const string EntityLogicalName = "defra_application";
+        public const string EntityLogicalName = "defra_location";
 
         /// <summary>
         /// State field
@@ -17,14 +17,9 @@ namespace Model.Lp.Crm
         public const string State = "statecode";
 
         /// <summary>
-        /// Nps Determination fiels
+        /// Lookup to the Application
         /// </summary>
-        public const string NpsDetermination = "defra_npsdetermination";
-
-        /// <summary>
-        /// Application Type OptionSet
-        /// </summary>
-        public const string ApplicationType = "defra_applicationtype";
+        public const string Application = "defra_applicationid";
 
         /// <summary>
         /// Lookup to the Permit Entity

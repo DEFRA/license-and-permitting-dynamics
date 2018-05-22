@@ -1,9 +1,10 @@
-﻿// <copyright file="RefDataPermitToApplication.cs" company="">
+﻿// <copyright file = "CopyPermitDataToApplication.cs" company="">
 // Copyright (c) 2018 All Rights Reserved
 // </copyright>
-// <author></author>
-// <date>4/2/2018 2:51:39 PM</date>
-// <summary>Implements the RefDataPermitToApplication Workflow Activity.</summary>
+// <summary>Code activity copies reference data from the Permit to an Application, generating 
+// Application Lines as required</summary>
+
+using Defra.Lp.Workflows.Helpers;
 
 namespace Defra.Lp.Workflows
 {
@@ -12,7 +13,8 @@ namespace Defra.Lp.Workflows
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk.Workflow;
-    using PermitLifecycle1.PermitLifecycleWorkflows.Helpers;
+    using global::Model.Lp.Crm;
+    using Location = global::Model.Lp.Crm.Location;
 
     public sealed class CopyPermitDataToApplication : WorkFlowActivityBase
     {
@@ -52,24 +54,23 @@ namespace Defra.Lp.Workflows
             try
             {
                 //Retrieve the application
-                Entity application = service.Retrieve(context.PrimaryEntityName, context.PrimaryEntityId, new ColumnSet("defra_permitid"));
+                Entity application = service.Retrieve(context.PrimaryEntityName, context.PrimaryEntityId, new ColumnSet(Application.Permit));
 
-                if (application.Attributes.Contains("defra_permitid") && application["defra_permitid"] != null)
+                if (application.Attributes.Contains(Application.Permit) && application[Application.Permit] != null)
                 {
                     //Init the copier
-                    CopyRelationship copier = new CopyRelationship(service, "defra_permit", ((EntityReference)application["defra_permitid"]).Id, "defra_application", application.Id);
+                    RelationshipManager copier = new RelationshipManager(service, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id, Application.EntityLogicalName, application.Id);
 
-                    //Copy Location
-                    copier.Copy("defra_location", "defra_permitid", "defra_applicationid", true);
+                    //LinkEntitiesToTarget Location
+                    copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Permit, Location.Application, true);
 
-                    //Copy Lines
-                    copier.CopyAs("defra_permitline", "defra_permitid", new string[] { "defra_name", "defra_permittype", "defra_standardruleid" }, "defra_applicationline", "defra_applicationid", true);
+                    //LinkEntitiesToTarget Lines
+                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new string[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true);
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)
             {
                 tracingService.Trace("Exception: {0}", e.ToString());
-
                 // Handle the exception.
                 throw;
             }
