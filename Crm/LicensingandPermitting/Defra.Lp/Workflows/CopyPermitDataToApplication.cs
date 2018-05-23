@@ -66,7 +66,7 @@ namespace Defra.Lp.Workflows
                     copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Permit, Location.Application, true);
 
                     //LinkEntitiesToTarget Lines
-                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new string[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true);
+                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new string[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true, null);
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)

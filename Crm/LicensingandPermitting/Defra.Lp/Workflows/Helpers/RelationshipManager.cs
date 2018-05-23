@@ -138,7 +138,7 @@ namespace Defra.Lp.Workflows.Helpers
         /// <param name="copiedAsEntityName"></param>
         /// <param name="copiedAsEntityLookupToTarget"></param>
         /// <param name="deactivateOthers"></param>
-        public void CopyAs(string copiedEntityName, string copiedEntityLookupToSource, string[] copiedAttributes, string copiedAsEntityName, string copiedAsEntityLookupToTarget, bool deactivateOthers)
+        public void CopyAs(string copiedEntityName, string copiedEntityLookupToSource, string[] copiedAttributes, string copiedAsEntityName, string copiedAsEntityLookupToTarget, bool deactivateOthers, ConditionExpression filterCondition)
         {
             //Deactivate others if needed
             if (deactivateOthers)
@@ -155,6 +155,9 @@ namespace Defra.Lp.Workflows.Helpers
                         }
                     }
                 };
+
+                if(filterCondition != null)
+                    queryOthers.Criteria.Filters[0].Conditions.Add(filterCondition);
 
                 EntityCollection queryOthersResults = this._Service.RetrieveMultiple(queryOthers);
 
@@ -179,6 +182,9 @@ namespace Defra.Lp.Workflows.Helpers
                     }
                 }
             };
+
+            if (filterCondition != null)
+                queryCopiedEntities.Criteria.Filters[0].Conditions.Add(filterCondition);
 
             EntityCollection copiedEntities = this._Service.RetrieveMultiple(queryCopiedEntities);
 
