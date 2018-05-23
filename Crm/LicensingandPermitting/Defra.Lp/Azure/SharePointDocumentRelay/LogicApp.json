@@ -89,7 +89,7 @@
                       }
                     },
                     "method": "post",
-                    "body": "@triggerBody()?['FileBody']",
+                    "body": "@base64ToBinary(triggerBody()?['FileBody'])",
                     "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/files",
                     "queries": {
                       "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/",
