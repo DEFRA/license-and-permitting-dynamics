@@ -48,8 +48,9 @@ namespace Defra.Lp.Workflows
                 context.CorrelationId,
                 context.InitiatingUserId);
 
+            // Elevated rights service
             IOrganizationServiceFactory serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
-            IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
+            IOrganizationService service = serviceFactory.CreateOrganizationService(null);
 
             try
             {
