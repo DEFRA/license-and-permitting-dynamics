@@ -13,6 +13,7 @@ using System;
 using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Defra.Lp.Common;
+using Defra.Lp.Common.SharePoint;
 
 namespace Defra.Lp.Plugins
 {
@@ -68,13 +69,11 @@ namespace Defra.Lp.Plugins
             {
                 var entity = (Entity)context.InputParameters["Target"];
 
-                var config = Query.GetConfigurationEntity(adminService, "Licensing and Permitting");
-
-                var azureInterface = new AzureInterface(config, service, tracingService);
+                var azureInterface = new AzureInterface(adminService, service, tracingService);
                 if (entity.LogicalName == "activitymimeattachment")
                 {
-                    tracingService.Trace("Start of MoveFile from activitymimeattachment");
-                    azureInterface.MoveFile(entity.ToEntityReference(), "email", "defra_applicationid");
+                    tracingService.Trace("Start of UploadFile from activitymimeattachment");
+                    azureInterface.UploadFile(entity.ToEntityReference(), "email", "defra_applicationid");
                     tracingService.Trace("Email Processed Successfully");
                 }
                 //else if (entity.LogicalName == "annotation")

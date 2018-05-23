@@ -24,7 +24,6 @@ var Payments = {
 
         // Remove the Online Payment option from payment type
         Xrm.Page.getControl("defra_type").removeOption("910400000");
-
     },
 
     // Function called when user presses the Take Card Payment button from within CRM
@@ -184,6 +183,8 @@ var Payments = {
         newDescription = newDescription + (applicationName ? 'for application "' + applicationName + '"' : '');
 
         Xrm.Page.getAttribute("defra_description").setValue(newDescription);
+
+        Payments.SendMessageToApplication();
     },
 
     // Function sets the payment description based on fields in form

@@ -9,16 +9,43 @@ var Applications = {
 
     BalanceAmount: 0,
 
-    // Function sets the listeners for messages that the payment has been updated
-    OnLoad: function () {
-        if (window.XMLHttpRequest) {
-            //for browsers other than ie
-            window.addEventListener("message", Payments.ReceivedPostMessage, false);
-        } else {
-            //ie
-            window.attachEvent('onmessage', Payments.ReceivedPostMessage);
+    LastRefresh: new Date().getTime(),
+
+    Refresh: function () {
+        if (Applications.CanRefresh()) {
+            Applications.LastRefresh = new Date().getTime();
+            Xrm.Page.data.refresh();
         }
     },
+
+    CanRefresh: function () {
+        var now = new Date().getTime();
+        var msSinceLastRefresh = now - Applications.LastRefresh;
+
+        if (msSinceLastRefresh > 5000) {
+            return true;
+        }
+        return false;
+    },
+
+    // Function sets the listeners for messages that the payment has been updated
+    OnLoad: function () {
+
+        /*
+        var refreshForm = function () {
+            if (Applications.CanRefresh()) {
+                Applications.LastRefresh = new Date().getTime();
+                Xrm.Page.data.refresh();
+            }
+        };
+        */
+        
+        Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
+        Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
+    },
+
+
+
 
     // Function called when user presses the Write Off button from the CRM ribbon
     WriteOffBalance: function () {

@@ -9,11 +9,9 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 
-using System;
-using System.ServiceModel;
+using Common.PermitNumbering;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Common.PermitNumbering;
 
 namespace Defra.Lp.Plugins
 {
@@ -141,7 +139,6 @@ namespace Defra.Lp.Plugins
                 target["defra_applicationnumber"] = PermitApplicationNumber;
                 target["defra_name"] = PermitApplicationNumber;
             }
-
 
             //throw new InvalidPluginExecutionException("DEBUG");
         }

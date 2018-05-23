@@ -25,5 +25,11 @@ namespace Model.Lp.Crm
         /// Application Type OptionSet
         /// </summary>
         public const string ApplicationType = "defra_applicationtype";
+
+        /// <summary>
+        /// Lookup to the Permit Entity
+        /// </summary>
+        public const string Permit = "defra_permitid";
+        
     }
 }

@@ -57,61 +57,6 @@
                       </cell>
                     </row>
                     <row>
-                      <cell id="{8b570561-0797-0064-bea0-8e48a13d4a86}" showlabel="true" locklevel="0">
-                        <labels>
-                          <label description="Email" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="emailaddress1" datafieldname="emailaddress1" classid="{ADA2203E-B4CD-49be-9DDF-234642B43B52}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{3441a91e-47c5-672c-7a20-902d6baa9036}" showlabel="true" labelid="{77d7dbda-5d47-4c28-b840-89a7c263e247}">
-                        <labels>
-                          <label description="Phone" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="telephone1" datafieldname="telephone1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{8b98a55e-a345-b20e-d46e-801e79d5c1c1}" showlabel="true" labelid="{50581284-e62a-471c-82cc-3a0a41fa583b}">
-                        <labels>
-                          <label description="Fax" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="fax" datafieldname="fax" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{e6441984-4343-813a-aa7e-e2747ad35390}" showlabel="true" labelid="{37196b49-2841-4740-9294-24b946f8d087}">
-                        <labels>
-                          <label description="Website" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="websiteurl" datafieldname="websiteurl" classid="{71716B6C-711E-476c-8AB8-5D11542BFB47}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{87DE203E-B03C-44CC-8B06-438202B82553}" labelid="{241db68d-2ca3-4146-ba88-f71f52bb31c0}">
-                        <labels>
-                          <label description="Parent Account" languagecode="1033" />
-                        </labels>
-                        <events>
-                          <event name="setadditionalparams" application="true" active="true">
-                            <InternalHandlers>
-                              <Handler functionName="AppCommon.Account.Instance.parentaccountid_setadditionalparams" libraryName="AppCommon/Account/Account_main_system_library.js" handlerUniqueId="c5cc10db-58ac-4611-a529-c1ff599707b1" enabled="true" passExecutionContext="true" />
-                            </InternalHandlers>
-                          </event>
-                        </events>
-                        <control id="parentaccountid" datafieldname="parentaccountid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
-                      </cell>
-                    </row>
-                    <row>
-                      <cell id="{5f38af3a-3307-47dc-b36d-d9a5de525e6e}" showlabel="true" labelid="{548c7e0f-052e-4b39-ab51-47ab0ae5bc31}">
-                        <labels>
-                          <label description="Ticker Symbol" languagecode="1033" />
-                        </labels>
-                        <control disabled="false" id="tickersymbol" datafieldname="tickersymbol" classid="{1E1FC551-F7A8-43af-AC34-A8DC35C7B6D4}" />
-                      </cell>
-                    </row>
-                    <row>
                       <cell id="{b9713d80-b5db-c956-cc36-644666b7828a}" showlabel="true" locklevel="0">
                         <labels>
                           <label description="Company house status" languagecode="1033" />
@@ -655,12 +600,28 @@
       </clientresources>
       <Navigation>
         <NavBar>
-          <NavBarByRelationshipItem Id="navAddresses" Area="Info" Sequence="10" RelationshipName="Account_CustomerAddress" Show="false">
+          <NavBarByRelationshipItem Id="navContracts" Area="Info" Sequence="10" RelationshipName="contract_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreContracts">
             <Privileges>
               <Privilege Entity="" Privilege="ReadActivity" />
             </Privileges>
             <Titles>
-              <Title Text="Addresses" LCID="1033" />
+              <Title Text="Contract" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="navInvoices" Area="Info" Sequence="10" RelationshipName="invoice_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreInvoices">
+            <Privileges>
+              <Privilege Entity="" Privilege="ReadActivity" />
+            </Privileges>
+            <Titles>
+              <Title Text="Invoice" LCID="1033" />
+            </Titles>
+          </NavBarByRelationshipItem>
+          <NavBarByRelationshipItem Id="navOrders" Area="Info" Sequence="10" RelationshipName="order_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreOrders">
+            <Privileges>
+              <Privilege Entity="" Privilege="ReadActivity" />
+            </Privileges>
+            <Titles>
+              <Title Text="SalesOrder" LCID="1033" />
             </Titles>
           </NavBarByRelationshipItem>
           <NavBarByRelationshipItem Id="navQuotes" Area="Info" Sequence="10" RelationshipName="quote_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreQuotes">
@@ -679,12 +640,12 @@
               <Title Text="CustomerRelationship" LCID="1033" />
             </Titles>
           </NavBarByRelationshipItem>
-          <NavBarByRelationshipItem Id="navInvoices" Area="Info" Sequence="10" RelationshipName="invoice_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreInvoices">
+          <NavBarByRelationshipItem Id="navAddresses" Area="Info" Sequence="10" RelationshipName="Account_CustomerAddress" Show="false">
             <Privileges>
               <Privilege Entity="" Privilege="ReadActivity" />
             </Privileges>
             <Titles>
-              <Title Text="Invoice" LCID="1033" />
+              <Title Text="Addresses" LCID="1033" />
             </Titles>
           </NavBarByRelationshipItem>
           <NavBarByRelationshipItem Id="navSubAccts" Area="Info" Sequence="10" RelationshipName="account_parent_account" Show="false" TitleResourceId="Label_SubAccounts">
@@ -693,27 +654,6 @@
             </Privileges>
             <Titles>
               <Title Text="Accounts" LCID="1033" />
-            </Titles>
-          </NavBarByRelationshipItem>
-          <NavBarByRelationshipItem Id="navContracts" Area="Info" Sequence="10" RelationshipName="contract_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreContracts">
-            <Privileges>
-              <Privilege Entity="" Privilege="ReadActivity" />
-            </Privileges>
-            <Titles>
-              <Title Text="Contract" LCID="1033" />
-            </Titles>
-          </NavBarByRelationshipItem>
-          <NavBarByRelationshipItem Id="navOrders" Area="Info" Sequence="10" RelationshipName="order_customer_accounts" Show="false" TitleResourceId="Tab_Label_MoreOrders">
-            <Privileges>
-              <Privilege Entity="" Privilege="ReadActivity" />
-            </Privileges>
-            <Titles>
-              <Title Text="SalesOrder" LCID="1033" />
-            </Titles>
-          </NavBarByRelationshipItem>
-          <NavBarByRelationshipItem Id="navCampaignsInSFA" Area="Marketing" Sequence="20" RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navCampaignsInSFA" Show="false">
-            <Titles>
-              <Title Text="Campaigns" LCID="1033" />
             </Titles>
           </NavBarByRelationshipItem>
           <NavBarByRelationshipItem Id="navAsyncOperations" Area="ProcessCenter" Sequence="9500" RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navAsyncOperations" Show="false">

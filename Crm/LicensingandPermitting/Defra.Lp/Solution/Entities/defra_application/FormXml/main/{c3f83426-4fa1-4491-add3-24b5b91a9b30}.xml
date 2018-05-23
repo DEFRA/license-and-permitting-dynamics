@@ -250,6 +250,37 @@
                   </row>
                 </rows>
               </section>
+              <section name="{bca068a4-5707-4114-9524-fb1c241761c8}_section_6" showlabel="true" showbar="false" locklevel="0" id="{d7c5ac33-748c-b939-2ce4-7444934025ec}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                <labels>
+                  <label description="Permit Document" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{043bc323-8936-032d-65bb-808ce3047244}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Permit" languagecode="1033" />
+                      </labels>
+                      <control id="defra_permitid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_permitid" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{ae1bd5d3-c25c-34b9-67e3-593d7805d13e}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Permit Document Location" languagecode="1033" />
+                      </labels>
+                      <control id="defra_permitdocumentlocation" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_permitdocumentlocation" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{56c13802-43d8-b63b-56ad-c549b208577c}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Permit doc complete" languagecode="1033" />
+                      </labels>
+                      <control id="defra_permitdocumentcompleted" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_permitdocumentcompleted" disabled="false" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
             </sections>
           </column>
           <column width="33%">
@@ -289,6 +320,14 @@
                   <row />
                   <row />
                   <row />
+                  <row>
+                    <cell id="{730514dd-3e0d-a885-d019-1c290beb59c6}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Payment Required" languagecode="1033" />
+                      </labels>
+                      <control id="defra_payment_required" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_payment_required" disabled="false" />
+                    </cell>
+                  </row>
                   <row>
                     <cell id="{98decc73-182e-7253-2814-78eb705a0263}" showlabel="true" colspan="1" auto="false" rowspan="6">
                       <labels>
@@ -547,6 +586,13 @@
     <formLibraries>
       <Library name="defra_/applications/application_form_events.js" libraryUniqueId="{b6e1670c-9083-7b90-486d-9828c154a4da}" />
     </formLibraries>
+    <events>
+      <event name="onload" application="false" active="false">
+        <Handlers>
+          <Handler functionName="Applications.OnLoad" libraryName="defra_/applications/application_form_events.js" handlerUniqueId="{5bacad7c-b950-c389-1a39-24d89dc3e7c3}" enabled="true" parameters="" passExecutionContext="false" />
+        </Handlers>
+      </event>
+    </events>
     <DisplayConditions FallbackForm="true">
       <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
       <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />

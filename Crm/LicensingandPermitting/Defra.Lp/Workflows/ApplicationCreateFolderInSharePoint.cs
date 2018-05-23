@@ -9,20 +9,10 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Activities;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
-using System.Runtime.Serialization;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using Defra.Lp.Common;
+using Defra.Lp.Common.SharePoint;
 
 namespace Defra.Lp.Workflows
 {
@@ -33,11 +23,6 @@ namespace Defra.Lp.Workflows
         [Input("Application")] 
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
-
-        [RequiredArgument]
-        [Input("Configuration")]
-        [ReferenceTarget("defra_configuration")]
-        public InArgument<EntityReference> Configuration { get; set; }
 
         /// <summary>
         /// Executes the WorkFlow.
@@ -62,18 +47,16 @@ namespace Defra.Lp.Workflows
 
             try
             { 
-                //var context = executionContext.GetExtension<IWorkflowContext>();
                 var tracingService = executionContext.GetExtension<ITracingService>();
-                //var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
+                var serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
                 var service = crmWorkflowContext.OrganizationService;
-                //var adminService = serviceFactory.CreateOrganizationService(null);
+                var adminService = serviceFactory.CreateOrganizationService(null);
 
                 tracingService.Trace("In ApplicationCreateFolderInSharePoint with Application Name");
 
                 var application = this.Application.Get(executionContext);
-                var configuration = this.Configuration.Get(executionContext);
 
-                AzureInterface azureInterface = new AzureInterface(configuration, service, tracingService);
+                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
                 azureInterface.CreateFolder(application);
             }
             catch (Exception ex)

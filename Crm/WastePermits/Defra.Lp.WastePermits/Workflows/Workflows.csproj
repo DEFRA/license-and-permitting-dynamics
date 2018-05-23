@@ -39,14 +39,26 @@
     <AssemblyOriginatorKeyFile>Defra.Waste.Workflows.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\DataAccess\DataAccessStandardRule.cs">
+      <Link>DataAccess\WastePermits\DataAccessStandardRule.cs</Link>
+    </Compile>
     <Compile Include="..\Model\Crm\*.cs">
       <Link>Model\WastePermits\Crm\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Crm\*.cs">
       <Link>Model\Lp\Crm\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\DataAccess\*.cs">
-      <Link>DataAccess\WastePermits\%(RecursiveDir)%(FileName)</Link>
+    <Compile Include="..\DataAccess\DataAccessApplicationLine.cs">
+      <Link>DataAccess\WastePermits\DataAccessApplicationLine</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataAccessApplicationPrice.cs">
+      <Link>DataAccess\WastePermits\DataAccessApplicationPrice</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\DataAccessCase.cs">
+      <Link>DataAccess\WastePermits\DataAccessCase</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Messages.Designer.cs">
+      <Link>DataAccess\WastePermits\Messages.Designer</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +102,6 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Common\Query.cs">
-      <Link>Common\Query.cs</Link>
-    </Compile>
     <Compile Include="GetActiveCasesCount.cs" />
     <Compile Include="GetActiveLinesCount.cs" />
     <Compile Include="GetPermitDetailsForApplication.cs" />
