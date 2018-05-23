@@ -86,19 +86,19 @@ namespace Defra.Lp.Plugins
             if (applicationType.Value == 910400000)
             {
                 tracing.Trace("Creating sharePointdocumentlocation for Permit (new application)");
-                var permitLocation = service.CreatePermitDocumentLocation((string)target["defra_permitnumber"], permitListRef, target.ToEntityReference());
+                var permitLocation = adminService.CreatePermitDocumentLocation((string)target["defra_permitnumber"], permitListRef, target.ToEntityReference());
                 if (permitLocation != null)
                 {
                     // Set the lookup on the Application to the Permit Document Location
                     target["defra_permitdocumentlocation"] = permitLocation;
                     if (context.Depth <= 1)
                     {
-                        service.Update(target);
+                        adminService.Update(target);
                     }
 
                     // Now create Application document location 
                     tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
-                    service.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation.Id, target.ToEntityReference());
+                    adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation.Id, target.ToEntityReference());
                 }
             }
             else
@@ -109,7 +109,7 @@ namespace Defra.Lp.Plugins
                 var parentRef = adminService.FindPermitListInSharePoint(permitListRef.ToString(), (string)target["defra_permitnumber"]);
                 tracing.Trace("Permit List in SharePoint document location = {0}", parentRef.ToString());
 
-                service.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], parentRef, target.ToEntityReference());
+                adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], parentRef, target.ToEntityReference());
             }
         }
     }
