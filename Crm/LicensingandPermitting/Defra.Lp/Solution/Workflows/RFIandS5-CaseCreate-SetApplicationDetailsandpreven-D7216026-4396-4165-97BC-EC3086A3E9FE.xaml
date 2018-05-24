@@ -13,7 +13,7 @@
   <mxswa:Workflow>
     <mxswa:Workflow.Variables>
       <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep4CompanyAddress_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep5SiteDetails_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep12SiteDetails_localParameter" />
     </mxswa:Workflow.Variables>
     <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="StageStep8: 1. Validation">
       <mxswa:ActivityReference.Properties>
@@ -235,15 +235,17 @@
               </sco:Collection>
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep5: Site Name and Address">
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep12: Get Site Name and Address for the Application in a single field">
             <mxswa:ActivityReference.Properties>
               <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep5_1" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep5_2" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep5_1_converted" />
+                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_1" />
+                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_2" />
+                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_1_converted" />
+                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_3" />
+                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep12_3_converted" />
               </sco:Collection>
               <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                <mxswa:GetEntityProperty Attribute="defra_application" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CustomActivityStep5_2]">
+                <mxswa:GetEntityProperty Attribute="defra_application" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CustomActivityStep12_2]">
                   <mxswa:GetEntityProperty.TargetType>
                     <InArgument x:TypeArguments="s:Type">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
@@ -253,26 +255,36 @@
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep5_2 }]</InArgument>
+                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep12_2 }]</InArgument>
                     <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                     </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep5_1]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_1]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
                   <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep5_1]</InArgument>
+                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep12_1]</InArgument>
                     <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                     </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep5_1_converted]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_1_converted]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetSiteNameAddress, Defra.Lp.Workflows, Version=1.1.75.13, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep5: Site Name and Address">
+                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
                   <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep5_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="SiteDetails">[CustomActivityStep5SiteDetails_localParameter]</OutArgument>
+                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep12_3]</InArgument>
+                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                    </InArgument>
+                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep12_3_converted]</OutArgument>
+                  </mxswa:ActivityReference.Arguments>
+                </mxswa:ActivityReference>
+                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetSiteNameAddress, Defra.Lp.Workflows, Version=1.1.75.27, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep12: Get Site Name and Address for the Application in a single field">
+                  <mxswa:ActivityReference.Arguments>
+                    <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep12_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
+                    <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Permit">[DirectCast(CustomActivityStep12_3_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
+                    <OutArgument x:TypeArguments="x:String" x:Key="SiteDetails">[CustomActivityStep12SiteDetails_localParameter]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
               </sco:Collection>
@@ -305,7 +317,7 @@
             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
               <mxswa:ActivityReference.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep5SiteDetails_localParameter }]</InArgument>
+                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep12SiteDetails_localParameter }]</InArgument>
                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                 </InArgument>
