@@ -6,15 +6,23 @@ namespace DAL
 {
     public static class DataAccessStandardRule
     {
-        public static string GetStandardRules(this IOrganizationService service, EntityReference application)
+        public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef)
+        {
+            var entityName = "defra_application";
+            var fieldName = "defra_applicationid";
+            var lineEntityName = "defra_applicationline";
+            return service.GetStandardRules(entityRef, entityName, fieldName, lineEntityName);
+        }
+
+        public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName, string lineEntityName)
         {
             var returnData = string.Empty;
             var fetchXml = string.Format(@"<fetch top='50' >
-                                                  <entity name='defra_application' >
+                                                  <entity name='{1}' >
                                                     <filter>
-                                                      <condition attribute='defra_applicationid' operator='eq' value='{0}' />
+                                                      <condition attribute='{2}' operator='eq' value='{0}' />
                                                     </filter>
-                                                    <link-entity name='defra_applicationline' from='defra_applicationid' to='defra_applicationid' >
+                                                    <link-entity name='{3}' from='{2}' to='{2}' >
                                                       <filter>
                                                         <condition attribute='defra_permittype' operator='eq' value='910400000' />
                                                       </filter>
@@ -24,7 +32,7 @@ namespace DAL
                                                       </link-entity>
                                                     </link-entity>
                                                   </entity>
-                                                </fetch>", application.Id.ToString());
+                                                </fetch>", entityRef.Id.ToString(), entityName, fieldName, lineEntityName);
             RetrieveMultipleRequest fetchRequest = new RetrieveMultipleRequest
             {
                 Query = new FetchExpression(fetchXml)
