@@ -86,7 +86,7 @@ namespace Defra.Lp.Plugins
             if (applicationType.Value == 910400000)
             {
                 tracing.Trace("Creating sharePointdocumentlocation for Permit (new application)");
-                var permitLocation = adminService.CreatePermitDocumentLocation((string)target["defra_permitnumber"], permitListRef, target.ToEntityReference());
+                var permitLocation = adminService.CreatePermitDocumentLocation((string)target["defra_permitnumber"], permitListRef, null);
                 if (permitLocation != null)
                 {
                     // Set the lookup on the Application to the Permit Document Location. Creating 

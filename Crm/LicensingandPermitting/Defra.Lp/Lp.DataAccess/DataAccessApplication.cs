@@ -4,19 +4,26 @@
 
     public static class DataAccessApplication
     {
+        public static string GetSiteDetails(this IOrganizationService service, EntityReference entityRef)
+        {
+            var entityName = "defra_application";
+            var fieldName = "defra_applicationid";
+            return service.GetSiteDetails(entityRef, entityName, fieldName);
+        }
+
         /// <summary>
         /// Gets the site name from Location and Grid Reference or Address from Location Details\Address
         /// </summary>
         /// <param name="application"></param>
         /// <returns>Location name, grid reference and address concatenated into a string comma separated</returns>
-        public static string GetSiteDetailsForApplication(this IOrganizationService service, EntityReference application)
+        public static string GetSiteDetails(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName)
         {
             var fetchXml = string.Format(@"<fetch top='50' >
-                                          <entity name='defra_application' >
+                                          <entity name='{1}' >
                                             <filter>
-                                              <condition attribute='defra_applicationid' operator='eq' value='{0}' />
+                                              <condition attribute='{2}' operator='eq' value='{0}' />
                                             </filter>
-                                            <link-entity name='defra_location' from='defra_applicationid' to='defra_applicationid' alias='location' >
+                                            <link-entity name='defra_location' from='{2}' to='{2}' alias='location' >
                                               <attribute name='defra_name' />
                                               <link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' alias='locationdetail' >
                                                 <attribute name='defra_gridreferenceid' />
@@ -31,7 +38,7 @@
                                               </link-entity>
                                             </link-entity>
                                           </entity>
-                                        </fetch>", application.Id.ToString());
+                                        </fetch>", entityRef.Id.ToString(), entityName, fieldName);
             var results = Query.QueryCRMForMultipleRecords(service, fetchXml);
             if (results != null && results.Entities.Count > 0)
             {

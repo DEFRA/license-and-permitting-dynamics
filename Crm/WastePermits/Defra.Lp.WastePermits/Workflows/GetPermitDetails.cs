@@ -19,14 +19,17 @@ namespace Defra.Lp.WastePermits.Workflows
     using DAL;
 
     /// </summary>    
-    public class GetPermitDetailsForApplication: WorkFlowActivityBase
+    public class GetPermitDetails: WorkFlowActivityBase
     {
         #region Properties 
         //Property for Entity defra_application
-        [RequiredArgument]
         [Input("Application")]
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
+
+        [Input("Permit")]
+        [ReferenceTarget("defra_permit")]
+        public InArgument<EntityReference> Permit { get; set; }
 
         [Output("Return data")]
         public OutArgument<string> ReturnData { get; set; }
@@ -61,12 +64,22 @@ namespace Defra.Lp.WastePermits.Workflows
             Service = crmWorkflowContext.OrganizationService;
             Context = crmWorkflowContext.WorkflowExecutionContext;
 
-            var application = this.Application.Get(executionContext);
-            if (application == null) return;
+            var application = Application.Get(executionContext);
+            var permit = Permit.Get(executionContext);
+            if (application == null && permit == null) return;
 
-            TracingService.Trace("Getting Standard Rules for application: {0}", application.Id.ToString());
-
-            string returnData = Service.GetStandardRules(application);               
+            string returnData = string.Empty;
+            if (application != null)
+            {
+                TracingService.Trace("Getting Standard Rules for application: {0}", application.Id.ToString());
+                returnData = Service.GetStandardRules(application);
+            }
+            else if (permit != null)
+            {
+                TracingService.Trace("Getting Standard Rules for permit: {0}", permit.Id.ToString());
+                returnData = Service.GetStandardRules(permit, "defra_permit", "defra_permitid", "defra_permitline");
+            }
+                         
             ReturnData.Set(executionContext, returnData);
             TracingService.Trace("Returning data: {0}", returnData);
 

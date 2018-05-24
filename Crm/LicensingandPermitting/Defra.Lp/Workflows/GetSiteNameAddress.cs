@@ -21,11 +21,13 @@ namespace Defra.Lp.Workflows
     public class GetSiteNameAddress: WorkFlowActivityBase
     {
         #region Properties 
-        //Property for Entity defra_application
-        [RequiredArgument]
         [Input("Application")] 
         [ReferenceTarget("defra_application")]
         public InArgument<EntityReference> Application { get; set; }
+
+        [Input("Permit")]
+        [ReferenceTarget("defra_permit")]
+        public InArgument<EntityReference> Permit { get; set; }
 
         //[Input("Label text")]
         //[Default("Site:")]
@@ -64,16 +66,25 @@ namespace Defra.Lp.Workflows
             Service = crmWorkflowContext.OrganizationService;
             Context = crmWorkflowContext.WorkflowExecutionContext;
 
-            var application = this.Application.Get(executionContext);
-            if (application == null) return;
+            var application = Application.Get(executionContext);
+            var permit = Permit.Get(executionContext);
+            if (application == null && permit == null) return;
 
             //var labelText = this.LabelText.Get(executionContext);
             var labelText = "Site:";
-
-            TracingService.Trace("Getting site name and address for application: {0}", application.Id.ToString());
+            var returnData = string.Empty;
+            if (application != null)
+            {
+                TracingService.Trace("Getting site name and address for application: {0}", application.Id.ToString());
+                returnData = Service.GetSiteDetails(application);
+            }
+            else if (permit != null)
+            {
+                TracingService.Trace("Getting site name and address for permit: {0}", permit.Id.ToString());
+                returnData = Service.GetSiteDetails(permit, "defra_permit", "defra_permitid");
+            }
 
             // Put label on the front if we have a site and a label
-            string returnData = Service.GetSiteDetailsForApplication(application);
             if (!string.IsNullOrEmpty(returnData))
             {
                 if (!string.IsNullOrWhiteSpace(labelText))

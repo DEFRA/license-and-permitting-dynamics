@@ -61,7 +61,8 @@
             newLocation["name"] = permitNumber;
             newLocation["parentsiteorlocation"] = new EntityReference("sharepointdocumentlocation", parentLocation);
             newLocation["relativeurl"] = permitNumber;
-            newLocation["regardingobjectid"] = regarding;
+            if(regarding != null)
+                newLocation["regardingobjectid"] = regarding;
 
             newLocation.Id = service.Create(newLocation);
 
