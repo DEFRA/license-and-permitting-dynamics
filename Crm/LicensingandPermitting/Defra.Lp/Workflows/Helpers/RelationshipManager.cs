@@ -156,8 +156,7 @@ namespace Defra.Lp.Workflows.Helpers
                     }
                 };
 
-                if(filterCondition != null)
-                    queryOthers.Criteria.Filters[0].Conditions.Add(filterCondition);
+
 
                 EntityCollection queryOthersResults = this._Service.RetrieveMultiple(queryOthers);
 
@@ -183,8 +182,11 @@ namespace Defra.Lp.Workflows.Helpers
                 }
             };
 
+            // Filter the items being copied if required
             if (filterCondition != null)
-                queryCopiedEntities.Criteria.Filters[0].Conditions.Add(filterCondition);
+            {
+                queryCopiedEntities.Criteria.Conditions.Add(filterCondition);
+            }
 
             EntityCollection copiedEntities = this._Service.RetrieveMultiple(queryCopiedEntities);
 
