@@ -35,5 +35,20 @@ namespace Model.Lp.Crm
         /// Standard Rule
         /// </summary>
         public const string StandardRule = "defra_standardruleid";
+
+        /// <summary>
+        /// Type of line, optionset
+        /// </summary>
+        public static string LineType = "defra_linetype";
+    }
+
+    /// <summary>
+    /// LineType Optionset used in Permit and Application Lines
+    /// </summary>
+    public enum LineTypes
+    {
+        RegulatedFacility = 910400000,
+        PositiveAdjustment = 910400001,
+        NegativeAdjustment = 910400002
     }
 }

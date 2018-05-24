@@ -79,7 +79,7 @@ namespace Defra.Lp.Workflows
                         }, 
                         PermitLine.EntityLogicalName, 
                         PermitLine.Permit, 
-                        true);
+                        true, new ConditionExpression(PermitLine.LineType, ConditionOperator.Equal, (int)LineTypes.RegulatedFacility));
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)
