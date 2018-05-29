@@ -11,40 +11,49 @@ var Applications = {
 
     LastRefresh: new Date().getTime(),
 
+    // Function refreshes the form so long as it it allowed by minimum refresh frequency
     Refresh: function () {
         if (Applications.CanRefresh()) {
-            Applications.LastRefresh = new Date().getTime();
             Xrm.Page.data.refresh();
+            Applications.LastRefresh = new Date().getTime();
         }
     },
 
+    // Dictates whether the form can refresh
     CanRefresh: function () {
         var now = new Date().getTime();
         var msSinceLastRefresh = now - Applications.LastRefresh;
-
-        if (msSinceLastRefresh > 5000) {
-            return true;
+     
+        if (msSinceLastRefresh < 5000) {
+            console.log('not refreshing... last refresh: ' + Applications.LastRefresh);
+            return false;
         }
-        return false;
+
+        if (Xrm.Page.data.entity.getIsDirty()) {
+            console.log('not refreshing... form has updates');
+            return false;
+        }
+
+        console.log('refreshing... last refresh: ' + Applications.LastRefresh);
+        return true;
     },
 
     // Function sets the listeners for messages that the payment has been updated
-    OnLoad: function () {
-
-        /*
-        var refreshForm = function () {
-            if (Applications.CanRefresh()) {
-                Applications.LastRefresh = new Date().getTime();
-                Xrm.Page.data.refresh();
-            }
-        };
-        */
-        
+    OnLoad: function ()
+    {
+        console.log('JS: On Load.');
+        // Set the last refresh so that a grid refresh doesn't happen as we're loading
+        Applications.LastRefresh = new Date().getTime();
         Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
         Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
     },
 
-
+    // On Save event
+    OnSave: function () {
+        // Set the last refresh so that a grid refresh doesn't happen as we're saving.
+        Applications.LastRefresh = new Date().getTime();
+        console.log('JS: On Save.');
+    },
 
 
     // Function called when user presses the Write Off button from the CRM ribbon
@@ -149,20 +158,5 @@ var Applications = {
             }
         };
         req.send(JSON.stringify(parameters));
-    },
-
-    // Function listens for messages that the record has been updated
-    ReceivedPostMessage: function (event) {
-
-        alert('refreshing');
-
-        if (event.origin !== window.location.origin) {
-            return;
-        }
-
-        // Refresh the form
-        
-        Xrm.Page.data.refresh();
     }
-
 }
