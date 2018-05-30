@@ -77,7 +77,10 @@ namespace Defra.Lp.Workflows
                 TracingService.Trace("Getting site name and address for permit: {0}", permit.Id.ToString());
                 returnData = Service.GetSiteDetails(permit, "defra_permit", "defra_permitid");
             }
-
+            if (string.IsNullOrEmpty(returnData))
+            {
+                returnData = "not applicable";
+            }
             this.SiteDetails.Set(executionContext, returnData);
             TracingService.Trace("Site name and address: {0}", returnData);
         }
