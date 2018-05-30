@@ -51,9 +51,21 @@
     "sharepointonline_1_Connection_DisplayName": {
       "type": "string",
       "defaultValue": "wastesysops@defradev.onmicrosoft.com"
+    },
+    "spoSiteName": {
+      "type": "string",
+      "metadata": {
+        "description": "SharePointOnline site name"
+      }
     }
   },
-  "variables": {},
+  "variables": {
+    "spo": {
+      "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}')]",
+      "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/files')]",
+      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]"
+    }
+  },
   "resources": [
     {
       "name": "[parameters('logicAppName')]",
@@ -90,7 +102,7 @@
                     },
                     "method": "post",
                     "body": "@base64ToBinary(triggerBody()?['FileBody'])",
-                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/files",
+                    "path": "[variables('spo').fileUpload]",
                     "queries": {
                       "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/",
                       "name": "@triggerBody()?['FileName']",
@@ -114,7 +126,7 @@
                         "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
                       }
                     },
-                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/tables/@{encodeURIComponent(encodeURIComponent('041a7022-c01d-46ee-801e-c628b6419348'))}/items/@{encodeURIComponent(body('Upload_file_to_Application_folder_in_SharePoint')?['ItemId'])}/patchfileitem"
+                    "path": "[variables('spo').updateFileProperties]"
                   },
                   "runAfter": {
                     "Upload_file_to_Application_folder_in_SharePoint": [
@@ -123,62 +135,6 @@
                   }
                 }
               },
-              "runAfter": {
-                "Does_application_document_set_exist_already": [
-                  "Succeeded"
-                ]
-              }
-            },
-            "Create_Application_Document_Set_inside_Permit_Folder": {
-              "type": "Function",
-              "inputs": {
-                "body": {
-                  "ContentTypeName": "@{triggerBody()?['ApplicationContentType']}",
-                  "DocumentSetName": "@{triggerBody()?['ApplicationNo']}",
-                  "FolderPath": "@{triggerBody()?['PermitNo']}",
-                  "ListName": "@{triggerBody()?['ListName']}"
-                },
-                "function": {
-                  "id": "/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Web/sites/LPSharePointDocumentRelayFunc/functions/CreateDocumentSetInSharePoint"
-                }
-              },
-              "runAfter": {
-                "Delete_dummy_file": [
-                  "Succeeded"
-                ]
-              }
-            },
-            "Response": {
-              "type": "Response",
-              "kind": "http",
-              "inputs": {
-                "statusCode": 200
-              },
-              "runAfter": {
-                "Is_there_a_File_Body": [
-                  "Succeeded"
-                ]
-              }
-            },
-            "Does_application_document_set_exist_already": {
-              "type": "If",
-              "expression": {
-                "and": [
-                  {
-                    "equals": [
-                      "@outputs('Create_Application_Document_Set_inside_Permit_Folder')['statusCode']",
-                      200
-                    ]
-                  },
-                  {
-                    "contains": [
-                      "@body('Create_Application_Document_Set_inside_Permit_Folder')",
-                      "Document set exists already"
-                    ]
-                  }
-                ]
-              },
-              "actions": {},
               "runAfter": {
                 "Create_Application_Document_Set_inside_Permit_Folder": [
                   "Succeeded"
@@ -197,10 +153,10 @@
                       },
                       "body": {
                         "ApplicationNo": "@triggerBody()?['ApplicationNo']",
-                        "ListName": "@triggerBody()?['ListName']",
-                        "SiteDetails": "@triggerBody()?['SiteDetails']",
-                        "PermitDetails": "@triggerBody()?['PermitDetails']",
                         "Customer": "@triggerBody()?['Customer']",
+                        "ListName": "@triggerBody()?['ListName']",
+                        "PermitDetails": "@triggerBody()?['PermitDetails']",
+                        "SiteDetails": "@triggerBody()?['SiteDetails']",
                         "UpdateType": "Application"
                       }
                     },
@@ -209,38 +165,31 @@
                 }
               }
             },
-            "Create_permit_folder_by_creating_a_dummy_file": {
-              "type": "ApiConnection",
+            "Create_Application_Document_Set_inside_Permit_Folder": {
+              "type": "Function",
               "inputs": {
-                "host": {
-                  "connection": {
-                    "name": "@parameters('$connections')['sharepointonline']['connectionId']"
-                  }
+                "body": {
+                  "ApplicationContentType": "@{triggerBody()?['ApplicationContentType']}",
+                  "ApplicationFolder": "@{triggerBody()?['ApplicationNo']}",
+                  "PermitFolder": "@{triggerBody()?['PermitNo']}",
+                  "ListName": "@{triggerBody()?['ListName']}",
+                  "SpoSiteName": "[variables('spo').siteName]",
+                  "PermitContentType": "@{triggerBody()?['PermitContentType']}"
                 },
-                "method": "post",
-                "body": "I'm a dummy file that was created to create the folder. You can delete me.",
-                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/files",
-                "queries": {
-                  "folderPath": "/@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}",
-                  "name": "dummy.txt",
-                  "queryParametersSingleEncoded": true
+                "function": {
+                  "id": "/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Web/sites/LPSharePointDocumentRelayFunc/functions/CreateDocumentSetInSharePoint"
                 }
               },
               "runAfter": {}
             },
-            "Delete_dummy_file": {
-              "type": "ApiConnection",
+            "Response": {
+              "type": "Response",
+              "kind": "http",
               "inputs": {
-                "host": {
-                  "connection": {
-                    "name": "@parameters('$connections')['sharepointonline']['connectionId']"
-                  }
-                },
-                "method": "delete",
-                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/files/@{encodeURIComponent(body('Create_permit_folder_by_creating_a_dummy_file')?['Id'])}"
+                "statusCode": 200
               },
               "runAfter": {
-                "Create_permit_folder_by_creating_a_dummy_file": [
+                "Is_there_a_File_Body": [
                   "Succeeded"
                 ]
               }
