@@ -29,10 +29,6 @@ namespace Defra.Lp.Workflows
         [ReferenceTarget("defra_permit")]
         public InArgument<EntityReference> Permit { get; set; }
 
-        [Input("Label text for emails and letters")]
-        [Default("Site:")]
-        public InArgument<string> LabelText { get; set; }
-
         [Output("Site details")]
         public OutArgument<string> SiteDetails { get; set; }
 
@@ -70,8 +66,6 @@ namespace Defra.Lp.Workflows
             var permit = Permit.Get(executionContext);
             if (application == null && permit == null) return;
 
-            var labelText = this.LabelText.Get(executionContext);
-            //var labelText = "Site:";
             var returnData = string.Empty;
             if (application != null)
             {
@@ -84,16 +78,6 @@ namespace Defra.Lp.Workflows
                 returnData = Service.GetSiteDetails(permit, "defra_permit", "defra_permitid");
             }
 
-            // Put label on the front if we have a site and a label. This is required for letters and emails
-            // so that site conditionally displayed.
-            if (!string.IsNullOrEmpty(returnData))
-            {
-                if (!string.IsNullOrWhiteSpace(labelText))
-                {
-                    // Needs a new line on the front to avoid blank lines in the email
-                    returnData = string.Format("{2}{0} {1}", labelText, returnData, Environment.NewLine);
-                }
-            }
             this.SiteDetails.Set(executionContext, returnData);
             TracingService.Trace("Site name and address: {0}", returnData);
         }
