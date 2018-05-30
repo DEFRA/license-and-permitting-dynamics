@@ -77,12 +77,11 @@ namespace Defra.Lp.WastePermits.Workflows
             else if (permit != null)
             {
                 TracingService.Trace("Getting Standard Rules for permit: {0}", permit.Id.ToString());
-                returnData = Service.GetStandardRules(permit, "defra_permit", "defra_permitid", "defra_permitline");
+                returnData = Service.GetStandardRules(permit, "defra_permit", "defra_permitid", "defra_permit_lines");
             }
                          
             ReturnData.Set(executionContext, returnData);
             TracingService.Trace("Returning data: {0}", returnData);
-
         }
     }
 }
