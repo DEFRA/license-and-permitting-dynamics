@@ -178,17 +178,17 @@ namespace Defra.Lp.Common.SharePoint
             }
             else if (entity.LogicalName == "defra_permit")
             {
-                var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, entity);
+                var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber" }, entity);
                 if (permitEntity != null)
                 {
-                    TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", permitEntity["defra_permitnumber"].ToString(), permitEntity["defra_applicationnumber"].ToString()));
+                    TracingService.Trace(string.Format("Permit Number = {0}", permitEntity["defra_permitnumber"].ToString()));
 
                     request.ApplicationNo = string.Empty;
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
                     request.PermitNo = permitEntity.GetAttributeValue<string>("defra_permitnumber");
-                    request.Customer = string.Empty;
-                    request.SiteDetails = string.Empty;
-                    request.PermitDetails = string.Empty;
+                    request.Customer = customer;
+                    request.SiteDetails = siteDetails;
+                    request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataPermitUpdateType;
                 }
                 else

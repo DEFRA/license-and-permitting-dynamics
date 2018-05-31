@@ -14,6 +14,7 @@ namespace Defra.Lp.SharePointAzureFunctions
 {
     public class CreateDocumentSet
     {
+
         public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
@@ -27,10 +28,11 @@ namespace Defra.Lp.SharePointAzureFunctions
                 // TODO: Rather than using web application settings, we should be using the Azure Key Vault for
                 // credentials  
 
-                var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SharePointUrl"].ConnectionString;
+                //var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SharePointUrl"].ConnectionString;
+				var connectionString = WebUtility.UrlDecode(WebUtility.UrlDecode(data.SpoSiteName.ToString()));
                 var documentSetUrl = string.Empty;
-                var dsName = data.DocumentSetName.ToString();
-                var folderPath = data.FolderPath.ToString();
+                var applicationFolder = data.ApplicationFolder.ToString();
+                var permitFolderName = data.PermitFolder.ToString();
 
                 using (ClientContext clientContext = new ClientContext(connectionString))
                 {
@@ -48,30 +50,31 @@ namespace Defra.Lp.SharePointAzureFunctions
                     var credentials = new SharePointOnlineCredentials(username, securePassword);
                     clientContext.Credentials = credentials;
 
-                    var list = clientContext.Web.Lists.GetByTitle(data.ListName.ToString());
-                    //var parentFolder = list.RootFolder;
-                    var folderUrl = String.Format("{0}/{1}", data.ListName.ToString(), folderPath);
-                    //var folders = list.RootFolder.Folders;
-                    //clientContext.Load(folders, fldrs => fldrs.Include(fldr => fldr.ServerRelativeUrl));
-                    //clientContext.ExecuteQuery();
-                    //var parentFolder = folders.FirstOrDefault(f => f.ServerRelativeUrl.ToLower() == folderUrl.ToLower());
-                    //var web = clientContext.Web;
-                    var parentFolder = clientContext.Web.GetFolderByServerRelativeUrl(folderUrl);
-
+                    log.Info("Got client context and set credentials");
                     log.Info(string.Format("ListName is {0}", data.ListName.ToString()));
-                    log.Info(string.Format("Folder is {0}", parentFolder));
-                    // Gets the document set content type
-                    //var ct = clientContext.Web.ContentTypes.GetById("0x0120D520000AB59DAA21D4E4479F41140BE556886A007DD3406F677CDC4DB3C2054F130F37CB");
-                    //clientContext.Load(ct);
-                    //clientContext.ExecuteQuery();
-                    var ct = GetByName(list.ContentTypes, data.ContentTypeName.ToString());
 
-                    log.Info(string.Format("Content Type Id is {0}", ct.Id.StringValue));
+                    var list = clientContext.Web.Lists.GetByTitle(data.ListName.ToString());
+                    var rootFolder = list.RootFolder;
+                    var permitFolderUrl = String.Format("{0}/{1}", data.ListName.ToString(), permitFolderName);
+                    var applicationFolderUrl = String.Format("{0}/{1}", permitFolderUrl, applicationFolder);
 
-                    // Creates the Document Set
+                    // Get the Permit folder content type
+                    var ctPermit = GetByName(list.ContentTypes, data.PermitContentType.ToString());
+                    log.Info(string.Format("Permit Content Type Id is {0}", ctPermit.Id.StringValue));
+
+                    // Create permit sub folder inside list root folder if it doesn't exist
+                    var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
+                    //var permitFolder = clientContext.Web.GetFolderByServerRelativeUrl(permitFolderUrl);
+                    log.Info(string.Format("Folder is {0}", permitFolder.Name));
+
+                    // Get the Application document set content type
+                    var ctApplication = GetByName(list.ContentTypes, data.ApplicationContentType.ToString());
+                    log.Info(string.Format("Applicaction Content Type Id is {0}", ctApplication.Id.StringValue));
+
+                    // Create the Document Set
                     try
                     {
-                        var ds = DocumentSet.Create(clientContext, parentFolder, dsName, ct.Id);
+                        var ds = DocumentSet.Create(clientContext, permitFolder, applicationFolder, ctApplication.Id);
                         clientContext.ExecuteQuery();
                         documentSetUrl = ds.Value;
                         log.Info(string.Format("Document Set Id is {0}", documentSetUrl));
@@ -92,13 +95,51 @@ namespace Defra.Lp.SharePointAzureFunctions
             }
         }
 
-        public static ContentType GetByName(ContentTypeCollection cts, string name)
+        private static ContentType GetByName(ContentTypeCollection cts, string name)
         {
             var ctx = cts.Context;
             ctx.Load(cts);
             ctx.ExecuteQuery();
 
             return Enumerable.FirstOrDefault(cts, ct => ct.Name == name);
+        }
+
+        private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId)
+        {
+            //Remove the sub folder slashes
+            //this.ValidateSubFolderName(ref subFolder);
+
+            //Get Folder
+            //Folder sfolder = clientContext.Web.GetFolderByServerRelativeUrl(folder);
+
+            // Check if the subfolder exists
+            clientContext.Load(folder);
+            var subFolders = folder.Folders;
+            clientContext.Load(folder.Folders);
+            clientContext.ExecuteQuery();
+            if (folder.Folders.Count > 0)
+            {
+                foreach (Folder fd in folder.Folders)
+                {
+                    if (fd.Name.ToUpper() == subFolder.ToUpper())
+                    {
+                        // Already exists
+                        return fd;
+                    }
+                }
+            }
+
+            // Create the folder
+            var newFolder = folder.Folders.Add(subFolder);
+
+            // Set the content type 
+            newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
+            newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
+            newFolder.ListItemAllFields.Update();
+
+            clientContext.ExecuteQuery();
+
+            return newFolder;
         }
     }
 }
