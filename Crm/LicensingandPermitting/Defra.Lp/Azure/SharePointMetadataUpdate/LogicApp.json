@@ -51,9 +51,21 @@
     "sharepointonline_1_Connection_DisplayName": {
       "type": "string",
       "defaultValue": "wastesysops@defradev.onmicrosoft.com"
+    },
+    "spoSiteName": {
+      "type": "string",
+      "metadata": {
+        "description": "SharePointOnline site name"
+      }
     }
   },
-  "variables": {},
+  "variables": {
+    "spo": {
+      "getFileItems": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/getfileitems')]",
+      "updateMetaData": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(items(''For_each_item_in_Application_folder'')?[''ID''])}/patchfileitem')]",
+      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]"
+    }
+  },
   "resources": [
     {
       "name": "[parameters('logicAppName')]",
@@ -91,9 +103,9 @@
                       }
                     },
                     "method": "get",
-                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/tables/@{encodeURIComponent(encodeURIComponent('041a7022-c01d-46ee-801e-c628b6419348'))}/getfileitems",
+                    "path": "[variables('spo').getFileItems]",
                     "queries": {
-                      "$filter": "Application_x0020_ID eq '@{triggerBody()?['ApplicationNo']}'"
+                      "$filter": "Title eq '@{triggerBody()?['ApplicationNo']}'"
                     }
                   },
                   "runAfter": {}
@@ -133,7 +145,7 @@
                             "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
                           }
                         },
-                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/tables/@{encodeURIComponent(encodeURIComponent('041a7022-c01d-46ee-801e-c628b6419348'))}/items/@{encodeURIComponent(items('For_each_item_in_Application_folder')?['ID'])}/patchfileitem"
+                        "path": "[variables('spo').updateMetaData]"
                       },
                       "runAfter": {}
                     }
@@ -157,9 +169,9 @@
                         }
                       },
                       "method": "get",
-                      "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/tables/@{encodeURIComponent(encodeURIComponent('041a7022-c01d-46ee-801e-c628b6419348'))}/getfileitems",
+                      "path": "[variables('spo').getFileItems]",
                       "queries": {
-                        "$filter": "Permit_x0020_ID eq '@{triggerBody()?['PermitNo']}'"
+                        "$filter": "Permit_x0020_ID eq '@{triggerBody()?['PermitNo']}' and Application_x0020_ID eq null"
                       }
                     },
                     "runAfter": {}
@@ -186,7 +198,7 @@
                               "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
                             }
                           },
-                          "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE'))}/tables/@{encodeURIComponent(encodeURIComponent('041a7022-c01d-46ee-801e-c628b6419348'))}/items/@{encodeURIComponent(items('For_each')?['ID'])}/patchfileitem"
+                          "path": "[variables('spo').updatePermitMetadata]"
                         },
                         "runAfter": {}
                       }
