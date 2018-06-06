@@ -9,11 +9,9 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 
-using System;
-using System.ServiceModel;
-using Microsoft.Xrm.Sdk;
-using Defra.Lp.Common;
 using Defra.Lp.Common.SharePoint;
+using Microsoft.Xrm.Sdk;
+using Model.Lp.Crm;
 
 namespace Defra.Lp.Plugins
 {
@@ -72,36 +70,59 @@ namespace Defra.Lp.Plugins
                 var azureInterface = new AzureInterface(adminService, service, tracingService);
                 if (entity.LogicalName == "activitymimeattachment")
                 {
+                    // Triggered for email attachments
                     tracingService.Trace("Start of UploadFile from activitymimeattachment");
                     azureInterface.UploadFile(entity.ToEntityReference(), "email", "defra_applicationid");
                     tracingService.Trace("Email Processed Successfully");
                 }
-                //else if (entity.LogicalName == "annotation")
-                //{
-                //    tracingService.Trace("Start of MoveFile from annotation");
-                //    Entity PostEntityImage = context.PostEntityImages["PostImage"];
+                else if (entity.LogicalName == "annotation")
+                {
+                    // Triggered for Notes attachments
+                    tracingService.Trace("Start of UploadFile from annotation");
+                    EntityReference regarding = null;
+                    if (context.MessageName == PluginMessages.Update)
+                    {
+                        // For an update get the regarding from the PostImage
+                        var postEntityImage = context.PostEntityImages["PostImage"];
+                        tracingService.Trace("Got PostImage");
+                        if (postEntityImage.Attributes.Contains("objectid"))
+                        {
+                            regarding = (EntityReference)postEntityImage.Attributes["objectid"];
+                            tracingService.Trace("Parent Entity (update) is: " + regarding.LogicalName);
+                        }
+                    }
+                    else if (context.MessageName == PluginMessages.Create)
+                    {
+                        // For a create, the regarding is in the Target
+                        if (entity.Attributes.Contains("objectid"))
+                        {
+                            regarding = (EntityReference)entity.Attributes["objectid"];
+                            tracingService.Trace("Parent Entity (create) is: " + regarding.LogicalName);
+                        }
+                    }
 
-                //    tracingService.Trace("Got PostImage");
-
-                //    EntityReference Regarding = null;
-                //    if (PostEntityImage.Attributes.Contains("objectid"))
-                //    {
-
-                //        Regarding = (EntityReference)PostEntityImage.Attributes["objectid"];
-                //    }
-                //    tracingService.Trace("Parent Entity is: " + Regarding.LogicalName);
-
-                //    if (Regarding.LogicalName == "account")
-                //    {
-                //        azureInterface.MoveFile(entity.ToEntityReference(), "account", "accountid");
-                //        tracingService.Trace("Account Note Processed Successfully");
-                //    }
-                //    else if (Regarding.LogicalName == "defra_application")
-                //    {
-                //        azureInterface.MoveFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
-                //        tracingService.Trace("Application Note Processed Successfully");
-                //    }
-                //}
+                    if (regarding != null)
+                    {
+                        if (regarding.LogicalName == "defra_application")
+                        {
+                            // Upload attachment if Note is regarding an application
+                            // and there is an attachment
+                            if (entity.GetAttributeValue<bool>("isdocument"))
+                            {
+                                azureInterface.UploadFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
+                                tracingService.Trace("Application Note Processed Successfully");
+                            }
+                            else
+                            {
+                                tracingService.Trace("No file attached");
+                            }
+                        }
+                        else
+                        {
+                            tracingService.Trace("Note not processed for {0}", regarding.LogicalName);
+                        }
+                    }                           
+                }
             }
         }
     }
