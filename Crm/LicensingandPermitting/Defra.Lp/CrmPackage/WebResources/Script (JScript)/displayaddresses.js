@@ -14,7 +14,7 @@ function displayAddresses() {
 	jQuery('#the_address').empty();
 	jQuery('#lkp_msg').html("");
 	
-    var postcode = window.parent.Xrm.Page.getAttribute("defra_postcode").getValue();
+	var postcode = window.parent.Xrm.Page.getAttribute("defra_address_search_criteria").getValue();
 	
 	if(postcode == null){
 		return;
@@ -97,6 +97,7 @@ function displayAddresses() {
                     window.parent.Xrm.Page.getAttribute("defra_street").setValue(results.street_address);
                     window.parent.Xrm.Page.getAttribute("defra_locality").setValue(results.locality);
                     window.parent.Xrm.Page.getAttribute("defra_towntext").setValue(results.city);
+                    window.parent.Xrm.Page.getAttribute("defra_postcode").setValue(results.postcode);
                 }
 			});
 
