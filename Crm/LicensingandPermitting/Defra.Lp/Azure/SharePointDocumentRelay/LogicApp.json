@@ -55,7 +55,13 @@
     "spoSiteName": {
       "type": "string",
       "metadata": {
-        "description": "SharePointOnline site name"
+        "description": "SharePoint Online site name"
+      }
+    },
+    "spoPermitLibraryGuid": {
+      "type": "string",
+      "metadata": {
+        "description": "SharePoint Online Permit Library Guid"
       }
     }
   },
@@ -63,7 +69,7 @@
     "spo": {
       "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}')]",
       "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/files')]",
-      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]"
+      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]"
     }
   },
   "resources": [

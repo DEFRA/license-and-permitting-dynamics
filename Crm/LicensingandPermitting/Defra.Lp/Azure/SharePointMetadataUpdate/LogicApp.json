@@ -55,15 +55,21 @@
     "spoSiteName": {
       "type": "string",
       "metadata": {
-        "description": "SharePointOnline site name"
+        "description": "SharePoint Online site name"
+      }
+    },
+    "spoPermitLibraryGuid": {
+      "type": "string",
+      "metadata": {
+        "description": "SharePoint Online Permit Library Guid"
       }
     }
   },
   "variables": {
     "spo": {
-      "getFileItems": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/getfileitems')]",
-      "updateMetaData": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(items(''For_each_item_in_Application_folder'')?[''ID''])}/patchfileitem')]",
-      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''041a7022-c01d-46ee-801e-c628b6419348''))}/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]"
+      "getFileItems": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/getfileitems')]",
+      "updateMetaData": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each_item_in_Application_folder'')?[''ID''])}/patchfileitem')]",
+      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]"
     }
   },
   "resources": [
