@@ -4,6 +4,7 @@ using Microsoft.Xrm.Sdk;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -224,7 +225,10 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace("Permit No: {0}", permitNo);
             TracingService.Trace("Application No: {0}", applicationNo);
 
+            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+            // user uploads something with the same name from front end.
             var fileName = queryRecord.GetAttributeValue<string>("filename");
+            fileName = AppendTimeStamp(fileName);
 
             TracingService.Trace("Filename: {0}", fileName);
             TracingService.Trace("Logical Name: {0}", queryRecord.LogicalName);
@@ -342,6 +346,16 @@ namespace Defra.Lp.Common.SharePoint
                 fileName = fileName.Remove(100);
             }
             return fileName;
+        }
+
+        // Extension method to 
+        private string AppendTimeStamp(string fileName)
+        {
+            return string.Concat(
+                Path.GetFileNameWithoutExtension(fileName),
+                DateTime.Now.ToString("yyyyMMddHHmmssfff"),
+                Path.GetExtension(fileName)
+                );
         }
     }
 }
