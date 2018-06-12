@@ -10,8 +10,8 @@ Param(
 	[string]$Password
 )
 
-Add-Type -Path "..\Defra.Lp.SharePointDeployment\packages\Microsoft.SharePointOnline.CSOM.16.1.7723.1200\lib\net45\Microsoft.SharePoint.Client.dll"   
-Add-Type -Path "..\Defra.Lp.SharePointDeployment\packages\Microsoft.SharePointOnline.CSOM.16.1.7723.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.dll"   
+Add-Type -Path ".\packages\Microsoft.SharePointOnline.CSOM.16.1.7723.1200\lib\net45\Microsoft.SharePoint.Client.dll"   
+Add-Type -Path ".\packages\Microsoft.SharePointOnline.CSOM.16.1.7723.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.dll"   
 
 Write-Host "Log in to source SharePoint site " $SiteUrl
 
