@@ -7,7 +7,9 @@ Param(
 	[string]$SiteUrl,
 	[string]$SiteUrlDest,
 	[string]$UserName,
-	[string]$Password
+	[string]$Password,
+	[string]$UserNameDest,
+	[string]$PasswordDest
 )
 
 Add-Type -Path ".\packages\Microsoft.SharePointOnline.CSOM.16.1.7723.1200\lib\net45\Microsoft.SharePoint.Client.dll"   
@@ -23,9 +25,9 @@ $Context.ExecuteQuery()
 
 Write-Host "Log in to source SharePoint site " $SiteUrl " successfull"
 
-Write-Host "Log in to destination SharePoint site " $SiteUrl
+Write-Host "Log in to destination SharePoint site " $SiteUrlDest
 
-$CredentialsDest = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($UserName,(ConvertTo-SecureString $Password -AsPlainText -Force)) 
+$CredentialsDest = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($UserNameDest,(ConvertTo-SecureString $PasswordDest -AsPlainText -Force)) 
 $ContextDest = New-Object Microsoft.SharePoint.Client.ClientContext($SiteUrlDest) 
 $ContextDest.Credentials = $CredentialsDest 
 
@@ -33,7 +35,7 @@ $ContextDest.Load($ContextDest.Web.AvailableContentTypes)
 #$ContextDest.Load($ContextDest.Web.ContentTypes)
 $ContextDest.ExecuteQuery()
 
-Write-Host "Log in to destination SharePoint site " $SiteUrl " successfull"
+Write-Host "Log in to destination SharePoint site " $SiteUrlDest " successfull"
 
 #Get the Content Type Schema from XML
 #$XMLFile = "./SiteContentTypes.xml" 
