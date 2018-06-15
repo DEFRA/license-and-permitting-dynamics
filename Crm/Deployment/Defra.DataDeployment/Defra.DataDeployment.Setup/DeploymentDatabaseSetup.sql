@@ -43,3 +43,36 @@ roleid uniqueidentifier not null,
 rolename nvarchar(200) not null,
 rolebusinessunitname nvarchar(200) not null
 )
+create table srcqueues
+(
+	queueid uniqueidentifier primary key not null,
+	businessunitid uniqueidentifier  null,
+	[description] ntext  null,
+	emailaddress nvarchar(100)  null,
+	name nvarchar(200)  null,
+	onwerid uniqueidentifier null,
+	owneridtype nvarchar(64)  null,
+	queueviewtype int null,
+	statecode int null,
+	statuscode int null,
+	outgoingemailstatus int null,
+	incomingemailstatus int null,
+	mailboxstatus int null
+)
+
+create table destqueues
+(
+	queueid uniqueidentifier primary key not null,
+	businessunitid uniqueidentifier  null,
+	[description] ntext  null,
+	emailaddress nvarchar(100)  null,
+	name nvarchar(200)  null,
+	onwerid uniqueidentifier null,
+	owneridtype nvarchar(64)  null,
+	queueviewtype int null,
+	statecode int null,
+	statuscode int null,
+	outgoingemailstatus int null,
+	incomingemailstatus int null,
+	mailboxstatus int null
+)
