@@ -32,8 +32,6 @@ namespace Defra.Lp.Plugins
         public ApplicationCreateSharePointDocumentLocation(string unsecure, string secure)
             : base(typeof(ApplicationCreateSharePointDocumentLocation))
         {
-            
-           // TODO: Implement your custom configuration handling.
         }
 
 
@@ -59,7 +57,6 @@ namespace Defra.Lp.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
-            var service = localContext.OrganizationService;
             var context = localContext.PluginExecutionContext;
             var tracing = localContext.TracingService;
             var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));

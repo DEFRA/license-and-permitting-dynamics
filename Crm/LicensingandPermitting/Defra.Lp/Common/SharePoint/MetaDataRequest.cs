@@ -1,5 +1,9 @@
 ﻿namespace Defra.Lp.Common.SharePoint
 {
+
+    /// <summary>
+    /// Model used to communicate with Logic App that updates SharePoint metadata
+    /// </summary>
     internal class MetaDataRequest
     {
         public string ApplicationNo { get; internal set; }
