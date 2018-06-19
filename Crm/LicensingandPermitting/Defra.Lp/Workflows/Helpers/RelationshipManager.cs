@@ -140,9 +140,10 @@ namespace Defra.Lp.Workflows.Helpers
         /// <param name="deactivateOthers"></param>
         public void CopyAs(string copiedEntityName, string copiedEntityLookupToSource, string[] copiedAttributes, string copiedAsEntityName, string copiedAsEntityLookupToTarget, bool deactivateOthers, ConditionExpression filterCondition)
         {
-            //Deactivate others if needed
+            //Deactivate records that shouldn't be linked to the target, start afresh
             if (deactivateOthers)
             {
+                // Get all active records in the target
                 QueryExpression queryOthers = new QueryExpression(copiedAsEntityName)
                 {
                     ColumnSet = new ColumnSet(string.Format("{0}id", copiedAsEntityName)),
@@ -155,11 +156,9 @@ namespace Defra.Lp.Workflows.Helpers
                         }
                     }
                 };
-
-
-
                 EntityCollection queryOthersResults = this._Service.RetrieveMultiple(queryOthers);
 
+                // Deactivate the entities that should not be linked to the target
                 foreach (Entity otherEntity in queryOthersResults.Entities)
                 {
                     otherEntity["statecode"] = new OptionSetValue(1);
@@ -169,6 +168,7 @@ namespace Defra.Lp.Workflows.Helpers
                 }
             }
 
+            // Get all the entities that need to be copied 
             QueryExpression queryCopiedEntities = new QueryExpression(copiedEntityName)
             {
                 ColumnSet = new ColumnSet(copiedAttributes),
@@ -187,7 +187,6 @@ namespace Defra.Lp.Workflows.Helpers
             {
                 queryCopiedEntities.Criteria.Conditions.Add(filterCondition);
             }
-
             EntityCollection copiedEntities = this._Service.RetrieveMultiple(queryCopiedEntities);
 
             //Create the copied entities
