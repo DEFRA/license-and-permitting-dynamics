@@ -28,7 +28,6 @@ namespace Defra.Lp.SharePointAzureFunctions
                 // TODO: Rather than using web application settings, we should be using the Azure Key Vault for
                 // credentials  
 
-                //var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SharePointUrl"].ConnectionString;
 				var connectionString = WebUtility.UrlDecode(WebUtility.UrlDecode(data.SpoSiteName.ToString()));
                 var documentSetUrl = string.Empty;
                 var applicationFolder = data.ApplicationFolder.ToString();
@@ -64,7 +63,6 @@ namespace Defra.Lp.SharePointAzureFunctions
 
                     // Create permit sub folder inside list root folder if it doesn't exist
                     var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
-                    //var permitFolder = clientContext.Web.GetFolderByServerRelativeUrl(permitFolderUrl);
                     log.Info(string.Format("Folder is {0}", permitFolder.Name));
 
                     // Get the Application document set content type
@@ -106,12 +104,6 @@ namespace Defra.Lp.SharePointAzureFunctions
 
         private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId)
         {
-            //Remove the sub folder slashes
-            //this.ValidateSubFolderName(ref subFolder);
-
-            //Get Folder
-            //Folder sfolder = clientContext.Web.GetFolderByServerRelativeUrl(folder);
-
             // Check if the subfolder exists
             clientContext.Load(folder);
             var subFolders = folder.Folders;
