@@ -1,3 +1,5 @@
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -10,9 +12,13 @@ using System.Threading.Tasks;
 
 namespace Defra.Lp.SharePointAzureFunctions
 {
-    public class UpdateMetaData
+    // This Azure function is not currently used by the SharePoint integration. Metadata is updated by configuration
+    // in the out of the box sharepoint logic app connectors. Its been left here in case its useful to have a generic
+    // function to update metadata in the future.
+    public static class UpdateMetadata
     {
-        public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
+        [FunctionName("UpdateMetadata")]
+        public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
 
@@ -44,7 +50,7 @@ namespace Defra.Lp.SharePointAzureFunctions
                     var credentials = new SharePointOnlineCredentials(username, securePassword);
                     clientContext.Credentials = credentials;
 
-                    Microsoft.SharePoint.Client.File file = GetSharePointFile(clientContext, (string)data.RecordURL, log);
+                    File file = GetSharePointFile(clientContext, (string)data.RecordURL, log);
 
                     var listItem = file.ListItemAllFields;
                     clientContext.Load(file, c => c.ListItemAllFields.Id);
@@ -86,7 +92,7 @@ namespace Defra.Lp.SharePointAzureFunctions
         {
             log.Info($"Get SharePoint File:" + fileUrl);
 
-            File sourceFile = clientContext.Web.GetFileByServerRelativeUrl(fileUrl);
+            var sourceFile = clientContext.Web.GetFileByServerRelativeUrl(fileUrl);
             clientContext.Load(sourceFile);
             clientContext.ExecuteQuery();
 
