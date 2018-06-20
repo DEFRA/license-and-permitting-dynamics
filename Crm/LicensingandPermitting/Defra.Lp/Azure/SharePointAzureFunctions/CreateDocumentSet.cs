@@ -1,21 +1,24 @@
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.DocumentSet;
-using Microsoft.SharePoint.Client.Taxonomy;
-using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.DocumentSet;
+using Microsoft.SharePoint.Client.Taxonomy;
+using Newtonsoft.Json;
 
 namespace Defra.Lp.SharePointAzureFunctions
 {
-    public class CreateDocumentSet
+    public static class CreateDocumentSet
     {
-
-        public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
+        [FunctionName("CreateDocumentSet")]
+        public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
 
@@ -28,8 +31,7 @@ namespace Defra.Lp.SharePointAzureFunctions
                 // TODO: Rather than using web application settings, we should be using the Azure Key Vault for
                 // credentials  
 
-                //var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SharePointUrl"].ConnectionString;
-				var connectionString = WebUtility.UrlDecode(WebUtility.UrlDecode(data.SpoSiteName.ToString()));
+                var connectionString = WebUtility.UrlDecode(WebUtility.UrlDecode(data.SpoSiteName.ToString()));
                 var documentSetUrl = string.Empty;
                 var applicationFolder = data.ApplicationFolder.ToString();
                 var permitFolderName = data.PermitFolder.ToString();
@@ -38,8 +40,8 @@ namespace Defra.Lp.SharePointAzureFunctions
                 {
                     var dummy = new TaxonomyItem(clientContext, null);
 
-                    var username = System.Configuration.ConfigurationManager.ConnectionStrings["UserName"].ConnectionString;
-                    var password = System.Configuration.ConfigurationManager.ConnectionStrings["Password"].ConnectionString;
+                    var username = ConfigurationManager.ConnectionStrings["UserName"].ConnectionString;
+                    var password = ConfigurationManager.ConnectionStrings["Password"].ConnectionString;
 
                     var securePassword = new SecureString();
                     foreach (char p in password)
@@ -64,7 +66,6 @@ namespace Defra.Lp.SharePointAzureFunctions
 
                     // Create permit sub folder inside list root folder if it doesn't exist
                     var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
-                    //var permitFolder = clientContext.Web.GetFolderByServerRelativeUrl(permitFolderUrl);
                     log.Info(string.Format("Folder is {0}", permitFolder.Name));
 
                     // Get the Application document set content type
@@ -106,12 +107,6 @@ namespace Defra.Lp.SharePointAzureFunctions
 
         private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId)
         {
-            //Remove the sub folder slashes
-            //this.ValidateSubFolderName(ref subFolder);
-
-            //Get Folder
-            //Folder sfolder = clientContext.Web.GetFolderByServerRelativeUrl(folder);
-
             // Check if the subfolder exists
             clientContext.Load(folder);
             var subFolders = folder.Folders;
@@ -136,7 +131,7 @@ namespace Defra.Lp.SharePointAzureFunctions
             newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
             newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
             newFolder.ListItemAllFields.Update();
-
+            clientContext.Load(newFolder);
             clientContext.ExecuteQuery();
 
             return newFolder;
