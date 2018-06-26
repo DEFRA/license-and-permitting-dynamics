@@ -1,5 +1,10 @@
 ﻿namespace Defra.Lp.Common.SharePoint
 {
+
+    /// <summary>
+    /// Used when calling the SharePoint document relay logic app
+    /// to upload the files and folders in SharePoint
+    /// </summary>
     internal class DocumentRelayRequest
     {
         public string ApplicationContentType { get; internal set; }

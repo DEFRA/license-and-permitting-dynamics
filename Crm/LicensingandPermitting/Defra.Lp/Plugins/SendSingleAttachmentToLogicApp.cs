@@ -31,8 +31,6 @@ namespace Defra.Lp.Plugins
         public SendSingleAttachmentToLogicApp(string unsecure, string secure)
             : base(typeof(SendSingleAttachmentToLogicApp))
         {
-
-            // TODO: Implement your custom configuration handling.
         }
 
         /// <summary>
@@ -68,6 +66,8 @@ namespace Defra.Lp.Plugins
                 var entity = (Entity)context.InputParameters["Target"];
 
                 var azureInterface = new AzureInterface(adminService, service, tracingService);
+
+                // Process the attachment depending on the target entity
                 if (entity.LogicalName == "activitymimeattachment")
                 {
                     // Triggered for email attachments

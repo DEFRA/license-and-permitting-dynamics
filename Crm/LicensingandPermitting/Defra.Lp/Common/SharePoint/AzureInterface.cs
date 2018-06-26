@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
+using Model.Lp.Crm;
 
 namespace Defra.Lp.Common.SharePoint
 {
@@ -27,23 +28,21 @@ namespace Defra.Lp.Common.SharePoint
             TracingService = tracingService;
 
             // Read the settings
-            try
-            {
-                Config = adminService.GetConfigurationStringValues(
-                     $"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}",
-                     $"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}",
-                     $"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}",
-                     $"{SharePointSecureConfigurationKeys.PermitFolderContentType}",
-                     $"{SharePointSecureConfigurationKeys.PermitListName}");
+            Config = adminService.GetConfigurationStringValues(
+                    $"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}",
+                    $"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}",
+                    $"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}",
+                    $"{SharePointSecureConfigurationKeys.PermitFolderContentType}",
+                    $"{SharePointSecureConfigurationKeys.PermitListName}");
 
-                // Try to access - error if we need to configure
-                var appFolderContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
-                var documentRelayLogicApp = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
-                var metadataLogicApp = Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"];
-                var permitFolderContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
-                var permitListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-            }
-            catch (Exception exc)
+            // Validate configuration records exist
+            if (Config == null
+                || !Config.ContainsKey(SharePointSecureConfigurationKeys.ApplicationFolderContentType)
+                || !Config.ContainsKey(SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl)
+                || !Config.ContainsKey(SharePointSecureConfigurationKeys.MetadataLogicAppUrl)
+                || !Config.ContainsKey(SharePointSecureConfigurationKeys.PermitFolderContentType)
+                || !Config.ContainsKey(SharePointSecureConfigurationKeys.PermitListName))
+
             {
                 throw new InvalidPluginExecutionException("The Sharepoint integration needs to be configured.");
             }
@@ -74,8 +73,7 @@ namespace Defra.Lp.Common.SharePoint
 
             TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"]));
 
-            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
-            //var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+            SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
         }
 
         internal void UploadFile(EntityReference recordIdentifier, string parentEntity, string parentLookup)
@@ -95,24 +93,18 @@ namespace Defra.Lp.Common.SharePoint
                 {
                     throw new InvalidPluginExecutionException("No attachment data record returned from query");
                 }
-                else
-                {
-                    bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
 
-                    OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
-                    if (direction && statusCode.Value != 3)
-                    {
-                        //Outgoing email, do not send the attachment on create
-                        TracingService.Trace("Aborted creating attachment for outgoing email attachment that is not sent");
-                        return;
-                    }
+                bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
+
+                OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
+                if (direction && statusCode.Value != 3)
+                {
+                    //Outgoing email, do not send the attachment on create
+                    TracingService.Trace("Aborted creating attachment for outgoing email attachment that is not sent");
+                    return;
                 }
 
-
                 activityId = AddInsertFileParametersToRequest(request, attachmentData);
-
-                //entityMetadataQuery = ReturnEmailMetadataQuery(activityId);
-
             }
             else
             {
@@ -122,27 +114,23 @@ namespace Defra.Lp.Common.SharePoint
                 {
                     throw new InvalidPluginExecutionException("No annotation data record returned from query");
                 }
-                else
-                {
-                    activityId = AddInsertFileParametersToRequest(request, annotationData);
-                }
+
+                activityId = AddInsertFileParametersToRequest(request, annotationData);
             }
 
-            TracingService.Trace(string.Format("activityId {0}", activityId.ToString()));
+            TracingService.Trace($"activityId {activityId}");
 
             var stringContent = JsonConvert.SerializeObject(request);
             var logicAppUrl = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
-            TracingService.Trace(string.Format("Sending data to Logic App URL {0}", logicAppUrl));
+            TracingService.Trace($"Sending data to Logic App URL {logicAppUrl}");
 
             var resultBody = SendRequest(logicAppUrl, stringContent);
-            //MoveSharePointResult data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
-            //if (data != null && !string.IsNullOrEmpty(data.SharePointId))
+
             if (resultBody!= null)
             {
                 //TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
                 if (annotationData != null)
                 {
-                    //Service.Delete(annotationData.LogicalName, annotationData.Id);
                     annotationData["documentbody"] = string.Empty;
                     Service.Update(annotationData);
                 }
@@ -157,12 +145,12 @@ namespace Defra.Lp.Common.SharePoint
 
             var request = new MetaDataRequest();
 
-            if (entity.LogicalName == "defra_application")
+            if (entity.LogicalName == Application.EntityLogicalName)
             {
                 var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, entity);
                 if (applicationEntity != null)
                 {
-                    TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity["defra_permitnumber"].ToString(), applicationEntity["defra_applicationnumber"].ToString()));
+                    TracingService.Trace($"Permit Number = {applicationEntity["defra_permitnumber"]}; Application Number = {applicationEntity["defra_applicationnumber"].ToString()}");
 
                     request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
@@ -177,7 +165,7 @@ namespace Defra.Lp.Common.SharePoint
                     throw new InvalidPluginExecutionException(string.Format("No Application exists for entity reference {0}", entity.Id.ToString()));
                 }
             }
-            else if (entity.LogicalName == "defra_permit")
+            else if (entity.LogicalName == Permit.EntityLogicalName)
             {
                 var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber" }, entity);
                 if (permitEntity != null)
@@ -200,10 +188,9 @@ namespace Defra.Lp.Common.SharePoint
 
             var stringContent = JsonConvert.SerializeObject(request);
 
-            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"]));
+            TracingService.Trace($"Data Sent to Logic App URL {Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"]}");
 
-            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"], stringContent);
-            //var data = JsonConvert.DeserializeObject<MoveSharePointResult>(resultBody);
+            SendRequest(Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"], stringContent);
         }
 
         private Guid AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
@@ -233,7 +220,7 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace("Filename: {0}", fileName);
             TracingService.Trace("Logical Name: {0}", queryRecord.LogicalName);
 
-            var body = string.Empty;
+            string body;
             if (queryRecord.LogicalName == "activitymimeattachment")
             {
                 fileName = SpRemoveIllegalChars(fileName);
@@ -348,7 +335,11 @@ namespace Defra.Lp.Common.SharePoint
             return fileName;
         }
 
-        // Extension method to 
+        /// <summary>
+        /// Adds timestamp to the filename
+        /// </summary>
+        /// <param name="fileName">Original filename</param>
+        /// <returns>Orignal filename + timestamp + ext</returns>
         private string AppendTimeStamp(string fileName)
         {
             return string.Concat(
