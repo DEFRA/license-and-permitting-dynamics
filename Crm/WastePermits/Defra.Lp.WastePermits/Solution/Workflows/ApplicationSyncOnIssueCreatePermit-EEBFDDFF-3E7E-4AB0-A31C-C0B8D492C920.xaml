@@ -15,18 +15,21 @@
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep14: Team Lead Sign-off not equal to yes?">
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep14: Has the application been issued and does it need a permit created?">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
             </mxswa:ActivityReference.Arguments>
             <mxswa:ActivityReference.Properties>
               <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
                 <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep15_condition" />
-                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_1" />
+                <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep15_1" />
                 <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_2" />
+                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_3" />
+                <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep15_4" />
+                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_5" />
               </sco:Collection>
               <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                <mxswa:GetEntityProperty Attribute="defra_permittingteamleadersignoff" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[ConditionBranchStep15_1]">
+                <mxswa:GetEntityProperty Attribute="statuscode" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[ConditionBranchStep15_2]">
                   <mxswa:GetEntityProperty.TargetType>
                     <InArgument x:TypeArguments="s:Type">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
@@ -38,18 +41,43 @@
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Boolean, "1" }]</InArgument>
+                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.OptionSetValue, "910400007", "Status" }]</InArgument>
                     <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                     </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep15_2]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep15_3]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">NotEqual</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep15_2 }]</InArgument>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep15_1]</InArgument>
+                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep15_3 }]</InArgument>
+                    <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep15_2]</InArgument>
+                    <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep15_1]</OutArgument>
+                  </mxswa:ActivityReference.Arguments>
+                </mxswa:ActivityReference>
+                <mxswa:GetEntityProperty Attribute="defra_permitid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[ConditionBranchStep15_5]">
+                  <mxswa:GetEntityProperty.TargetType>
+                    <InArgument x:TypeArguments="s:Type">
+                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
+                        <x:Null />
+                      </mxswa:ReferenceLiteral>
+                    </InArgument>
+                  </mxswa:GetEntityProperty.TargetType>
+                </mxswa:GetEntityProperty>
+                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
+                  <mxswa:ActivityReference.Arguments>
+                    <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">NotNull</InArgument>
+                    <x:Null x:Key="Parameters" />
+                    <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep15_5]</InArgument>
+                    <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep15_4]</OutArgument>
+                  </mxswa:ActivityReference.Arguments>
+                </mxswa:ActivityReference>
+                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateLogicalCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateLogicalCondition">
+                  <mxswa:ActivityReference.Arguments>
+                    <InArgument x:TypeArguments="mxsq:LogicalOperator" x:Key="LogicalOperator">Or</InArgument>
+                    <InArgument x:TypeArguments="x:Boolean" x:Key="LeftOperand">[ConditionBranchStep15_1]</InArgument>
+                    <InArgument x:TypeArguments="x:Boolean" x:Key="RightOperand">[ConditionBranchStep15_4]</InArgument>
                     <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep15_condition]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
@@ -62,10 +90,10 @@
                       <mxswa:ActivityReference.Properties>
                         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                          <Sequence DisplayName="StopWorkflowStep16: Nothing to do yet">
+                          <Sequence DisplayName="StopWorkflowStep16: Application not issued, or it already has a permit. Stop here.">
                             <Sequence.Variables>
                               <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep16_1" />
-                              <Variable x:TypeArguments="x:String" Default="18cb37d6-5c19-44de-92d6-ba98901e1af4" Name="stepLabelLabelId" />
+                              <Variable x:TypeArguments="x:String" Default="70ccf327-e68b-4718-af8e-16f80e19852f" Name="stepLabelLabelId" />
                               <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                 <Variable.Default>
                                   <Literal x:TypeArguments="x:String" Value="" />
@@ -83,7 +111,7 @@
                                 <OutArgument x:TypeArguments="x:Object" x:Key="Result">[StopWorkflowStep16_1]</OutArgument>
                               </mxswa:ActivityReference.Arguments>
                             </mxswa:ActivityReference>
-                            <TerminateWorkflow DisplayName="StopWorkflowStep16: Nothing to do yet" Exception="[New Microsoft.Xrm.Sdk.InvalidPluginExecutionException(Microsoft.Xrm.Sdk.OperationStatus.Succeeded)]" Reason="[DirectCast(StopWorkflowStep16_1, System.String)]" />
+                            <TerminateWorkflow DisplayName="StopWorkflowStep16: Application not issued, or it already has a permit. Stop here." Exception="[New Microsoft.Xrm.Sdk.InvalidPluginExecutionException(Microsoft.Xrm.Sdk.OperationStatus.Succeeded)]" Reason="[DirectCast(StopWorkflowStep16_1, System.String)]" />
                           </Sequence>
                         </sco:Collection>
                       </mxswa:ActivityReference.Properties>

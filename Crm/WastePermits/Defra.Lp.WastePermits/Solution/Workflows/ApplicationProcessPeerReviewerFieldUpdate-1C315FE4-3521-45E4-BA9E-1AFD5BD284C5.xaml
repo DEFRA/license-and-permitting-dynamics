@@ -57,7 +57,7 @@
                           <Sequence DisplayName="StopWorkflowStep29: No reviewer, do not process action.">
                             <Sequence.Variables>
                               <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep29_1" />
-                              <Variable x:TypeArguments="x:String" Default="111a6a7b-0418-4ad6-be98-3d8e3a1e6378" Name="stepLabelLabelId" />
+                              <Variable x:TypeArguments="x:String" Default="d6bb54ca-a0a9-42ce-9aa1-94c7cf3a0e44" Name="stepLabelLabelId" />
                               <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                 <Variable.Default>
                                   <Literal x:TypeArguments="x:String" Value="" />
@@ -694,7 +694,7 @@
                             <mxswa:CreateEntity EntityId="{x:Null}" DisplayName="CreateStep4: Create Peer Review Task" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="task" />
                             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
                           </Sequence>
-                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="InvokeSdkMessageStep17: Let Application Know Peer Reviewer Assigned: PEER_REVIEWER_ASSIGNED">
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="InvokeSdkMessageStep17: Let Application Know Peer Reviewer Assigned: PEER_REVIEW_STARTED">
                             <mxswa:ActivityReference.Properties>
                               <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
                                 <Variable x:TypeArguments="x:Object" Name="InvokeSdkMessageStep17_1" />
@@ -707,7 +707,7 @@
                                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                   <mxswa:ActivityReference.Arguments>
                                     <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "PEER_REVIEWER_ASSIGNED", "String" }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "PEER_REVIEW_STARTED", "String" }]</InArgument>
                                     <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                     </InArgument>
@@ -749,7 +749,7 @@
                                     <OutArgument x:TypeArguments="x:Object" x:Key="Result">[InvokeSdkMessageStep17_2_converted]</OutArgument>
                                   </mxswa:ActivityReference.Arguments>
                                 </mxswa:ActivityReference>
-                                <mcwa:InvokeSdkMessageActivity DisplayName="InvokeSdkMessageStep17: Let Application Know Peer Reviewer Assigned: PEER_REVIEWER_ASSIGNED" SdkMessageEntityName="defra_application" SdkMessageId="58af578a-7548-e811-a958-000d3ab39dc2" SdkMessageName="defra_ApplicationStateMachineProcessing" SdkMessageRequestSuffix="">
+                                <mcwa:InvokeSdkMessageActivity DisplayName="InvokeSdkMessageStep17: Let Application Know Peer Reviewer Assigned: PEER_REVIEW_STARTED" SdkMessageEntityName="defra_application" SdkMessageId="58af578a-7548-e811-a958-000d3ab39dc2" SdkMessageName="defra_ApplicationStateMachineProcessing" SdkMessageRequestSuffix="">
                                   <mcwa:InvokeSdkMessageActivity.Arguments>
                                     <InArgument x:TypeArguments="x:String" x:Key="Action">[DirectCast(InvokeSdkMessageStep17_1_converted, System.String)]</InArgument>
                                     <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Target">[DirectCast(InvokeSdkMessageStep17_2_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
