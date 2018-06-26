@@ -2668,6 +2668,10 @@
     <value />
     <comment>'defra_application' : Description for Attribute 'defra_permittingteamleadersignoff' on Entity</comment>
   </data>
+  <data name="1:Description,defra_applicationdefra_permit_document_creation_date" xml:space="preserve">
+    <value />
+    <comment>'defra_application' : Description for Attribute 'defra_permit_document_creation_date' on Entity</comment>
+  </data>
   <data name="1:Description,defra_applicationdefra_preapplicationid" xml:space="preserve">
     <value>Unique identifier for Pre-Application associated with Application.</value>
     <comment>'defra_application' : Description for Attribute 'defra_preapplicationid' on Entity</comment>
@@ -6620,6 +6624,10 @@
     <value>Team Lead Sign-off</value>
     <comment>'defra_application' : displayname for Attribute 'defra_permittingteamleadersignoff' on Entity</comment>
   </data>
+  <data name="1:displayname,defra_applicationdefra_permit_document_creation_date" xml:space="preserve">
+    <value>Permit Document Creation Date</value>
+    <comment>'defra_application' : displayname for Attribute 'defra_permit_document_creation_date' on Entity</comment>
+  </data>
   <data name="1:displayname,defra_applicationdefra_preapplicationid" xml:space="preserve">
     <value>Pre-Application</value>
     <comment>'defra_application' : displayname for Attribute 'defra_preapplicationid' on Entity</comment>
@@ -7065,7 +7073,7 @@
     <comment>'defra_application' : displayname for Attribute 'stageid' on Entity</comment>
   </data>
   <data name="1:displayname,defra_applicationstatecode" xml:space="preserve">
-    <value>Status</value>
+    <value>State</value>
     <comment>'defra_application' : displayname for Attribute 'statecode' on Entity</comment>
   </data>
   <data name="1:displayname,defra_applicationstatuscode" xml:space="preserve">
@@ -10457,7 +10465,7 @@
     <comment>'Application' : label for cell in Entity FormXml ID: '{3d386626-12e0-e49c-332d-79a445a36d89}'</comment>
   </data>
   <data name="1:label,Application{420a96b3-a361-0056-c156-d9e8ce66416e}" xml:space="preserve">
-    <value>Status</value>
+    <value>State</value>
     <comment>'Application' : label for cell in Entity FormXml ID: '{420a96b3-a361-0056-c156-d9e8ce66416e}'</comment>
   </data>
   <data name="1:label,Application{493ae2d8-8393-161d-c92e-c462c1a7334b}" xml:space="preserve">
@@ -13193,19 +13201,19 @@
     <comment>'defra_application' : label for status '910400000' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400001" xml:space="preserve">
-    <value>Allocated</value>
+    <value>Duly Making</value>
     <comment>'defra_application' : label for status '910400001' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400002" xml:space="preserve">
-    <value>Duly Made</value>
+    <value>Determination</value>
     <comment>'defra_application' : label for status '910400002' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400005" xml:space="preserve">
-    <value>Ready For Review</value>
+    <value>Peer Review</value>
     <comment>'defra_application' : label for status '910400005' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400006" xml:space="preserve">
-    <value>Consultation</value>
+    <value>Pending Consultation</value>
     <comment>'defra_application' : label for status '910400006' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400007" xml:space="preserve">
@@ -13220,10 +13228,6 @@
     <value>On Hold: Pending Schedule 5</value>
     <comment>'defra_application' : label for status '910400009' on Entity</comment>
   </data>
-  <data name="1:label,defra_applicationdefra_application_statuscode910400012" xml:space="preserve">
-    <value>Withdrawn</value>
-    <comment>'defra_application' : label for status '910400012' on Entity</comment>
-  </data>
   <data name="1:label,defra_applicationdefra_application_statuscode910400013" xml:space="preserve">
     <value>Refused</value>
     <comment>'defra_application' : label for status '910400013' on Entity</comment>
@@ -13231,6 +13235,26 @@
   <data name="1:label,defra_applicationdefra_application_statuscode910400014" xml:space="preserve">
     <value>Returned Not Duly Made</value>
     <comment>'defra_application' : label for status '910400014' on Entity</comment>
+  </data>
+  <data name="1:label,defra_applicationdefra_application_statuscode910400015" xml:space="preserve">
+    <value>Intelligence Checks</value>
+    <comment>'defra_application' : label for status '910400015' on Entity</comment>
+  </data>
+  <data name="1:label,defra_applicationdefra_application_statuscode910400017" xml:space="preserve">
+    <value>Area Approval</value>
+    <comment>'defra_application' : label for status '910400017' on Entity</comment>
+  </data>
+  <data name="1:label,defra_applicationdefra_application_statuscode910400018" xml:space="preserve">
+    <value>Team Leader Approval</value>
+    <comment>'defra_application' : label for status '910400018' on Entity</comment>
+  </data>
+  <data name="1:label,defra_applicationdefra_application_statuscode910400019" xml:space="preserve">
+    <value>Deemed Withdrawn</value>
+    <comment>'defra_application' : label for status '910400019' on Entity</comment>
+  </data>
+  <data name="1:label,defra_applicationdefra_application_statuscode910400020" xml:space="preserve">
+    <value>Withdrawn</value>
+    <comment>'defra_application' : label for status '910400020' on Entity</comment>
   </data>
   <data name="1:label,defra_applicationlinedefra_applicationline_defra_linetype910400000" xml:space="preserve">
     <value>Regulated Facility</value>
@@ -18952,6 +18976,10 @@
     <value>Team</value>
     <comment> 'Team' : LocalizedName for Entity</comment>
   </data>
+  <data name="1:LocalizedName,Team{00000000-0000-0000-00aa-000010001026}" xml:space="preserve">
+    <value>All Teams</value>
+    <comment>'Team' : LocalizedName for SavedQuery on Entity QueryId: '{00000000-0000-0000-00aa-000010001026}'</comment>
+  </data>
   <data name="1:LocalizedName,Team{4aabf594-b30a-490d-bf97-89c67c6777fe}" xml:space="preserve">
     <value>Team form – Business</value>
     <comment>'Team' : LocalizedName for systemform in Entity FormXml ID: '{4aabf594-b30a-490d-bf97-89c67c6777fe}'</comment>
@@ -19324,6 +19352,10 @@
     <value>Service</value>
     <comment>'Contact Details' : Title for NavBarArea in Entity FormXml ID: 'Service'</comment>
   </data>
+  <data name="1:Title,ContactInfo{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
+    <value>Common</value>
+    <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Info'</comment>
+  </data>
   <data name="1:Title,ContactInfo{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Common</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Info'</comment>
@@ -19331,6 +19363,10 @@
   <data name="1:Title,ContactInfo{293c878f-f068-40a0-ae48-4297e060871c}" xml:space="preserve">
     <value>Common</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Info'</comment>
+  </data>
+  <data name="1:Title,ContactMarketing{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
+    <value>Marketing</value>
+    <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Marketing'</comment>
   </data>
   <data name="1:Title,ContactMarketing{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Marketing</value>
@@ -19371,10 +19407,6 @@
   <data name="1:Title,ContactnavAsyncOperations{cc760212-3eab-4009-b5c3-ea9cf6f3e141}" xml:space="preserve">
     <value>Workflows</value>
     <comment>'Contact' : Title for NavBarByRelationshipItem in Entity FormXml ID: 'navAsyncOperations'</comment>
-  </data>
-  <data name="1:Title,ContactnavCampaignsInSFA{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
-    <value>Campaigns</value>
-    <comment>'Contact' : Title for NavBarByRelationshipItem in Entity FormXml ID: 'navCampaignsInSFA'</comment>
   </data>
   <data name="1:Title,ContactnavCampaignsInSFA{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Campaigns</value>
@@ -19504,6 +19536,10 @@
     <value>Contacts</value>
     <comment>'Contact' : Title for NavBarByRelationshipItem in Entity FormXml ID: 'navSubConts'</comment>
   </data>
+  <data name="1:Title,ContactProcessCenter{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
+    <value>Process Sessions</value>
+    <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'ProcessCenter'</comment>
+  </data>
   <data name="1:Title,ContactProcessCenter{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Process Sessions</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'ProcessCenter'</comment>
@@ -19512,6 +19548,10 @@
     <value>Process Sessions</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'ProcessCenter'</comment>
   </data>
+  <data name="1:Title,ContactSales{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
+    <value>Sales</value>
+    <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Sales'</comment>
+  </data>
   <data name="1:Title,ContactSales{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Sales</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Sales'</comment>
@@ -19519,6 +19559,10 @@
   <data name="1:Title,ContactSales{293c878f-f068-40a0-ae48-4297e060871c}" xml:space="preserve">
     <value>Sales</value>
     <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Sales'</comment>
+  </data>
+  <data name="1:Title,ContactService{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" xml:space="preserve">
+    <value>Service</value>
+    <comment>'Contact' : Title for NavBarArea in Entity FormXml ID: 'Service'</comment>
   </data>
   <data name="1:Title,ContactService{256dfbb3-dbe6-4364-beae-f466047c3edb}" xml:space="preserve">
     <value>Service</value>
