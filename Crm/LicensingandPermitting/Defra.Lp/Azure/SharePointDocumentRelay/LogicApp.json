@@ -3,89 +3,70 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "logicAppName": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 80,
-      "metadata": {
-        "description": "Name of the Logic App."
-      }
+      "type": "string"
     },
-    "logicAppLocation": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "allowedValues": [
-        "[resourceGroup().location]",
-        "eastasia",
-        "southeastasia",
-        "centralus",
-        "eastus",
-        "eastus2",
-        "westus",
-        "northcentralus",
-        "southcentralus",
-        "northeurope",
-        "westeurope",
-        "japanwest",
-        "japaneast",
-        "brazilsouth",
-        "australiaeast",
-        "australiasoutheast",
-        "southindia",
-        "centralindia",
-        "westindia",
-        "canadacentral",
-        "canadaeast",
-        "uksouth",
-        "ukwest",
-        "westcentralus",
-        "westus2"
-      ],
-      "metadata": {
-        "description": "Location of the Logic App."
-      }
+    "location": {
+      "type": "string"
     },
-    "sharepointonline_1_Connection_Name": {
+    "connectionName": {
       "type": "string",
       "defaultValue": "sharepointonline"
     },
-    "sharepointonline_1_Connection_DisplayName": {
-      "type": "string",
-      "defaultValue": "wastesysops@defradev.onmicrosoft.com"
+    "connectionDisplayName": {
+      "type": "string"
     },
-    "spoSiteName": {
-      "type": "string",
-      "metadata": {
-        "description": "SharePoint Online site name"
-      }
+    "siteName": {
+      "type": "string"
     },
-    "spoPermitLibraryGuid": {
-      "type": "string",
-      "metadata": {
-        "description": "SharePoint Online Permit Library Guid"
-      }
+    "permitLibraryGuid": {
+      "type": "string"
     },
     "metaDataLogicAppName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the SharePointMetdataUpdate Logic App to be called by this logic app"
-      }
+      "type": "string"
+    },
+    "sharePointAzureFunctionName": {
+      "type" : "string"
+    },
+    "Environment": {
+      "type": "string"
+    },
+    "ServiceCode": {
+      "type": "string"
+    },
+    "ServiceName": {
+      "type": "string"
+    },
+    "ServiceType": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "string"
     }
   },
   "variables": {
     "spo": {
-      "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}')]",
-      "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/files')]",
-      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]",
-      "setMetaData": "[concat('/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Logic/workflows/', parameters('metaDataLogicAppName'))]"
+      "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}')]",
+      "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/files')]",
+      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]",
+      "setMetaData": "[concat(resourceGroup().id,'/providers/Microsoft.Logic/workflows/', parameters('metaDataLogicAppName'))]",
+      "uploadFileToApplicationFolderInSharePointConnection": "[ concat( '@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']' ) ]",
+      "updateFilePropertiesConnection": "[ concat( '@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']' ) ]"
     }
   },
   "resources": [
     {
       "name": "[parameters('logicAppName')]",
       "type": "Microsoft.Logic/workflows",
-      "location": "[parameters('logicAppLocation')]",
+      "location": "[parameters('location')]",
       "tags": {
-        "displayName": "LogicApp"
+        "Name": "[parameters('connectionName')]",
+        "Tier": "Compute",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName') ,' LogicApp')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
       },
       "apiVersion": "2016-06-01",
       "properties": {
@@ -110,7 +91,7 @@
                   "inputs": {
                     "host": {
                       "connection": {
-                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                        "name": "[variables('spo').uploadFileToApplicationFolderInSharePointConnection]"
                       }
                     },
                     "method": "post",
@@ -129,7 +110,7 @@
                   "inputs": {
                     "host": {
                       "connection": {
-                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                        "name": "[variables('spo').uploadFileToApplicationFolderInSharePointConnection]"
                       }
                     },
                     "method": "patch",
@@ -139,7 +120,7 @@
                         "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
                       }
                     },
-                    "path": "[variables('spo').updateFileProperties]"
+                    "path": "[variables('spo').updateFilePropertiesConnection]"
                   },
                   "runAfter": {
                     "Upload_file_to_Application_folder_in_SharePoint": [
@@ -191,7 +172,7 @@
                   "PermitContentType": "@{triggerBody()?['PermitContentType']}"
                 },
                 "function": {
-                  "id": "/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Web/sites/LPSharePointAzureFunctions/functions/CreateDocumentSet"
+                  "id": "[concat(resourceGroup().id,'/providers/Microsoft.Web/sites/',parameters('sharePointAzureFunctionName'),'/functions/','CreateDocumentSet')]"
                 }
               },
               "runAfter": {}
@@ -269,28 +250,38 @@
           "$connections": {
             "value": {
               "sharepointonline": {
-                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]",
-                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sharepointonline_1_Connection_Name'))]",
-                "connectionName": "[parameters('sharepointonline_1_Connection_Name')]"
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]",
+                "connectionName": "[parameters('connectionName')]"
               }
             }
           }
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/connections', parameters('sharepointonline_1_Connection_Name'))]"
+        "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]"
       ]
     },
     {
       "type": "MICROSOFT.WEB/CONNECTIONS",
       "apiVersion": "2016-06-01",
-      "name": "[parameters('sharepointonline_1_Connection_Name')]",
-      "location": "[parameters('logicAppLocation')]",
+      "name": "[parameters('connectionName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Name": "[parameters('connectionName')]",
+        "Tier": "Other",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' Api Connection')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
+      },
       "properties": {
         "api": {
-          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]"
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]"
         },
-        "displayName": "[parameters('sharepointonline_1_Connection_DisplayName')]"
+        "displayName": "[parameters('connectionDisplayName')]"
       }
     }
   ],
