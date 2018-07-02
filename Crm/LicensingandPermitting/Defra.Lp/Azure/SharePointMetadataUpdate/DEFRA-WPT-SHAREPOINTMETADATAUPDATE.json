@@ -1,0 +1,302 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "connectionName": {
+      "type": "string" 
+    },
+    "connectionDisplayName": {
+      "type": "string"
+    },
+    "siteName": {
+      "type": "string"
+    },
+    "permitLibraryGuid": {
+      "type": "string"
+    },
+    "Environment": {
+      "type": "string"
+    },
+    "ServiceCode": {
+      "type": "string"
+    },
+    "ServiceName": {
+      "type": "string"
+    },
+    "ServiceType": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "spo": {
+      "getFileItems": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/getfileitems')]",
+      "updateMetaData": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each_item_in_Application_folder'')?[''ID''])}/patchfileitem')]",
+      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]",
+      "getItemsForUpdateByApplicationIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "updateApplicationMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "getItemsForUpdateByPermitIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "updatePermitMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]"
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Name": "[parameters('logicAppName')]",
+        "Tier": "Compute",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' LogicApp')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
+      },
+      "apiVersion": "2016-06-01",
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Is_this_an_Application_folder": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@toUpper(triggerBody()?['UpdateType'])",
+                        "PERMIT"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "actions": {
+                "Get_items_for_update_by_Application_ID": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                      }
+                    },
+                    "method": "get",
+                    "path": "[variables('spo').getFileItems]",
+                    "queries": {
+                      "$filter": "Title eq '@{triggerBody()?['ApplicationNo']}'"
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Response_-_Application": {
+                  "type": "Response",
+                  "kind": "http",
+                  "inputs": {
+                    "statusCode": 200,
+                    "body": "@body('Get_items_for_update_by_Application_ID')?['value']"
+                  },
+                  "runAfter": {
+                    "For_each_item_in_Application_folder": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "For_each_item_in_Application_folder": {
+                  "type": "Foreach",
+                  "foreach": "@body('Get_items_for_update_by_Application_ID')?['value']",
+                  "actions": {
+                    "Update_Application_metadata_for_this_item": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                          }
+                        },
+                        "method": "patch",
+                        "body": {
+                          "Application_x0020_ID": "@triggerBody()?['ApplicationNo']",
+                          "Permit_x0020_ID": "@triggerBody()?['PermitNo']",
+                          "Customer_x0020_Name": "@triggerBody()?['Customer']",
+                          "Site": "@triggerBody()?['SiteDetails']",
+                          "Regulated_x0020_Facilities": "@triggerBody()?['PermitDetails']",
+                          "{ContentType}": {
+                            "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
+                          }
+                        },
+                        "path": "[variables('spo').updateMetaData]"
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {
+                    "Get_items_for_update_by_Application_ID": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {},
+              "else": {
+                "actions": {
+                  "Get_items_for_update_by_Permit_ID": {
+                    "type": "ApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connection": {
+                          "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                        }
+                      },
+                      "method": "get",
+                      "path": "[variables('spo').getFileItems]",
+                      "queries": {
+                        "$filter": "Permit_x0020_ID eq '@{triggerBody()?['PermitNo']}' and Application_x0020_ID eq null"
+                      }
+                    },
+                    "runAfter": {}
+                  },
+                  "For_each": {
+                    "type": "Foreach",
+                    "foreach": "@body('Get_items_for_update_by_Permit_ID')?['value']",
+                    "actions": {
+                      "Update_permit_metadata_for_this_item": {
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                            }
+                          },
+                          "method": "patch",
+                          "body": {
+                            "Permit_x0020_ID": "@triggerBody()?['PermitNo']",
+                            "Customer_x0020_Name": "@triggerBody()?['Customer']",
+                            "Site": "@triggerBody()?['SiteDetails']",
+                            "Regulated_x0020_Facilities": "@triggerBody()?['PermitDetails']",
+                            "{ContentType}": {
+                              "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
+                            }
+                          },
+                          "path": "[variables('spo').updatePermitMetadata]"
+                        },
+                        "runAfter": {}
+                      }
+                    },
+                    "runAfter": {
+                      "Get_items_for_update_by_Permit_ID": [
+                        "Succeeded"
+                      ]
+                    }
+                  },
+                  "Response_-_Permit": {
+                    "type": "Response",
+                    "kind": "http",
+                    "inputs": {
+                      "statusCode": 200,
+                      "body": "@body('Get_items_for_update_by_Permit_ID')?['value']"
+                    },
+                    "runAfter": {
+                      "For_each": [
+                        "Succeeded"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "ApplicationNo": {
+                      "type": "string"
+                    },
+                    "ListName": {
+                      "type": "string"
+                    },
+                    "PermitNo": {
+                      "type": "string"
+                    },
+                    "SiteDetails": {
+                      "type": "string"
+                    },
+                    "PermitDetails": {
+                      "type": "string"
+                    },
+                    "Customer": {
+                      "type": "string"
+                    },
+                    "UpdateType": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "method": "POST"
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('connectionName')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]",
+                "connectionName": "[parameters('connectionName')]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('connectionName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Name": "[parameters('connectionName')]",
+        "Tier": "Other",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' Api Connection')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
+      },
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]"
+        },
+        "displayName": "[parameters('connectionDisplayName')]"
+      }
+    }
+  ],
+  "outputs": {}
+}
