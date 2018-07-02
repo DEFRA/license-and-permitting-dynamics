@@ -321,9 +321,9 @@
                                               <x:Boolean x:Key="ContainsElseBranch">False</x:Boolean>
                                             </mxswa:ActivityReference.Properties>
                                           </mxswa:ActivityReference>
-                                          <Sequence DisplayName="UpdateStep16: Update Completed Duly Made flag on Application">
+                                          <Sequence DisplayName="UpdateStep34: Update Completed Duly Made flag on Application to Yes">
                                             <Sequence.Variables>
-                                              <Variable x:TypeArguments="x:Object" Name="UpdateStep16_1" />
+                                              <Variable x:TypeArguments="x:Object" Name="UpdateStep34_1" />
                                             </Sequence.Variables>
                                             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" Value="[New Entity(&quot;defra_application&quot;)]" />
                                             <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;).Id]" Value="[InputEntities(&quot;related_defra_applicationid#defra_application&quot;).Id]" />
@@ -334,17 +334,17 @@
                                                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
                                                 </InArgument>
-                                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep16_1]</OutArgument>
+                                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep34_1]</OutArgument>
                                               </mxswa:ActivityReference.Arguments>
                                             </mxswa:ActivityReference>
-                                            <mxswa:SetEntityProperty Attribute="defra_completeddulymade" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep16_1]">
+                                            <mxswa:SetEntityProperty Attribute="defra_completeddulymade" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep34_1]">
                                               <mxswa:SetEntityProperty.TargetType>
                                                 <InArgument x:TypeArguments="s:Type">
                                                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
                                                 </InArgument>
                                               </mxswa:SetEntityProperty.TargetType>
                                             </mxswa:SetEntityProperty>
-                                            <mxswa:UpdateEntity DisplayName="UpdateStep16" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" />
+                                            <mxswa:UpdateEntity DisplayName="UpdateStep34" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" />
                                             <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;related_defra_applicationid#defra_application&quot;)]" Value="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" />
                                           </Sequence>
                                           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="InvokeSdkMessageStep21: Prompt application to change state to Duly Made DULY_MADE_CHECKLIST_COMPLETE">
@@ -461,22 +461,6 @@
                                       <mxswa:ActivityReference.Properties>
                                         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                                         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                                          <mxswa:SetState DisplayName="SetStateStep15: Update the status of the Application to Returned Not Duly Made" Entity="[InputEntities(&quot;related_defra_applicationid#defra_application&quot;)]" EntityId="[InputEntities(&quot;related_defra_applicationid#defra_application&quot;).Id]" EntityName="defra_application">
-                                            <mxswa:SetState.State>
-                                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="0" />
-                                                </mxswa:ReferenceLiteral>
-                                              </InArgument>
-                                            </mxswa:SetState.State>
-                                            <mxswa:SetState.Status>
-                                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="910400014" />
-                                                </mxswa:ReferenceLiteral>
-                                              </InArgument>
-                                            </mxswa:SetState.Status>
-                                          </mxswa:SetState>
                                           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="InvokeSdkMessageStep22: Prompt application to change state to Not Duly Made - DULY_MADE_CHECKLIST_NOT_DULY_MADE">
                                             <mxswa:ActivityReference.Properties>
                                               <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
