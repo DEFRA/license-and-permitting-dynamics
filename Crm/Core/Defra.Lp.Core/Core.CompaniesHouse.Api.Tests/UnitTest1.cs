@@ -9,7 +9,7 @@ namespace Core.CompaniesHouse.Api.Tests
     public class UnitTest1
     {
         private string apiUrl= "https://api.companieshouse.gov.uk";
-        private string apiKey = "R63PBUpJhDM5_GrZ0XDN0Fe2aksMjSJU7EDj6DJ4";
+        private string apiKey = "";
 
         [TestMethod]
         public void TestMethod1()
@@ -17,7 +17,6 @@ namespace Core.CompaniesHouse.Api.Tests
 
             //Companies House Service
             var chService = new CompaniesHouseService(apiUrl, apiKey, "OC391037");
-            chService.GetCompanyDirectorsAndPartners();
 
             chService.GetCompanyMembers(false);
 
