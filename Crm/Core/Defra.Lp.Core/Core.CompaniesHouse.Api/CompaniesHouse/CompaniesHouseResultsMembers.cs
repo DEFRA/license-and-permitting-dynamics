@@ -3,9 +3,9 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class CompaniesHouseResultsDirectors
+    public class CompaniesHouseMembersResult
     {
         [DataMember]
-        public CompaniesHouseContact[] items { get; set; }
+        public CompaniesHouseMember[] items { get; set; }
     }
 }

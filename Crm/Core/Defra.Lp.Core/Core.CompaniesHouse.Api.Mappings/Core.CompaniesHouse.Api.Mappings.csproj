@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5D40570-6856-4879-A592-95FD26660A71}</ProjectGuid>
+    <ProjectGuid>{0C660B49-3918-4EAA-8427-CBE194A47938}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Core.CompaniesHouse.Api</RootNamespace>
-    <AssemblyName>Core.CompaniesHouse.Api</AssemblyName>
+    <RootNamespace>Core.CompaniesHouse.Api.Mappings</RootNamespace>
+    <AssemblyName>Core.CompaniesHouse.Api.Mappings</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,24 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,25 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\APIServiceBase.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseAddress.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseCompany.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseCompanyStatus.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseIdentification.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseMember.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseDate.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseResultsMembers.cs" />
-    <Compile Include="CompaniesHouse\CompaniesHouseService.cs" />
-    <Compile Include="Model\CompanyTypes.cs" />
-    <Compile Include="Model\OfficerRoles.cs" />
-    <Compile Include="OSPlaces\OSPlacesAddress.cs" />
-    <Compile Include="OSPlaces\OSPlacesDPA.cs" />
-    <Compile Include="OSPlaces\OSPlacesResults.cs" />
-    <Compile Include="OSPlaces\OSPlacesService.cs" />
+    <Compile Include="CompanyTypeMapping.cs" />
+    <Compile Include="OfficerRoleMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Core.CompaniesHouse.Api\Core.CompaniesHouse.Api.csproj">
+      <Project>{f5d40570-6856-4879-a592-95fd26660a71}</Project>
+      <Name>Core.CompaniesHouse.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Model\Core.Model.csproj">
+      <Project>{6a50de32-ca46-4684-8aa2-64b1e4fcd36e}</Project>
+      <Name>Core.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

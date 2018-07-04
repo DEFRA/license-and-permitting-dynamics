@@ -1,16 +1,16 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Microsoft Dynamics 365 Developer Toolkit")]
-[assembly: AssemblyDescription("Dynamics 365 Developer Toolkit for Visual Studio")]
+[assembly: AssemblyTitle("Core.CompaniesHouse.Api.Mappings")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Microsoft Dynamics© CRM")]
-[assembly: AssemblyCopyright("© 2015 Microsoft Corporation. All rights reserved")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Core.CompaniesHouse.Api.Mappings")]
+[assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1b77e4b9-9e26-4334-9aa1-1a86af626e4c")]
+[assembly: Guid("0c660b49-3918-4eaa-8427-cbe194a47938")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyVersion("1.1.30.8")]
-[assembly: AssemblyFileVersion("1.1.30.8")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

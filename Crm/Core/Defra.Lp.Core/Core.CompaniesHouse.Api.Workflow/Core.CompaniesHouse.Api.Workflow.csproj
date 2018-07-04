@@ -76,29 +76,20 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core.CompaniesHouse.Api\Base\APIServiceBase.cs">
-      <Link>Linked\Base\APIServiceBase.cs</Link>
+    <Compile Include="..\Core.CompaniesHouse.Api\Base\*.cs">
+      <Link>Linked\CompaniesHouse\Base\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseAddress.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseAddress.cs</Link>
+    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\*.cs">
+      <Link>Linked\CompaniesHouse\CompaniesHouse\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseCompany.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseCompany.cs</Link>
+    <Compile Include="..\Core.CompaniesHouse.Api\Model\*.cs">
+      <Link>Linked\CompaniesHouse\Model\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseCompanyStatus.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseCompanyStatus.cs</Link>
+    <Compile Include="..\Core.CompaniesHouse.Api.Mappings\*.cs">
+      <Link>Linked\CompaniesHouse\Mappings\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseContact.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseContact.cs</Link>
-    </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseDate.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseDate.cs</Link>
-    </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseResultsDirectors.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseResultsDirectors.cs</Link>
-    </Compile>
-    <Compile Include="..\Core.CompaniesHouse.Api\CompaniesHouse\CompaniesHouseService.cs">
-      <Link>Linked\CompaniesHouse\CompaniesHouseService.cs</Link>
+    <Compile Include="..\Core.Model\Entities\*.cs">
+      <Link>Linked\Core.Model\Entities\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Core.CompaniesHouse.Api\OSPlaces\OSPlacesAddress.cs">
       <Link>Linked\OSPlaces\OSPlacesAddress.cs</Link>
@@ -115,9 +106,7 @@
     <Compile Include="..\Core.DataAccess\DataAccessSecureConfiguration.cs">
       <Link>Linked\DataAccess\DataAccessSecureConfiguration.cs</Link>
     </Compile>
-    <Compile Include="..\Core.Model\Entities\SecureConfiguration.cs">
-      <Link>Linked\DataAccess\SecureConfiguration.cs</Link>
-    </Compile>
+
     <Compile Include="CompaniesHouseServiceDynamics.cs" />
     <Compile Include="CompaniesHouseValidation.cs" />
     <Compile Include="Constants\CompaniesHouseSecureConfigurationKeys.cs" />
@@ -131,7 +120,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,12 @@
-﻿namespace Defra.Lp.Core.CompaniesHouse
+﻿// ReSharper disable InconsistentNaming
+using Core.CompaniesHouse.Api.CompaniesHouse;
+
+namespace Defra.Lp.Core.CompaniesHouse
 {
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class CompaniesHouseContact
+    public class CompaniesHouseMember
     {
         [DataMember]
         public string country_of_residence;
@@ -55,5 +58,12 @@
                 return name;
             }
         }
+
+        /// <summary>
+        /// Contains the corporate member company number
+        /// </summary>
+        [DataMember]
+        public CompaniesHouseIdentification identification;
     }
 }
+ 
