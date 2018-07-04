@@ -4,7 +4,7 @@
   <IntroducedVersion>5.0.0.0</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
   <FormActivationState>1</FormActivationState>
-  <form showImage="true" shownavigationbar="true" maxWidth="1920">
+  <form showImage="true">
     <ancestor id="{1fed44d1-ae68-4a41-bd2b-f13acac4acfa}" />
     <hiddencontrols>
       <data id="fullname" datafieldname="fullname" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" />
@@ -139,7 +139,7 @@
                       <labels>
                         <label description="" languagecode="1033" />
                       </labels>
-                      <control id="notescontrol" classid="{06375649-C143-495E-A496-C962E5B4488E}" disabled="false" uniqueid="{4d9bccd9-de00-93ea-caa5-2219e524732a}" />
+                      <control id="notescontrol" classid="{06375649-C143-495E-A496-C962E5B4488E}" disabled="false" />
                     </cell>
                   </row>
                   <row />
@@ -284,6 +284,28 @@
                       </control>
                     </cell>
                   </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                </rows>
+              </section>
+              <section name="TalkingPoints_section" showlabel="false" showbar="false" locklevel="0" id="{493e163e-b936-e24d-83e0-e52dcecc5da9}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Top" visible="false">
+                <labels>
+                  <label description="Icebreakers" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{06cb0652-a8d8-bdae-eb58-b6a05bd93224}" showlabel="true" locklevel="0" rowspan="8">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                      <control id="TalkingPoints" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{5ca8c570-a541-4cf4-9209-99406ba7cbdf}" />
+                    </cell>
+                  </row>
+                  <row />
                   <row />
                   <row />
                   <row />
@@ -562,6 +584,9 @@
         <InternalHandlers>
           <Handler functionName="AppCommon.Contact.Instance.form_onload" libraryName="AppCommon/Contact/Contact_main_system_library.js" handlerUniqueId="4ea24ebd-795d-434e-af94-6812c3867b54" enabled="true" />
         </InternalHandlers>
+        <Handlers>
+          <Handler functionName="loadTalkingPoints" libraryName="msdyn_talkingpointsloader.js" handlerUniqueId="{a96425be-a853-9549-dc5a-1610151533dd}" enabled="true" parameters="" passExecutionContext="true" />
+        </Handlers>
       </event>
     </events>
     <Navigation>
@@ -630,6 +655,11 @@
           </Privileges>
           <Titles>
             <Title LCID="1033" Text="Contract" />
+          </Titles>
+        </NavBarByRelationshipItem>
+        <NavBarByRelationshipItem RelationshipName="hardcoded_{B7196B13-6B9D-42CD-BD58-B19A3953126F}navCampaignsInSFA" Sequence="20" Area="Marketing" Id="navCampaignsInSFA" Show="false">
+          <Titles>
+            <Title LCID="1033" Text="Campaigns" />
           </Titles>
         </NavBarByRelationshipItem>
         <NavBarByRelationshipItem RelationshipName="listcontact_association" Id="navListsInSFA" Sequence="10" Area="Info" Show="false">
@@ -889,10 +919,31 @@
         </NavBarArea>
       </NavBarAreas>
     </Navigation>
-    <controlDescriptions />
     <DisplayConditions FallbackForm="true" Order="3">
       <Everyone />
     </DisplayConditions>
+    <formLibraries>
+      <Library name="msdyn_talkingpointsloader.js" libraryUniqueId="{30d6d0a4-d097-b9be-cc6e-5722727be490}" />
+    </formLibraries>
+    <controlDescriptions>
+      <controlDescription forControl="{5ca8c570-a541-4cf4-9209-99406ba7cbdf}">
+        <customControl formFactor="0" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="1" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="2" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+      </controlDescription>
+    </controlDescriptions>
   </form>
   <LocalizedNames>
     <LocalizedName description="Contact" languagecode="1033" />

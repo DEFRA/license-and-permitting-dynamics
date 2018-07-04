@@ -11,6 +11,10 @@ namespace Defra.Lp.Core.CompaniesHouse
         public string company_name;
 
         [DataMember]
+        public string type;
+
+
+        [DataMember]
         public CompaniesHouseAddress registered_office_address;
 
         public CompaniesHouseCompanyStatus company_status;
