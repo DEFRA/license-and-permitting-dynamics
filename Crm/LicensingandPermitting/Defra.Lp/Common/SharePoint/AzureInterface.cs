@@ -1,6 +1,7 @@
 ﻿using Core.Configuration;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
+using Model.Lp.Crm;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
-using Model.Lp.Crm;
 
 namespace Defra.Lp.Common.SharePoint
 {
@@ -46,6 +46,8 @@ namespace Defra.Lp.Common.SharePoint
             {
                 throw new InvalidPluginExecutionException("The Sharepoint integration needs to be configured.");
             }
+
+            TracingService.Trace("Configuration read successfully.");
         }
 
         internal void CreateFolder(EntityReference application)
@@ -81,13 +83,14 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace(string.Format("In UploadFile with Entity Type {0} and Entity Id {1}. Parent Entity: {2} Lookup Name: {3}", recordIdentifier.LogicalName, recordIdentifier.Id, parentEntity, parentLookup));
             
             var request = new DocumentRelayRequest();
-            var activityId = Guid.Empty;
             Entity annotationData = null;
             Entity attachmentData = null;
+            Entity emailData = null;
 
             if (parentEntity == "email")
             {
-                // This will have been fired against the creation of the Activity Mime Attachment Record
+                // This will have been fired against the creation of the Activity Mime Attachment Record. We want to
+                // process the email attachments and upload to SharePoint.
                 attachmentData = ReturnAttachmentData(recordIdentifier.Id);
                 if (attachmentData == null)
                 {
@@ -104,21 +107,36 @@ namespace Defra.Lp.Common.SharePoint
                     return;
                 }
 
-                activityId = AddInsertFileParametersToRequest(request, attachmentData);
+                AddInsertFileParametersToRequest(request, attachmentData);
+            }
+            else if (parentEntity == "incident")
+            {
+                // Creation of an Annotation record on a Case
             }
             else
             {
-                //This will have been fired against the creation of the Attachment Record
-                annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
-                if (annotationData == null)
+                if (recordIdentifier.LogicalName == "email")
                 {
-                    throw new InvalidPluginExecutionException("No annotation data record returned from query");
+                    // Processing an email record. Need the information so we can upload the email to SharePoint
+                    emailData = ReturnEmailData(recordIdentifier.Id);
+                    if (emailData == null)
+                    {
+                        throw new InvalidPluginExecutionException("No email data record returned from query");
+                    }
+                    AddInsertFileParametersToRequest(request, emailData);
                 }
+                else
+                {
+                    // Creation of of an Annotation record on a Application
+                    annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
+                    if (annotationData == null)
+                    {
+                        throw new InvalidPluginExecutionException("No annotation data record returned from query");
+                    }
 
-                activityId = AddInsertFileParametersToRequest(request, annotationData);
+                    AddInsertFileParametersToRequest(request, annotationData);
+                }
             }
-
-            TracingService.Trace($"activityId {activityId}");
 
             var stringContent = JsonConvert.SerializeObject(request);
             var logicAppUrl = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
@@ -135,7 +153,11 @@ namespace Defra.Lp.Common.SharePoint
                     Service.Update(annotationData);
                 }
                 else if (attachmentData != null)
+                {
                     TracingService.Trace("Need to delete attachment");
+                    attachmentData["body"] = string.Empty;
+                    Service.Update(annotationData);
+                }   
             }
         }
 
@@ -193,7 +215,7 @@ namespace Defra.Lp.Common.SharePoint
             SendRequest(Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"], stringContent);
         }
 
-        private Guid AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
+        private void AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
         {
             TracingService.Trace("In AddInsertFileParametersToRequest()");
 
@@ -212,22 +234,39 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace("Permit No: {0}", permitNo);
             TracingService.Trace("Application No: {0}", applicationNo);
 
+            // Filename will be in subject for emails for filename field
+            // for annotations and attachments
+            var fileName = string.Empty;
+            if (queryRecord.Contains("filename"))
+            {
+                queryRecord.GetAttributeValue<string>("filename");
+            }
+            else if (queryRecord.Contains("subject"))
+            {
+                queryRecord.GetAttributeValue<string>("subject");
+            }
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end.
-            var fileName = queryRecord.GetAttributeValue<string>("filename");
             fileName = AppendTimeStamp(fileName);
+            fileName = SpRemoveIllegalChars(fileName);
 
             TracingService.Trace("Filename: {0}", fileName);
             TracingService.Trace("Logical Name: {0}", queryRecord.LogicalName);
 
-            string body;
-            if (queryRecord.LogicalName == "activitymimeattachment")
+            var body = string.Empty;
+            if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
             {
-                fileName = SpRemoveIllegalChars(fileName);
+                // For an attachment the file is in body          
                 body = queryRecord.GetAttributeValue<string>("body");
+            }
+            else if (queryRecord.LogicalName == Email.EntityLogicalName)
+            {
+                // For an email the body is in description
+                body = queryRecord.GetAttributeValue<string>("description");
             }
             else
             {
+                // For an annotation the file is in document body
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
 
@@ -245,7 +284,7 @@ namespace Defra.Lp.Common.SharePoint
 
             TracingService.Trace(string.Format("Requests: {0}", request));
 
-            return new Guid();
+            return;
         }
 
         private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
@@ -298,6 +337,30 @@ namespace Defra.Lp.Common.SharePoint
                                                             </link-entity>
                                                           </entity>
                                                         </fetch>", recordId);
+
+            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+        }
+
+        private Entity ReturnEmailData(Guid recordId)
+        {
+            string fetchXml = string.Format(@"<fetch top='1' >
+                                                  <entity name='email' >
+                                                    <attribute name='description' />
+                                                    <attribute name='subject' />
+                                                    <attribute name='activityid' />
+                                                    <attribute name='statuscode' />
+                                                    <attribute name='regardingobjectid' />
+                                                    <attribute name='directioncode' />
+                                                    <filter>
+                                                      <condition attribute='activityid' operator='eq' value='{0}' />
+                                                    </filter>
+                                                    <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
+                                                      <attribute name='defra_applicationnumber' />
+                                                      <attribute name='defra_name' />
+                                                      <attribute name='defra_permitnumber' />
+                                                    </link-entity>
+                                                  </entity>
+                                                </fetch>", recordId);
 
             return Query.QueryCRMForSingleEntity(Service, fetchXml);
         }
