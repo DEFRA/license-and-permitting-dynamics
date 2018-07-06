@@ -1,15 +1,9 @@
-﻿
-
-using Core.CompaniesHouse.Api.Mappings;
-using Core.Model.Entities;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata;
-
-namespace Defra.Lp.Core.CompaniesHouse.Workflow
+﻿namespace Defra.Lp.Core.CompaniesHouse.Workflow
 {
     using System;
     using global::Core.CompaniesHouse.Api.Model;
     using global::Core.Model.Entities;
+    using global::Core.CompaniesHouse.Api.Mappings;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using System.Globalization;
@@ -78,7 +72,7 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
 
                     if (this.Company.type == CompanyTypes.LimitedCompany)
                     {
-                        //Get the company directords
+                        //Get the company directors
                         this.GetCompanyMembers(true);
                     }
                     else
@@ -308,7 +302,7 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
         /// <param name="account"></param>
         private void CreateOrUpdateMemberAccount(Entity account)
         {
-            _crmTracing.Trace("Creating directors");
+            _crmTracing.Trace("Creating member accounts");
 
             // Validation
             if (this.CompanyMembers == null || this.CompanyMembers.items == null || account == null)
@@ -317,7 +311,8 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
             }
 
             // Get the existing crm members linked to the account, we may need to unlink them
-            var existingCorporateMembers = GetAccountMembers(account.Id);
+            var existingLinks = GetAccountMembers(account.Id);
+            _crmTracing.Trace($"GetAccountMembers {account.Id} found {existingLinks.Entities.Count} linked records");
 
             // iterate through each companies house contact
             foreach (CompaniesHouseMember companiesHouseMember in this.CompanyMembers.items)
@@ -331,35 +326,55 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
                 }
 
                 // Validate member is of a type we can process
-                if (companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipdCorporateDesignatedMember
+                if (companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipCorporateDesignatedMember
                     && companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipdCorporateMember)
                 {
                     continue;
                 }
 
-                // Check if the company house member already exists in CRM
-                Entity exitingCorporateMemberToUpdate = null;
-                foreach (Entity existingCorporateMember in existingCorporateMembers.Entities)
+                // Check if the company house member already linked to the parent account
+                Entity existingRelationship = null;
+                foreach (Entity existingLink in existingLinks.Entities)
                 {
-                    if (DoesCorporateMemberAlreadyExist(existingCorporateMember, companiesHouseMember))
+                    if (IsCorporateMemberAlreadyLinked(existingLink, companiesHouseMember))
                     {
                         // Existing CRM account needs to be unlinked
-                        exitingCorporateMemberToUpdate = existingCorporateMember;
+                        existingRelationship = existingLink;
                     }
                 }
 
-                // Create member accounts that have not resigned
-                if (exitingCorporateMemberToUpdate == null && string.IsNullOrEmpty(companiesHouseMember.resigned_on))
+                Entity existingAccount = null;
+                // Check if the the child account member already exists in CRM at all
+                if (existingRelationship == null
+                    && companiesHouseMember.identification != null
+                    && string.IsNullOrEmpty(companiesHouseMember.resigned_on))
                 {
-                    // Member is active, create it
-                    Entity memberAccount = this.CreateAccountMember(account, companiesHouseMember);
+                    existingAccount = this.GetAccount(companiesHouseMember.identification?.registration_number);
+                }
 
-                    // And link it to the parent
-                    this.LinkAccountMember(account, memberAccount);
+                // Create member accounts that have not resigned
+                if (existingRelationship == null && string.IsNullOrEmpty(companiesHouseMember.resigned_on))
+                {
+                    // Member is active, create it, but only if not already exists
+                    if (existingAccount == null)
+                    {
+                        _crmTracing.Trace($"CreateOrUpdateMemberAccount creating account {companiesHouseMember.identification?.registration_number}");
+                        Entity memberAccount = this.CreateAccountMember(companiesHouseMember);
+
+                        // And link it to the parent
+                        _crmTracing.Trace($"CreateOrUpdateMemberAccount linking new account {companiesHouseMember.identification?.registration_number}");
+                        this.LinkAccountMember(account, memberAccount);
+                    }
+                    else
+                    {
+                        // And link it to the parent
+                        _crmTracing.Trace($"CreateOrUpdateMemberAccount linking existing account {companiesHouseMember.identification?.registration_number}");
+                        this.LinkAccountMember(account, existingAccount);
+                    }
                 }
 
                 // Unlink the resigned date of any existing member
-                if (exitingCorporateMemberToUpdate != null && !string.IsNullOrEmpty(companiesHouseMember.resigned_on))
+                if (existingRelationship != null && !string.IsNullOrEmpty(companiesHouseMember.resigned_on))
                 {
                     // TODO - Unlink resigned corporate members
                 }
@@ -389,53 +404,30 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
         /// <summary>
         /// Creates a new companies house contact linked to the account given in the parameters
         /// </summary>
-        /// <param name="Account"></param>
+        /// <param name="account">Parent account</param>
         /// <param name="companiesHouseMember"></param>
-        private void CreateContactMember(Entity Account, CompaniesHouseMember companiesHouseMember)
+        private void CreateContactMember(Entity account, CompaniesHouseMember companiesHouseMember)
         {
-            // Map the Companies house member role to the CRM contact role
-            ContactAccountRoleCode crmContactRole = OfficerRoleMapping.MapToCrmContactRoleCode(companiesHouseMember.officer_role);
+            // Map Companies House member to CRM
+            Entity newContact = CompaniesHouseMemberMapping.MapToContact(companiesHouseMember);
 
-            Entity newDirector = new Entity("contact");
-            newDirector["defra_fromcompanieshouse"] = true;
-            newDirector["parentcustomerid"] = Account.ToEntityReference();
-            newDirector["accountrolecode"] = new OptionSetValue((int)crmContactRole);
-            newDirector["firstname"] = companiesHouseMember.firstname;
-            newDirector["lastname"] = companiesHouseMember.lastname;
-            newDirector["jobtitle"] = companiesHouseMember.occupation;
-            if (companiesHouseMember.date_of_birth != null)
-            {
-                newDirector["defra_dobmonthcompanieshouse"] = companiesHouseMember.date_of_birth.month;
-                newDirector["defra_dobyearcompanieshouse"] = companiesHouseMember.date_of_birth.year;
-            }
-            if (!string.IsNullOrEmpty(companiesHouseMember.resigned_on))
-            {
-                try
-                {
-                    newDirector["defra_resignedoncompanieshouse"] = DateTime.ParseExact(companiesHouseMember.resigned_on,
-                        "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                }
-                catch (FormatException)
-                {
-                    _crmTracing.Trace($"Resigned Date {companiesHouseMember.resigned_on} is not in the correct format.");
-                }
-            }
-            newDirector.Id = _crmService.Create(newDirector);
+            // Link to the parent account
+            newContact[Contact.ParentCustomerIdField] = account.ToEntityReference();
+
+            // Create in CRM
+            _crmService.Create(newContact);
         }
 
         /// <summary>
-        /// Creates a new companies house contact linked to the account given in the parameters
+        /// Creates a new companies house acccount from a mcompanies house member
         /// </summary>
         /// <param name="parentAccount"></param>
         /// <param name="companiesHouseMember"></param>
-        private Entity CreateAccountMember(Entity parentAccount, CompaniesHouseMember companiesHouseMember)
+        private Entity CreateAccountMember(CompaniesHouseMember companiesHouseMember)
         {
-            // Map the Companies house member role to the CRM contact role
-            Entity newAccount = new Entity(Account.EntityLogicalName);
-            newAccount[Account.NameField] = companiesHouseMember.name;
-            newAccount[Account.CompanyNumberField] = companiesHouseMember.identification?.registration_number;
+            // Map Companies house meber to an account and create it in CRM
+            Entity newAccount = CompaniesHouseMemberMapping.MapToAccount(companiesHouseMember);
             newAccount.Id = _crmService.Create(newAccount);
-
             return newAccount;
         }
 
@@ -451,11 +443,10 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
                 PrimaryEntityRole = EntityRole.Referencing
             };
 
-            //The relationship was not found, so create it
             _crmService.Associate(
-                    Account.EntityLogicalName, 
+                    Account.EntityLogicalName,
                     parentAccount.Id,
-                    relation, 
+                    relation,
                     new EntityReferenceCollection { memberAccount.ToEntityReference() });
         }
 
@@ -484,17 +475,19 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
         }
 
         // Checks if a companies house member already exists
-        private static bool DoesCorporateMemberAlreadyExist(Entity existingAccount, CompaniesHouseMember companiesHouseMember)
+        private bool IsCorporateMemberAlreadyLinked(Entity existingLink, CompaniesHouseMember companiesHouseMember)
         {
-            if (existingAccount.Attributes.Contains(Account.CompanyNumberField)
+            _crmTracing.Trace($"IsCorporateMemberAlreadyLinked {companiesHouseMember}");
+            if (existingLink.Attributes.Contains(Account.ParentChildAccountManyToManyRelationshipAlias + "." + Account.CompanyNumberField)
                 && companiesHouseMember.identification != null
-                && existingAccount.Attributes[Account.CompanyNumberField].ToString() == companiesHouseMember.identification.registration_number)
+                && existingLink.Attributes[Account.ParentChildAccountManyToManyRelationshipAlias + "." + Account.CompanyNumberField].ToString() == companiesHouseMember.identification.registration_number)
             {
                 // Matching account with the same company reg number exists
                 return true;
             }
             return false;
         }
+
         /// <summary>
         /// Retrieves all contacts linked to the account given
         /// </summary>
@@ -514,7 +507,6 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
                     {
                         new ConditionExpression("statecode", ConditionOperator.Equal, 0),
                         new ConditionExpression("parentcustomerid", ConditionOperator.Equal, Account.Id),
-                        //new ConditionExpression("accountrolecode", ConditionOperator.Equal, 910400000),
                         new ConditionExpression("fullname", ConditionOperator.NotNull)
                     }
                 }
@@ -529,38 +521,57 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
         /// <returns></returns>
         private EntityCollection GetAccountMembers(Guid parentAccountId)
         {
+            // Instantiate QueryExpression QEdefra_parent_child_account_relationship
+            var query = new QueryExpression(Account.ParentChildAccountManyToManyRelationship) {TopCount = 50};
 
-            //Create Query Expression.
-            QueryExpression query = new QueryExpression()
+            // Define filter QEdefra_parent_child_account_relationship.Criteria
+            query.Criteria.AddCondition(Account.ParentChildAccountManyToManyRelationshipFromField, ConditionOperator.Equal, parentAccountId);
+
+            // Add link-entity QEdefra_parent_child_account_relationship_account
+            var link = query.AddLink(Account.EntityLogicalName, Account.ParentChildAccountManyToManyRelationshipToField, Account.AccountIdField);
+            link.EntityAlias = Account.ParentChildAccountManyToManyRelationshipAlias;
+
+            // Add columns to QEdefra_parent_child_account_relationship_account.Columns
+            link.Columns.AddColumns(Account.AccountIdField, Account.NameField, Account.CompanyNumberField);
+            _crmTracing.Trace($"GetAccountMembers query {query} for parent {parentAccountId}");
+            return _crmService.RetrieveMultiple(query);
+        }
+
+
+        /// <summary>
+        /// Gets the first contact matching the given companies house number
+        /// </summary>
+        /// <param name="companyHouseNumber">The companies house number to look up in CRM</param>
+        /// <returns>Matching account or null</returns>
+        private Entity GetAccount(string companyHouseNumber)
+        {
+            //Prepare the query
+            QueryExpression query = new QueryExpression(Account.EntityLogicalName)
             {
-                EntityName = Account.EntityLogicalName,
-                ColumnSet = new ColumnSet("name"),
-                LinkEntities =
-                        {
-                            new LinkEntity
-                            {
-                                LinkFromEntityName = Account.EntityLogicalName,
-                                LinkFromAttributeName = Account.AccountIdField,
-                                LinkToEntityName = Account.EntityLogicalName,
-                                LinkToAttributeName = Account.AccountIdField,
-                                LinkCriteria = new FilterExpression
-                                {
-                                    FilterOperator = LogicalOperator.And,
-                                    Conditions =
-                                    {
-                                        new ConditionExpression
-                                        {
-                                            AttributeName = Account.AccountIdField,
-                                            Operator = ConditionOperator.Equal,
-                                            Values = { parentAccountId }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                ColumnSet = new ColumnSet(Account.NameField),
+                TopCount = 1,
+                Criteria = new FilterExpression()
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression(Account.StateField, ConditionOperator.Equal, 0),
+                        new ConditionExpression(Account.CompanyNumberField, ConditionOperator.Equal, companyHouseNumber)
+                    }
+                }
             };
 
-            return _crmService.RetrieveMultiple(query);
+            // Get the first record found 
+            EntityCollection accounts = _crmService.RetrieveMultiple(query);
+
+            if (accounts?.Entities != null && accounts.Entities.Count > 0)
+            {
+                _crmTracing.Trace($"GetAccount {companyHouseNumber} found {accounts.Entities.Count} matching records");
+                return accounts.Entities[0];
+            }
+
+            _crmTracing.Trace($"GetAccount {companyHouseNumber} found 0 matching records");
+            // No account found
+            return null;
         }
     }
 }

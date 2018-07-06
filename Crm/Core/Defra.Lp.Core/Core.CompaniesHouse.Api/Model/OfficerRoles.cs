@@ -29,7 +29,7 @@
         /// <summary>
         ///  Corporate LLP Designated Member
         /// </summary>
-        public const string LimitedLiabilityPartnershipdCorporateDesignatedMember = "corporate-llp-designated-member";
+        public const string LimitedLiabilityPartnershipCorporateDesignatedMember = "corporate-llp-designated-member";
         
             
     }
