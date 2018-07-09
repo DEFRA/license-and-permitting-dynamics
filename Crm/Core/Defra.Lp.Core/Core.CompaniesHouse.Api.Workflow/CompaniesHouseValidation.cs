@@ -55,7 +55,6 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
                 var companyRegNumber = CompanyRegistrationNumber.Get(executionContext);
                 var account = new Entity(crmWorkflowContext.WorkflowExecutionContext.PrimaryEntityName) { Id = crmWorkflowContext.WorkflowExecutionContext.PrimaryEntityId };
 
-                // TODO: Implement your custom activity handling.
                 if (!string.IsNullOrEmpty(companyRegNumber) && account.Id != Guid.Empty)
                 {
                     //OS Places Service used for address matching
@@ -79,7 +78,7 @@ namespace Defra.Lp.Core.CompaniesHouse.Workflow
                         CHTARGETURL = configSettings[$"{CompaniesHouseSecureConfigurationKeys.TargetUrl}"];
                         CHAPIKey = configSettings[$"{CompaniesHouseSecureConfigurationKeys.ApiKey}"];
                     }
-                    catch (Exception exc)
+                    catch
                     {
                         throw new InvalidPluginExecutionException("The Companies House integration needs to be configured.");
                     }

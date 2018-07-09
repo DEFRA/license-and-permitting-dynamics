@@ -21,7 +21,7 @@
                   <row>
                     <cell id="{73487565-b55d-8bd5-7768-87d674aa1890}" locklevel="0" showlabel="true">
                       <labels>
-                        <label description="Customer" languagecode="1033" />
+                        <label description="Operator" languagecode="1033" />
                       </labels>
                       <control disabled="false" id="defra_customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_customerid" />
                     </cell>
@@ -163,7 +163,7 @@
                       <labels>
                         <label description="Title" languagecode="1033" />
                       </labels>
-                      <control disabled="true" id="defra_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_name" uniqueid="{b84c4266-467d-8b77-e765-13a26947014b}" />
+                      <control disabled="false" id="defra_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_name" uniqueid="{b84c4266-467d-8b77-e765-13a26947014b}" />
                     </cell>
                   </row>
                   <row>
@@ -287,11 +287,19 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{1be6a557-1291-de78-b943-94d133453945}" showlabel="true" locklevel="0">
+                    <cell id="{75e1bc61-3c33-2192-c716-c0c1b5c516a6}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Pre-app plan assessment status" languagecode="1033" />
+                        <label description="External System" languagecode="1033" />
                       </labels>
-                      <control id="defra_plan_assessment_status" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_plan_assessment_status" disabled="false" />
+                      <control id="defra_external_system" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_external_system" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{54eae8ca-10dd-9b6a-62eb-6b11dd2a56ba}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="External System Reference" languagecode="1033" />
+                      </labels>
+                      <control id="defra_external_system_reference" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_external_system_reference" disabled="false" />
                     </cell>
                   </row>
                 </rows>
@@ -347,6 +355,14 @@
                   <label description="Applicant declaration" languagecode="1033" />
                 </labels>
                 <rows>
+                  <row>
+                    <cell id="{1be6a557-1291-de78-b943-94d133453945}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Pre-app plan declaration" languagecode="1033" />
+                      </labels>
+                      <control id="defra_plan_assessment_status" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_plan_assessment_status" disabled="false" uniqueid="{e2b1b164-9614-2668-69eb-9c024b2538a0}" />
+                    </cell>
+                  </row>
                   <row>
                     <cell id="{9d06154c-a69a-d09c-50d8-42226c7c8dc2}" locklevel="0" showlabel="true">
                       <labels>
@@ -611,9 +627,9 @@
           </column>
         </columns>
       </tab>
-      <tab id="{b4cd821e-cd4a-6d78-1a1b-318176ab7b4c}" name="tab_finance" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true">
+      <tab id="{b4cd821e-cd4a-6d78-1a1b-318176ab7b4c}" name="tab_finance" IsUserDefined="0" locklevel="0" expanded="true" showlabel="true">
         <labels>
-          <label description="FINANCE" languagecode="1033" />
+          <label description="PAYMENTS AND REFUNDS" languagecode="1033" />
         </labels>
         <columns>
           <column width="100%">
@@ -624,41 +640,41 @@
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{b25ed94b-69e5-13cb-abd1-b867a8c40b17}" locklevel="0" showlabel="true">
-                      <labels>
-                        <label description="Balance" languagecode="1033" />
-                      </labels>
-                      <control disabled="true" id="defra_balance" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_balance" uniqueid="{c8108e55-473a-4390-091b-9ce55a0a46d7}" />
-                    </cell>
                     <cell id="{69ec4da5-4973-4854-9a2c-d3476534c048}" locklevel="0" showlabel="true">
                       <labels>
-                        <label description="Line Items Total Amount" languagecode="1033" />
+                        <label description="Total costs" languagecode="1033" />
                       </labels>
                       <control disabled="true" id="defra_lineitemstotalamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_lineitemstotalamount" uniqueid="{bc07ebbe-be97-1052-80bd-385a97a03171}" />
+                    </cell>
+                    <cell id="{b25ed94b-69e5-13cb-abd1-b867a8c40b17}" locklevel="0" showlabel="true">
+                      <labels>
+                        <label description="To pay" languagecode="1033" />
+                      </labels>
+                      <control disabled="true" id="defra_balance" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_balance" uniqueid="{c8108e55-473a-4390-091b-9ce55a0a46d7}" />
                     </cell>
                   </row>
                   <row>
                     <cell id="{992e17e5-1a51-3d07-87a5-dedacb438a1c}" locklevel="0" showlabel="true">
                       <labels>
-                        <label description="Total Paid Amount" languagecode="1033" />
+                        <label description="Total paid" languagecode="1033" />
                       </labels>
                       <control disabled="true" id="defra_totalpaidamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_totalpaidamount" uniqueid="{ee6314b9-6ec5-0c84-6ad7-b096da84db93}" />
                     </cell>
-                    <cell id="{892a918b-e2da-d73d-4961-75b6579a9819}" locklevel="0" showlabel="true">
-                      <labels>
-                        <label description="Total Refunded Amount" languagecode="1033" />
-                      </labels>
-                      <control disabled="true" id="defra_totalrefundedamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_totalrefundedamount" uniqueid="{c6d0c7a0-c9dd-1a75-a312-24e089d14c46}" />
-                    </cell>
-                  </row>
-                  <row>
                     <cell id="{9e12a3d6-51c5-11a3-b90d-de09439d073e}" showlabel="true" locklevel="0">
                       <labels>
-                        <label description="Payment Required" languagecode="1033" />
+                        <label description="Payment required" languagecode="1033" />
                       </labels>
                       <control id="defra_payment_required" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_payment_required" disabled="true" uniqueid="{5688ca51-a2c8-b360-7624-680862a06b33}" />
                     </cell>
-                    <cell id="{837a08cd-eb8b-2420-e1c5-5745be6e7e17}" showlabel="false">
+                  </row>
+                  <row>
+                    <cell id="{892a918b-e2da-d73d-4961-75b6579a9819}" locklevel="0" showlabel="true">
+                      <labels>
+                        <label description="Refunded" languagecode="1033" />
+                      </labels>
+                      <control disabled="true" id="defra_totalrefundedamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="defra_totalrefundedamount" uniqueid="{c6d0c7a0-c9dd-1a75-a312-24e089d14c46}" />
+                    </cell>
+                    <cell id="{0dc886c5-153c-d421-bb6a-6087dd5c25c8}" showlabel="false">
                       <labels>
                         <label description="" languagecode="1033" />
                       </labels>
