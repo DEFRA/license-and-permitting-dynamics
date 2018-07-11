@@ -57,6 +57,7 @@ var Payments = {
             "ReturnUrl": returnUrl,
             "Reference": paymentReference,
             "Description": paymentDescription,
+            "ConfigurationPrefix": "WastePermits.MOTO.",
             "PaymentRecord": {
                 "@odata.type": "Microsoft.Dynamics.CRM.defra_payment",
                 "defra_paymentid": entityId
@@ -183,8 +184,6 @@ var Payments = {
         newDescription = newDescription + (applicationName ? 'for application "' + applicationName + '"' : '');
 
         Xrm.Page.getAttribute("defra_description").setValue(newDescription);
-
-        Payments.SendMessageToApplication();
     },
 
     // Function sets the payment description based on fields in form

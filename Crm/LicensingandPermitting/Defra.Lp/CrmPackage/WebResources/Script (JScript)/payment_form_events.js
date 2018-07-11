@@ -57,6 +57,7 @@ var Payments = {
             "ReturnUrl": returnUrl,
             "Reference": paymentReference,
             "Description": paymentDescription,
+            "ConfigurationPrefix": "WastePermits.MOTO.",
             "PaymentRecord": {
                 "@odata.type": "Microsoft.Dynamics.CRM.defra_payment",
                 "defra_paymentid": entityId
