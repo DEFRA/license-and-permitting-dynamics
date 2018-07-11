@@ -82,6 +82,7 @@ var Payments = {
         // Set-up Action Parameters
         var parameters = {};
         parameters.LookupByPaymentReference = paymentRefNumber;
+        parameters.ConfigurationPrefix = "WastePermits.MOTO.";
 
         // Set-up the Get Payment Status CRM Action request
         var req = new XMLHttpRequest();
