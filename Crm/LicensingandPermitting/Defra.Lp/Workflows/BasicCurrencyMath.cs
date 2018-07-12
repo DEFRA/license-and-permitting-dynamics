@@ -40,27 +40,30 @@ namespace Defra.Lp.Workflows
             {
                 var tracingService = executionContext.GetExtension<ITracingService>();
 
-                var n = Amount1.Get<Money>(executionContext);
-                var n2 = Amount2.Get<Money>(executionContext);
+                var leftValue = Amount1.Get<Money>(executionContext) ?? new Money();
+                var rightValue = Amount2.Get<Money>(executionContext) ?? new Money();
                 var symbol = Symbol.Get<string>(executionContext);
-                tracingService.Trace("Calculating '{0}' {1} '{2}'", n, symbol, n2);
+                tracingService.Trace("Calculating '{0}' {1} '{2}'", leftValue.Value, symbol, rightValue.Value);
                 switch (symbol)
                 {
                     case "+":
-                        n.Value += n2.Value;
+                        leftValue.Value += rightValue.Value;
                         break;
                     case "-":
-                        n.Value -= n2.Value;
+                        leftValue.Value -= rightValue.Value;
                         break;
                     case "/":
-                        n.Value /= n2.Value;
+                        leftValue.Value /= rightValue.Value;
                         break;
                     case "*":
-                        n.Value *= n2.Value;
+                        leftValue.Value *= rightValue.Value;
                         break;
+                    default:
+                        throw new ArgumentException($"Symbol {symbol} cannot be processed");
                 }
-                tracingService.Trace("Result = '{0}'", n);
-                Result.Set(executionContext, n);
+
+                tracingService.Trace("Result = '{0}'", leftValue.Value);
+                Result.Set(executionContext, leftValue);
             }
             catch (Exception ex)
             {
