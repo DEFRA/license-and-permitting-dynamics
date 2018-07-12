@@ -134,6 +134,10 @@
                     },
                     "method": "patch",
                     "body": {
+                      "CRM_x0020_Record_x0020_ID": "@triggerBody()?['EmailId']",
+                      "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
+                        "Value": "@triggerBody()?['EmailRegarding']"
+                      },
                       "Title": "@triggerBody()?['FileDescription']",
                       "{ContentType}": {
                         "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
@@ -228,6 +232,15 @@
                     "ApplicationNo": {
                       "type": "string"
                     },
+                    "Customer": {
+                      "type": "string"
+                    },
+                    "EmailId": {
+                      "type": "string"
+                    },
+                    "EmailRegarding": {
+                      "type": "string"
+                    },
                     "FileBody": {
                       "type": "string"
                     },
@@ -244,9 +257,6 @@
                       "type": "string"
                     },
                     "PermitNo": {
-                      "type": "string"
-                    },
-                    "Customer": {
                       "type": "string"
                     },
                     "PermitDetails": {

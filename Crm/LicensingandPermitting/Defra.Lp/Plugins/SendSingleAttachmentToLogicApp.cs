@@ -67,15 +67,16 @@ namespace Defra.Lp.Plugins
 
             // If its a standard Create or Update then we should have an Entity in Target.
             EntityReference entityReference = null;
-            if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
+            if (context.InputParameters.Contains(PluginInputParams.Target) && context.InputParameters[PluginInputParams.Target] is Entity)
             { 
-                entityReference = ((Entity)context.InputParameters["Target"]).ToEntityReference();      
+                entityReference = ((Entity)context.InputParameters[PluginInputParams.Target]).ToEntityReference();      
             }
 
             // If plugin is triggered from the Custom Action Message , then we have some custom input parameters. 
             if (context.InputParameters.Contains(PluginInputParams.TargetEntityName) && context.InputParameters.Contains(PluginInputParams.TargetEntityId))
             {
-                entityReference = new EntityReference((string)context.InputParameters["TargetEntityName"], new Guid((string)context.InputParameters["TargetEntityName"]));
+                entityReference = new EntityReference((string)context.InputParameters[PluginInputParams.TargetEntityName], 
+                                                       new Guid((string)context.InputParameters[PluginInputParams.TargetEntityId]));
             }
 
             if (entityReference != null)
@@ -87,29 +88,21 @@ namespace Defra.Lp.Plugins
                 tracingService.Trace("Start of UploadFile for entity {0}", entityReference.LogicalName);
                 if (entityReference.LogicalName == ActivityMimeAttachment.EntityLogicalName)
                 {
-                    // Triggered for email attachments - only processes incoming emails
-                    //
-                    // Note: We assume currently emails are regarding applications
-                    //
+                    // Triggered for email attachments
                     azureInterface.UploadFile(entityReference, "email", "defra_applicationid");
                 }
                 else if (entityReference.LogicalName == Email.EntityLogicalName)
                 {
-                    // Triggered for emails - only process incoming emails
-                    //
-                    // Note: We assume currently emails are regarding applications
-                    //
-                    //tracingService.Trace("Start of UploadFile from activitymimeattachment");
-                    //azureInterface.UploadFile(entityReference, "email", "defra_applicationid");
-                    //tracingService.Trace("Email Processed Successfully");
+                    // Triggered for emails
+                    azureInterface.UploadFile(entityReference, Application.EntityLogicalName, "defra_applicationid");
                 }
                 else if (entityReference.LogicalName == Annotation.EntityLogicalName)
                 {
                     // Triggered for Notes                  
                     if (context.MessageName == PluginMessages.SendFileToSharePoint || context.MessageName == PluginMessages.Update)
                     {
-                        // Need to do a query to get the regarding object. Could use image for update but query ok 
-                        // as its async and keeps the code simpler and more generic.
+                        // Need to do a query to get the regarding object when triggered by custom action messsage. 
+                        // Could use image for update but query ok as its async and keeps the code simpler and more generic.
                         var entity = Query.RetrieveDataForEntityRef(service, new string[] { Annotation.RegardingObjectId, Annotation.IsDocument }, entityReference);
                         if (entity != null)
                         {

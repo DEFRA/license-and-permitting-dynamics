@@ -12,6 +12,7 @@
 using Defra.Lp.Common.SharePoint;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using Model.Lp.Crm;
 using System;
@@ -44,47 +45,43 @@ namespace Defra.Lp.Workflows
         private void ProcessAttachments()
         {   
             var azureInterface = new AzureInterface(AdminService, Service, TracingService);
-            var results = Query.QueryCRMForMultipleRecords(Service, ReturnAttachmentsFetchXML(Context.PrimaryEntityId));
+            var results = GetAttachmentsForEmail(Context.PrimaryEntityId);
 
-            // Upload the actual email as a file to SharePoint. Parent entity is an Application for outbound emails.
-            // Assume we are only sending emails from Application to begin with ...
-            //
-            // Do we need to check the regarding here?
-            //
-            //if (Context.PrimaryEntityName == Application.EntityLogicalName)
-            //{
-                TracingService.Trace("Uploading email message");
-                azureInterface.UploadFile(new EntityReference(Context.PrimaryEntityName, Context.PrimaryEntityId), Application.EntityLogicalName, "defra_applicationid");
+            TracingService.Trace("Requesting action for Email upload.");
+            azureInterface.SendFileToSharePointActionRequest(Context.PrimaryEntityName, Context.PrimaryEntityId);
 
+            // Call the plugin to upload the email and all its attachments as files to SharePoint. 
+            if (results != null && results.Entities.Count > 0)
+            {
                 // Now process the attachments
                 TracingService.Trace("Processing {0} attachments.", results.Entities.Count.ToString());
                 foreach (Entity attachment in results.Entities)
                 {
                     // Using an action because we don't know how many attachments we'll have. Could take more than process
                     // limit of 2 minutes so using action trigger async plugin.
-                    var actionRequest = new OrganizationRequest(PluginMessages.SendFileToSharePoint)
-                    {
-                        [PluginInputParams.TargetEntityName] = attachment.LogicalName,
-                        [PluginInputParams.TargetEntityId] = attachment.Id.ToString()
-                    };
-                    var actionResponse = Service.Execute(actionRequest);
+                    azureInterface.SendFileToSharePointActionRequest(attachment.LogicalName, attachment.Id);
 
                     TracingService.Trace("{0} request sent for attachment with Id={1}", PluginMessages.SendFileToSharePoint, attachment.Id.ToString());
                 }
-            //}
+            }
         }
 
-        private string ReturnAttachmentsFetchXML(Guid emailId)
+        private EntityCollection GetAttachmentsForEmail(Guid emailId)
         {
-            return string.Format(@"<fetch>
-                                    <entity name='activitymimeattachment' >
-                                    <link-entity name='email' from='activityid' to='objectid' link-type='inner' alias='email' >
-                                        <filter>
-                                        <condition attribute='activityid' operator='eq' value='{0}' />
-                                        </filter>
-                                    </link-entity>
-                                    </entity>
-                                </fetch>", emailId);
+            // Instantiate QueryExpression QEactivitymimeattachment
+            var QEactivitymimeattachment = new QueryExpression(ActivityMimeAttachment.EntityLogicalName);
+
+            // Add columns to activitymimeattachment
+            QEactivitymimeattachment.ColumnSet.AddColumns(ActivityMimeAttachment.Id);
+
+            // Add link-entity for Email
+            var QEactivitymimeattachment_email = QEactivitymimeattachment.AddLink(Email.EntityLogicalName, ActivityMimeAttachment.ObjectId, Email.ActivityId);
+            QEactivitymimeattachment_email.EntityAlias = "email";
+
+            // Define filter. Only want attachments for one specific email
+            QEactivitymimeattachment_email.LinkCriteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, emailId);
+
+            return Service.RetrieveMultiple(QEactivitymimeattachment);
         }
     }
 }

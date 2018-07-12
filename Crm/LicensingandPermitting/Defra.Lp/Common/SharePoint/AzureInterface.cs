@@ -1,11 +1,12 @@
 ﻿using Core.Configuration;
+using Core.Helpers.Extensions;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Model.Lp.Crm;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -55,18 +56,18 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace(string.Format("In CreateFolder with Entity Type {0} and Entity Id {1}", application.LogicalName, application.Id));
 
             var request = new DocumentRelayRequest();
-            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, application);
+            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber }, application);
 
-            TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity["defra_permitnumber"].ToString(), applicationEntity["defra_applicationnumber"].ToString()));
+            TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity[Application.PermitNumber].ToString(), applicationEntity[Application.ApplicationNumber].ToString()));
 
             request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
-            request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
+            request.ApplicationNo = applicationEntity.GetAttributeValue<string>(Application.ApplicationNumber).Replace('/', '_');
             request.FileBody = string.Empty;
             request.FileDescription = string.Empty;
             request.FileName = string.Empty;
             request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
             request.PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
-            request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+            request.PermitNo = applicationEntity.GetAttributeValue<string>(Application.PermitNumber);
             request.Customer = string.Empty;
             request.SiteDetails = string.Empty;
             request.PermitDetails = string.Empty;
@@ -87,7 +88,7 @@ namespace Defra.Lp.Common.SharePoint
             Entity attachmentData = null;
             Entity emailData = null;
 
-            if (parentEntity == "email")
+            if (parentEntity == Email.EntityLogicalName)
             {
                 // This will have been fired against the creation of the Activity Mime Attachment Record. We want to
                 // process the email attachments and upload to SharePoint.
@@ -109,13 +110,13 @@ namespace Defra.Lp.Common.SharePoint
 
                 AddInsertFileParametersToRequest(request, attachmentData);
             }
-            else if (parentEntity == "incident")
+            else if (parentEntity == Case.EntityLogicalName)
             {
                 // Creation of an Annotation record on a Case
             }
             else
             {
-                if (recordIdentifier.LogicalName == "email")
+                if (recordIdentifier.LogicalName == Email.EntityLogicalName)
                 {
                     // Processing an email record. Need the information so we can upload the email to SharePoint
                     emailData = ReturnEmailData(recordIdentifier.Id);
@@ -169,14 +170,14 @@ namespace Defra.Lp.Common.SharePoint
 
             if (entity.LogicalName == Application.EntityLogicalName)
             {
-                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber", "defra_applicationnumber" }, entity);
+                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new string[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber }, entity);
                 if (applicationEntity != null)
                 {
-                    TracingService.Trace($"Permit Number = {applicationEntity["defra_permitnumber"]}; Application Number = {applicationEntity["defra_applicationnumber"].ToString()}");
+                    TracingService.Trace($"Permit Number = {applicationEntity[Application.PermitNumber]}; Application Number = {applicationEntity[Application.ApplicationNumber].ToString()}");
 
-                    request.ApplicationNo = applicationEntity.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
+                    request.ApplicationNo = applicationEntity.GetAttributeValue<string>(Application.ApplicationNumber).Replace('/', '_');
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-                    request.PermitNo = applicationEntity.GetAttributeValue<string>("defra_permitnumber");
+                    request.PermitNo = applicationEntity.GetAttributeValue<string>(Application.PermitNumber);
                     request.Customer = customer;
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
@@ -189,14 +190,14 @@ namespace Defra.Lp.Common.SharePoint
             }
             else if (entity.LogicalName == Permit.EntityLogicalName)
             {
-                var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { "defra_name", "defra_permitnumber" }, entity);
+                var permitEntity = Query.RetrieveDataForEntityRef(Service, new string[] { Permit.Name, Permit.PermitNumber }, entity);
                 if (permitEntity != null)
                 {
-                    TracingService.Trace(string.Format("Permit Number = {0}", permitEntity["defra_permitnumber"].ToString()));
+                    TracingService.Trace(string.Format("Permit Number = {0}", permitEntity[Permit.PermitNumber].ToString()));
 
                     request.ApplicationNo = string.Empty;
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-                    request.PermitNo = permitEntity.GetAttributeValue<string>("defra_permitnumber");
+                    request.PermitNo = permitEntity.GetAttributeValue<string>(Permit.PermitNumber);
                     request.Customer = customer;
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
@@ -215,60 +216,50 @@ namespace Defra.Lp.Common.SharePoint
             SendRequest(Config[$"{SharePointSecureConfigurationKeys.MetadataLogicAppUrl}"], stringContent);
         }
 
+        private void AddEmailParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
+        {
+            TracingService.Trace("Adding Email Parameters to Request");
+
+            request.EmailId = string.Empty;
+            request.EmailRegarding = string.Empty;
+
+            // Set Email Activity Id when we have an email
+            if (queryRecord.LogicalName == Email.EntityLogicalName && queryRecord.Contains(Email.ActivityId))
+            {
+                request.EmailId = queryRecord.GetAttributeValue<Guid>(Email.ActivityId).ToString();
+            }
+
+            // Set Email Activity Id when we have an Attachment
+            if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName && queryRecord.Contains("email.activityid"))
+            {
+                request.EmailId = queryRecord.GetAttributeValue<Guid>("email.activityid").ToString();
+            }
+
+            if (queryRecord.LogicalName == Email.EntityLogicalName)
+            {
+                // Set the email regarding field to Schedule 5 or RFI otherwise assume its an application
+                if (queryRecord.Contains("case.casetypecode"))
+                {
+                    var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
+                    request.EmailRegarding = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
+                }
+                else
+                {
+                    request.EmailRegarding = "Application";
+                }
+            }
+        }
+
         private void AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
         {
             TracingService.Trace("In AddInsertFileParametersToRequest()");
-
-            var permitNo = string.Empty;
-            var applicationNo = string.Empty;
-            if (queryRecord.Contains("parent.defra_permitnumber"))
-            {
-                permitNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_permitnumber"]).Value;
-            }
-            if (queryRecord.Contains("parent.defra_applicationnumber"))
-            {
-                applicationNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_applicationnumber"]).Value;
-                applicationNo = applicationNo.Replace('/', '_');
-            }
-
-            TracingService.Trace("Permit No: {0}", permitNo);
-            TracingService.Trace("Application No: {0}", applicationNo);
-
-            // Filename will be in subject for emails for filename field
-            // for annotations and attachments
-            var fileName = string.Empty;
-            if (queryRecord.Contains("filename"))
-            {
-                queryRecord.GetAttributeValue<string>("filename");
-            }
-            else if (queryRecord.Contains("subject"))
-            {
-                queryRecord.GetAttributeValue<string>("subject");
-            }
-            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
-            // user uploads something with the same name from front end.
-            fileName = AppendTimeStamp(fileName);
-            fileName = SpRemoveIllegalChars(fileName);
-
-            TracingService.Trace("Filename: {0}", fileName);
             TracingService.Trace("Logical Name: {0}", queryRecord.LogicalName);
 
-            var body = string.Empty;
-            if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
-            {
-                // For an attachment the file is in body          
-                body = queryRecord.GetAttributeValue<string>("body");
-            }
-            else if (queryRecord.LogicalName == Email.EntityLogicalName)
-            {
-                // For an email the body is in description
-                body = queryRecord.GetAttributeValue<string>("description");
-            }
-            else
-            {
-                // For an annotation the file is in document body
-                body = queryRecord.GetAttributeValue<string>("documentbody");
-            }
+            var permitNo = GetPermitNumber(queryRecord);
+            var applicationNo = GetApplicationNumber(queryRecord);
+            var fileName = GetFileName(queryRecord);
+            var body = GetBody(queryRecord);
+            var description = GetDescription(queryRecord);
 
             request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
             request.ApplicationNo = applicationNo;
@@ -282,10 +273,141 @@ namespace Defra.Lp.Common.SharePoint
             request.SiteDetails = string.Empty;
             request.PermitDetails = string.Empty;
 
+            AddEmailParametersToRequest(request, queryRecord);
+
             TracingService.Trace(string.Format("Requests: {0}", request));
 
             return;
         }
+
+        private string GetDescription(Entity queryRecord)
+        {
+            var desc = string.Empty;
+            if (queryRecord.Contains("subject"))
+            {
+                desc = (string)queryRecord.GetAttributeValue<string>("subject");
+            }
+            queryRecord.GetAttributeValue<string>("subject");
+            TracingService.Trace("Description: {0}", desc);
+            return desc;
+        }
+
+        private string GetPermitNumber(Entity queryRecord)
+        {
+            var permitNo = string.Empty;
+            if (queryRecord.Contains("parent.defra_permitnumber"))
+            {
+                permitNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_permitnumber"]).Value;
+            }
+            if (queryRecord.Contains("application.defra_permitnumber"))
+            {
+                permitNo = (string)((AliasedValue)queryRecord.Attributes["application.defra_permitnumber"]).Value;
+            }
+            if (queryRecord.Contains("case.application.defra_permitnumber"))
+            {
+                permitNo = (string)((AliasedValue)queryRecord.Attributes["case.application.defra_permitnumber"]).Value;
+            }
+            TracingService.Trace("Permit No: {0}", permitNo);
+            return permitNo;
+        }
+
+        private string GetApplicationNumber(Entity queryRecord)
+        {
+            var applicationNo = string.Empty;
+            if (queryRecord.Contains("parent.defra_applicationnumber"))
+            {
+                applicationNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_applicationnumber"]).Value;
+                applicationNo = applicationNo.Replace('/', '_');
+            }
+            if (queryRecord.Contains("application.defra_applicationnumber"))
+            {
+                applicationNo = (string)((AliasedValue)queryRecord.Attributes["application.defra_applicationnumber"]).Value;
+                applicationNo = applicationNo.Replace('/', '_');
+            }
+            if (queryRecord.Contains("case.application.defra_applicationnumber"))
+            {
+                applicationNo = (string)((AliasedValue)queryRecord.Attributes["case.application.defra_applicationnumber"]).Value;
+                applicationNo = applicationNo.Replace('/', '_');
+            }
+            TracingService.Trace("Application No: {0}", applicationNo);
+            return applicationNo;
+        }
+
+        private string GetFileName(Entity queryRecord)
+        {
+            // Filename will be in subject for emails for filename field
+            // for annotations and attachments
+            var fileName = string.Empty;
+            if (queryRecord.Contains("filename"))
+            {
+                fileName = queryRecord.GetAttributeValue<string>("filename");
+            }
+            else if (queryRecord.Contains(Email.Subject))
+            {
+                // For an email, we're going to use the subject as the filename.
+                fileName = queryRecord.GetAttributeValue<string>(Email.Subject);
+                // Give it an HTML ending as we want to view it in SharePoint as HTML
+                fileName = fileName + ".html";
+            }
+            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+            // user uploads something with the same name from front end. Also need to remove
+            // any illegal charcter that SharePoint might complain about
+            fileName = SpRemoveIllegalChars(fileName.AppendTimeStamp());
+
+            TracingService.Trace("Filename: {0}", fileName);
+
+            return fileName;
+        }
+
+        private string GetBody(Entity queryRecord)
+        {
+            var body = string.Empty;
+            if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
+            {
+                // For an attachment the file is in body          
+                body = queryRecord.GetAttributeValue<string>("body");
+            }
+            else if (queryRecord.LogicalName == Email.EntityLogicalName)
+            {
+                // For an email the body is in description. It needs to be wrapped in 
+                // a HTML Header and Body tags as we want to view it like HTML in SharePoint.
+                body = string.Format("<html><head></head><body>{0}</body></html>", queryRecord.GetAttributeValue<string>(Email.Description));
+
+                // It needs to be Base64 encoded so it matches body and documentbody
+                body = body.Base64Encode();
+            }
+            else
+            {
+                // For an annotation the file is in document body
+                body = queryRecord.GetAttributeValue<string>("documentbody");
+            }
+            TracingService.Trace("Body (first 200 chars): {0}", body.Substring(0, 200));
+            return body;
+        }
+
+        //private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
+        //{
+        //    // Instantiate QueryExpression QEannotation
+        //    var QEannotation = new QueryExpression("annotation");
+        //    QEannotation.TopCount = 1;
+
+        //    // Add columns to QEannotation.ColumnSet
+        //    QEannotation.ColumnSet.AddColumns("subject", "documentbody", "filename", "annotationid");
+        //    QEannotation.AddOrder("subject", OrderType.Ascending);
+
+        //    // Define filter QEannotation.Criteria
+        //    QEannotation.Criteria.AddCondition("annotationid", ConditionOperator.Equal, "4e0d7f5e-0a64-e811-a958-000d3ab31ad6");
+
+        //    // Add link-entity QEannotation_defra_application
+        //    var QEannotation_defra_application = QEannotation.AddLink("defra_application", "objectid", "defra_applicationid");
+        //    QEannotation_defra_application.EntityAlias = "parent";
+
+        //    // Add columns to QEannotation_defra_application.Columns
+        //    QEannotation_defra_application.Columns.AddColumns("defra_applicationid", "defra_name", "defra_permitnumber", "defra_applicationnumber", "statuscode");
+
+        //    // Define filter QEannotation_defra_application.LinkCriteria
+        //    QEannotation_defra_application.LinkCriteria.AddCondition("statuscode", ConditionOperator.NotNull);
+        //}
 
         private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
         {
@@ -317,52 +439,107 @@ namespace Defra.Lp.Common.SharePoint
 
         private Entity ReturnAttachmentData(Guid recordId)
         {
-            string fetchXml = string.Format(@"<fetch top='1' >
-                                                          <entity name='activitymimeattachment' >
-                                                             <attribute name='filename' />
-                                                            <attribute name='body' />
-                                                        <filter>
-                                                        <condition attribute='activitymimeattachmentid' operator='eq' value='{0}' />
-                                                        </filter>
-                                                        <link-entity name='email' from='activityid' to='objectid' alias='email' link-type='inner' >
-                                                              <attribute name='directioncode' />
-                                                              <attribute name='activityid' />
-                                                              <attribute name='statuscode' />
-                                                              <attribute name='regardingobjectid' />
-                                                              <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
-                                                                <attribute name='defra_name' />
-                                                                <attribute name='defra_permitnumber' />
-                                                                <attribute name='defra_applicationnumber' />
-                                                              </link-entity>
-                                                            </link-entity>
-                                                          </entity>
-                                                        </fetch>", recordId);
+            // Instantiate QueryExpression QEactivitymimeattachment
+            var QEactivitymimeattachment = new QueryExpression(ActivityMimeAttachment.EntityLogicalName);
+            QEactivitymimeattachment.TopCount = 1;
 
-            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+            // Add columns to ActivityMimeAttachment Entity
+            QEactivitymimeattachment.ColumnSet.AddColumns(ActivityMimeAttachment.Filename, ActivityMimeAttachment.Body);
+
+            // Define filter on Primary Key
+            QEactivitymimeattachment.Criteria.AddCondition(ActivityMimeAttachment.Id, ConditionOperator.Equal, recordId);
+
+            // Add link-entity QEactivitymimeattachment_email. Inner join as it must be regarding an Email
+            var QEactivitymimeattachment_email = QEactivitymimeattachment.AddLink(Email.EntityLogicalName, 
+                                                                                  ActivityMimeAttachment.ObjectId, 
+                                                                                  Email.ActivityId);
+            QEactivitymimeattachment_email.EntityAlias = "email";
+
+            // Add columns to QEactivitymimeattachment_email.Columns
+            QEactivitymimeattachment_email.Columns.AddColumns(Email.DirectionCode, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId);
+
+            // Add Application link-entity and define an alias.
+            // Its an outer join as we want to return results even if not regarding an application
+            var QEactivitymimeattachment_email_defra_application = QEactivitymimeattachment_email.AddLink(Application.EntityLogicalName, 
+                                                                                                          Email.RegardingObjectId, 
+                                                                                                          Application.ApplicationId,
+                                                                                                          JoinOperator.LeftOuter);
+            QEactivitymimeattachment_email_defra_application.EntityAlias = "application";
+
+            // Add columns to Application Entity
+            QEactivitymimeattachment_email_defra_application.Columns.AddColumns(Application.Name, Application.PermitNumber, Application.ApplicationNumber);
+
+            // Add Application link-entity and define an alias.
+            // Its an outer join as we want to return results even if not regarding an case
+            var QEactivitymimeattachment_email_incident = QEactivitymimeattachment_email.AddLink(Case.EntityLogicalName,
+                                                                                                 Email.RegardingObjectId,
+                                                                                                 Case.IncidentId,
+                                                                                                 JoinOperator.LeftOuter);
+            QEactivitymimeattachment_email_incident.EntityAlias = "case";
+
+            // Add columns to Case Entity
+            QEactivitymimeattachment_email_incident.Columns.AddColumns(Case.Title, Case.IncidentId);
+
+            // Add link-entity to Application Entity from Case and define an alias
+            var QEactivitymimeattachment_email_incident_defra_application = QEactivitymimeattachment_email_incident.AddLink(Application.EntityLogicalName,
+                                                                                                                            Case.Application, 
+                                                                                                                            Application.ApplicationId,
+                                                                                                                            JoinOperator.LeftOuter);
+            QEactivitymimeattachment_email_incident_defra_application.EntityAlias = "case.application";
+
+            // Add columns to Application Entity that we got via Case
+            QEactivitymimeattachment_email_incident_defra_application.Columns.AddColumns(Application.ApplicationNumber, Application.Name, Application.PermitNumber);
+
+            var results = Service.RetrieveMultiple(QEactivitymimeattachment);
+            if (results != null && results.Entities.Count >= 1)
+            {
+                return results.Entities[0];
+            }
+
+            return null;
         }
 
         private Entity ReturnEmailData(Guid recordId)
         {
-            string fetchXml = string.Format(@"<fetch top='1' >
-                                                  <entity name='email' >
-                                                    <attribute name='description' />
-                                                    <attribute name='subject' />
-                                                    <attribute name='activityid' />
-                                                    <attribute name='statuscode' />
-                                                    <attribute name='regardingobjectid' />
-                                                    <attribute name='directioncode' />
-                                                    <filter>
-                                                      <condition attribute='activityid' operator='eq' value='{0}' />
-                                                    </filter>
-                                                    <link-entity name='defra_application' from='defra_applicationid' to='regardingobjectid' link-type='outer' alias='parent' >
-                                                      <attribute name='defra_applicationnumber' />
-                                                      <attribute name='defra_name' />
-                                                      <attribute name='defra_permitnumber' />
-                                                    </link-entity>
-                                                  </entity>
-                                                </fetch>", recordId);
+            var QEemail = new QueryExpression(Email.EntityLogicalName);
+            QEemail.TopCount = 1;
 
-            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+            // Add columns for Email entity
+            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode);
+
+            // Define filter
+            QEemail.Criteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, recordId);
+
+            // Add Application link-entity and define an alias.
+            // Its an outer join as we want to return results even if not regarding an application
+            var QEemail_defra_application = QEemail.AddLink(Application.EntityLogicalName, Email.RegardingObjectId, Application.ApplicationId, JoinOperator.LeftOuter);
+            QEemail_defra_application.EntityAlias = "application";
+
+            // Add columns for Application link entity
+            QEemail_defra_application.Columns.AddColumns(Application.ApplicationNumber, Application.Name, Application.PermitNumber);
+
+            // Add link-entity to Case and define an alias.
+            // Its an outer join as we want to return results even if not regarding a case
+            var QEemail_incident = QEemail.AddLink(Case.EntityLogicalName, Case.RegardingObjectId, Case.IncidentId, JoinOperator.LeftOuter);
+            QEemail_incident.EntityAlias = "case";
+
+            // Add columns for Case link entity
+            QEemail_incident.Columns.AddColumns(Case.CaseType, Case.Title, Case.IncidentId);
+
+            // Add link-entity from Case to Application and define an alias
+            var QEemail_incident_defra_application = QEemail_incident.AddLink(Application.EntityLogicalName, Case.Application, Application.ApplicationId, JoinOperator.LeftOuter);
+            QEemail_incident_defra_application.EntityAlias = "case.application";
+
+            // Add columns to for Application entity regarding the Case
+            QEemail_incident_defra_application.Columns.AddColumns(Application.ApplicationNumber, Application.Name, Application.PermitNumber);
+
+            var results = Service.RetrieveMultiple(QEemail);
+            if (results != null && results.Entities.Count >= 1)
+            {
+                return results.Entities[0];
+            }
+
+            return null;
         }
 
         private string SendRequest(string url, string requestContent)
@@ -399,17 +576,19 @@ namespace Defra.Lp.Common.SharePoint
         }
 
         /// <summary>
-        /// Adds timestamp to the filename
+        /// Issue SendFileToSharePoint Message which will trigger the SendSingleAttachmentToSharePoint Plugin.
+        /// Need to process as a series of async plugin requests because we don't know how many attachments there might be
+        /// so could exceed the limit of 2 minutes.
         /// </summary>
-        /// <param name="fileName">Original filename</param>
-        /// <returns>Orignal filename + timestamp + ext</returns>
-        private string AppendTimeStamp(string fileName)
+        /// <param name="entity"></param>
+        internal void SendFileToSharePointActionRequest(string entityName, Guid id)
         {
-            return string.Concat(
-                Path.GetFileNameWithoutExtension(fileName),
-                DateTime.Now.ToString("yyyyMMddHHmmssfff"),
-                Path.GetExtension(fileName)
-                );
+            var actionRequest = new OrganizationRequest(PluginMessages.SendFileToSharePoint)
+            {
+                [PluginInputParams.TargetEntityName] = entityName,
+                [PluginInputParams.TargetEntityId] = id.ToString()
+            };
+            var actionResponse = Service.Execute(actionRequest);
         }
     }
 }
