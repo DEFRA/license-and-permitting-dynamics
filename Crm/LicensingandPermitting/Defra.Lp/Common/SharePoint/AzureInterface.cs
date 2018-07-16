@@ -157,7 +157,7 @@ namespace Defra.Lp.Common.SharePoint
                 {
                     TracingService.Trace("Need to delete attachment");
                     attachmentData["body"] = string.Empty;
-                    Service.Update(annotationData);
+                    Service.Update(attachmentData);
                 }   
             }
         }
@@ -232,7 +232,7 @@ namespace Defra.Lp.Common.SharePoint
             // Set Email Activity Id when we have an Attachment
             if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName && queryRecord.Contains("email.activityid"))
             {
-                request.EmailId = queryRecord.GetAttributeValue<Guid>("email.activityid").ToString();
+                request.EmailId = ((Guid)((AliasedValue)queryRecord.Attributes["email.activityid"]).Value).ToString();
             }
 
             if (queryRecord.LogicalName == Email.EntityLogicalName)
@@ -381,7 +381,8 @@ namespace Defra.Lp.Common.SharePoint
                 // For an annotation the file is in document body
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
-            TracingService.Trace("Body (first 200 chars): {0}", body.Substring(0, 200));
+            var length = body.Length > 200 ? 200 : body.Length - 1;
+            TracingService.Trace("Body (first {1} chars): {0}", body.Substring(length), length.ToString());
             return body;
         }
 
