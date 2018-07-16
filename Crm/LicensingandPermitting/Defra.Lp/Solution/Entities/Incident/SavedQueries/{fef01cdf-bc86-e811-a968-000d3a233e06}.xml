@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{fef01cdf-bc86-e811-a968-000d3a233e06}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" icon="1" preview="1" select="1" jump="title">
+      <row id="incidentid" name="result">
+        <cell name="title" width="150" />
+        <cell name="ticketnumber" width="100" />
+        <cell name="caseorigincode" width="100" />
+        <cell name="statuscode" width="100" />
+        <cell name="defra_deadlineresponsebreached" width="100" />
+        <cell name="defra_requiredresponsedatebreached" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="incident">
+        <attribute name="title" />
+        <attribute name="statuscode" />
+        <attribute name="caseorigincode" />
+        <attribute name="ticketnumber" />
+        <attribute name="defra_requiredresponsedatebreached" />
+        <attribute name="defra_deadlineresponsebreached" />
+        <order descending="false" attribute="title" />
+        <filter type="and">
+          <condition attribute="casetypecode" operator="eq" value="910400000" />
+          <condition attribute="defra_application" operator="not-null" />
+          <condition attribute="defra_responsereceiveddate" operator="null" />
+        </filter>
+        <attribute name="incidentid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.2.1.4</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Pending application RFIs" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

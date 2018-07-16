@@ -9,13 +9,14 @@
   <layoutxml>
     <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
       <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
-        <cell name="enteredon" width="140" />
-        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_penfolddate" width="100" disableSorting="1" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_applicationnumber" width="100" disableSorting="1" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_customerid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_site_description" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_applicationtype" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_facility_description" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.statuscode" width="100" disableSorting="1" />
-        <cell name="title" width="300" />
-        <cell name="objectid" width="100" />
-        <cell name="queueid" width="150" />
-        <cell name="statuscode" width="100" />
+        <cell name="a_fdbe0726afc3e71180eb3863bb34fad0.defra_penfolddate" width="100" disableSorting="1" />
+        <cell name="enteredon" width="140" />
         <cell name="queueitemid" ishidden="1" width="100" />
       </row>
     </grid>
@@ -24,11 +25,7 @@
   <fetchxml>
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
-        <attribute name="title" />
         <attribute name="enteredon" />
-        <attribute name="queueid" />
-        <attribute name="objectid" />
-        <attribute name="objectid" />
         <attribute name="objecttypecode" />
         <order attribute="enteredon" descending="true" />
         <filter type="and">
@@ -36,11 +33,16 @@
           <condition attribute="workerid" operator="null" />
           <condition attribute="objecttypecodename" operator="like" value="%Application%" />
         </filter>
-        <attribute name="statuscode" />
         <link-entity alias="a_fdbe0726afc3e71180eb3863bb34fad0" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
           <attribute name="defra_penfolddate" />
           <attribute name="statuscode" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_facility_description" />
         </link-entity>
+        <attribute name="objectid" />
       </entity>
     </fetch>
   </fetchxml>
