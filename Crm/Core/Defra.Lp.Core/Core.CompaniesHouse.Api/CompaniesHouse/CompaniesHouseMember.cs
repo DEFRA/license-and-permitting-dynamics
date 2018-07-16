@@ -1,4 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
+
+using System.Text;
 using Core.CompaniesHouse.Api.CompaniesHouse;
 
 namespace Defra.Lp.Core.CompaniesHouse
@@ -36,12 +38,22 @@ namespace Defra.Lp.Core.CompaniesHouse
         {
             get
             {
-                if(this.name.Contains(", "))
+                string[] names = this.name.Split(',');
+
+                if (names.Length == 2)
                 {
-                    return name.Substring(name.LastIndexOf(", ") + 2, name.Length - name.LastIndexOf(", ") - 2);
-                    //return name.Substring(name.IndexOf(',') + 1);
+                    return names[1].Trim();
                 }
 
+                if (names.Length == 3)
+                {
+                    return $"{names[2].Trim()} {names[1].Trim()}";
+                }
+
+                if (names.Length > 3)
+                {
+                    return $"{names[names.Length-1].Trim()} {names[names.Length - 2].Trim()} {names[names.Length - 3].Trim()}";
+                }
                 return string.Empty;
             }
         }
@@ -50,12 +62,9 @@ namespace Defra.Lp.Core.CompaniesHouse
         {
             get
             {
-                if (this.name.Contains(", "))
-                {
-                    return name.Substring(0, name.IndexOf(","));
-                }
-
-                return name;
+                // Return the last name
+                string[] names = this.name.Split(',');
+                return names[0];
             }
         }
 
