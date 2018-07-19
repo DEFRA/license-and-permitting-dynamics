@@ -20,6 +20,7 @@ namespace Defra.Lp.Common.SharePoint
         public string Customer { get; internal set; }
         public string PermitDetails { get; internal set; }
         public string SiteDetails { get; internal set; }
+        public string AttachmentId { get; internal set; }
         public string EmailId { get; internal set; }
         public string EmailRegarding { get; internal set; }
     }

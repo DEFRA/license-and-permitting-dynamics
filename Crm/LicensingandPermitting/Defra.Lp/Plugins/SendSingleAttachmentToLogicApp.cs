@@ -79,6 +79,8 @@ namespace Defra.Lp.Plugins
                                                        new Guid((string)context.InputParameters[PluginInputParams.TargetEntityId]));
             }
 
+            tracingService.Trace("Execution depth = {0};", context.Depth.ToString());
+
             if (entityReference != null)
             {
                 //var entity = (Entity)context.InputParameters["Target"];
@@ -115,6 +117,8 @@ namespace Defra.Lp.Plugins
                                 {
                                     // Upload attachment if Note is regarding an application or a case
                                     // and there is an attachment 
+                                    //string bodyAttr = (target.LogicalName == "annotation") ? "documentbody" : "body";
+                                    //if (target.Attributes.Contains(bodyAttr) && !string.IsNullOrEmpty(target.GetAttributeValue<string>(bodyAttr)))
                                     if (entity.GetAttributeValue<bool>(Annotation.IsDocument))
                                     {
                                         azureInterface.UploadFile(entityReference, Application.EntityLogicalName, "defra_applicationid");

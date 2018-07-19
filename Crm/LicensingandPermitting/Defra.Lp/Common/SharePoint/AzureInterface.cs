@@ -147,15 +147,15 @@ namespace Defra.Lp.Common.SharePoint
 
             if (resultBody!= null)
             {
-                //TracingService.Trace(string.Format("SharePoint File Id {0}", data.SharePointId));
+                TracingService.Trace("Returned from LogicApp OK");
                 if (annotationData != null)
                 {
+                    annotationData["notetext"] = "File has been uploaded to SharePoint.";
                     annotationData["documentbody"] = string.Empty;
                     Service.Update(annotationData);
                 }
                 else if (attachmentData != null)
                 {
-                    TracingService.Trace("Need to delete attachment");
                     attachmentData["body"] = string.Empty;
                     Service.Update(attachmentData);
                 }   
@@ -220,23 +220,25 @@ namespace Defra.Lp.Common.SharePoint
         {
             TracingService.Trace("Adding Email Parameters to Request");
 
+            //request.AttachmentId = string.Empty;
             request.EmailId = string.Empty;
             request.EmailRegarding = string.Empty;
 
             // Set Email Activity Id when we have an email
-            if (queryRecord.LogicalName == Email.EntityLogicalName && queryRecord.Contains(Email.ActivityId))
+            if (queryRecord.LogicalName == Email.EntityLogicalName || queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
             {
-                request.EmailId = queryRecord.GetAttributeValue<Guid>(Email.ActivityId).ToString();
-            }
+                // Set Email activity Id when we have an email
+                if (queryRecord.Contains(Email.ActivityId))
+                {
+                    request.EmailId = queryRecord.GetAttributeValue<Guid>(Email.ActivityId).ToString();
+                }
 
-            // Set Email Activity Id when we have an Attachment
-            if (queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName && queryRecord.Contains("email.activityid"))
-            {
-                request.EmailId = ((Guid)((AliasedValue)queryRecord.Attributes["email.activityid"]).Value).ToString();
-            }
+                // Set Email Activity Id when we have an Attachment
+                if (queryRecord.Contains("email.activityid"))
+                {
+                    request.EmailId = ((Guid)((AliasedValue)queryRecord.Attributes["email.activityid"]).Value).ToString();
+                }
 
-            if (queryRecord.LogicalName == Email.EntityLogicalName)
-            {
                 // Set the email regarding field to Schedule 5 or RFI otherwise assume its an application
                 if (queryRecord.Contains("case.casetypecode"))
                 {
@@ -246,6 +248,11 @@ namespace Defra.Lp.Common.SharePoint
                 else
                 {
                     request.EmailRegarding = "Application";
+                }
+
+                if (queryRecord.Contains(ActivityMimeAttachment.Id))
+                {
+                    request.AttachmentId = queryRecord.GetAttributeValue<Guid>(ActivityMimeAttachment.Id).ToString();
                 }
             }
         }
@@ -479,7 +486,7 @@ namespace Defra.Lp.Common.SharePoint
             QEactivitymimeattachment_email_incident.EntityAlias = "case";
 
             // Add columns to Case Entity
-            QEactivitymimeattachment_email_incident.Columns.AddColumns(Case.Title, Case.IncidentId);
+            QEactivitymimeattachment_email_incident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType);
 
             // Add link-entity to Application Entity from Case and define an alias
             var QEactivitymimeattachment_email_incident_defra_application = QEactivitymimeattachment_email_incident.AddLink(Application.EntityLogicalName,
