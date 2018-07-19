@@ -76,7 +76,8 @@
       "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}')]",
       "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/files')]",
       "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('spoPermitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]",
-      "setMetaData": "[concat('/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Logic/workflows/', parameters('metaDataLogicAppName'))]"
+      "setMetaData": "[concat('/subscriptions/e716414f-1f8e-48f1-8f56-65f35cfdafb6/resourceGroups/SNDWPTDEVRGP001/providers/Microsoft.Logic/workflows/', parameters('metaDataLogicAppName'))]",
+      "getParentEmail": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('spoSiteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''Permit''))}/items')]"
     }
   },
   "resources": [
@@ -134,7 +135,8 @@
                     },
                     "method": "patch",
                     "body": {
-                      "CRM_x0020_Record_x0020_ID": "@triggerBody()?['EmailId']",
+                      "CRM_x0020_Record_x0020_ID": "@{coalesce(triggerBody()?['AttachmentId'],triggerBody()?['EmailId'])}",
+                      "Email": "@not(empty(triggerBody()?['EmailId']))",
                       "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
                         "Value": "@triggerBody()?['EmailRegarding']"
                       },
@@ -147,6 +149,81 @@
                   },
                   "runAfter": {
                     "Upload_file_to_Application_folder_in_SharePoint": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Is_this_an_attachment_linked_to_an_email": {
+                  "type": "If",
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@empty(triggerBody()?['AttachmentId'])",
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "Get_parent_email_for_attachment_by_CRM_Id": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                          }
+                        },
+                        "method": "get",
+                        "path": "[variables('spo').getParentEmail]",
+                        "queries": {
+                          "$filter": "CRM_x0020_Record_x0020_ID eq '@{triggerBody()?['EmailId']}'"
+                        }
+                      },
+                      "runAfter": {}
+                    },
+                    "For_each": {
+                      "type": "Foreach",
+                      "foreach": "@body('Get_parent_email_for_attachment_by_CRM_Id')?['value']",
+                      "actions": {
+                        "Update_regarding_email_subject_field_for_this_item": {
+                          "type": "ApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                              }
+                            },
+                            "method": "patch",
+                            "body": {
+                              "CRM_x0020_Record_x0020_ID": "@{coalesce(triggerBody()?['AttachmentId'],triggerBody()?['EmailId'])}",
+                              "Email": "@not(empty(triggerBody()?['EmailId']))",
+                              "Public": false,
+                              "Regarding_x0020_Email_x0020_Subject": "@items('For_each')?['{Name}']",
+                              "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
+                                "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                                "Value": "@triggerBody()?['EmailRegarding']"
+                              },
+                              "Reviewed": false,
+                              "Title": "@triggerBody()?['FileDescription']",
+                              "{ContentType}": {
+                                "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
+                              }
+                            },
+                            "path": "[variables('spo').updateFileProperties]"
+                          },
+                          "runAfter": {}
+                        }
+                      },
+                      "runAfter": {
+                        "Get_parent_email_for_attachment_by_CRM_Id": [
+                          "Succeeded"
+                        ]
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Update_file_properties": [
                       "Succeeded"
                     ]
                   }
@@ -230,6 +307,9 @@
                       "type": "string"
                     },
                     "ApplicationNo": {
+                      "type": "string"
+                    },
+                    "AttachmentId": {
                       "type": "string"
                     },
                     "Customer": {
