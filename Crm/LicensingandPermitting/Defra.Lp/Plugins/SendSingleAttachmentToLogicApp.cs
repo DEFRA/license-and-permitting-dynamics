@@ -63,23 +63,27 @@ namespace Defra.Lp.Plugins
 
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
-                var entity = (Entity)context.InputParameters["Target"];
+                var target = (Entity)context.InputParameters["Target"];
 
                 var azureInterface = new AzureInterface(adminService, service, tracingService);
 
                 // Process the attachment depending on the target entity
-                if (entity.LogicalName == "activitymimeattachment")
+                if (target.LogicalName == "activitymimeattachment")
                 {
                     // Triggered for email attachments
                     tracingService.Trace("Start of UploadFile from activitymimeattachment");
-                    azureInterface.UploadFile(entity.ToEntityReference(), "email", "defra_applicationid");
+                    azureInterface.UploadFile(target.ToEntityReference(), "email", "defra_applicationid");
                     tracingService.Trace("Email Processed Successfully");
                 }
-                else if (entity.LogicalName == "annotation")
+                else if (target.LogicalName == "annotation")
                 {
                     // Triggered for Notes attachments
                     tracingService.Trace("Start of UploadFile from annotation");
                     EntityReference regarding = null;
+
+                    // Plugin triggered on Create and Update. Check execution depth
+                    // to prevent recursive calls.
+                    tracingService.Trace("Execution depth = {0};", context.Depth.ToString());
                     if (context.MessageName == PluginMessages.Update)
                     {
                         // For an update get the regarding from the PostImage
@@ -94,9 +98,9 @@ namespace Defra.Lp.Plugins
                     else if (context.MessageName == PluginMessages.Create)
                     {
                         // For a create, the regarding is in the Target
-                        if (entity.Attributes.Contains("objectid"))
+                        if (target.Attributes.Contains("objectid"))
                         {
-                            regarding = (EntityReference)entity.Attributes["objectid"];
+                            regarding = (EntityReference)target.Attributes["objectid"];
                             tracingService.Trace("Parent Entity (create) is: " + regarding.LogicalName);
                         }
                     }
@@ -107,9 +111,11 @@ namespace Defra.Lp.Plugins
                         {
                             // Upload attachment if Note is regarding an application
                             // and there is an attachment
-                            if (entity.GetAttributeValue<bool>("isdocument"))
+                            //if (target.GetAttributeValue<bool>("isdocument"))
+                            string bodyAttr = (target.LogicalName == "annotation") ? "documentbody" : "body";
+                            if (target.Attributes.Contains(bodyAttr) && !string.IsNullOrEmpty(target.GetAttributeValue<string>(bodyAttr)))
                             {
-                                azureInterface.UploadFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
+                                azureInterface.UploadFile(target.ToEntityReference(), "defra_application", "defra_applicationid");
                                 tracingService.Trace("Application Note Processed Successfully");
                             }
                             else
@@ -121,7 +127,7 @@ namespace Defra.Lp.Plugins
                         {
                             tracingService.Trace("Note not processed for {0}", regarding.LogicalName);
                         }
-                    }                           
+                    }
                 }
             }
         }
