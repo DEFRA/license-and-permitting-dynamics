@@ -12,5 +12,7 @@
         public const string StatusCode = "statuscode";
         public const string RegardingObjectId = "regardingobjectid";
         public const string DirectionCode = "directioncode";
+        public const string Sender = "sender";
+        public const string ToRecipients = "torecipients";
     }
 }

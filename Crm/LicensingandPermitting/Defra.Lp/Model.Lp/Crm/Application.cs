@@ -50,5 +50,10 @@ namespace Model.Lp.Crm
         /// Application Id Primary Key field
         /// </summary>
         public const string ApplicationId = "defra_applicationid";
+
+        /// <summary>
+        /// Status code field
+        /// </summary>
+        public const string StatusCode = "statuscode";
     }
 }

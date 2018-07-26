@@ -23,5 +23,8 @@ namespace Defra.Lp.Common.SharePoint
         public string AttachmentId { get; internal set; }
         public string EmailId { get; internal set; }
         public string EmailRegarding { get; internal set; }
+        public string EmailFrom { get; internal set; }
+        public string EmailTo { get; internal set; }
+
     }
 }

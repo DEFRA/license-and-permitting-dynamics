@@ -101,7 +101,7 @@ namespace Defra.Lp.Plugins
                 else if (entityReference.LogicalName == Annotation.EntityLogicalName)
                 {
                     // Triggered for Notes                  
-                    if (context.MessageName == PluginMessages.SendFileToSharePoint || context.MessageName == PluginMessages.Update)
+                    if (context.MessageName == PluginMessages.SendFileToSharePoint || context.MessageName == PluginMessages.Update || context.MessageName == PluginMessages.Create)
                     {
                         // Need to do a query to get the regarding object when triggered by custom action messsage. 
                         // Could use image for update but query ok as its async and keeps the code simpler and more generic.

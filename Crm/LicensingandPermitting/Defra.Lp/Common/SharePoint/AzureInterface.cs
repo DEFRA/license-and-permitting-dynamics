@@ -98,9 +98,8 @@ namespace Defra.Lp.Common.SharePoint
                     throw new InvalidPluginExecutionException("No attachment data record returned from query");
                 }
 
-                bool direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
-
-                OptionSetValue statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
+                var direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
+                var statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
                 if (direction && statusCode.Value != 3)
                 {
                     //Outgoing email, do not send the attachment on create
@@ -109,10 +108,6 @@ namespace Defra.Lp.Common.SharePoint
                 }
 
                 AddInsertFileParametersToRequest(request, attachmentData);
-            }
-            else if (parentEntity == Case.EntityLogicalName)
-            {
-                // Creation of an Annotation record on a Case
             }
             else
             {
@@ -124,11 +119,21 @@ namespace Defra.Lp.Common.SharePoint
                     {
                         throw new InvalidPluginExecutionException("No email data record returned from query");
                     }
+
+                    var direction = attachmentData.GetAttributeValue<bool>(Email.DirectionCode);
+                    var statusCode = attachmentData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
+                    if (direction && statusCode.Value != 3)
+                    {
+                        //Outgoing email, do not send the email on create
+                        TracingService.Trace("Aborted creating email for outgoing email that is not sent");
+                        return;
+                    }
+
                     AddInsertFileParametersToRequest(request, emailData);
                 }
                 else
                 {
-                    // Creation of of an Annotation record on a Application
+                    // Creation of of an Annotation record on a Application or Case
                     annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
                     if (annotationData == null)
                     {
@@ -150,13 +155,13 @@ namespace Defra.Lp.Common.SharePoint
                 TracingService.Trace("Returned from LogicApp OK");
                 if (annotationData != null)
                 {
-                    annotationData["notetext"] = "File has been uploaded to SharePoint.";
-                    annotationData["documentbody"] = string.Empty;
+                    annotationData[Annotation.NoteText] = "File has been uploaded to SharePoint.";
+                    annotationData[Annotation.DocumentBody] = string.Empty;
                     Service.Update(annotationData);
                 }
                 else if (attachmentData != null)
                 {
-                    attachmentData["body"] = string.Empty;
+                    attachmentData[ActivityMimeAttachment.Body] = string.Empty;
                     Service.Update(attachmentData);
                 }   
             }
@@ -223,6 +228,8 @@ namespace Defra.Lp.Common.SharePoint
             //request.AttachmentId = string.Empty;
             request.EmailId = string.Empty;
             request.EmailRegarding = string.Empty;
+            request.EmailTo = string.Empty;
+            request.EmailFrom = string.Empty;
 
             // Set Email Activity Id when we have an email
             if (queryRecord.LogicalName == Email.EntityLogicalName || queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
@@ -248,6 +255,26 @@ namespace Defra.Lp.Common.SharePoint
                 else
                 {
                     request.EmailRegarding = "Application";
+                }
+
+                if (queryRecord.Contains(Email.Sender))
+                {
+                    request.EmailFrom = queryRecord.GetAttributeValue<string>(Email.Sender);
+                }
+
+                if (queryRecord.Contains(Email.ToRecipients))
+                {
+                    request.EmailTo = queryRecord.GetAttributeValue<string>(Email.ToRecipients);
+                }
+
+                if (queryRecord.Contains("email.sender"))
+                {
+                    request.EmailFrom = ((string)((AliasedValue)queryRecord.Attributes["email.sender"]).Value);
+                }
+
+                if (queryRecord.Contains("email.torecipients"))
+                {
+                    request.EmailTo = ((string)((AliasedValue)queryRecord.Attributes["email.torecipients"]).Value);
                 }
 
                 if (queryRecord.Contains(ActivityMimeAttachment.Id))
@@ -348,18 +375,26 @@ namespace Defra.Lp.Common.SharePoint
             if (queryRecord.Contains("filename"))
             {
                 fileName = queryRecord.GetAttributeValue<string>("filename");
+
+                // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+                // user uploads something with the same name from front end. Also need to remove
+                // any illegal charcter that SharePoint might complain about
+                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp();
             }
             else if (queryRecord.Contains(Email.Subject))
             {
                 // For an email, we're going to use the subject as the filename.
                 fileName = queryRecord.GetAttributeValue<string>(Email.Subject);
+
+                // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+                // user uploads something with the same name from front end. Also need to remove
+                // any illegal charcter that SharePoint might complain about
+                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp();
+
                 // Give it an HTML ending as we want to view it in SharePoint as HTML
                 fileName = fileName + ".html";
             }
-            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
-            // user uploads something with the same name from front end. Also need to remove
-            // any illegal charcter that SharePoint might complain about
-            fileName = SpRemoveIllegalChars(fileName.AppendTimeStamp());
+
 
             TracingService.Trace("Filename: {0}", fileName);
 
@@ -378,7 +413,17 @@ namespace Defra.Lp.Common.SharePoint
             {
                 // For an email the body is in description. It needs to be wrapped in 
                 // a HTML Header and Body tags as we want to view it like HTML in SharePoint.
-                body = string.Format("<html><head></head><body>{0}</body></html>", queryRecord.GetAttributeValue<string>(Email.Description));
+                // We're also adding in the To, From and Subject
+                var desc = queryRecord.GetAttributeValue<string>(Email.Description);
+                desc = string.IsNullOrEmpty(desc) ? string.Empty : desc;
+                var sender = queryRecord.GetAttributeValue<string>(Email.Sender);
+                sender = string.IsNullOrEmpty(sender) ? string.Empty : sender;
+                var to = queryRecord.GetAttributeValue<string>(Email.ToRecipients);
+                to = string.IsNullOrEmpty(to) ? string.Empty : to;
+                var subject = queryRecord.GetAttributeValue<string>(Email.Subject);
+                subject = string.IsNullOrEmpty(subject) ? string.Empty : subject;
+                body = string.Format("<html><head></head><body><div><p><b>From:</b>&nbsp;{1}</p><p><b>To:</b>&nbsp;{2}</p><p><b>Subject:</b>&nbsp;{3}</p></div>{0}</body></html>",
+                                      desc, sender, to, subject);
 
                 // It needs to be Base64 encoded so it matches body and documentbody
                 body = body.Base64Encode();
@@ -388,61 +433,50 @@ namespace Defra.Lp.Common.SharePoint
                 // For an annotation the file is in document body
                 body = queryRecord.GetAttributeValue<string>("documentbody");
             }
-            var length = body.Length > 200 ? 200 : body.Length - 1;
-            TracingService.Trace("Body (first {1} chars): {0}", body.Substring(length), length.ToString());
+            TracingService.Trace("Got body");
             return body;
         }
 
-        //private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
-        //{
-        //    // Instantiate QueryExpression QEannotation
-        //    var QEannotation = new QueryExpression("annotation");
-        //    QEannotation.TopCount = 1;
-
-        //    // Add columns to QEannotation.ColumnSet
-        //    QEannotation.ColumnSet.AddColumns("subject", "documentbody", "filename", "annotationid");
-        //    QEannotation.AddOrder("subject", OrderType.Ascending);
-
-        //    // Define filter QEannotation.Criteria
-        //    QEannotation.Criteria.AddCondition("annotationid", ConditionOperator.Equal, "4e0d7f5e-0a64-e811-a958-000d3ab31ad6");
-
-        //    // Add link-entity QEannotation_defra_application
-        //    var QEannotation_defra_application = QEannotation.AddLink("defra_application", "objectid", "defra_applicationid");
-        //    QEannotation_defra_application.EntityAlias = "parent";
-
-        //    // Add columns to QEannotation_defra_application.Columns
-        //    QEannotation_defra_application.Columns.AddColumns("defra_applicationid", "defra_name", "defra_permitnumber", "defra_applicationnumber", "statuscode");
-
-        //    // Define filter QEannotation_defra_application.LinkCriteria
-        //    QEannotation_defra_application.LinkCriteria.AddCondition("statuscode", ConditionOperator.NotNull);
-        //}
-
         private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
         {
-            var fetchXml = string.Format(@"<fetch top='1' >
-                                            <entity name='annotation' >
-                                            <attribute name='subject' />
-                                            <attribute name='documentbody' />
-                                            <attribute name='filename' />
-                                            <attribute name='annotationid' />
-                                            <order attribute='subject' descending='false' />
-                                            <filter type='and' >
-                                                <condition attribute='annotationid' operator='eq' uitype='annotation' value='{0}' />
-                                            </filter>
-                                            <link-entity name='{1}' from='{2}' to='objectid' alias='parent' link-type='inner' >
-                                                <attribute name='{2}' />
-                                                <attribute name='defra_name' />
-                                                <attribute name='defra_permitnumber' />
-                                                <attribute name='defra_applicationnumber' />
-                                                <attribute name='statuscode' />
-                                                <filter type='and' >
-                                                <condition attribute='statuscode' operator='not-null' />
-                                                </filter>
-                                            </link-entity>
-                                            </entity>
-                                        </fetch>", recordId, parentEntityName, parentLookup);
+            // Instantiate QueryExpression QEannotation
+            var QEannotation = new QueryExpression(Annotation.EntityLogicalName);
+            QEannotation.TopCount = 1;
 
-            return Query.QueryCRMForSingleEntity(Service, fetchXml);
+            // Add columns to annotation entity
+            QEannotation.ColumnSet.AddColumns(Annotation.Subject, Annotation.DocumentBody, Annotation.Filename, Annotation.Id, Annotation.NoteText, Annotation.FileSize, Annotation.IsDocument);
+
+            // Define filter on Primary key
+            QEannotation.Criteria.AddCondition(Annotation.Id, ConditionOperator.Equal, recordId);
+
+            // Add link-entity to defra_application. Outer join as it might be regarding a case or application
+            var QEannotation_defra_application = QEannotation.AddLink(Application.EntityLogicalName, Annotation.RegardingObjectId, Application.ApplicationId, JoinOperator.LeftOuter);
+            QEannotation_defra_application.EntityAlias = "application";
+
+            // Add columns to Application entity
+            QEannotation_defra_application.Columns.AddColumns(Application.ApplicationId, Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.StatusCode);
+
+            // Add link-entity to Case. Outer join as it might be regarding case or application
+            var QEannotation_incident = QEannotation.AddLink(Case.EntityLogicalName, Annotation.RegardingObjectId, Case.IncidentId, JoinOperator.LeftOuter);
+            QEannotation_incident.EntityAlias = "case";
+
+            // Add columns to Case entity
+            QEannotation_incident.Columns.AddColumns(Case.Title, Case.IncidentId);
+
+            // Add link-entity from case to application
+            var QEannotation_incident_defra_application = QEannotation_incident.AddLink(Application.EntityLogicalName, Case.Application, Application.ApplicationId, JoinOperator.LeftOuter);
+            QEannotation_incident_defra_application.EntityAlias = "case.application";
+
+            // Add columns to QEannotation_incident_defra_application.Columns
+            QEannotation_incident_defra_application.Columns.AddColumns(Application.ApplicationNumber, Application.Name, Application.PermitNumber);
+
+            var results = Service.RetrieveMultiple(QEannotation);
+            if (results != null && results.Entities.Count >= 1)
+            {
+                return results.Entities[0];
+            }
+
+            return null;
         }
 
         private Entity ReturnAttachmentData(Guid recordId)
@@ -464,7 +498,7 @@ namespace Defra.Lp.Common.SharePoint
             QEactivitymimeattachment_email.EntityAlias = "email";
 
             // Add columns to QEactivitymimeattachment_email.Columns
-            QEactivitymimeattachment_email.Columns.AddColumns(Email.DirectionCode, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId);
+            QEactivitymimeattachment_email.Columns.AddColumns(Email.DirectionCode, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.Sender, Email.ToRecipients);
 
             // Add Application link-entity and define an alias.
             // Its an outer join as we want to return results even if not regarding an application
@@ -513,7 +547,7 @@ namespace Defra.Lp.Common.SharePoint
             QEemail.TopCount = 1;
 
             // Add columns for Email entity
-            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode);
+            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode, Email.Sender, Email.ToRecipients);
 
             // Define filter
             QEemail.Criteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, recordId);
@@ -575,10 +609,10 @@ namespace Defra.Lp.Common.SharePoint
             fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
             var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
             fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
-            fileName = Regex.Replace(fileName, @"\s", "");
-            if (fileName.Length >= 101)
+            fileName = Regex.Replace(fileName, @"\s", ""); // Removes whitespace
+            if (fileName.Length >= 76)
             {
-                fileName = fileName.Remove(100);
+                fileName = fileName.Remove(75);
             }
             return fileName;
         }
