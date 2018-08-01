@@ -186,7 +186,7 @@
                   <row />
                   <row />
                   <row />
-                  <row />
+                  <row height="auto" />
                 </rows>
               </section>
               <section name="emailengagementactions" showlabel="false" showbar="true" locklevel="1" id="{29F94F00-EC82-4E0E-94F1-5D25F707DA88}" height="auto" IsUserDefined="0" layout="varheight" columns="11" labelid="{12cace50-4e0b-49ea-2bf8-0e61791a04f2}" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
@@ -223,7 +223,20 @@
                 <labels>
                   <label description="Section" languagecode="1033" />
                 </labels>
-                <rows />
+                <rows>
+                  <row>
+                    <cell id="{239041f4-30dc-4c1b-87af-da99fece13a2}">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                    </cell>
+                    <cell id="{f5e92a85-f764-4226-8e23-06df0ad4d880}">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                    </cell>
+                  </row>
+                </rows>
               </section>
             </sections>
           </column>
@@ -280,9 +293,6 @@
         </row>
       </rows>
     </footer>
-    <DisplayConditions FallbackForm="true" Order="2">
-      <Everyone />
-    </DisplayConditions>
     <events>
       <event name="onload" application="true" active="true">
         <InternalHandlers>
@@ -291,6 +301,7 @@
         <Handlers>
           <Handler functionName="EmailEngagementForUCI.attachmentsGridLoaded" libraryName="msdyn_/FollowAttachments/Scripts/Email_Engagement_Attachments.js" handlerUniqueId="{c33d5b1c-5424-e5d9-79d5-04d3a476b651}" enabled="true" parameters="" passExecutionContext="true" />
           <Handler functionName="SetPrimaryTeamQueue" libraryName="defra_email_form_events.js" handlerUniqueId="{4687dbdb-05bd-c11e-a009-77245a8a1a51}" enabled="true" parameters="" passExecutionContext="false" />
+          <Handler functionName="SetToField" libraryName="defra_email_form_events.js" handlerUniqueId="{1ec20585-02b0-339e-2603-b11dbdc330cd}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
     </events>
@@ -302,7 +313,7 @@
       </internalresources>
     </clientresources>
     <Navigation>
-      <NavBar />
+      <NavBar></NavBar>
       <NavBarAreas>
         <NavBarArea Id="Info">
           <Titles>
@@ -557,6 +568,9 @@
       <Library name="defra_jQuery3.2.1.min.js" libraryUniqueId="{d208aee8-5bb3-50d3-4bed-11b35ac85255}" />
       <Library name="defra_email_form_events.js" libraryUniqueId="{e0ee247d-2552-a3e0-e115-0927045256da}" />
     </formLibraries>
+    <DisplayConditions FallbackForm="true" Order="2">
+      <Everyone />
+    </DisplayConditions>
   </form>
   <LocalizedNames>
     <LocalizedName description="Email" languagecode="1033" />
