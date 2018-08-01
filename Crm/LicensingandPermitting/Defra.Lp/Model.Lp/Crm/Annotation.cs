@@ -22,5 +22,6 @@
         public const string Filename = "filename";
         public const string Id = "annotationid";
         public const string FileSize = "filesize";
+        public const string CreatedOn = "createdon";
     }
 }

@@ -118,7 +118,7 @@
                     "body": "@base64ToBinary(triggerBody()?['FileBody'])",
                     "path": "[variables('spo').fileUpload]",
                     "queries": {
-                      "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/",
+                      "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/@{if(empty(triggerBody()?['CaseNo']),'',triggerBody()?['CaseNo'])}",
                       "name": "@triggerBody()?['FileName']",
                       "queryParametersSingleEncoded": true
                     }
@@ -135,11 +135,11 @@
                     },
                     "method": "patch",
                     "body": {
-                      "CRM_x0020_Record_x0020_ID": "@{coalesce(triggerBody()?['AttachmentId'],triggerBody()?['EmailId'])}",
-                      "Email": "@not(empty(triggerBody()?['EmailId']))",
+                      "CRM_x0020_Record_x0020_ID": "@triggerBody()?['CrmId']",
+                      "Email": "@not(empty(coalesce(triggerBody()?['EmailFrom'],triggerBody()?['EmailTo'])))",
                       "Email_x0020_From": "@triggerBody()?['EmailFrom']",
                       "Email_x0020_To0": "@triggerBody()?['EmailTo']",
-                      "Regarding_x0020_Email_x0020_Subject": "@triggerBody()?['FileName']",
+                      "Regarding_x0020_Email_x0020_Subject": "@triggerBody()?['EmailLink']",
                       "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
                         "Value": "@triggerBody()?['EmailRegarding']"
                       },
@@ -152,83 +152,6 @@
                   },
                   "runAfter": {
                     "Upload_file_to_Application_folder_in_SharePoint": [
-                      "Succeeded"
-                    ]
-                  }
-                },
-                "Is_this_an_attachment_linked_to_an_email": {
-                  "type": "If",
-                  "expression": {
-                    "and": [
-                      {
-                        "equals": [
-                          "@empty(triggerBody()?['AttachmentId'])",
-                          false
-                        ]
-                      }
-                    ]
-                  },
-                  "actions": {
-                    "Get_parent_email_for_attachment_by_CRM_Id": {
-                      "type": "ApiConnection",
-                      "inputs": {
-                        "host": {
-                          "connection": {
-                            "name": "@parameters('$connections')['sharepointonline']['connectionId']"
-                          }
-                        },
-                        "method": "get",
-                        "path": "[variables('spo').getParentEmail]",
-                        "queries": {
-                          "$filter": "CRM_x0020_Record_x0020_ID eq '@{triggerBody()?['EmailId']}'"
-                        }
-                      },
-                      "runAfter": {}
-                    },
-                    "For_each": {
-                      "type": "Foreach",
-                      "foreach": "@body('Get_parent_email_for_attachment_by_CRM_Id')?['value']",
-                      "actions": {
-                        "Update_regarding_email_subject_field_for_this_item": {
-                          "type": "ApiConnection",
-                          "inputs": {
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['sharepointonline']['connectionId']"
-                              }
-                            },
-                            "method": "patch",
-                            "body": {
-                              "CRM_x0020_Record_x0020_ID": "@{coalesce(triggerBody()?['AttachmentId'],triggerBody()?['EmailId'])}",
-                              "Email": "@not(empty(triggerBody()?['EmailId']))",
-                              "Email_x0020_From": "@triggerBody()?['EmailFrom']",
-                              "Email_x0020_To0": "@triggerBody()?['EmailTo']",
-                              "Public": false,
-                              "Regarding_x0020_Email_x0020_Subject": "@items('For_each')?['{Name}']",
-                              "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
-                                "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
-                                "Value": "@triggerBody()?['EmailRegarding']"
-                              },
-                              "Reviewed": false,
-                              "Title": "@items('For_each')?['Title']",
-                              "{ContentType}": {
-                                "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
-                              }
-                            },
-                            "path": "[variables('spo').updateFileProperties]"
-                          },
-                          "runAfter": {}
-                        }
-                      },
-                      "runAfter": {
-                        "Get_parent_email_for_attachment_by_CRM_Id": [
-                          "Succeeded"
-                        ]
-                      }
-                    }
-                  },
-                  "runAfter": {
-                    "Update_file_properties": [
                       "Succeeded"
                     ]
                   }
@@ -314,23 +237,26 @@
                     "ApplicationNo": {
                       "type": "string"
                     },
-                    "AttachmentId": {
-                      "type": "string"
-                    },
                     "Customer": {
                       "type": "string"
                     },
                     "EmailFrom": {
-                        "type": "string"
+                      "type": "string"
                     },
-                    "EmailId": {
+                    "CaseNo": {
+                      "type": "string"
+                    },
+                    "CrmId": {
                       "type": "string"
                     },
                     "EmailRegarding": {
-                        "type": "string"
+                      "type": "string"
+                    },
+                    "EmailLink": {
+                      "type": "string"
                     },
                     "EmailTo": {
-                        "type": "string"
+                      "type": "string"
                     },
                     "FileBody": {
                       "type": "string"

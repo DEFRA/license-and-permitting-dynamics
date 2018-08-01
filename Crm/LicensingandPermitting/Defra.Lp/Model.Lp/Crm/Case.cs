@@ -31,5 +31,10 @@
         /// Field name of lookup to Application
         /// </summary>
         public const string Application = "defra_application";
+
+        /// <summary>
+        /// Field name of auto number field
+        /// </summary>
+        public const string TicketNumber = "ticketnumber";
     }
 }

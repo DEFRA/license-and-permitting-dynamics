@@ -120,8 +120,8 @@ namespace Defra.Lp.Common.SharePoint
                         throw new InvalidPluginExecutionException("No email data record returned from query");
                     }
 
-                    var direction = attachmentData.GetAttributeValue<bool>(Email.DirectionCode);
-                    var statusCode = attachmentData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
+                    var direction = emailData.GetAttributeValue<bool>(Email.DirectionCode);
+                    var statusCode = emailData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
                     if (direction && statusCode.Value != 3)
                     {
                         //Outgoing email, do not send the email on create
@@ -225,38 +225,12 @@ namespace Defra.Lp.Common.SharePoint
         {
             TracingService.Trace("Adding Email Parameters to Request");
 
-            //request.AttachmentId = string.Empty;
-            request.EmailId = string.Empty;
-            request.EmailRegarding = string.Empty;
             request.EmailTo = string.Empty;
             request.EmailFrom = string.Empty;
 
-            // Set Email Activity Id when we have an email
+            // Set Email stuff when we have an email
             if (queryRecord.LogicalName == Email.EntityLogicalName || queryRecord.LogicalName == ActivityMimeAttachment.EntityLogicalName)
             {
-                // Set Email activity Id when we have an email
-                if (queryRecord.Contains(Email.ActivityId))
-                {
-                    request.EmailId = queryRecord.GetAttributeValue<Guid>(Email.ActivityId).ToString();
-                }
-
-                // Set Email Activity Id when we have an Attachment
-                if (queryRecord.Contains("email.activityid"))
-                {
-                    request.EmailId = ((Guid)((AliasedValue)queryRecord.Attributes["email.activityid"]).Value).ToString();
-                }
-
-                // Set the email regarding field to Schedule 5 or RFI otherwise assume its an application
-                if (queryRecord.Contains("case.casetypecode"))
-                {
-                    var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
-                    request.EmailRegarding = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
-                }
-                else
-                {
-                    request.EmailRegarding = "Application";
-                }
-
                 if (queryRecord.Contains(Email.Sender))
                 {
                     request.EmailFrom = queryRecord.GetAttributeValue<string>(Email.Sender);
@@ -275,13 +249,22 @@ namespace Defra.Lp.Common.SharePoint
                 if (queryRecord.Contains("email.torecipients"))
                 {
                     request.EmailTo = ((string)((AliasedValue)queryRecord.Attributes["email.torecipients"]).Value);
+                } 
+                if (queryRecord.Contains(Email.Subject))
+                {
+                    // For an email, this is just the filename again
+                    request.EmailLink = GetFileName(queryRecord);
+                }
+                else if (queryRecord.Contains("email.subject"))
+                {
+                    // Annotation needs the filename created for the email from subject and created on date
+                    request.EmailLink = CreateEmailFileNameForAttachment(queryRecord);
                 }
 
-                if (queryRecord.Contains(ActivityMimeAttachment.Id))
-                {
-                    request.AttachmentId = queryRecord.GetAttributeValue<Guid>(ActivityMimeAttachment.Id).ToString();
-                }
             }
+            // Max size of 250 in SharePoint
+            request.EmailFrom = request.EmailFrom.TruncateIfNeeded(250);
+            request.EmailTo = request.EmailTo.TruncateIfNeeded(250);
         }
 
         private void AddInsertFileParametersToRequest(DocumentRelayRequest request, Entity queryRecord)
@@ -294,18 +277,25 @@ namespace Defra.Lp.Common.SharePoint
             var fileName = GetFileName(queryRecord);
             var body = GetBody(queryRecord);
             var description = GetDescription(queryRecord);
+            var subject = GetSubject(queryRecord);
+            var crmId = GetCrmId(queryRecord);
+            var caseNo = GetCaseNumber(queryRecord);
+            var regarding = GetRegarding(queryRecord);
 
             request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
             request.ApplicationNo = applicationNo;
             request.FileBody = body;
-            request.FileDescription = queryRecord.GetAttributeValue<string>("subject");
+            request.FileDescription = subject;
             request.FileName = fileName;
             request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
             request.PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
             request.PermitNo = permitNo;
-            request.Customer = string.Empty;
-            request.SiteDetails = string.Empty;
-            request.PermitDetails = string.Empty;
+            request.Customer = string.Empty;      // Not currently set by Document relay, enhancement
+            request.SiteDetails = string.Empty;   // Not currently set by Document relay, enhancement
+            request.PermitDetails = string.Empty; // Not currently set by Document relay, enhancement
+            request.CrmId = crmId;
+            request.CaseNo = caseNo;
+            request.EmailRegarding = regarding;
 
             AddEmailParametersToRequest(request, queryRecord);
 
@@ -314,14 +304,69 @@ namespace Defra.Lp.Common.SharePoint
             return;
         }
 
+        private string GetRegarding(Entity queryRecord)
+        {
+            var regarding = string.Empty;
+            // Set the email regarding field to Schedule 5 or RFI otherwise assume its an application
+            if (queryRecord.Contains("case.casetypecode"))
+            {
+                var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
+                regarding = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
+            }
+            else
+            {
+                regarding = "Application";
+            }
+            TracingService.Trace("Regarding: {0}", regarding);
+            return regarding;
+        }
+
+        private string GetCaseNumber(Entity queryRecord)
+        {
+            var caseNo = string.Empty;
+            if (queryRecord.Contains("case.ticketnumber"))
+            {
+                caseNo = (string)((AliasedValue)queryRecord.Attributes["case.ticketnumber"]).Value;
+            }
+            TracingService.Trace("CaseNo: {0}", caseNo);
+            return caseNo;
+        }
+
+        private string GetCrmId(Entity queryRecord)
+        {
+            var crmId = string.Empty;
+            // Annotation
+            if (queryRecord.Contains(Annotation.Id))
+            {
+                crmId = queryRecord.GetAttributeValue<Guid>(Annotation.Id).ToString();
+            }
+            // Email
+            if (queryRecord.Contains(Email.ActivityId))
+            {
+                crmId = queryRecord.GetAttributeValue<Guid>(Email.ActivityId).ToString();
+            }
+            // Attachment
+            if (queryRecord.Contains("email.activityid"))
+            {
+                crmId = ((Guid)((AliasedValue)queryRecord.Attributes["email.activityid"]).Value).ToString();
+            }
+            TracingService.Trace("Crm Id: {0}", crmId);
+            return crmId;
+        }
+
         private string GetDescription(Entity queryRecord)
         {
             var desc = string.Empty;
-            if (queryRecord.Contains("subject"))
+            // Emails
+            if (queryRecord.Contains(Email.Subject))
             {
-                desc = (string)queryRecord.GetAttributeValue<string>("subject");
+                desc = queryRecord.GetAttributeValue<string>(Email.Subject);
             }
-            queryRecord.GetAttributeValue<string>("subject");
+            // Attachments
+            if (queryRecord.Contains("email.subject"))
+            {
+                desc = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value;
+            }
             TracingService.Trace("Description: {0}", desc);
             return desc;
         }
@@ -367,37 +412,88 @@ namespace Defra.Lp.Common.SharePoint
             return applicationNo;
         }
 
+        private string GetSubject(Entity queryRecord)
+        {
+            var subject = string.Empty;
+            // email
+            if (queryRecord.Contains(Email.Subject))
+            {
+                subject = queryRecord.GetAttributeValue<string>(Email.Subject);
+            }
+            // attachment
+            if (queryRecord.Contains("email.subject"))
+            {
+                subject = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value;
+            }
+            TracingService.Trace("Subject: {0}", subject);
+            return subject;
+        }
+
+        private string CreateEmailFileName(Entity queryRecord)
+        {
+            // For an email, we're going to use the subject as the filename.
+            var fileName = queryRecord.GetAttributeValue<string>(Email.Subject);
+            var createdDate = queryRecord.GetAttributeValue<DateTime>(Email.CreatedOn);
+            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+            // user uploads something with the same name from front end. Also need to remove
+            // any illegal charcter that SharePoint might complain about
+            fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
+
+            // Give it an HTML ending as we want to view it in SharePoint as HTML
+            fileName = fileName + ".html";
+
+            return fileName;
+        }
+
+        private string CreateEmailFileNameForAttachment(Entity queryRecord)
+        {
+            // For an email, we're going to use the subject as the filename.
+            var fileName = queryRecord.GetAttributeValue<string>("email.subject");
+            var createdDate = queryRecord.GetAttributeValue<DateTime>("email.createdon");
+            // Filename needs to have a timestamp so that CRM doesn't overwrite if the
+            // user uploads something with the same name from front end. Also need to remove
+            // any illegal charcter that SharePoint might complain about
+            fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
+
+            // Give it an HTML ending as we want to view it in SharePoint as HTML
+            fileName = fileName + ".html";
+
+            return fileName;
+        }
+
         private string GetFileName(Entity queryRecord)
         {
             // Filename will be in subject for emails for filename field
             // for annotations and attachments
             var fileName = string.Empty;
+            var createdDate = DateTime.Now;
+            // Use created date for timestamp to avoid querying sharepoint in logic app
+            if (queryRecord.Contains(Email.CreatedOn))
+            {
+                // annotation and email
+                createdDate = queryRecord.GetAttributeValue<DateTime>(Email.CreatedOn);
+            }
+            if (queryRecord.Contains("email.createdon"))
+            {
+                // attachments
+                createdDate = (DateTime)((AliasedValue)queryRecord.Attributes["email.createdon"]).Value;
+            }
             if (queryRecord.Contains("filename"))
             {
+                // attachments and annotations have a filename
                 fileName = queryRecord.GetAttributeValue<string>("filename");
 
                 // Filename needs to have a timestamp so that CRM doesn't overwrite if the
                 // user uploads something with the same name from front end. Also need to remove
                 // any illegal charcter that SharePoint might complain about
-                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp();
+                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
             }
             else if (queryRecord.Contains(Email.Subject))
             {
                 // For an email, we're going to use the subject as the filename.
-                fileName = queryRecord.GetAttributeValue<string>(Email.Subject);
-
-                // Filename needs to have a timestamp so that CRM doesn't overwrite if the
-                // user uploads something with the same name from front end. Also need to remove
-                // any illegal charcter that SharePoint might complain about
-                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp();
-
-                // Give it an HTML ending as we want to view it in SharePoint as HTML
-                fileName = fileName + ".html";
+                fileName = CreateEmailFileName(queryRecord);
             }
-
-
             TracingService.Trace("Filename: {0}", fileName);
-
             return fileName;
         }
 
@@ -444,7 +540,7 @@ namespace Defra.Lp.Common.SharePoint
             QEannotation.TopCount = 1;
 
             // Add columns to annotation entity
-            QEannotation.ColumnSet.AddColumns(Annotation.Subject, Annotation.DocumentBody, Annotation.Filename, Annotation.Id, Annotation.NoteText, Annotation.FileSize, Annotation.IsDocument);
+            QEannotation.ColumnSet.AddColumns(Annotation.Subject, Annotation.DocumentBody, Annotation.Filename, Annotation.Id, Annotation.NoteText, Annotation.FileSize, Annotation.IsDocument, Annotation.CreatedOn);
 
             // Define filter on Primary key
             QEannotation.Criteria.AddCondition(Annotation.Id, ConditionOperator.Equal, recordId);
@@ -461,7 +557,7 @@ namespace Defra.Lp.Common.SharePoint
             QEannotation_incident.EntityAlias = "case";
 
             // Add columns to Case entity
-            QEannotation_incident.Columns.AddColumns(Case.Title, Case.IncidentId);
+            QEannotation_incident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType, Case.TicketNumber);
 
             // Add link-entity from case to application
             var QEannotation_incident_defra_application = QEannotation_incident.AddLink(Application.EntityLogicalName, Case.Application, Application.ApplicationId, JoinOperator.LeftOuter);
@@ -498,7 +594,7 @@ namespace Defra.Lp.Common.SharePoint
             QEactivitymimeattachment_email.EntityAlias = "email";
 
             // Add columns to QEactivitymimeattachment_email.Columns
-            QEactivitymimeattachment_email.Columns.AddColumns(Email.DirectionCode, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.Sender, Email.ToRecipients);
+            QEactivitymimeattachment_email.Columns.AddColumns(Email.Description, Email.Subject, Email.DirectionCode, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.Sender, Email.ToRecipients, Email.CreatedOn);
 
             // Add Application link-entity and define an alias.
             // Its an outer join as we want to return results even if not regarding an application
@@ -520,7 +616,7 @@ namespace Defra.Lp.Common.SharePoint
             QEactivitymimeattachment_email_incident.EntityAlias = "case";
 
             // Add columns to Case Entity
-            QEactivitymimeattachment_email_incident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType);
+            QEactivitymimeattachment_email_incident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType, Case.TicketNumber);
 
             // Add link-entity to Application Entity from Case and define an alias
             var QEactivitymimeattachment_email_incident_defra_application = QEactivitymimeattachment_email_incident.AddLink(Application.EntityLogicalName,
@@ -547,7 +643,7 @@ namespace Defra.Lp.Common.SharePoint
             QEemail.TopCount = 1;
 
             // Add columns for Email entity
-            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode, Email.Sender, Email.ToRecipients);
+            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode, Email.Sender, Email.ToRecipients, Email.CreatedOn);
 
             // Define filter
             QEemail.Criteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, recordId);
@@ -566,7 +662,7 @@ namespace Defra.Lp.Common.SharePoint
             QEemail_incident.EntityAlias = "case";
 
             // Add columns for Case link entity
-            QEemail_incident.Columns.AddColumns(Case.CaseType, Case.Title, Case.IncidentId);
+            QEemail_incident.Columns.AddColumns(Case.CaseType, Case.Title, Case.IncidentId, Case.TicketNumber);
 
             // Add link-entity from Case to Application and define an alias
             var QEemail_incident_defra_application = QEemail_incident.AddLink(Application.EntityLogicalName, Case.Application, Application.ApplicationId, JoinOperator.LeftOuter);

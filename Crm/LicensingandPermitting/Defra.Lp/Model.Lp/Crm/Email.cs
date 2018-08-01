@@ -14,5 +14,6 @@
         public const string DirectionCode = "directioncode";
         public const string Sender = "sender";
         public const string ToRecipients = "torecipients";
+        public const string CreatedOn = "createdon";
     }
 }

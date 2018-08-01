@@ -44,12 +44,12 @@ namespace Core.Helpers.Extensions
         /// </summary>
         /// <param name="fileName">Original filename</param>
         /// <returns>Orignal filename + timestamp + ext</returns>
-        public static string AppendTimeStamp(this string fileName)
+        public static string AppendTimeStamp(this string fileName, DateTime date)
         {
             return string.Concat(
                 Path.GetFileNameWithoutExtension(fileName),
                 "_",
-                DateTime.Now.ToString("yyyyMMddHHmmssfff"),
+                date.ToString("yyyyMMddHHmmssfff"),
                 Path.GetExtension(fileName)
                 );
         }
