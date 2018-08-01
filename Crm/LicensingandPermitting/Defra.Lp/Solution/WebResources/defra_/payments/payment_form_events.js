@@ -201,8 +201,6 @@ var Payments = {
             Xrm.Page.getControl("defra_type").removeOption("910400008");
             Xrm.Page.getControl("defra_type").removeOption("910400009");
 
-            // Change labels
-            Xrm.Page.getControl('defra_payment_received_date').setLabel('Postal Code');
         }
         else if (paymentCategory === 910400001){
             // Outbound
