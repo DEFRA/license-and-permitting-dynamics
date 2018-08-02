@@ -91,12 +91,12 @@ namespace Defra.Lp.Plugins
                 if (entityReference.LogicalName == ActivityMimeAttachment.EntityLogicalName)
                 {
                     // Triggered for email attachments
-                    azureInterface.UploadFile(entityReference, "email", "defra_applicationid");
+                    azureInterface.UploadFile(entityReference);
                 }
                 else if (entityReference.LogicalName == Email.EntityLogicalName)
                 {
                     // Triggered for emails
-                    azureInterface.UploadFile(entityReference, Application.EntityLogicalName, "defra_applicationid");
+                    azureInterface.UploadFile(entityReference);
                 }
                 else if (entityReference.LogicalName == Annotation.EntityLogicalName)
                 {
@@ -121,7 +121,7 @@ namespace Defra.Lp.Plugins
                                     //if (target.Attributes.Contains(bodyAttr) && !string.IsNullOrEmpty(target.GetAttributeValue<string>(bodyAttr)))
                                     if (entity.GetAttributeValue<bool>(Annotation.IsDocument))
                                     {
-                                        azureInterface.UploadFile(entityReference, Application.EntityLogicalName, "defra_applicationid");
+                                        azureInterface.UploadFile(entityReference);
                                     }
                                     else
                                     {

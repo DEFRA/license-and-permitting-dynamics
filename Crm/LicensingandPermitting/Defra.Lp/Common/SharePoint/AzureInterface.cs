@@ -79,25 +79,41 @@ namespace Defra.Lp.Common.SharePoint
             SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
         }
 
-        internal void UploadFile(EntityReference recordIdentifier, string parentEntity, string parentLookup)
+        
+
+        internal void UploadFile(EntityReference recordIdentifier)
         {
-            TracingService.Trace(string.Format("In UploadFile with Entity Type {0} and Entity Id {1}. Parent Entity: {2} Lookup Name: {3}", recordIdentifier.LogicalName, recordIdentifier.Id, parentEntity, parentLookup));
-            
-            var request = new DocumentRelayRequest();
-            Entity annotationData = null;
-            Entity attachmentData = null;
-            Entity emailData = null;
+            TracingService.Trace("In UploadFile with Entity Type {0} and Entity Id {1}", recordIdentifier.LogicalName, recordIdentifier.Id);
 
-            if (parentEntity == Email.EntityLogicalName)
+            switch (recordIdentifier.LogicalName)
             {
-                // This will have been fired against the creation of the Activity Mime Attachment Record. We want to
-                // process the email attachments and upload to SharePoint.
-                attachmentData = ReturnAttachmentData(recordIdentifier.Id);
-                if (attachmentData == null)
-                {
-                    throw new InvalidPluginExecutionException("No attachment data record returned from query");
-                }
+                case Email.EntityLogicalName:
+                    UploadEmail(recordIdentifier.Id);
+                    break;
+                case ActivityMimeAttachment.EntityLogicalName:
+                    UploadAttachment(recordIdentifier.Id);
+                    break; 
+                default:
+                    // Default is annotation for Application or Case
+                    UploadAnnotation(recordIdentifier.Id);
+                    break;
+            }
+        }
 
+        private void UploadAttachment(Guid recordId)
+        {
+            var request = new DocumentRelayRequest();
+            // This will have been fired against the creation of the Activity Mime Attachment Record. We want to
+            // process the email attachments and upload to SharePoint.
+            var attachmentData = ReturnAttachmentData(recordId);
+            if (attachmentData == null)
+            {
+                throw new InvalidPluginExecutionException("No attachment data record returned from query");
+            }
+
+            var regardingObjectId = GetRegardingObjectId(attachmentData);
+            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName != Case.EntityLogicalName))
+            {
                 var direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
                 var statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
                 if (direction && statusCode.Value != 3)
@@ -108,62 +124,86 @@ namespace Defra.Lp.Common.SharePoint
                 }
 
                 AddInsertFileParametersToRequest(request, attachmentData);
+
+                var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
+                if (resultBody != null)
+                {
+                    TracingService.Trace("Returned from LogicApp OK");
+                    if (attachmentData != null)
+                    {
+                        // Delete attachment from CRM
+                        attachmentData[ActivityMimeAttachment.Body] = string.Empty;
+                        Service.Update(attachmentData);
+                    }
+                }
             }
             else
             {
-                if (recordIdentifier.LogicalName == Email.EntityLogicalName)
-                {
-                    // Processing an email record. Need the information so we can upload the email to SharePoint
-                    emailData = ReturnEmailData(recordIdentifier.Id);
-                    if (emailData == null)
-                    {
-                        throw new InvalidPluginExecutionException("No email data record returned from query");
-                    }
+                TracingService.Trace("Only attachments for emails regarding Applications, RFIs or Schedule 5s are currently sent to SharePoint");
+            }
+        }
 
-                    var direction = emailData.GetAttributeValue<bool>(Email.DirectionCode);
-                    var statusCode = emailData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
-                    if (direction && statusCode.Value != 3)
-                    {
-                        //Outgoing email, do not send the email on create
-                        TracingService.Trace("Aborted creating email for outgoing email that is not sent");
-                        return;
-                    }
+        private void UploadEmail(Guid recordId)
+        {
+            var request = new DocumentRelayRequest();
 
-                    AddInsertFileParametersToRequest(request, emailData);
-                }
-                else
-                {
-                    // Creation of of an Annotation record on a Application or Case
-                    annotationData = ReturnAnnotationData(recordIdentifier.Id, parentEntity, parentLookup);
-                    if (annotationData == null)
-                    {
-                        throw new InvalidPluginExecutionException("No annotation data record returned from query");
-                    }
-
-                    AddInsertFileParametersToRequest(request, annotationData);
-                }
+            // Processing an email record. Need the information so we can upload the email to SharePoint
+            var emailData = ReturnEmailData(recordId);
+            if (emailData == null)
+            {
+                throw new InvalidPluginExecutionException("No email data record returned from query");
             }
 
-            var stringContent = JsonConvert.SerializeObject(request);
-            var logicAppUrl = Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"];
-            TracingService.Trace($"Sending data to Logic App URL {logicAppUrl}");
+            var regardingObjectId = GetRegardingObjectId(emailData);
+            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName != Case.EntityLogicalName))
+            {
+                var direction = emailData.GetAttributeValue<bool>(Email.DirectionCode);
+                var statusCode = emailData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
+                if (direction && statusCode.Value != 3)
+                {
+                    //Outgoing email, do not send the email on create
+                    TracingService.Trace("Aborted creating email for outgoing email that is not sent");
+                    return;
+                }
 
-            var resultBody = SendRequest(logicAppUrl, stringContent);
+                AddInsertFileParametersToRequest(request, emailData);
 
-            if (resultBody!= null)
+                var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
+                if (resultBody != null)
+                {
+                    TracingService.Trace("Returned from LogicApp OK");
+                }
+            }
+            else
+            {
+                TracingService.Trace("Only emails regarding Applications, RFIs or Schedule 5s are sent to SharePoint");
+            }
+        }
+
+        private void UploadAnnotation(Guid recordId)
+        {
+            var request = new DocumentRelayRequest();
+
+            // Creation of of an Annotation record on a Application or Case
+            var annotationData = ReturnAnnotationData(recordId);
+            if (annotationData == null)
+            {
+                throw new InvalidPluginExecutionException("No annotation data record returned from query");
+            }
+
+            AddInsertFileParametersToRequest(request, annotationData);
+
+            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
+            if (resultBody != null)
             {
                 TracingService.Trace("Returned from LogicApp OK");
                 if (annotationData != null)
                 {
+                    // Delete annotation from CRM and a note to say thats what we've done!
                     annotationData[Annotation.NoteText] = "File has been uploaded to SharePoint.";
                     annotationData[Annotation.DocumentBody] = string.Empty;
                     Service.Update(annotationData);
                 }
-                else if (attachmentData != null)
-                {
-                    attachmentData[ActivityMimeAttachment.Body] = string.Empty;
-                    Service.Update(attachmentData);
-                }   
             }
         }
 
@@ -302,6 +342,22 @@ namespace Defra.Lp.Common.SharePoint
             TracingService.Trace(string.Format("Requests: {0}", request));
 
             return;
+        }
+
+        private EntityReference GetRegardingObjectId(Entity queryRecord)
+        {
+            EntityReference regardingObjectRef = null;
+            // Email
+            if (queryRecord.Contains(Email.RegardingObjectId))
+            {
+                regardingObjectRef = queryRecord.GetAttributeValue<EntityReference>(Email.RegardingObjectId);
+            }
+            // Attachment
+            if (queryRecord.Contains(Email.RegardingObjectId))
+            {
+                regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>("email.regardingobjectid")).Value;
+            }
+            return regardingObjectRef;
         }
 
         private string GetRegarding(Entity queryRecord)
@@ -533,7 +589,7 @@ namespace Defra.Lp.Common.SharePoint
             return body;
         }
 
-        private Entity ReturnAnnotationData(Guid recordId, string parentEntityName, string parentLookup)
+        private Entity ReturnAnnotationData(Guid recordId)
         {
             // Instantiate QueryExpression QEannotation
             var QEannotation = new QueryExpression(Annotation.EntityLogicalName);
@@ -682,7 +738,7 @@ namespace Defra.Lp.Common.SharePoint
 
         private string SendRequest(string url, string requestContent)
         {
-            TracingService.Trace(string.Format("Sending request to {0}", url));
+            TracingService.Trace("Sending request to {0}", url);
 
             using (var httpclient = new HttpClient())
             {
@@ -718,7 +774,8 @@ namespace Defra.Lp.Common.SharePoint
         /// Need to process as a series of async plugin requests because we don't know how many attachments there might be
         /// so could exceed the limit of 2 minutes.
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entityName"></param>
+        /// <param name="id"></param>
         internal void SendFileToSharePointActionRequest(string entityName, Guid id)
         {
             var actionRequest = new OrganizationRequest(PluginMessages.SendFileToSharePoint)
