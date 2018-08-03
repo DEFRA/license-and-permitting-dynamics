@@ -112,7 +112,7 @@ namespace Defra.Lp.Common.SharePoint
             }
 
             var regardingObjectId = GetRegardingObjectId(attachmentData);
-            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName != Case.EntityLogicalName))
+            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName == Case.EntityLogicalName))
             {
                 var direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("email.directioncode")).Value;
                 var statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("email.statuscode")).Value;
@@ -155,7 +155,7 @@ namespace Defra.Lp.Common.SharePoint
             }
 
             var regardingObjectId = GetRegardingObjectId(emailData);
-            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName != Case.EntityLogicalName))
+            if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName == Case.EntityLogicalName))
             {
                 var direction = emailData.GetAttributeValue<bool>(Email.DirectionCode);
                 var statusCode = emailData.GetAttributeValue<OptionSetValue>(Email.StatusCode);
