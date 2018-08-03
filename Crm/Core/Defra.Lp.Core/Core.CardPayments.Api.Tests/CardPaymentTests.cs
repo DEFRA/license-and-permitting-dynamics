@@ -14,12 +14,12 @@ namespace Core.CardPayments.Tests
     [TestClass]
     public class CardPaymentsServiceTests
     {
-        private const string APIKey = "";
+
         private string pid;
 
         private RestServiceConfiguration serviceConfiguration = new RestServiceConfiguration
         {
-            ApiKey = "5npsgtkn8p0sd5r0l03qhhlsuafbk9cbgecu038ksvuvl091uhvo8i6pk4",
+            ApiKey = "",
             SecurityProtocol = SecurityProtocolType.Tls12,
             SecurityHeader = "Bearer",
             TargetHost = "publicapi.payments.service.gov.uk",
