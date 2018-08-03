@@ -353,7 +353,7 @@ namespace Defra.Lp.Common.SharePoint
                 regardingObjectRef = queryRecord.GetAttributeValue<EntityReference>(Email.RegardingObjectId);
             }
             // Attachment
-            if (queryRecord.Contains(Email.RegardingObjectId))
+            if (queryRecord.Contains("email.regardingobjectid"))
             {
                 regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>("email.regardingobjectid")).Value;
             }
@@ -504,8 +504,8 @@ namespace Defra.Lp.Common.SharePoint
         private string CreateEmailFileNameForAttachment(Entity queryRecord)
         {
             // For an email, we're going to use the subject as the filename.
-            var fileName = queryRecord.GetAttributeValue<string>("email.subject");
-            var createdDate = queryRecord.GetAttributeValue<DateTime>("email.createdon");
+            var fileName = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value; ;
+            var createdDate = (DateTime)((AliasedValue)queryRecord.Attributes["email.createdon"]).Value;
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end. Also need to remove
             // any illegal charcter that SharePoint might complain about
