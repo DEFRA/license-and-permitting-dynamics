@@ -125,7 +125,7 @@ namespace Defra.Lp.Plugins
                                     }
                                     else
                                     {
-                                        tracingService.Trace("No file attached");
+                                        tracingService.Trace("No file attached. File already uploaded to SharePoint.");
                                     }
                                 }
                                 else

@@ -79,8 +79,6 @@ namespace Defra.Lp.Common.SharePoint
             SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
         }
 
-        
-
         internal void UploadFile(EntityReference recordIdentifier)
         {
             TracingService.Trace("In UploadFile with Entity Type {0} and Entity Id {1}", recordIdentifier.LogicalName, recordIdentifier.Id);
@@ -172,6 +170,12 @@ namespace Defra.Lp.Common.SharePoint
                 if (resultBody != null)
                 {
                     TracingService.Trace("Returned from LogicApp OK");
+                    if (emailData != null)
+                    {
+                        // Set uploaded to SharePoint flag!
+                        emailData[Email.UploadedToSharePoint] = true;
+                        Service.Update(emailData);
+                    }
                 }
             }
             else
@@ -430,10 +434,10 @@ namespace Defra.Lp.Common.SharePoint
         private string GetPermitNumber(Entity queryRecord)
         {
             var permitNo = string.Empty;
-            if (queryRecord.Contains("parent.defra_permitnumber"))
-            {
-                permitNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_permitnumber"]).Value;
-            }
+            //if (queryRecord.Contains("parent.defra_permitnumber"))
+            //{
+            //    permitNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_permitnumber"]).Value;
+            //}
             if (queryRecord.Contains("application.defra_permitnumber"))
             {
                 permitNo = (string)((AliasedValue)queryRecord.Attributes["application.defra_permitnumber"]).Value;
@@ -449,11 +453,11 @@ namespace Defra.Lp.Common.SharePoint
         private string GetApplicationNumber(Entity queryRecord)
         {
             var applicationNo = string.Empty;
-            if (queryRecord.Contains("parent.defra_applicationnumber"))
-            {
-                applicationNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_applicationnumber"]).Value;
-                applicationNo = applicationNo.Replace('/', '_');
-            }
+            //if (queryRecord.Contains("parent.defra_applicationnumber"))
+            //{
+            //    applicationNo = (string)((AliasedValue)queryRecord.Attributes["parent.defra_applicationnumber"]).Value;
+            //    applicationNo = applicationNo.Replace('/', '_');
+            //}
             if (queryRecord.Contains("application.defra_applicationnumber"))
             {
                 applicationNo = (string)((AliasedValue)queryRecord.Attributes["application.defra_applicationnumber"]).Value;
@@ -504,7 +508,7 @@ namespace Defra.Lp.Common.SharePoint
         private string CreateEmailFileNameForAttachment(Entity queryRecord)
         {
             // For an email, we're going to use the subject as the filename.
-            var fileName = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value; ;
+            var fileName = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value;
             var createdDate = (DateTime)((AliasedValue)queryRecord.Attributes["email.createdon"]).Value;
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end. Also need to remove
@@ -699,7 +703,7 @@ namespace Defra.Lp.Common.SharePoint
             QEemail.TopCount = 1;
 
             // Add columns for Email entity
-            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode, Email.Sender, Email.ToRecipients, Email.CreatedOn);
+            QEemail.ColumnSet.AddColumns(Email.Description, Email.Subject, Email.ActivityId, Email.StatusCode, Email.RegardingObjectId, Email.DirectionCode, Email.Sender, Email.ToRecipients, Email.CreatedOn, Email.UploadedToSharePoint);
 
             // Define filter
             QEemail.Criteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, recordId);

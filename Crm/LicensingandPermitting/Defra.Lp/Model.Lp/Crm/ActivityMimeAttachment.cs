@@ -13,6 +13,11 @@
         public const string Filename = "filename";
 
         /// <summary>
+        /// Filesize field name
+        /// </summary>
+        public const string Filesize = "filesize";
+
+        /// <summary>
         /// Body field name
         /// </summary>
         public const string Body = "body";

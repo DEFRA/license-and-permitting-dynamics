@@ -15,5 +15,6 @@
         public const string Sender = "sender";
         public const string ToRecipients = "torecipients";
         public const string CreatedOn = "createdon";
+        public const string UploadedToSharePoint = "defra_uploadedtosharepoint";
     }
 }
