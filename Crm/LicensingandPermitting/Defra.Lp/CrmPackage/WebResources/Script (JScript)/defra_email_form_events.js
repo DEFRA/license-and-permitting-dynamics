@@ -76,42 +76,41 @@ function SetToField() {
     }
 
     // 2. Get Application Primary Contact
+    var uri = Xrm.Page.context.getClientUrl() +
+        "/api/data/v8.2/defra_applications?$select=_defra_primarycontactid_value&$filter=defra_applicationid eq " +
+        regardingLookup[0].id.replace('{', '').replace('}', '');
 
-    var req = new XMLHttpRequest();
-    req.open("GET", Xrm.Page.context.getClientUrl() 
-        + "/api/data/v8.2/defra_applications?$select=_defra_primarycontactid_value&$filter=defra_applicationid eq " 
-        + regardingLookup[0].id.replace('{', '').replace('}', ''),
-        true);
-    req.setRequestHeader("OData-MaxVersion", "4.0");
-    req.setRequestHeader("OData-Version", "4.0");
-    req.setRequestHeader("Accept", "application/json");
-    req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-    req.setRequestHeader("Prefer", "odata.include-annotations=\"*\",odata.maxpagesize=1");
-    req.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            req.onreadystatechange = null;
-            if (this.status === 200) {
-                var results = JSON.parse(this.response);
+    $.ajax({
+        url: uri,
+        type: 'GET',
+        dataType: 'json',
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
 
-                if (results && results.value && results.value.length > 0) {
+            if (data && data.value && data.value.length > 0) {
 
-                    // 3. Set TO field to Primary Contact
-                    var _defra_primarycontactid_value = results.value[0]["_defra_primarycontactid_value"];
-                    var _defra_primarycontactid_value_formatted = results.value[0]["_defra_primarycontactid_value@OData.Community.Display.V1.FormattedValue"];
-                    var _defra_primarycontactid_value_lookuplogicalname = results.value[0]["_defra_primarycontactid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
+                // 3. Set TO field to Primary Contact
+                var _defra_primarycontactid_value = data.value[0]["_defra_primarycontactid_value"];
+                var _defra_primarycontactid_value_formatted = data.value[0]["_defra_primarycontactid_value@OData.Community.Display.V1.FormattedValue"];
+                var _defra_primarycontactid_value_lookuplogicalname = data.value[0]["_defra_primarycontactid_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
 
-                    if (results.value[0] && _defra_primarycontactid_value_lookuplogicalname) {
-                        var lookupReference = [];
-                        lookupReference[0] = {};
-                        lookupReference[0].id = _defra_primarycontactid_value;
-                        lookupReference[0].entityType = _defra_primarycontactid_value_lookuplogicalname;
-                        lookupReference[0].name = _defra_primarycontactid_value_formatted;
-                        Xrm.Page.getAttribute("to").setValue(lookupReference);
-                    }
+                if (data.value[0] && _defra_primarycontactid_value_lookuplogicalname) {
+                    var lookupReference = [];
+                    lookupReference[0] = {};
+                    lookupReference[0].id = _defra_primarycontactid_value;
+                    lookupReference[0].entityType = _defra_primarycontactid_value_lookuplogicalname;
+                    lookupReference[0].name = _defra_primarycontactid_value_formatted;
+                    Xrm.Page.getAttribute("to").setValue(lookupReference);
                 }
             }
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
         }
-    };
-    req.send();
+    });
+
+
 }
 
