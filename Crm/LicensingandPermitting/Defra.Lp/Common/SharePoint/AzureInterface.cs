@@ -101,8 +101,7 @@ namespace Defra.Lp.Common.SharePoint
         private void UploadAttachment(Guid recordId)
         {
             var request = new DocumentRelayRequest();
-            // This will have been fired against the creation of the Activity Mime Attachment Record. We want to
-            // process the email attachments and upload to SharePoint.
+            // Email attachment has been created. Query CRM to get the email attachment data
             var attachmentData = ReturnAttachmentData(recordId);
             if (attachmentData == null)
             {
@@ -188,7 +187,7 @@ namespace Defra.Lp.Common.SharePoint
         {
             var request = new DocumentRelayRequest();
 
-            // Creation of of an Annotation record on a Application or Case
+            // Creation of of an Annotation record on a Application or Case. 
             var annotationData = ReturnAnnotationData(recordId);
             if (annotationData == null)
             {
@@ -323,7 +322,7 @@ namespace Defra.Lp.Common.SharePoint
             var description = GetDescription(queryRecord);
             var subject = GetSubject(queryRecord);
             var crmId = GetCrmId(queryRecord);
-            var caseNo = GetCaseNumber(queryRecord);
+            var caseNo = GetCaseFolderName(queryRecord);
             var regarding = GetRegarding(queryRecord);
 
             request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
@@ -381,14 +380,29 @@ namespace Defra.Lp.Common.SharePoint
             return regarding;
         }
 
-        private string GetCaseNumber(Entity queryRecord)
+        private string GetCaseFolderName(Entity queryRecord)
         {
+            //var caseType = string.Empty;
             var caseNo = string.Empty;
+            //var title = string.Empty;
+            //if (queryRecord.Contains("case.casetypecode"))
+            //{
+            //    var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
+            //    caseType = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
+            //}
+            // Using the unique generated id intially. Does the title work better? Might be updated. Does that matter?
+            //
+            //if (queryRecord.Contains("case.title"))
+            //{
+            //    title = (string)((AliasedValue)queryRecord.Attributes["case.title"]).Value;
+            //    title = SpRemoveIllegalChars(title, false); // Used for folder name. Spaces ok.
+            //}
             if (queryRecord.Contains("case.ticketnumber"))
             {
                 caseNo = (string)((AliasedValue)queryRecord.Attributes["case.ticketnumber"]).Value;
             }
-            TracingService.Trace("CaseNo: {0}", caseNo);
+            //var caseFolderName = string.Format("{0}_{1}", caseType, title);
+            TracingService.Trace("Case Folder Name: {0}", caseNo);
             return caseNo;
         }
 
@@ -762,10 +776,18 @@ namespace Defra.Lp.Common.SharePoint
 
         private string SpRemoveIllegalChars(string fileName)
         {
+            return SpRemoveIllegalChars(fileName, true);
+        }
+
+        private string SpRemoveIllegalChars(string fileName, bool removeWhiteSpace)
+        {
             fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
             var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
             fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
-            fileName = Regex.Replace(fileName, @"\s", ""); // Removes whitespace
+            if (removeWhiteSpace)
+            {
+                fileName = Regex.Replace(fileName, @"\s", ""); // Removes whitespace
+            }
             if (fileName.Length >= 76)
             {
                 fileName = fileName.Remove(75);
