@@ -81,12 +81,18 @@ function SetToField() {
         regardingLookup[0].id.replace('{', '').replace('}', '');
 
     $.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        datatype: "json",
         url: uri,
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/json",
-        async: false,
-        success: function (data) {
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("OData-MaxVersion", "4.0");
+            XMLHttpRequest.setRequestHeader("OData-Version", "4.0");
+            XMLHttpRequest.setRequestHeader("Accept", "application/json");
+            XMLHttpRequest.setRequestHeader("Prefer", "odata.include-annotations=\"*\",odata.maxpagesize=1");
+        },
+        async: true,
+        success: function (data, textStatus, xhr) {
 
             if (data && data.value && data.value.length > 0) {
 
@@ -104,13 +110,10 @@ function SetToField() {
                     Xrm.Page.getAttribute("to").setValue(lookupReference);
                 }
             }
-
-
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function (xhr, textStatus, errorThrown) {
+            Xrm.Utility.alertDialog(textStatus + " " + errorThrown);
         }
     });
-
-
 }
 
