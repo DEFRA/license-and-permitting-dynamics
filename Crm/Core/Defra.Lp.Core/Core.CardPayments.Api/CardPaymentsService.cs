@@ -1,18 +1,20 @@
-﻿
-using System.Text;
-using CardPayments;
-using CardPayments.Model;
-
-namespace Defra.Lp.Core.Workflows.CompaniesHouse
+﻿namespace Defra.Lp.Core.Workflows.CompaniesHouse
 {
     using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.IO;
     using System.Runtime.Serialization.Json;
+    using System.Text;
+    using global::CardPayments;
+    using global::CardPayments.Model;
 
     public class CardPaymentService : RestServiceBase
     {
+
+        // String that would be returned by GovPay on error
+        private const string ErrorState = "error";
+
         public CardPaymentService(RestServiceConfiguration configuration)
             :base(configuration)
         {
@@ -23,10 +25,25 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
             using (this.Httpclient)
             {
                 // 1. Call API
-                var byteContent = PrepareRequest(request);
+                ByteArrayContent byteContent = PrepareRequest(request);
 
                 // Todo: Implement retry orchestration
-                var result = Post(CardServiceConstants.CreatePaymentCommand, byteContent);
+                HttpResponseMessage result;
+                try
+                {
+                    result = Post(CardServiceConstants.CreatePaymentCommand, byteContent);
+                }
+                catch (Exception ex)
+                {
+                    return new CreatePaymentResponse
+                    {
+                        error_message = ex.Message,
+                        state = new State
+                        {
+                            status = "error"
+                        }
+                    };
+                }
                 
                 // 2. Check Request Status
                 if (result.IsSuccessStatusCode)
@@ -34,20 +51,19 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                     // 3. Parse Response
                     return ParseResponse<CreatePaymentResponse>(result.Content);
                 }
-                else
-                {
-                    return new CreatePaymentResponse
-                    {
-                        error_message = result.Content?.ReadAsStringAsync().Result,
-                        state = new State
-                        {
-                            status = "error"
-                        }
-                    };
 
-                    //4. Handle Errors
-                    //throw new ApplicationException($"There was an error calling the api {CardServiceConstants.CreatePaymentCommand}: {result.StatusCode} - {result.ReasonPhrase}");
-                }
+                // Return error
+                return new CreatePaymentResponse
+                {
+                    error_message = result.Content?.ReadAsStringAsync().Result,
+                    state = new State
+                    {
+                        status = "error"
+                    }
+                };
+
+                //4. Handle Errors
+                //throw new ApplicationException($"There was an error calling the api {CardServiceConstants.CreatePaymentCommand}: {result.StatusCode} - {result.ReasonPhrase}");
             }
         }
 
@@ -58,7 +74,22 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
             {
                 // 1. Call API
                 // Todo: Implement retry orchestration
-                var result = Get(CardServiceConstants.FindPaymentCommand + "/" + request.PaymentId );
+                HttpResponseMessage result;
+                try
+                {
+                    result = Get(CardServiceConstants.FindPaymentCommand + "/" + request.PaymentId);
+                }
+                catch (Exception ex)
+                {
+                    return new FindPaymentResponse
+                    {
+                        error_message = ex.Message,
+                        state = new State
+                        {
+                            status = ErrorState
+                        }
+                    };
+                }
 
                 // 2. Check Request Status
                 if (result.IsSuccessStatusCode)
@@ -70,7 +101,6 @@ namespace Defra.Lp.Core.Workflows.CompaniesHouse
                 {
                     //4. Handle Errors
                     throw new ApplicationException($"There was an error calling the api {CardServiceConstants.FindPaymentCommand}: {result.StatusCode} - {result.StatusCode}");
-
                 }
             }
         }

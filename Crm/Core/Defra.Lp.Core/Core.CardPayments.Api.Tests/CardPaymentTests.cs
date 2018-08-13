@@ -14,19 +14,19 @@ namespace Core.CardPayments.Tests
     [TestClass]
     public class CardPaymentsServiceTests
     {
-        private const string APIKey = "5npsgtkn8p0sd5r0l03qhhlsuafbk9cbgecu038ksvuvl091uhvo8i6pk4";
+
         private string pid;
 
         private RestServiceConfiguration serviceConfiguration = new RestServiceConfiguration
         {
-            ApiKey = "5npsgtkn8p0sd5r0l03qhhlsuafbk9cbgecu038ksvuvl091uhvo8i6pk4",
+            ApiKey = "",
             SecurityProtocol = SecurityProtocolType.Tls12,
             SecurityHeader = "Bearer",
             TargetHost = "publicapi.payments.service.gov.uk",
             TargetUrl = "https://publicapi.payments.service.gov.uk/"
         };
 
-        /*
+        
         [TestMethod]
         public void CreatePaymentIsSuccessful()
         {
@@ -41,7 +41,27 @@ namespace Core.CardPayments.Tests
             });
             Assert.IsNotNull(response);
         }
-        */
+
+
+        [TestMethod]
+        public void CreatePaymentGovPayOffline()
+        {
+            var config = serviceConfiguration;
+            config.TargetUrl = "https://test.invaliddomaindoesnotexisteverever.com/";
+            config.TargetHost = "test.invaliddomaindoesnotexisteverever.com";
+
+            CardPaymentService service = new CardPaymentService(serviceConfiguration);
+
+            var response = service.CreatePayment(new CreatePaymentRequest
+            {
+                amount = 100,
+                description = "Test1",
+                return_url = "https://defra/",
+                reference = "MSTEST1"
+            });
+            Assert.IsNotNull(response.state.status = "error");
+        }
+
 
         [TestMethod]
         public void FindPaymentIsSuccessful()                                                                                   
@@ -73,7 +93,7 @@ namespace Core.CardPayments.Tests
 
 
         [TestMethod]
-        public void FindPayment()
+        public void FindPaymentSuccessful()
         {
 
             var response = new CardPaymentService(serviceConfiguration).FindPayment(new FindPaymentRequest
@@ -82,6 +102,21 @@ namespace Core.CardPayments.Tests
             });
 
             Assert.IsNotNull(response);
+        }
+
+        [TestMethod]
+        public void FindPaymentSuccessfulGovPayOffline()
+        {
+            var config = serviceConfiguration;
+            config.TargetUrl = "https://test.invaliddomaindoesnotexisteverever.com/";
+            config.TargetHost = "test.invaliddomaindoesnotexisteverever.com";
+
+            var response = new CardPaymentService(config).FindPayment(new FindPaymentRequest
+            {
+                PaymentId = pid
+            });
+
+            Assert.IsNotNull(response.state.status = "error");
         }
     }
 }
