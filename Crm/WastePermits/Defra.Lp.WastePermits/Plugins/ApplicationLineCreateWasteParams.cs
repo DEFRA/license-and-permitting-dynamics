@@ -125,6 +125,9 @@ namespace Defra.Lp.WastePermits.Plugins
                             Guid? applicationId = this.GetApplicationId(preImageEntity, targetAppLine);
                             this.GetApplication(applicationId);
 
+                            // Check for Duplicate Standard Rules on this Application
+                            CheckForDuplicateStandardRules(targetAppLine);
+
                             //Run only if the standard rule is updated
                             _TracingService.Trace("Checking for defra_standardruleid");
                             if (targetAppLine.Contains("defra_standardruleid"))
@@ -594,7 +597,8 @@ namespace Defra.Lp.WastePermits.Plugins
                         ApplicationLine.NpsDetermination,
                         Model.Waste.Crm.ApplicationLine.LocationScreeningRequired,
                         ApplicationLine.State,
-                        ApplicationLine.LineType),
+                        ApplicationLine.LineType,
+                        ApplicationLine.StandardRule),
                 Criteria = new FilterExpression()
                 {
                     FilterOperator = LogicalOperator.And,
@@ -664,5 +668,25 @@ namespace Defra.Lp.WastePermits.Plugins
             return null;
         }
 
+        private void CheckForDuplicateStandardRules(Entity targetAppLine)
+        {
+            EntityCollection appLines = GetApplicationLines(this.ApplicationEntity.Id);
+
+            // Check for duplicate Standard rules for this Application
+            if (targetAppLine != null && targetAppLine.Attributes.Contains(ApplicationLine.StandardRule))
+            {
+                foreach (Entity appLineRetrieved in appLines.Entities)
+                {
+                    if (appLineRetrieved.Contains(ApplicationLine.StandardRule))
+                    {
+                        if (appLineRetrieved.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule).Id == targetAppLine.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule).Id)
+                        {
+                            // Can't have the same Standard Rule more than once on an application
+                            throw new InvalidPluginExecutionException(string.Format("An Application Line with Standard Rule {0} already exists on this Application", appLineRetrieved.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule).Id.ToString()));
+                        }
+                    }
+                }
+            }
+        }
     }
 }
