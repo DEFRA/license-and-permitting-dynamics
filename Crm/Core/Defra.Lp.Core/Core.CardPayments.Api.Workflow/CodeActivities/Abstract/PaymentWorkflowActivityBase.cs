@@ -63,22 +63,38 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities.Abstract
         protected void PrepareOutputParameters(CodeActivityContext executionContext, BasePaymentResponse apiResponse, ITracingService tracingService)
         {
             tracingService.Trace("PrepareOutputParameters()");
-            tracingService.Trace("PrepareOutputParameters() status = {0}", apiResponse.state?.status);
-            PaymentStatus.Set(executionContext, apiResponse.state?.status);
-            tracingService.Trace("PrepareOutputParameters() payment_id = {0}", apiResponse.payment_id);
-            PaymentId.Set(executionContext, apiResponse.payment_id);
+
+            var status = string.IsNullOrEmpty(apiResponse.state?.status) ? string.Empty : apiResponse.state?.status;
+            tracingService.Trace("PrepareOutputParameters() status = {0}", status);
+            PaymentStatus.Set(executionContext, status);
+
+            var id = string.IsNullOrEmpty(apiResponse.payment_id) ? string.Empty : apiResponse.payment_id;
+            tracingService.Trace("PrepareOutputParameters() payment_id = {0}", id);
+            PaymentId.Set(executionContext, id);
+
+            var finished = (apiResponse.state?.finished == null) ? false : apiResponse.state?.finished;
             tracingService.Trace("PrepareOutputParameters() finished = {0}", apiResponse.state?.finished);
             PaymentFinished.Set(executionContext, apiResponse.state?.finished);
-            tracingService.Trace("PrepareOutputParameters() apiResponse._links?.next_url.href) = {0}", apiResponse._links?.next_url?.href);
-            PaymentNextUrlHref.Set(executionContext, apiResponse._links?.next_url?.href);
-            tracingService.Trace("PrepareOutputParameters() apiResponse._links?.next_url.method = {0}", apiResponse._links?.next_url?.method);
-            PaymentNextUrlMethod.Set(executionContext, apiResponse._links?.next_url?.method);
-            tracingService.Trace("PrepareOutputParameters() cancel.href = {0}", apiResponse._links?.cancel?.href);
-            PaymentCancelUrlHref.Set(executionContext, apiResponse._links?.cancel?.href);
-            tracingService.Trace("PrepareOutputParameters() cancel.method = {0}", apiResponse._links?.cancel?.method);
-            PaymentCancelUrlMethod.Set(executionContext, apiResponse._links?.cancel?.method);
-            tracingService.Trace("PrepareOutputParameters() payment_provider = {0}", apiResponse.payment_provider);
-            PaymentProvider.Set(executionContext, apiResponse.payment_provider);
+
+            var href = string.IsNullOrEmpty(apiResponse._links?.next_url?.href) ? string.Empty : apiResponse._links?.next_url?.href;
+            tracingService.Trace("PrepareOutputParameters() apiResponse._links?.next_url.href) = {0}", href);
+            PaymentNextUrlHref.Set(executionContext, href);
+
+            var method = string.IsNullOrEmpty(apiResponse._links?.next_url?.method) ? string.Empty : apiResponse._links?.next_url?.method;
+            tracingService.Trace("PrepareOutputParameters() apiResponse._links?.next_url.method = {0}", method);
+            PaymentNextUrlMethod.Set(executionContext, method);
+
+            var cancelhref = string.IsNullOrEmpty(apiResponse._links?.cancel?.href) ? string.Empty : apiResponse._links?.cancel?.href;
+            tracingService.Trace("PrepareOutputParameters() cancel.href = {0}", cancelhref);
+            PaymentCancelUrlHref.Set(executionContext, cancelhref);
+
+            var cancelmethod = string.IsNullOrEmpty(apiResponse._links?.cancel?.method) ? string.Empty : apiResponse._links?.cancel?.method;
+            tracingService.Trace("PrepareOutputParameters() cancel.method = {0}", cancelmethod);
+            PaymentCancelUrlMethod.Set(executionContext, cancelmethod);
+
+            var provider = string.IsNullOrEmpty(apiResponse.payment_provider) ? string.Empty : apiResponse.payment_provider;
+            tracingService.Trace("PrepareOutputParameters() payment_provider = {0}", provider);
+            PaymentProvider.Set(executionContext, provider);
         }
 
         protected RestServiceConfiguration RetrieveCardPaymentServiceConfiguration(CodeActivityContext executionContext, string configurationPrefix)
