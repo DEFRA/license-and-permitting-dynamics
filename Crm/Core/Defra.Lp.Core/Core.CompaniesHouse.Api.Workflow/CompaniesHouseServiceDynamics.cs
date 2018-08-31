@@ -70,6 +70,10 @@
                     if (accountToBeUpdated)
                         _crmService.Update(Account);
 
+                    //Get the company directors or designated members
+                    this.GetCompanyMembers(true);
+
+                    
                     if (this.Company.type == CompanyTypes.LimitedCompany)
                     {
                         //Get the company directors
@@ -77,7 +81,7 @@
                     }
                     else
                     {
-                        //Get all company members, for LLP we need designated memebers and members
+                        //Get all company members, for LLP we need designated memebers
                         this.GetCompanyMembers(false);
                     }
 
@@ -263,7 +267,6 @@
 
                 // Validate member is of a type we can process
                 if (companiesHouseMember.officer_role != OfficerRoles.Director
-                    && companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipdMember
                     && companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipDesignatedMember)
                 {
                     _crmTracing.Trace($"Member does not a valid role {companiesHouseMember.name}");
@@ -326,8 +329,7 @@
                 }
 
                 // Validate member is of a type we can process
-                if (companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipCorporateDesignatedMember
-                    && companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipdCorporateMember)
+                if (companiesHouseMember.officer_role != OfficerRoles.LimitedLiabilityPartnershipCorporateDesignatedMember)
                 {
                     continue;
                 }
@@ -340,20 +342,32 @@
                     {
                         // Existing CRM account needs to be unlinked
                         existingRelationship = existingLink;
+                        break;
                     }
+                }
+
+                // Unlink the resigned date of any existing member
+                if (existingRelationship != null)
+                {
+                    if (!string.IsNullOrEmpty(companiesHouseMember.resigned_on))
+                    {
+                        this.UnlinkCorporateMember(existingRelationship);
+                        // TODO - Unlink resigned corporate members    
+                    }
+
+                    return;
                 }
 
                 Entity existingAccount = null;
                 // Check if the the child account member already exists in CRM at all
-                if (existingRelationship == null
-                    && companiesHouseMember.identification != null
+                if (companiesHouseMember.identification != null
                     && string.IsNullOrEmpty(companiesHouseMember.resigned_on))
                 {
                     existingAccount = this.GetAccount(companiesHouseMember.identification?.registration_number);
                 }
 
                 // Create member accounts that have not resigned
-                if (existingRelationship == null && string.IsNullOrEmpty(companiesHouseMember.resigned_on))
+                if (string.IsNullOrEmpty(companiesHouseMember.resigned_on))
                 {
                     // Member is active, create it, but only if not already exists
                     if (existingAccount == null)
@@ -373,12 +387,14 @@
                     }
                 }
 
-                // Unlink the resigned date of any existing member
-                if (existingRelationship != null && !string.IsNullOrEmpty(companiesHouseMember.resigned_on))
-                {
-                    // TODO - Unlink resigned corporate members
-                }
+  
             }
+        }
+
+        // Removes the many to many relationship
+        private void UnlinkCorporateMember(Entity existingRelationship)
+        {
+            _crmService.Delete(existingRelationship.LogicalName, existingRelationship.Id);
         }
 
         /// <summary>
@@ -478,12 +494,16 @@
         private bool IsCorporateMemberAlreadyLinked(Entity existingLink, CompaniesHouseMember companiesHouseMember)
         {
             _crmTracing.Trace($"IsCorporateMemberAlreadyLinked {companiesHouseMember}");
+
             if (existingLink.Attributes.Contains(Account.ParentChildAccountManyToManyRelationshipAlias + "." + Account.CompanyNumberField)
-                && companiesHouseMember.identification != null
-                && existingLink.Attributes[Account.ParentChildAccountManyToManyRelationshipAlias + "." + Account.CompanyNumberField].ToString() == companiesHouseMember.identification.registration_number)
+                && companiesHouseMember.identification != null)
             {
-                // Matching account with the same company reg number exists
-                return true;
+                AliasedValue value = existingLink.Attributes[Account.ParentChildAccountManyToManyRelationshipAlias + "." + Account.CompanyNumberField] as AliasedValue;
+                if (value != null && value.Value.ToString().Trim() == companiesHouseMember.identification.registration_number.Trim())
+                {
+                    // Matching account with the same company reg number exists
+                    return true;
+                }
             }
             return false;
         }
