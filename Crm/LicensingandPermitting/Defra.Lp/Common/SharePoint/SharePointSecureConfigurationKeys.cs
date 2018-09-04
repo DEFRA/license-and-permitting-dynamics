@@ -1,5 +1,8 @@
 ﻿namespace Defra.Lp.Common.SharePoint
 {
+    /// <summary>
+    /// SP Config keys stored in the Secure Configuration entity
+    /// </summary>
     class SharePointSecureConfigurationKeys
     {
         public const string ApplicationFolderContentType = "SharePoint.ApplicationFolderContentType";

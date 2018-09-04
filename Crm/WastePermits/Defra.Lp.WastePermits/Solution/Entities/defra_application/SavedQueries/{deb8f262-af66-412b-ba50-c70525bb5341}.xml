@@ -9,11 +9,11 @@
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_applicationid">
-        <cell name="defra_name" width="300" />
         <cell name="defra_applicationnumber" width="100" />
         <cell name="defra_regime" width="100" />
         <cell name="defra_applicationtype" width="100" />
         <cell name="defra_source" width="100" />
+        <cell name="defra_penfolddate" width="125" imageproviderfunctionname="Views.DisplayApplicationPendfoldIcon" imageproviderwebresource="$webresource:defra_view_functions" />
         <cell name="defra_customerid" width="100" />
         <cell name="defra_primarycontactid" width="100" />
         <cell name="statuscode" width="100" />
@@ -31,9 +31,8 @@
   <fetchxml>
     <fetch version="1.0" mapping="logical">
       <entity name="defra_application">
-        <attribute name="defra_name" />
         <attribute name="createdon" />
-        <order attribute="defra_name" descending="false" />
+        <order attribute="defra_applicationnumber" descending="false" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
@@ -52,6 +51,7 @@
           <attribute name="stagename" />
         </link-entity>
         <attribute name="defra_payment_required" />
+        <attribute name="defra_penfolddate" />
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>

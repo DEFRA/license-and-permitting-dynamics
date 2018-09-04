@@ -15,9 +15,9 @@
           <columns>
             <column width="100%">
               <sections>
-                <section name="information" labelwidth="90" id="{bab598b4-2ec6-4224-ac89-007cd686eda4}" IsUserDefined="0" showlabel="true" showbar="false" labelid="{7b31fdf5-3de0-4d02-a392-ba7131481c64}">
+                <section name="information" labelwidth="90" id="{bab598b4-2ec6-4224-ac89-007cd686eda4}" IsUserDefined="0" showlabel="true" showbar="false" labelid="{7b31fdf5-3de0-4d02-a392-ba7131481c64}" columns="1" locklevel="0" celllabelalignment="Left" celllabelposition="Left">
                   <labels>
-                    <label description="CUSTOMER DETAILS" languagecode="1033" />
+                    <label description="Account Details" languagecode="1033" />
                   </labels>
                   <rows>
                     <row>
@@ -25,7 +25,7 @@
                         <labels>
                           <label description="Account Name" languagecode="1033" />
                         </labels>
-                        <control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" />
+                        <control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" uniqueid="{55d26068-6a49-ba75-8d16-8733ec673424}" />
                       </cell>
                     </row>
                     <row>
@@ -74,13 +74,14 @@
                             <EnableViewPicker>false</EnableViewPicker>
                             <EnableJumpBar>false</EnableJumpBar>
                             <EnableChartPicker>false</EnableChartPicker>
-                            <RecordsPerPage>5</RecordsPerPage>
+                            <RecordsPerPage>4</RecordsPerPage>
                             <EnableContextualActions>false</EnableContextualActions>
                             <IsUserView>false</IsUserView>
                             <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
                             <ChartGridMode>Grid</ChartGridMode>
                             <VisualizationId />
                             <IsUserChart>false</IsUserChart>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
                           </parameters>
                         </control>
                       </cell>
@@ -88,6 +89,83 @@
                     <row />
                     <row />
                     <row height="auto" />
+                  </rows>
+                </section>
+                <section name="general_section_3" showlabel="true" showbar="false" locklevel="0" id="{c479bbcb-33b7-8c64-5b16-de058a1cda00}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Contacts" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{6e5656b1-15ab-b6c8-34ac-8307e395e604}" showlabel="false" colspan="1" auto="false" rowspan="4">
+                        <labels>
+                          <label description="Contacts" languagecode="1033" />
+                        </labels>
+                        <control id="Contacts" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{b9004c58-7605-2ceb-27ae-851613ba1c12}">
+                          <parameters>
+                            <ViewId>{00000000-0000-0000-00AA-000010001003}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>defra_contact_account</RelationshipName>
+                            <TargetEntityType>contact</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{00000000-0000-0000-00AA-000010001003}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId>{E365462F-1DB9-46A8-928D-BEAB1A7A2375}</VisualizationId>
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>2</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                            <RelationshipRoleOrdinal>2</RelationshipRoleOrdinal>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+                <section name="general_section_4" showlabel="true" showbar="false" locklevel="0" id="{39bb9045-0e0a-80bd-509c-7e559c4aebee}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Corporate Members" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e71dc5e7-2014-5ab8-3077-474c79686e80}" showlabel="false" colspan="1" auto="false" rowspan="7">
+                        <labels>
+                          <label description="Corporate Members" languagecode="1033" />
+                        </labels>
+                        <control id="Corporate_Members" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{d8289786-09cb-4923-65cd-684ce2996783}">
+                          <parameters>
+                            <ViewId>{00000000-0000-0000-00AA-000010001001}</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>defra_parent_child_account_relationship</RelationshipName>
+                            <TargetEntityType>account</TargetEntityType>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <ViewIds>{00000000-0000-0000-00AA-000010001001}</ViewIds>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId>{74A622C0-5193-DE11-97D4-00155DA3B01E}</VisualizationId>
+                            <IsUserChart>false</IsUserChart>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <RecordsPerPage>5</RecordsPerPage>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                            <RelationshipRoleOrdinal>1</RelationshipRoleOrdinal>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
                   </rows>
                 </section>
               </sections>

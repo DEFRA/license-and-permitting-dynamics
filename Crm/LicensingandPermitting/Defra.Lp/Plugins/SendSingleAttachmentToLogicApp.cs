@@ -10,8 +10,10 @@
 // </auto-generated>
 
 using Defra.Lp.Common.SharePoint;
+using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Model.Lp.Crm;
+using System;
 
 namespace Defra.Lp.Plugins
 {
@@ -31,8 +33,6 @@ namespace Defra.Lp.Plugins
         public SendSingleAttachmentToLogicApp(string unsecure, string secure)
             : base(typeof(SendSingleAttachmentToLogicApp))
         {
-
-            // TODO: Implement your custom configuration handling.
         }
 
         /// <summary>
@@ -63,66 +63,84 @@ namespace Defra.Lp.Plugins
             var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
             var adminService = serviceFactory.CreateOrganizationService(null);
 
-            if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
-            {
-                var entity = (Entity)context.InputParameters["Target"];
+            tracingService.Trace("Message = {0}", context.MessageName);
 
+            // If its a standard Create or Update then we should have an Entity in Target.
+            EntityReference entityReference = null;
+            if (context.InputParameters.Contains(PluginInputParams.Target) && context.InputParameters[PluginInputParams.Target] is Entity)
+            { 
+                entityReference = ((Entity)context.InputParameters[PluginInputParams.Target]).ToEntityReference();      
+            }
+
+            // If plugin is triggered from the Custom Action Message , then we have some custom input parameters. 
+            if (context.InputParameters.Contains(PluginInputParams.TargetEntityName) && context.InputParameters.Contains(PluginInputParams.TargetEntityId))
+            {
+                entityReference = new EntityReference((string)context.InputParameters[PluginInputParams.TargetEntityName], 
+                                                       new Guid((string)context.InputParameters[PluginInputParams.TargetEntityId]));
+            }
+
+            tracingService.Trace("Execution depth = {0};", context.Depth.ToString());
+
+            if (entityReference != null)
+            {
+                //var entity = (Entity)context.InputParameters["Target"];
                 var azureInterface = new AzureInterface(adminService, service, tracingService);
-                if (entity.LogicalName == "activitymimeattachment")
+
+                // Process the attachment depending on the target entity
+                tracingService.Trace("Start of UploadFile for entity {0}", entityReference.LogicalName);
+                if (entityReference.LogicalName == ActivityMimeAttachment.EntityLogicalName)
                 {
                     // Triggered for email attachments
-                    tracingService.Trace("Start of UploadFile from activitymimeattachment");
-                    azureInterface.UploadFile(entity.ToEntityReference(), "email", "defra_applicationid");
-                    tracingService.Trace("Email Processed Successfully");
+                    azureInterface.UploadFile(entityReference);
                 }
-                else if (entity.LogicalName == "annotation")
+                else if (entityReference.LogicalName == Email.EntityLogicalName)
                 {
-                    // Triggered for Notes attachments
-                    tracingService.Trace("Start of UploadFile from annotation");
-                    EntityReference regarding = null;
-                    if (context.MessageName == PluginMessages.Update)
-                    {
-                        // For an update get the regarding from the PostImage
-                        var postEntityImage = context.PostEntityImages["PostImage"];
-                        tracingService.Trace("Got PostImage");
-                        if (postEntityImage.Attributes.Contains("objectid"))
-                        {
-                            regarding = (EntityReference)postEntityImage.Attributes["objectid"];
-                            tracingService.Trace("Parent Entity (update) is: " + regarding.LogicalName);
-                        }
-                    }
-                    else if (context.MessageName == PluginMessages.Create)
-                    {
-                        // For a create, the regarding is in the Target
-                        if (entity.Attributes.Contains("objectid"))
-                        {
-                            regarding = (EntityReference)entity.Attributes["objectid"];
-                            tracingService.Trace("Parent Entity (create) is: " + regarding.LogicalName);
-                        }
-                    }
-
-                    if (regarding != null)
-                    {
-                        if (regarding.LogicalName == "defra_application")
-                        {
-                            // Upload attachment if Note is regarding an application
-                            // and there is an attachment
-                            if (entity.GetAttributeValue<bool>("isdocument"))
-                            {
-                                azureInterface.UploadFile(entity.ToEntityReference(), "defra_application", "defra_applicationid");
-                                tracingService.Trace("Application Note Processed Successfully");
-                            }
-                            else
-                            {
-                                tracingService.Trace("No file attached");
-                            }
-                        }
-                        else
-                        {
-                            tracingService.Trace("Note not processed for {0}", regarding.LogicalName);
-                        }
-                    }                           
+                    // Triggered for emails
+                    azureInterface.UploadFile(entityReference);
                 }
+                else if (entityReference.LogicalName == Annotation.EntityLogicalName)
+                {
+                    // Triggered for Notes                  
+                    if (context.MessageName == PluginMessages.SendFileToSharePoint || context.MessageName == PluginMessages.Update || context.MessageName == PluginMessages.Create)
+                    {
+                        // Need to do a query to get the regarding object when triggered by custom action messsage. 
+                        // Could use image for update but query ok as its async and keeps the code simpler and more generic.
+                        var entity = Query.RetrieveDataForEntityRef(service, new string[] { Annotation.RegardingObjectId, Annotation.IsDocument }, entityReference);
+                        if (entity != null)
+                        {
+                            var regarding = (EntityReference)entity.Attributes[Annotation.RegardingObjectId];
+                            if (regarding != null)
+                            {
+                                tracingService.Trace("Parent Entity ({0}) is: {1}", context.MessageName, regarding.LogicalName);
+
+                                if (regarding.LogicalName == Application.EntityLogicalName || regarding.LogicalName == Case.EntityLogicalName)
+                                {
+                                    // Upload attachment if Note is regarding an application or a case
+                                    // and there is an attachment 
+                                    //string bodyAttr = (target.LogicalName == "annotation") ? "documentbody" : "body";
+                                    //if (target.Attributes.Contains(bodyAttr) && !string.IsNullOrEmpty(target.GetAttributeValue<string>(bodyAttr)))
+                                    if (entity.GetAttributeValue<bool>(Annotation.IsDocument))
+                                    {
+                                        azureInterface.UploadFile(entityReference);
+                                    }
+                                    else
+                                    {
+                                        tracingService.Trace("No file attached. File already uploaded to SharePoint.");
+                                    }
+                                }
+                                else
+                                {
+                                    tracingService.Trace("Note not processed for {0}", regarding.LogicalName);
+                                }
+                            }
+                        }
+                    }        
+                }
+                tracingService.Trace("{0} processed successfully", entityReference.LogicalName);
+            }
+            else
+            {
+                tracingService.Trace("No entity or entity reference found in Target");
             }
         }
     }

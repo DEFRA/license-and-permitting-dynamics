@@ -292,6 +292,28 @@
                   <row />
                 </rows>
               </section>
+              <section name="TalkingPoints_section" showlabel="false" showbar="false" locklevel="0" id="{493e163e-b936-e24d-83e0-e52dcecc5da9}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Top" visible="false">
+                <labels>
+                  <label description="Icebreakers" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{06cb0652-a8d8-bdae-eb58-b6a05bd93224}" showlabel="true" locklevel="0" rowspan="8">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                      <control id="TalkingPoints" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{5ca8c570-a541-4cf4-9209-99406ba7cbdf}" />
+                    </cell>
+                  </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                </rows>
+              </section>
             </sections>
           </column>
         </columns>
@@ -562,6 +584,9 @@
         <InternalHandlers>
           <Handler functionName="AppCommon.Contact.Instance.form_onload" libraryName="AppCommon/Contact/Contact_main_system_library.js" handlerUniqueId="4ea24ebd-795d-434e-af94-6812c3867b54" enabled="true" />
         </InternalHandlers>
+        <Handlers>
+          <Handler functionName="loadTalkingPoints" libraryName="msdyn_talkingpointsloader.js" handlerUniqueId="{a96425be-a853-9549-dc5a-1610151533dd}" enabled="true" parameters="" passExecutionContext="true" />
+        </Handlers>
       </event>
     </events>
     <Navigation>
@@ -646,10 +671,280 @@
           </Titles>
         </NavBarByRelationshipItem>
       </NavBar>
+      <NavBarAreas>
+        <NavBarArea Id="Info">
+          <Titles>
+            <Title LCID="1033" Text="Common" />
+            <Title LCID="1025" Text="Common" />
+            <Title LCID="1026" Text="Common" />
+            <Title LCID="1027" Text="Common" />
+            <Title LCID="1029" Text="Common" />
+            <Title LCID="1030" Text="Common" />
+            <Title LCID="1031" Text="Common" />
+            <Title LCID="1032" Text="Common" />
+            <Title LCID="3082" Text="Common" />
+            <Title LCID="1061" Text="Common" />
+            <Title LCID="1069" Text="Common" />
+            <Title LCID="1035" Text="Common" />
+            <Title LCID="1036" Text="Common" />
+            <Title LCID="1110" Text="Common" />
+            <Title LCID="1037" Text="Common" />
+            <Title LCID="1081" Text="Common" />
+            <Title LCID="1050" Text="Common" />
+            <Title LCID="1038" Text="Common" />
+            <Title LCID="1057" Text="Common" />
+            <Title LCID="1040" Text="Common" />
+            <Title LCID="1041" Text="Common" />
+            <Title LCID="1087" Text="Common" />
+            <Title LCID="1042" Text="Common" />
+            <Title LCID="1063" Text="Common" />
+            <Title LCID="1062" Text="Common" />
+            <Title LCID="1086" Text="Common" />
+            <Title LCID="1044" Text="Common" />
+            <Title LCID="1043" Text="Common" />
+            <Title LCID="1045" Text="Common" />
+            <Title LCID="1046" Text="Common" />
+            <Title LCID="2070" Text="Common" />
+            <Title LCID="1048" Text="Common" />
+            <Title LCID="1049" Text="Common" />
+            <Title LCID="1051" Text="Common" />
+            <Title LCID="1060" Text="Common" />
+            <Title LCID="10266" Text="Common" />
+            <Title LCID="9242" Text="Common" />
+            <Title LCID="1053" Text="Common" />
+            <Title LCID="1054" Text="Common" />
+            <Title LCID="1055" Text="Common" />
+            <Title LCID="1058" Text="Common" />
+            <Title LCID="1066" Text="Common" />
+            <Title LCID="2052" Text="Common" />
+            <Title LCID="3076" Text="Common" />
+            <Title LCID="1028" Text="Common" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Sales">
+          <Titles>
+            <Title LCID="1033" Text="Sales" />
+            <Title LCID="1025" Text="Sales" />
+            <Title LCID="1026" Text="Sales" />
+            <Title LCID="1027" Text="Sales" />
+            <Title LCID="1029" Text="Sales" />
+            <Title LCID="1030" Text="Sales" />
+            <Title LCID="1031" Text="Sales" />
+            <Title LCID="1032" Text="Sales" />
+            <Title LCID="3082" Text="Sales" />
+            <Title LCID="1061" Text="Sales" />
+            <Title LCID="1069" Text="Sales" />
+            <Title LCID="1035" Text="Sales" />
+            <Title LCID="1036" Text="Sales" />
+            <Title LCID="1110" Text="Sales" />
+            <Title LCID="1037" Text="Sales" />
+            <Title LCID="1081" Text="Sales" />
+            <Title LCID="1050" Text="Sales" />
+            <Title LCID="1038" Text="Sales" />
+            <Title LCID="1057" Text="Sales" />
+            <Title LCID="1040" Text="Sales" />
+            <Title LCID="1041" Text="Sales" />
+            <Title LCID="1087" Text="Sales" />
+            <Title LCID="1042" Text="Sales" />
+            <Title LCID="1063" Text="Sales" />
+            <Title LCID="1062" Text="Sales" />
+            <Title LCID="1086" Text="Sales" />
+            <Title LCID="1044" Text="Sales" />
+            <Title LCID="1043" Text="Sales" />
+            <Title LCID="1045" Text="Sales" />
+            <Title LCID="1046" Text="Sales" />
+            <Title LCID="2070" Text="Sales" />
+            <Title LCID="1048" Text="Sales" />
+            <Title LCID="1049" Text="Sales" />
+            <Title LCID="1051" Text="Sales" />
+            <Title LCID="1060" Text="Sales" />
+            <Title LCID="10266" Text="Sales" />
+            <Title LCID="9242" Text="Sales" />
+            <Title LCID="1053" Text="Sales" />
+            <Title LCID="1054" Text="Sales" />
+            <Title LCID="1055" Text="Sales" />
+            <Title LCID="1058" Text="Sales" />
+            <Title LCID="1066" Text="Sales" />
+            <Title LCID="2052" Text="Sales" />
+            <Title LCID="3076" Text="Sales" />
+            <Title LCID="1028" Text="Sales" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Service">
+          <Titles>
+            <Title LCID="1033" Text="Service" />
+            <Title LCID="1025" Text="Service" />
+            <Title LCID="1026" Text="Service" />
+            <Title LCID="1027" Text="Service" />
+            <Title LCID="1029" Text="Service" />
+            <Title LCID="1030" Text="Service" />
+            <Title LCID="1031" Text="Service" />
+            <Title LCID="1032" Text="Service" />
+            <Title LCID="3082" Text="Service" />
+            <Title LCID="1061" Text="Service" />
+            <Title LCID="1069" Text="Service" />
+            <Title LCID="1035" Text="Service" />
+            <Title LCID="1036" Text="Service" />
+            <Title LCID="1110" Text="Service" />
+            <Title LCID="1037" Text="Service" />
+            <Title LCID="1081" Text="Service" />
+            <Title LCID="1050" Text="Service" />
+            <Title LCID="1038" Text="Service" />
+            <Title LCID="1057" Text="Service" />
+            <Title LCID="1040" Text="Service" />
+            <Title LCID="1041" Text="Service" />
+            <Title LCID="1087" Text="Service" />
+            <Title LCID="1042" Text="Service" />
+            <Title LCID="1063" Text="Service" />
+            <Title LCID="1062" Text="Service" />
+            <Title LCID="1086" Text="Service" />
+            <Title LCID="1044" Text="Service" />
+            <Title LCID="1043" Text="Service" />
+            <Title LCID="1045" Text="Service" />
+            <Title LCID="1046" Text="Service" />
+            <Title LCID="2070" Text="Service" />
+            <Title LCID="1048" Text="Service" />
+            <Title LCID="1049" Text="Service" />
+            <Title LCID="1051" Text="Service" />
+            <Title LCID="1060" Text="Service" />
+            <Title LCID="10266" Text="Service" />
+            <Title LCID="9242" Text="Service" />
+            <Title LCID="1053" Text="Service" />
+            <Title LCID="1054" Text="Service" />
+            <Title LCID="1055" Text="Service" />
+            <Title LCID="1058" Text="Service" />
+            <Title LCID="1066" Text="Service" />
+            <Title LCID="2052" Text="Service" />
+            <Title LCID="3076" Text="Service" />
+            <Title LCID="1028" Text="Service" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="Marketing">
+          <Titles>
+            <Title LCID="1033" Text="Marketing" />
+            <Title LCID="1025" Text="Marketing" />
+            <Title LCID="1026" Text="Marketing" />
+            <Title LCID="1027" Text="Marketing" />
+            <Title LCID="1029" Text="Marketing" />
+            <Title LCID="1030" Text="Marketing" />
+            <Title LCID="1031" Text="Marketing" />
+            <Title LCID="1032" Text="Marketing" />
+            <Title LCID="3082" Text="Marketing" />
+            <Title LCID="1061" Text="Marketing" />
+            <Title LCID="1069" Text="Marketing" />
+            <Title LCID="1035" Text="Marketing" />
+            <Title LCID="1036" Text="Marketing" />
+            <Title LCID="1110" Text="Marketing" />
+            <Title LCID="1037" Text="Marketing" />
+            <Title LCID="1081" Text="Marketing" />
+            <Title LCID="1050" Text="Marketing" />
+            <Title LCID="1038" Text="Marketing" />
+            <Title LCID="1057" Text="Marketing" />
+            <Title LCID="1040" Text="Marketing" />
+            <Title LCID="1041" Text="Marketing" />
+            <Title LCID="1087" Text="Marketing" />
+            <Title LCID="1042" Text="Marketing" />
+            <Title LCID="1063" Text="Marketing" />
+            <Title LCID="1062" Text="Marketing" />
+            <Title LCID="1086" Text="Marketing" />
+            <Title LCID="1044" Text="Marketing" />
+            <Title LCID="1043" Text="Marketing" />
+            <Title LCID="1045" Text="Marketing" />
+            <Title LCID="1046" Text="Marketing" />
+            <Title LCID="2070" Text="Marketing" />
+            <Title LCID="1048" Text="Marketing" />
+            <Title LCID="1049" Text="Marketing" />
+            <Title LCID="1051" Text="Marketing" />
+            <Title LCID="1060" Text="Marketing" />
+            <Title LCID="10266" Text="Marketing" />
+            <Title LCID="9242" Text="Marketing" />
+            <Title LCID="1053" Text="Marketing" />
+            <Title LCID="1054" Text="Marketing" />
+            <Title LCID="1055" Text="Marketing" />
+            <Title LCID="1058" Text="Marketing" />
+            <Title LCID="1066" Text="Marketing" />
+            <Title LCID="2052" Text="Marketing" />
+            <Title LCID="3076" Text="Marketing" />
+            <Title LCID="1028" Text="Marketing" />
+          </Titles>
+        </NavBarArea>
+        <NavBarArea Id="ProcessCenter">
+          <Titles>
+            <Title LCID="1033" Text="Process Sessions" />
+            <Title LCID="1025" Text="Process Sessions" />
+            <Title LCID="1026" Text="Process Sessions" />
+            <Title LCID="1027" Text="Process Sessions" />
+            <Title LCID="1029" Text="Process Sessions" />
+            <Title LCID="1030" Text="Process Sessions" />
+            <Title LCID="1031" Text="Process Sessions" />
+            <Title LCID="1032" Text="Process Sessions" />
+            <Title LCID="3082" Text="Process Sessions" />
+            <Title LCID="1061" Text="Process Sessions" />
+            <Title LCID="1069" Text="Process Sessions" />
+            <Title LCID="1035" Text="Process Sessions" />
+            <Title LCID="1036" Text="Process Sessions" />
+            <Title LCID="1110" Text="Process Sessions" />
+            <Title LCID="1037" Text="Process Sessions" />
+            <Title LCID="1081" Text="Process Sessions" />
+            <Title LCID="1050" Text="Process Sessions" />
+            <Title LCID="1038" Text="Process Sessions" />
+            <Title LCID="1057" Text="Process Sessions" />
+            <Title LCID="1040" Text="Process Sessions" />
+            <Title LCID="1041" Text="Process Sessions" />
+            <Title LCID="1087" Text="Process Sessions" />
+            <Title LCID="1042" Text="Process Sessions" />
+            <Title LCID="1063" Text="Process Sessions" />
+            <Title LCID="1062" Text="Process Sessions" />
+            <Title LCID="1086" Text="Process Sessions" />
+            <Title LCID="1044" Text="Process Sessions" />
+            <Title LCID="1043" Text="Process Sessions" />
+            <Title LCID="1045" Text="Process Sessions" />
+            <Title LCID="1046" Text="Process Sessions" />
+            <Title LCID="2070" Text="Process Sessions" />
+            <Title LCID="1048" Text="Process Sessions" />
+            <Title LCID="1049" Text="Process Sessions" />
+            <Title LCID="1051" Text="Process Sessions" />
+            <Title LCID="1060" Text="Process Sessions" />
+            <Title LCID="10266" Text="Process Sessions" />
+            <Title LCID="9242" Text="Process Sessions" />
+            <Title LCID="1053" Text="Process Sessions" />
+            <Title LCID="1054" Text="Process Sessions" />
+            <Title LCID="1055" Text="Process Sessions" />
+            <Title LCID="1058" Text="Process Sessions" />
+            <Title LCID="1066" Text="Process Sessions" />
+            <Title LCID="2052" Text="Process Sessions" />
+            <Title LCID="3076" Text="Process Sessions" />
+            <Title LCID="1028" Text="Process Sessions" />
+          </Titles>
+        </NavBarArea>
+      </NavBarAreas>
     </Navigation>
+    <controlDescriptions>
+      <controlDescription forControl="{5ca8c570-a541-4cf4-9209-99406ba7cbdf}">
+        <customControl formFactor="0" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="1" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="2" name="MscrmControls.TalkingPointsControl.TalkingPoints">
+          <parameters>
+            <fullname>fullname</fullname>
+          </parameters>
+        </customControl>
+      </controlDescription>
+    </controlDescriptions>
     <DisplayConditions FallbackForm="true" Order="3">
-      <Everyone />
+      <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
+      <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
     </DisplayConditions>
+    <formLibraries>
+      <Library name="msdyn_talkingpointsloader.js" libraryUniqueId="{30d6d0a4-d097-b9be-cc6e-5722727be490}" />
+    </formLibraries>
   </form>
   <LocalizedNames>
     <LocalizedName description="Contact" languagecode="1033" />

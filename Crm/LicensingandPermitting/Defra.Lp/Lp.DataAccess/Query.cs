@@ -110,18 +110,18 @@ namespace Lp.DataAccess
 
         public static string GetCRMOptionsetText(IOrganizationService service, string entityName, string attributeName, int optionSetValue)
         {
-            RetrieveEntityRequest retrieveDetails = new RetrieveEntityRequest
+            var retrieveDetails = new RetrieveEntityRequest
             {
                 EntityFilters = EntityFilters.All,
                 LogicalName = entityName
             };
 
-            RetrieveEntityResponse retrieveEntityResponseObj = (RetrieveEntityResponse)service.Execute(retrieveDetails);
-            EntityMetadata metadata = retrieveEntityResponseObj.EntityMetadata;
-            PicklistAttributeMetadata picklistMetadata = metadata.Attributes.FirstOrDefault(attribute => String.Equals(attribute.LogicalName, attributeName, StringComparison.OrdinalIgnoreCase)) as PicklistAttributeMetadata;
-            OptionSetMetadata options = picklistMetadata.OptionSet;
+            var retrieveEntityResponseObj = (RetrieveEntityResponse)service.Execute(retrieveDetails);
+            var metadata = retrieveEntityResponseObj.EntityMetadata;
+            var picklistMetadata = metadata.Attributes.FirstOrDefault(attribute => string.Equals(attribute.LogicalName, attributeName, StringComparison.OrdinalIgnoreCase)) as PicklistAttributeMetadata;
+            var options = picklistMetadata.OptionSet;
 
-            string optionsetLabel = (from o in options.Options
+            var optionsetLabel = (from o in options.Options
                                      where o.Value.Value == optionSetValue
                                      select o).First().Label.UserLocalizedLabel.Label;
             return optionsetLabel;

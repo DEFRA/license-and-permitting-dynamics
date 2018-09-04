@@ -9,7 +9,7 @@
       "type": "string"
     },
     "connectionName": {
-      "type": "string" 
+      "type": "string"
     },
     "connectionDisplayName": {
       "type": "string"
@@ -44,7 +44,8 @@
       "getItemsForUpdateByApplicationIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
       "updateApplicationMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
       "getItemsForUpdateByPermitIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
-      "updatePermitMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]"
+      "updatePermitMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "connectionId": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]"
     }
   },
   "resources": [
@@ -87,7 +88,7 @@
                   "inputs": {
                     "host": {
                       "connection": {
-                        "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                        "name": "[variables('spo').connectionId]"
                       }
                     },
                     "method": "get",
@@ -120,7 +121,7 @@
                       "inputs": {
                         "host": {
                           "connection": {
-                            "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                            "name": "[variables('spo').connectionId]"
                           }
                         },
                         "method": "patch",
@@ -154,7 +155,7 @@
                     "inputs": {
                       "host": {
                         "connection": {
-                          "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                          "name": "[variables('spo').connectionId]"
                         }
                       },
                       "method": "get",
@@ -174,7 +175,7 @@
                         "inputs": {
                           "host": {
                             "connection": {
-                              "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                              "name": "[variables('spo').connectionId]"
                             }
                           },
                           "method": "patch",

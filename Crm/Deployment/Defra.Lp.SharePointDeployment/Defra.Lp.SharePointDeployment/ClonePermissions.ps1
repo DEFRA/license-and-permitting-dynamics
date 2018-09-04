@@ -98,9 +98,20 @@ $ContextDest.Load($groupsDEST)
 $ContextDest.ExecuteQuery()
 write-host "Loading Destination groups - Successful"
 
+$destOwnerGroup = "" 
+foreach($destGroup in $groupsDEST)
+{ 
+    if($destGroup.Title.EndsWith("Owners"))
+    {
+        $destOwnerGroup = $destGroup
+        Write-Host "Owner group found" $destOwnerGroup.Title
+    }
+}
+
+
 foreach($srcGroup in $groupsSRC)
 { 
-    if(!$srcGroup.Title.EndsWith("Members") -and !$srcGroup.Title.EndsWith("Owners") -and !$srcGroup.Title.EndsWith("Visitors"))
+    if(!$srcGroup.Title.EndsWith("Members") -and !$srcGroup.Title.EndsWith("Owners") -and !$srcGroup.Title.EndsWith("Visitors") -and !$srcGroup.Title.StartsWith("Excel Services"))
     {
         $groupExists = 0
 
@@ -110,9 +121,15 @@ foreach($srcGroup in $groupsSRC)
 		    {
 				write-host "Group with title"$srcGroup.Title" already exists"
 		        $groupExists++
+
+#Delete the group ONLY IF WE WANT TO RECREATE ALL GROUPS
+#$ContextDest.Web.SiteGroups.Remove($destGroup)
+##Delete the group ONLY IF WE WANT TO RECREATE ALL GROUPS
 		    }			
 	    }
-
+#Delete the group ONLY IF WE WANT TO RECREATE ALL GROUPS
+#$ContextDest.ExecuteQuery()
+##Delete the group ONLY IF WE WANT TO RECREATE ALL GROUPS
 	    if($groupExists -eq 0)
 	    {
             Write-Host "Group not found: Title "$srcGroup.Title"Description "$srcGroup.Description"ID "$srcGroup.Id #"Owner " $srcGroup.Owner
@@ -123,12 +140,18 @@ foreach($srcGroup in $groupsSRC)
             $newGroupInfo = New-Object Microsoft.SharePoint.Client.GroupCreationInformation  
             $newGroupInfo.Title = $srcGroup.Title  
             $newGroupInfo.Description = $srcGroup.Description
-            
+
             $newGroup = $ContextDest.Web.SiteGroups.Add($newGroupInfo)
             $ContextDest.Load($newGroup)  
             $ContextDest.ExecuteQuery()
 
 			Write-Host "Creating Group" $srcGroup.Title "Successful"
+
+            Write-Host "Updating Group" $srcGroup.Title " Owner to "$destOwnerGroup.Title
+            $newGroup.Owner = $destOwnerGroup
+            $newGroup.Update()
+            $ContextDest.ExecuteQuery()
+            Write-Host "Updating Group" $srcGroup.Title " Owner to "$destOwnerGroup.Title "successful"
 
             #Find the role
             foreach($destRole in $ContextDest.Web.RoleDefinitions)

@@ -12,7 +12,7 @@
 
         public CompaniesHouseCompany Company;
 
-        public CompaniesHouseResultsDirectors Directors;
+        public CompaniesHouseMembersResult CompanyMembers;
 
         public CompaniesHouseService(string TargetURL, string APIKey, string CompanyRegistrationNumber)
             :base(TargetURL, APIKey)
@@ -105,14 +105,15 @@
             }
         }
 
-        public void GetCompanyDirectors()
+        public void GetCompanyMembers(bool includeOnlyDirectors)
         {
             using (this._httpclient)
             {
                 // Added register_view=true as docs say this is required to filter on directors. However, didn't seem
                 // to work at the time so we need to check befre creating contacts that it is a director
                 //string URL = string.Format("{0}/company/{1}/officers?register_type=directors&register_view=true", this.TargetURL, this.CompanyRegistrationNumber);
-                string URL = string.Format("{0}/company/{1}/officers?register_type=directors", this.TargetURL, this.CompanyRegistrationNumber);
+                string filter = includeOnlyDirectors ? "?register_type=directors" : string.Empty;
+                string URL = $"{this.TargetURL}/company/{this.CompanyRegistrationNumber}/officers{filter}" ;
 
                 var response = this._httpclient.GetAsync(URL).Result;
 
@@ -124,7 +125,7 @@
                     string responseString = responseContent.ReadAsStringAsync().Result;
 
                     //Deserialise
-                    this.Directors = new CompaniesHouseResultsDirectors();
+                    this.CompanyMembers = new CompaniesHouseMembersResult();
 
                     //Set up the object...  
                     MemoryStream stream1 = new MemoryStream();
@@ -134,10 +135,11 @@
                     writer.Flush();
                     stream1.Position = 0;
 
-                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(CompaniesHouseResultsDirectors));
-                    this.Directors = (CompaniesHouseResultsDirectors)ser.ReadObject(stream1);
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(CompaniesHouseMembersResult));
+                    this.CompanyMembers = (CompaniesHouseMembersResult)ser.ReadObject(stream1);
                 }
             }
         }
+        
     }
 }

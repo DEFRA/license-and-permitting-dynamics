@@ -2,6 +2,15 @@
   <x:Members>
     <x:Property Name="InputEntities" Type="InArgument(scg:IDictionary(x:String, mxs:Entity))" />
     <x:Property Name="CreatedEntities" Type="InArgument(scg:IDictionary(x:String, mxs:Entity))" />
+    <x:Property Name="ConfigurationPrefix" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <mxsw:ArgumentRequiredAttribute Value="False" />
+        <mxsw:ArgumentTargetAttribute Value="False" />
+        <mxsw:ArgumentDescriptionAttribute Value="Optional parameter used to retrieve specific GovPay configuration settings." />
+        <mxsw:ArgumentDirectionAttribute Value="Input" />
+        <mxsw:ArgumentEntityAttribute Value="" />
+      </x:Property.Attributes>
+    </x:Property>
     <x:Property Name="Finished" Type="OutArgument(x:Boolean)">
       <x:Property.Attributes>
         <mxsw:ArgumentRequiredAttribute Value="False" />
@@ -189,7 +198,7 @@
                     <Sequence DisplayName="StopWorkflowStep9: End here as no Gov Pay payment ID to lookup.">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep9_1" />
-                        <Variable x:TypeArguments="x:String" Default="1eb1af0e-b2e0-4737-af0c-aa7ec37fd8ec" Name="stepLabelLabelId" />
+                        <Variable x:TypeArguments="x:String" Default="d68c7d67-3e34-4953-96f3-b4e81ee99183" Name="stepLabelLabelId" />
                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                           <Variable.Default>
                             <Literal x:TypeArguments="x:String" Value="" />
@@ -229,6 +238,7 @@
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_3" />
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_3_converted" />
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_4" />
+          <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_5" />
           <Variable x:TypeArguments="x:Object" Name="CustomActivityStep1_4_converted" />
         </sco:Collection>
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
@@ -265,6 +275,26 @@
                 <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
               </InArgument>
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep1_3_converted]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConfigurationPrefix }]</InArgument>
+              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep1_5]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+              <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep1_5 }]</InArgument>
+              <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep1_4]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">

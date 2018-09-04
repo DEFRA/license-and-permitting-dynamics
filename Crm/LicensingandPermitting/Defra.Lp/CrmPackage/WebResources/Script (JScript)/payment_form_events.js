@@ -57,6 +57,7 @@ var Payments = {
             "ReturnUrl": returnUrl,
             "Reference": paymentReference,
             "Description": paymentDescription,
+            "ConfigurationPrefix": "WastePermits.MOTO.",
             "PaymentRecord": {
                 "@odata.type": "Microsoft.Dynamics.CRM.defra_payment",
                 "defra_paymentid": entityId
@@ -66,11 +67,17 @@ var Payments = {
 
         // 4. Redirect to GovPay Portal using the url provided 
         if (actionResult) {
-            // Redirect to GovPay next url
-            var nextUrl = actionResult.PaymentNextUrlHref;
-            Payments.PopupCenter(nextUrl, 'GovPay', 750, 700);
+            // Display error message if status of error returned with a 200
+            var paymentStatus = actionResult.PaymentStatus;
+            if (paymentStatus === "error") {
+                // Display error message
+                Xrm.Page.ui.setFormNotification("Payment transaction could not be completed. GOV.UK Pay is not available. Please contact your system administrator with payment ref: " + paymentReference, "ERROR");
+            } else {
+                // Redirect to GovPay next url
+                var nextUrl = actionResult.PaymentNextUrlHref;
+                Payments.PopupCenter(nextUrl, 'GovPay', 750, 700);
+            }
         } else {
-
             // Display error message
             Xrm.Page.ui.setFormNotification("Payment transaction could not be completed. Please contact your system administrator with payment ref: " + paymentReference, "ERROR");
         }
@@ -200,8 +207,6 @@ var Payments = {
             Xrm.Page.getControl("defra_type").removeOption("910400008");
             Xrm.Page.getControl("defra_type").removeOption("910400009");
 
-            // Change labels
-            Xrm.Page.getControl('defra_payment_received_date').setLabel('Postal Code');
         }
         else if (paymentCategory === 910400001){
             // Outbound
