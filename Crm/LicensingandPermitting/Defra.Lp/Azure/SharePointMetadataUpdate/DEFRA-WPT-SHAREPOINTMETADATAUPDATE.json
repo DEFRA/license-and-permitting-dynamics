@@ -9,7 +9,7 @@
       "type": "string"
     },
     "connectionName": {
-      "type": "string"
+      "type": "string" 
     },
     "connectionDisplayName": {
       "type": "string"
@@ -19,13 +19,32 @@
     },
     "permitLibraryGuid": {
       "type": "string"
+    },
+    "Environment": {
+      "type": "string"
+    },
+    "ServiceCode": {
+      "type": "string"
+    },
+    "ServiceName": {
+      "type": "string"
+    },
+    "ServiceType": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "string"
     }
   },
   "variables": {
     "spo": {
       "getFileItems": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/getfileitems')]",
       "updateMetaData": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each_item_in_Application_folder'')?[''ID''])}/patchfileitem')]",
-      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]"
+      "updatePermitMetadata": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(items(''For_each'')?[''ID''])}/patchfileitem')]",
+      "getItemsForUpdateByApplicationIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "updateApplicationMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "getItemsForUpdateByPermitIdConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]",
+      "updatePermitMetadataForThisItemConnection": "[concat('@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']')]"
     }
   },
   "resources": [
@@ -35,13 +54,13 @@
       "location": "[parameters('location')]",
       "tags": {
         "Name": "[parameters('logicAppName')]",
-        "Tier": "Application",
+        "Tier": "Compute",
         "Location": "[parameters('location')]",
-        "Environment": "#{env}",
-        "ServiceCode": "#{proj}",
-        "ServiceName": "#{ServiceNameTag}",
-        "ServiceType": "#{ServiceTypeTag}",
-        "CreatedDate": "#{DateTag}"
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' LogicApp')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
       },
       "apiVersion": "2016-06-01",
       "properties": {
@@ -68,7 +87,7 @@
                   "inputs": {
                     "host": {
                       "connection": {
-                        "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                        "name": "@parameters('$connections')[parameters('connectionName')]['connectionId']"
                       }
                     },
                     "method": "get",
@@ -101,7 +120,7 @@
                       "inputs": {
                         "host": {
                           "connection": {
-                            "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                            "name": "@parameters('$connections')[parameters('connectionName')]['connectionId']"
                           }
                         },
                         "method": "patch",
@@ -135,7 +154,7 @@
                     "inputs": {
                       "host": {
                         "connection": {
-                          "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                          "name": "@parameters('$connections')[parameters('connectionName')]['connectionId']"
                         }
                       },
                       "method": "get",
@@ -155,7 +174,7 @@
                         "inputs": {
                           "host": {
                             "connection": {
-                              "name": "@parameters('$connections')['#{connectionName}']['connectionId']"
+                              "name": "@parameters('$connections')[parameters('connectionName')]['connectionId']"
                             }
                           },
                           "method": "patch",
@@ -243,8 +262,8 @@
         "parameters": {
           "$connections": {
             "value": {
-              "#{connectionName}": {
-                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', '#{connectionName}')]",
+              "[parameters('connectionName')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]",
                 "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]",
                 "connectionName": "[parameters('connectionName')]"
               }
@@ -263,17 +282,17 @@
       "location": "[parameters('location')]",
       "tags": {
         "Name": "[parameters('connectionName')]",
-        "Tier": "OTHER",
+        "Tier": "Other",
         "Location": "[parameters('location')]",
-        "Environment": "#{env}",
-        "ServiceCode": "#{proj}",
-        "ServiceName": "#{ServiceNameTag}",
-        "ServiceType": "#{ServiceTypeTag}",
-        "CreatedDate": "#{DateTag}"
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' Api Connection')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
       },
       "properties": {
         "api": {
-          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', '#{connectionName}')]"
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]"
         },
         "displayName": "[parameters('connectionDisplayName')]"
       }
