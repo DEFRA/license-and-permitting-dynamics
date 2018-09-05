@@ -24,7 +24,7 @@ var Applications = {
         var now = new Date().getTime();
         var msSinceLastRefresh = now - Applications.LastRefresh;
      
-        if (msSinceLastRefresh < 5000) {
+        if (msSinceLastRefresh < 1000) {
             console.log('not refreshing... last refresh: ' + Applications.LastRefresh);
             return false;
         }
@@ -43,9 +43,14 @@ var Applications = {
     {
         console.log('JS: On Load.');
         // Set the last refresh so that a grid refresh doesn't happen as we're loading
-        Applications.LastRefresh = new Date().getTime();
-        Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
-        Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
+
+        // Wait 3 seconds before adding the onload events to prevent render issues.
+        setTimeout(
+          function () {
+              Applications.LastRefresh = new Date().getTime();
+              Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
+              Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
+          }, 3000);
     },
 
     // On Save event
