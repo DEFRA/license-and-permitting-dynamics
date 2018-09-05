@@ -1,13 +1,12 @@
-﻿using Microsoft.Xrm.Sdk;
-using System;
-using System.IO;
-using System.Text;
-
-// -----------------------------------------------
+﻿// -----------------------------------------------
 // Helper extensions for string processing
 // -----------------------------------------------
 namespace Core.Helpers.Extensions
 {
+    using System;
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// General string extensions
     /// </summary>
@@ -84,6 +83,7 @@ namespace Core.Helpers.Extensions
         /// Adds timestamp to the filename
         /// </summary>
         /// <param name="fileName">Original filename</param>
+        /// <param name="date">Date to be added to file name</param>
         /// <returns>Orignal filename + timestamp + ext</returns>
         public static string AppendTimeStamp(this string fileName, DateTime date)
         {
