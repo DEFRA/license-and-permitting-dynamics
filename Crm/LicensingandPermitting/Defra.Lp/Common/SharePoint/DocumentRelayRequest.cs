@@ -18,5 +18,11 @@
         public string Customer { get; internal set; }
         public string PermitDetails { get; internal set; }
         public string SiteDetails { get; internal set; }
+        public string CrmId { get; internal set; }
+        public string EmailRegarding { get; internal set; }
+        public string EmailFrom { get; internal set; }
+        public string EmailTo { get; internal set; }
+        public string EmailLink { get; internal set; }
+        public string CaseNo { get; internal set; }
     }
 }
