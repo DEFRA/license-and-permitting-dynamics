@@ -25,25 +25,21 @@ var Applications = {
         var msSinceLastRefresh = now - Applications.LastRefresh;
      
         if (msSinceLastRefresh < 1000) {
-            console.log('not refreshing... last refresh: ' + Applications.LastRefresh);
+            // Not refreshing
             return false;
         }
 
         if (Xrm.Page.data.entity.getIsDirty()) {
-            console.log('not refreshing... form has updates');
+            // Not refreshing, form has updates
             return false;
         }
 
-        console.log('refreshing... last refresh: ' + Applications.LastRefresh);
         return true;
     },
 
     // Function sets the listeners for messages that the payment has been updated
     OnLoad: function ()
     {
-        console.log('JS: On Load.');
-        // Set the last refresh so that a grid refresh doesn't happen as we're loading
-
         // Wait 3 seconds before adding the onload events to prevent render issues.
         setTimeout(
           function () {
@@ -57,7 +53,6 @@ var Applications = {
     OnSave: function () {
         // Set the last refresh so that a grid refresh doesn't happen as we're saving.
         Applications.LastRefresh = new Date().getTime();
-        console.log('JS: On Save.');
     },
 
 
@@ -132,7 +127,6 @@ var Applications = {
 
         return maximumWriteOffValue;
     },
-
 
     // Generic function to call a CRM action with given parameters
     CallWriteOffAction: function (writeOffAmount, applicationId, userId) {
