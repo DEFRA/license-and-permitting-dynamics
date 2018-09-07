@@ -477,9 +477,9 @@
             if (existingContact.Attributes.Contains("defra_dobmonthcompanieshouse") &&
                 existingContact.Attributes["defra_dobmonthcompanieshouse"] != null)
                 dynStr += ((int)existingContact["defra_dobmonthcompanieshouse"]).ToString();
-            if (existingContact.Attributes.Contains("defra_dobyearcompanieshouse") &&
-                existingContact.Attributes["defra_dobyearcompanieshouse"] != null)
-                dynStr += ((int)existingContact["defra_dobyearcompanieshouse"]).ToString();
+            if (existingContact.Attributes.Contains("defra_dobyearcompanieshouse_text") &&
+                existingContact.Attributes["defra_dobyearcompanieshouse_text"] != null)
+                dynStr += ((int)existingContact["defra_dobyearcompanieshouse_text"]).ToString();
 
             if (string.Equals(dynStr,
                 (companiesHouseMember.firstname + companiesHouseMember.lastname + companiesHouseMember.date_of_birth.month +
@@ -519,7 +519,7 @@
             QueryExpression query = new QueryExpression("contact")
             {
                 ColumnSet = new ColumnSet("fullname", "firstname", "lastname",
-                    "defra_dobmonthcompanieshouse", "defra_dobyearcompanieshouse",
+                    "defra_dobmonthcompanieshouse", "defra_dobyearcompanieshouse_text",
                     "defra_resignedoncompanieshouse"),
                 Criteria = new FilterExpression()
                 {
