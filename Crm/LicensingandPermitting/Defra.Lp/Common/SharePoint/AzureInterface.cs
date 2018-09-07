@@ -379,25 +379,23 @@ namespace Defra.Lp.Common.SharePoint
 
         private string GetCaseFolderName(Entity queryRecord)
         {
-            var caseType = string.Empty;
-            var caseNo = string.Empty;
-            var title = string.Empty;
-            if (queryRecord.Contains("case.casetypecode"))
+            var caseFolderName = string.Empty;
+            if (queryRecord.Contains("case.casetypecode") && queryRecord.Contains("case.title") && queryRecord.Contains("case.ticketnumber"))
             {
+                var caseType = string.Empty;
+                var caseNo = string.Empty;
+                var title = string.Empty;
                 var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
                 caseType = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
-            }
-            if (queryRecord.Contains("case.title"))
-            {
+
                 title = (string)((AliasedValue)queryRecord.Attributes["case.title"]).Value;
                 title = SpRemoveIllegalChars(title, false); // Used for folder name. Spaces ok.
-            }
-            if (queryRecord.Contains("case.ticketnumber"))
-            {
+           
                 caseNo = (string)((AliasedValue)queryRecord.Attributes["case.ticketnumber"]).Value;
+            
+                caseFolderName = string.Format("{0} - {1} ({2})", caseType, title, caseNo);
+                TracingService.Trace("Case Folder Name: {0}", caseFolderName);
             }
-            var caseFolderName = string.Format("{0} - {1} ({2})", caseType, title, caseNo);
-            TracingService.Trace("Case Folder Name: {0}", caseFolderName);
             return caseFolderName;
         }
 
