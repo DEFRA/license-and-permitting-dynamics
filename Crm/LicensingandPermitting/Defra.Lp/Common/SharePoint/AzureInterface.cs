@@ -379,28 +379,26 @@ namespace Defra.Lp.Common.SharePoint
 
         private string GetCaseFolderName(Entity queryRecord)
         {
-            //var caseType = string.Empty;
+            var caseType = string.Empty;
             var caseNo = string.Empty;
-            //var title = string.Empty;
-            //if (queryRecord.Contains("case.casetypecode"))
-            //{
-            //    var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
-            //    caseType = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
-            //}
-            // Using the unique generated id intially. Does the title work better? Might be updated. Does that matter?
-            //
-            //if (queryRecord.Contains("case.title"))
-            //{
-            //    title = (string)((AliasedValue)queryRecord.Attributes["case.title"]).Value;
-            //    title = SpRemoveIllegalChars(title, false); // Used for folder name. Spaces ok.
-            //}
+            var title = string.Empty;
+            if (queryRecord.Contains("case.casetypecode"))
+            {
+                var caseTypeCode = (OptionSetValue)(queryRecord.GetAttributeValue<AliasedValue>("case.casetypecode")).Value;
+                caseType = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
+            }
+            if (queryRecord.Contains("case.title"))
+            {
+                title = (string)((AliasedValue)queryRecord.Attributes["case.title"]).Value;
+                title = SpRemoveIllegalChars(title, false); // Used for folder name. Spaces ok.
+            }
             if (queryRecord.Contains("case.ticketnumber"))
             {
                 caseNo = (string)((AliasedValue)queryRecord.Attributes["case.ticketnumber"]).Value;
             }
-            //var caseFolderName = string.Format("{0}_{1}", caseType, title);
-            TracingService.Trace("Case Folder Name: {0}", caseNo);
-            return caseNo;
+            var caseFolderName = string.Format("{0} - {1} ({2})", caseType, title, caseNo);
+            TracingService.Trace("Case Folder Name: {0}", caseFolderName);
+            return caseFolderName;
         }
 
         private string GetCrmId(Entity queryRecord)
