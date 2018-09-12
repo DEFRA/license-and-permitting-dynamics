@@ -47,6 +47,9 @@ var Applications = {
               Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
               Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
           }, 3000);
+
+        // Add filter lookup for application sub type field
+        Applications.PreFilterLookup();
     },
 
     // On Save event
@@ -157,5 +160,21 @@ var Applications = {
             }
         };
         req.send(JSON.stringify(parameters));
+    },
+
+    // Called by the onload function, applies the Application Sub Type filter
+    PreFilterLookup: function () {
+        Xrm.Page.getControl("defra_application_subtype").addPreSearch(function () {
+            Applications.AddLookupFilterToApplicationSubType();
+        });
+    },
+
+    // Checks the current appplication type and filters the sub type
+    AddLookupFilterToApplicationSubType: function () {
+        var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
+        if (applicationType != null) {
+            fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
+            Xrm.Page.getControl("defra_application_subtype").addCustomFilter(fetchXml);
+        }
     }
 }
