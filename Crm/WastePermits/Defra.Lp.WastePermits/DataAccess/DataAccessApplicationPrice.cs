@@ -9,15 +9,15 @@ namespace DAL
 
     public static class DataAccessApplicationPrice
     {
-
         /// <summary>
         /// Get Price for the given application type and standard rule combination
         /// </summary>
         /// <param name="service"></param>
         /// <param name="applicationType"></param>
         /// <param name="standardRule"></param>
+        /// <param name="applicationSubType"></param>
         /// <returns></returns>
-        public static Money RetrieveApplicationPrice(this IOrganizationService service, OptionSetValue applicationType, EntityReference standardRule)
+        public static Money RetrieveApplicationPrice(this IOrganizationService service, OptionSetValue applicationType, EntityReference standardRule, EntityReference applicationSubType)
         {
 
 
@@ -31,11 +31,22 @@ namespace DAL
                     Conditions =
                     {
                         new ConditionExpression(ApplicationPrice.ApplicationType, ConditionOperator.Equal, applicationType.Value),
-                        new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule.Id),
                         new ConditionExpression(ApplicationPrice.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active)
                     }
                 }
             };
+
+            // Add standard rule filter if available
+            if (standardRule != null && standardRule.Id != Guid.Empty)
+            {
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule.Id));
+            }
+
+            // Add application sub type filter if available
+            if (applicationSubType != null && applicationSubType.Id != Guid.Empty)
+            {
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPrice.ApplicationSubType, ConditionOperator.Equal, applicationSubType.Id));
+            }
 
             EntityCollection results =  service.RetrieveMultiple(priceQuery);
 

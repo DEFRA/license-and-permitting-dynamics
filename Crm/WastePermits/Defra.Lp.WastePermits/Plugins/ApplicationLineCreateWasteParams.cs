@@ -213,7 +213,16 @@ namespace Defra.Lp.WastePermits.Plugins
             {
                 OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
                 EntityReference standardRuleEntityReference = targetAppLine[ApplicationLine.StandardRule] as EntityReference;
-                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference);
+
+                // Get the application sub type if it exists
+                EntityReference applicationSubType = null;
+                if (targetAppLine.Attributes.ContainsKey(Application.ApplicationSubType))
+                {
+                    applicationSubType = targetAppLine[Application.ApplicationSubType] as EntityReference;
+                }
+               
+                // Get the price from the Application Price table
+                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference, applicationSubType);
                 if (price != null)
                 {
                     _TracingService.Trace("Setting Application Price to {0}", price);

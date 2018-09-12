@@ -25,5 +25,11 @@ namespace Model.Lp.Crm
         /// Application Type OptionSet
         /// </summary>
         public const string ApplicationType = "defra_applicationtype";
+
+
+        /// <summary>
+        /// Application SubType Lookup
+        /// </summary>
+        public const string ApplicationSubType = "defra_application_subtype";
     }
 }
