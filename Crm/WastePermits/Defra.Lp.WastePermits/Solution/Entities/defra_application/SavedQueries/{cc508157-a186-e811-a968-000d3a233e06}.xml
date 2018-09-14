@@ -10,11 +10,15 @@
     <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_applicationid">
         <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_balance" width="100" />
         <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="ownerid" width="100" />
+        <cell name="defra_determinedbyid" width="100" />
         <cell name="defra_applicationtype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_facility_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="createdon" width="75" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="statuscode" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_submittedon" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
       </row>
     </grid>
   </layoutxml>
@@ -27,8 +31,7 @@
         <attribute name="defra_customerid" />
         <attribute name="defra_site_description" />
         <attribute name="defra_facility_description" />
-        <attribute name="createdon" />
-        <order attribute="createdon" descending="true" />
+        <order attribute="defra_submittedon" descending="false" />
         <filter type="and">
           <condition attribute="statuscode" operator="not-in">
             <value>910400007</value>
@@ -50,6 +53,11 @@
             </link-entity>
           </link-entity>
         </link-entity>
+        <attribute name="defra_submittedon" />
+        <attribute name="defra_determinedbyid" />
+        <attribute name="ownerid" />
+        <attribute name="statuscode" />
+        <attribute name="defra_balance" />
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>

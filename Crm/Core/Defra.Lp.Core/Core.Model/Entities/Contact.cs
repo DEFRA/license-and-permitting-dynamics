@@ -25,7 +25,7 @@
 
         public const string DobMonthCompaniesHouseField = "defra_dobmonthcompanieshouse";
 
-        public const string DobYearCompaniesHouseField = "defra_dobyearcompanieshouse";
+        public const string DobYearCompaniesHouseField = "defra_dobyearcompanieshouse_text";
 
         public const string ResignedOnCompaniesHouseField = "defra_resignedoncompanieshouse";
 

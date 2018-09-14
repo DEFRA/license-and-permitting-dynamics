@@ -1,0 +1,315 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "connectionName": {
+      "type": "string",
+      "defaultValue": "sharepointonline"
+    },
+    "connectionDisplayName": {
+      "type": "string"
+    },
+    "siteName": {
+      "type": "string"
+    },
+    "permitLibraryGuid": {
+      "type": "string"
+    },
+    "metaDataLogicAppName": {
+      "type": "string"
+    },
+    "sharePointAzureFunctionName": {
+      "type" : "string"
+    },
+    "Environment": {
+      "type": "string"
+    },
+    "ServiceCode": {
+      "type": "string"
+    },
+    "ServiceName": {
+      "type": "string"
+    },
+    "ServiceType": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "spo": {
+      "siteName": "[concat('@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}')]",
+      "fileUpload": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/files')]",
+      "updateFileProperties": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('siteName'), '''))}', '/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('permitLibraryGuid'), '''))}', '/items/@{encodeURIComponent(body(''Upload_file_to_Application_folder_in_SharePoint'')?[''ItemId''])}/patchfileitem')]",
+      "setMetaData": "[concat(resourceGroup().id,'/providers/Microsoft.Logic/workflows/', parameters('metaDataLogicAppName'))]",
+      "uploadFileToApplicationFolderInSharePointConnection": "[ concat( '@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']' ) ]",
+      "updateFilePropertiesConnection": "[ concat( '@parameters(''$connections'')[''',parameters('connectionName'),'''][''connectionId'']' ) ]"
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Name": "[parameters('connectionName')]",
+        "Tier": "Compute",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName') ,' LogicApp')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
+      },
+      "apiVersion": "2016-06-01",
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Is_there_a_File_Body": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@empty(triggerBody()?['FileBody'])",
+                      false
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Upload_file_to_Application_folder_in_SharePoint": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[variables('spo').uploadFileToApplicationFolderInSharePointConnection]"
+                      }
+                    },
+                    "method": "post",
+                    "body": "@base64ToBinary(triggerBody()?['FileBody'])",
+                    "path": "[variables('spo').fileUpload]",
+                    "queries": {
+                      "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/@{if(empty(triggerBody()?['CaseNo']),'',triggerBody()?['CaseNo'])}",
+                      "name": "@triggerBody()?['FileName']",
+                      "queryParametersSingleEncoded": true
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Update_file_properties": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[variables('spo').uploadFileToApplicationFolderInSharePointConnection]"
+                      }
+                    },
+                    "method": "patch",
+                    "body": {
+                      "CRM_x0020_Record_x0020_ID": "@triggerBody()?['CrmId']",
+                      "Email": "@not(empty(coalesce(triggerBody()?['EmailFrom'],triggerBody()?['EmailTo'])))",
+                      "Email_x0020_From": "@triggerBody()?['EmailFrom']",
+                      "Email_x0020_To": "@triggerBody()?['EmailTo']",
+                      "Regarding_x0020_Email_x0020_Subject": "@triggerBody()?['EmailLink']",
+                      "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
+                        "Value": "@triggerBody()?['EmailRegarding']"
+                      },
+                      "Title": "@triggerBody()?['FileDescription']",
+                      "{ContentType}": {
+                        "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
+                      }
+                    },
+                    "path": "[variables('spo').updateFileProperties]"
+                  },
+                  "runAfter": {
+                    "Upload_file_to_Application_folder_in_SharePoint": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Create_Application_Document_Set_inside_Permit_Folder": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Set_Application_folder_metadata": {
+                    "type": "Workflow",
+                    "inputs": {
+                      "host": {
+                        "triggerName": "manual",
+                        "workflow": {
+                          "id": "[variables('spo').setMetaData]"
+                        }
+                      },
+                      "body": {
+                        "ApplicationNo": "@triggerBody()?['ApplicationNo']",
+                        "Customer": "@triggerBody()?['Customer']",
+                        "ListName": "@triggerBody()?['ListName']",
+                        "PermitDetails": "@triggerBody()?['PermitDetails']",
+                        "PermitNo": "@triggerBody()?['PermitNo']",
+                        "SiteDetails": "@triggerBody()?['SiteDetails']",
+                        "UpdateType": "Application"
+                      }
+                    },
+                    "runAfter": {}
+                  }
+                }
+              }
+            },
+            "Create_Application_Document_Set_inside_Permit_Folder": {
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "ApplicationContentType": "@{triggerBody()?['ApplicationContentType']}",
+                  "ApplicationFolder": "@{triggerBody()?['ApplicationNo']}",
+                  "PermitFolder": "@{triggerBody()?['PermitNo']}",
+                  "ListName": "@{triggerBody()?['ListName']}",
+                  "SpoSiteName": "[variables('spo').siteName]",
+                  "PermitContentType": "@{triggerBody()?['PermitContentType']}"
+                },
+                "function": {
+                  "id": "[concat(resourceGroup().id,'/providers/Microsoft.Web/sites/',parameters('sharePointAzureFunctionName'),'/functions/','CreateDocumentSet')]"
+                }
+              },
+              "runAfter": {}
+            },
+            "Response": {
+              "type": "Response",
+              "kind": "http",
+              "inputs": {
+                "statusCode": 200
+              },
+              "runAfter": {
+                "Is_there_a_File_Body": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "ApplicationContentType": {
+                      "type": "string"
+                    },
+                    "ApplicationNo": {
+                      "type": "string"
+                    },
+                    "Customer": {
+                      "type": "string"
+                    },
+                    "EmailFrom": {
+                      "type": "string"
+                    },
+                    "CaseNo": {
+                      "type": "string"
+                    },
+                    "CrmId": {
+                      "type": "string"
+                    },
+                    "EmailRegarding": {
+                      "type": "string"
+                    },
+                    "EmailLink": {
+                      "type": "string"
+                    },
+                    "EmailTo": {
+                      "type": "string"
+                    },
+                    "FileBody": {
+                      "type": "string"
+                    },
+                    "FileDescription": {
+                      "type": "string"
+                    },
+                    "FileName": {
+                      "type": "string"
+                    },
+                    "ListName": {
+                      "type": "string"
+                    },
+                    "PermitContentType": {
+                      "type": "string"
+                    },
+                    "PermitNo": {
+                      "type": "string"
+                    },
+                    "PermitDetails": {
+                      "type": "string"
+                    },
+                    "SiteDetails": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "method": "POST"
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sharepointonline": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]",
+                "connectionName": "[parameters('connectionName')]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('connectionName'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('connectionName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Name": "[parameters('connectionName')]",
+        "Tier": "Other",
+        "Location": "[parameters('location')]",
+        "Environment": "[parameters('Environment')]",
+        "ServiceCode": "[parameters('ServiceCode')]",
+        "ServiceName": "[concat(parameters('ServiceName'),' Api Connection')]",
+        "ServiceType": "[parameters('ServiceType')]",
+        "CreatedDate": "[parameters('CreatedDate')]"
+      },
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('location'), '/managedApis/', parameters('connectionName'))]"
+        },
+        "displayName": "[parameters('connectionDisplayName')]"
+      }
+    }
+  ],
+  "outputs": {}
+}
