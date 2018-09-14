@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Step3_MigrateReferenceDataAfterSolutionImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="296"
-  DTS:VersionGUID="{1C009E1E-A024-4942-915C-C2FFAABAD069}">
+  DTS:VersionBuild="297"
+  DTS:VersionGUID="{9EB492E2-BF3B-4A2C-ACFC-5F14704E295C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -36,7 +36,7 @@
           ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-CORELP;CrmServerUrl=https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcRKMc/grdUOKwEeJaaSW/wAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABbOrU/pmhjGnFkEXSE7/Uq6wD/++aBXFz7E8Y/7RVDCgAAAAAOgAAAAAIAACAAAAC9VowCKDe5XwQblSqSYSxHUTGplEkWCKf0xx8tOwGZPyAAAAAH86rrb0KED/GdxI76wRNE9Q1sUrZheaZEk7/o0ACGu0AAAADOdCJuxsANxjXWJVrUpf0pmw08vFmy/hF5hfqHbFqDtgJ5IcBVEg0iDkPiXSsG6GKdvK4Kzykk543FXDIsyV1o</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcRKMc/grdUOKwEeJaaSW/wAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACviyV1vOQmgDplHPPVoNAs7VVLdXfPs4zyJGiPDyERegAAAAAOgAAAAAIAACAAAAD9QORy57K5He8nRudKoY6fYEU9A+jD75d5dzbPpdNPMiAAAACwjE62pEctyN7Qr8mHnkPPbnSOHOvXqVSVvwP0iLXNJEAAAADgR0f0oDW5xyKmItK1R2I1jtPccyZHO5ouN1fQEHKD8j2Qf3kJ1qZYxKboyY+KxA1FnpfFlIgeW30WDTRj+9Nn</Password>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -50,7 +50,7 @@
           ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcRKMc/grdUOKwEeJaaSW/wAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABXI5AXN8ASJasA6TwyGdwPAZXDcWAgZE27yAnOiX3O4gAAAAAOgAAAAAIAACAAAABh9fxoK0WNccbWF9Z4vZs9nkFjafh/0x4CmVXWU33A8iAAAACZNpgV+c4HE0SMTYVyKbx4bTDLS6H3d7xkzjT+XZfzT0AAAACaGbHdrzykAGo0HmIfxG2xI0VZWyYl1nUtDZWZlHi16Cl+lEnUd/J9a6PlsuDvw3MmvS1PcQKoWRa3iZv8TpUX</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcRKMc/grdUOKwEeJaaSW/wAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA+SCjqZB6qYwjyWNr1VcyZf8Npe87d4vmuoHQAlevaoAAAAAAOgAAAAAIAACAAAADTzcHJN4qsoh3N/t0gxeRM3FZFEfanAISNxYsxgsh0FSAAAAC3trmxZC2Pp0jwj089IqKQm7wJRHh/DI/mwvIp+zVz4EAAAABul4cKLLJ2gN9ReMw5gvZew9fhMQS3cNv5cuH/Zg7Wk3lBVlrOC6rciAI92mOzCsYhsi6CgCqn6jaRSRZMswa2</Password>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -1106,7 +1106,7 @@
                       dataType="System.String"
                       description="Destination entity to write data."
                       expressionType="Notify"
-                      name="DestinationEntity">defra_applicationprice</property>
+                      name="DestinationEntity">defra_application_subtypes</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies how data is written to CRM server."
@@ -1200,17 +1200,17 @@
                       name="Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_applicationpriceid]"
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_application_subtypesid]"
                           cachedDataType="guid"
-                          cachedName="defra_applicationpriceid"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_applicationpriceid]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\127:invalid" />
+                          cachedName="defra_application_subtypesid"
+                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_application_subtypesid]"
+                          lineageId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[defra_application_subtypesid]" />
                         <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_applicationtype]"
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_application_type]"
                           cachedDataType="i4"
-                          cachedName="defra_applicationtype"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_applicationtype]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\128:invalid" />
+                          cachedName="defra_application_type"
+                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_application_type]"
+                          lineageId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[defra_application_type]" />
                         <inputColumn
                           refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_name]"
                           cachedDataType="wstr"
@@ -1218,18 +1218,6 @@
                           cachedName="defra_name"
                           externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_name]"
                           lineageId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[defra_name]" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_price]"
-                          cachedDataType="cy"
-                          cachedName="defra_price"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_price]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\131:invalid" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[defra_standardruleid]"
-                          cachedDataType="guid"
-                          cachedName="defra_standardruleid"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_standardruleid]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\133:invalid" />
                         <inputColumn
                           refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[statecode]"
                           cachedDataType="i4"
@@ -1242,45 +1230,32 @@
                           cachedName="statuscode"
                           externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[statuscode]"
                           lineageId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source.Outputs[CRM Primary Output].Columns[statuscode]" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[timezoneruleversionnumber]"
-                          cachedDataType="i4"
-                          cachedName="timezoneruleversionnumber"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\140:invalid" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[utcconversiontimezonecode]"
-                          cachedDataType="i4"
-                          cachedName="utcconversiontimezonecode"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\143:invalid" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[importsequencenumber]"
-                          cachedDataType="i4"
-                          cachedName="importsequencenumber"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\136:invalid" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[owneridtype]"
-                          cachedDataType="wstr"
-                          cachedLength="64"
-                          cachedName="owneridtype"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[owneridtype]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\147:invalid" />
-                        <inputColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].Columns[owneridname]"
-                          cachedDataType="wstr"
-                          cachedLength="200"
-                          cachedName="owneridname"
-                          externalMetadataColumnId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[ownerid]"
-                          lineageId="Package\Sequence Container\Migrate Application Sub Types\148:invalid" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_applicationpriceid]"
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[createdby]"
                           dataType="guid"
-                          name="defra_applicationpriceid">
+                          name="createdby">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              name="CrmFieldType">Lookup</property>
+                            <property
+                              dataType="System.String"
+                              name="LookupTypes">systemuser</property>
+                            <property
+                              dataType="System.Boolean"
+                              name="Createable">true</property>
+                            <property
+                              dataType="System.Boolean"
+                              name="Updateable">false</property>
+                          </properties>
+                        </externalMetadataColumn>
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_application_subtypesid]"
+                          dataType="guid"
+                          name="defra_application_subtypesid">
                           <properties>
                             <property
                               dataType="System.String"
@@ -1297,9 +1272,9 @@
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_applicationtype]"
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_application_type]"
                           dataType="i4"
-                          name="defra_applicationtype">
+                          name="defra_application_type">
                           <properties>
                             <property
                               dataType="System.String"
@@ -1336,13 +1311,13 @@
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_price]"
-                          dataType="cy"
-                          name="defra_price">
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                          dataType="i4"
+                          name="importsequencenumber">
                           <properties>
                             <property
                               dataType="System.String"
-                              name="CrmFieldType">Money</property>
+                              name="CrmFieldType">Integer</property>
                             <property
                               dataType="System.String"
                               name="LookupTypes"></property>
@@ -1351,26 +1326,26 @@
                               name="Createable">true</property>
                             <property
                               dataType="System.Boolean"
-                              name="Updateable">true</property>
+                              name="Updateable">false</property>
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[defra_standardruleid]"
-                          dataType="guid"
-                          name="defra_standardruleid">
+                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                          dataType="dbTimeStamp"
+                          name="overriddencreatedon">
                           <properties>
                             <property
                               dataType="System.String"
-                              name="CrmFieldType">Lookup</property>
+                              name="CrmFieldType">DateTime</property>
                             <property
                               dataType="System.String"
-                              name="LookupTypes">defra_standardrule</property>
+                              name="LookupTypes"></property>
                             <property
                               dataType="System.Boolean"
                               name="Createable">true</property>
                             <property
                               dataType="System.Boolean"
-                              name="Updateable">true</property>
+                              name="Updateable">false</property>
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
@@ -1390,12 +1365,6 @@
                             <property
                               dataType="System.Boolean"
                               name="Updateable">true</property>
-                            <property
-                              dataType="System.String"
-                              name="TextLookup">&lt;TextLookupSetting&gt;
-  &lt;AllUsePrimaryField&gt;true&lt;/AllUsePrimaryField&gt;
-  &lt;CacheStrategy&gt;FullCache&lt;/CacheStrategy&gt;
-&lt;/TextLookupSetting&gt;</property>
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
@@ -1476,25 +1445,6 @@
                           </properties>
                         </externalMetadataColumn>
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[transactioncurrencyid]"
-                          dataType="guid"
-                          name="transactioncurrencyid">
-                          <properties>
-                            <property
-                              dataType="System.String"
-                              name="CrmFieldType">Lookup</property>
-                            <property
-                              dataType="System.String"
-                              name="LookupTypes">transactioncurrency</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Createable">true</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Updateable">true</property>
-                          </properties>
-                        </externalMetadataColumn>
-                        <externalMetadataColumn
                           refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
                           dataType="i4"
                           name="utcconversiontimezonecode">
@@ -1511,63 +1461,6 @@
                             <property
                               dataType="System.Boolean"
                               name="Updateable">true</property>
-                          </properties>
-                        </externalMetadataColumn>
-                        <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[createdby]"
-                          dataType="guid"
-                          name="createdby">
-                          <properties>
-                            <property
-                              dataType="System.String"
-                              name="CrmFieldType">Lookup</property>
-                            <property
-                              dataType="System.String"
-                              name="LookupTypes">systemuser</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Createable">true</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Updateable">false</property>
-                          </properties>
-                        </externalMetadataColumn>
-                        <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
-                          dataType="i4"
-                          name="importsequencenumber">
-                          <properties>
-                            <property
-                              dataType="System.String"
-                              name="CrmFieldType">Integer</property>
-                            <property
-                              dataType="System.String"
-                              name="LookupTypes"></property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Createable">true</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Updateable">false</property>
-                          </properties>
-                        </externalMetadataColumn>
-                        <externalMetadataColumn
-                          refId="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
-                          dataType="dbTimeStamp"
-                          name="overriddencreatedon">
-                          <properties>
-                            <property
-                              dataType="System.String"
-                              name="CrmFieldType">DateTime</property>
-                            <property
-                              dataType="System.String"
-                              name="LookupTypes"></property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Createable">true</property>
-                            <property
-                              dataType="System.Boolean"
-                              name="Updateable">false</property>
                           </properties>
                         </externalMetadataColumn>
                       </externalMetadataColumns>
@@ -16081,6 +15974,10 @@
           Id="Package\Sequence Container\Migrate Application Prices"
           TopLeft="436.110858761348,501.776403048152" />
         <NodeLayout
+          Size="221,42"
+          Id="Package\Sequence Container\Migrate Application Sub Types"
+          TopLeft="380.110858761348,328.776403048152" />
+        <NodeLayout
           Size="222,42"
           Id="Package\Sequence Container\Migrate Configuration Records"
           TopLeft="641.609984649222,182.362624379701" />
@@ -16322,10 +16219,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="221,42"
-          Id="Package\Sequence Container\Migrate Application Sub Types"
-          TopLeft="380.110858761348,328.776403048152" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
           TopLeft="279.317460855689,314.490688762438">
@@ -16439,6 +16332,44 @@
             <mssgm:EdgeLabel
               BoundingBox="-8,21.9970584202801,16,16"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Migrate Application Sub Types">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source"
+          TopLeft="437.142864587356,84.4235305957728" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination"
+          TopLeft="422.714289460864,193.917647436333" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Migrate Application Sub Types.Paths[CRM Primary Output]"
+          TopLeft="527.42857702411,126.423530595773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.4941168405602"
+              Start="0,0"
+              End="0,59.9941168405602">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.9941168405602" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -16850,46 +16781,6 @@
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <TaskHost
-    design-time-name="Package\Sequence Container\Migrate Application Sub Types">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="205,42"
-          Id="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Destination"
-          TopLeft="422.714289460864,193.917647436333" />
-        <NodeLayout
-          Size="185,42"
-          Id="Package\Sequence Container\Migrate Application Sub Types\Dynamics CRM Source"
-          TopLeft="437.142864587356,84.4235305957728" />
-        <EdgeLayout
-          Id="Package\Sequence Container\Migrate Application Sub Types.Paths[CRM Primary Output]"
-          TopLeft="527.42857702411,126.423530595773">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,67.4941168405602"
-              Start="0,0"
-              End="0,59.9941168405602">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,59.9941168405602" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-8,21.9970584202801,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
