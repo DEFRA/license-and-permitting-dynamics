@@ -9,18 +9,17 @@
   <layoutxml>
     <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
       <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
-        <cell name="objecttypecode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="objecttypecode" width="75" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="title" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_facility_description" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_applicationnumber" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_applicationtype" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_customerid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_facility_description" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_site_description" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="createdon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_deadline" width="100" disableSorting="1" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_response_deadline" width="100" disableSorting="1" />
-        <cell name="a_637d23e25bb7e811a978000d3ab31f97.ownerid" width="100" disableSorting="1" />
         <cell name="a_637d23e25bb7e811a978000d3ab31f97.defra_determinedbyid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="queueitemid" ishidden="1" width="100" />
       </row>
@@ -32,7 +31,7 @@
       <entity name="queueitem">
         <attribute name="title" />
         <attribute name="objecttypecode" />
-        <order attribute="createdon" descending="false" />
+        <order attribute="createdon" descending="true" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
           <condition attribute="workerid" operator="eq-userid" />
@@ -43,7 +42,6 @@
           <attribute name="statuscode" />
           <attribute name="defra_site_description" />
           <attribute name="defra_facility_description" />
-          <attribute name="ownerid" />
           <attribute name="defra_applicationnumber" />
           <attribute name="defra_customerid" />
           <attribute name="defra_response_deadline" />
