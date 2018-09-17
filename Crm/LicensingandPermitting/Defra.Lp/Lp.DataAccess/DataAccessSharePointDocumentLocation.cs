@@ -69,7 +69,7 @@
             return newLocation.ToEntityReference();
         }
 
-        public static void CreateApplicationDocumentLocation(this IOrganizationService service, string applicationNumber, Guid parentLocation, EntityReference regarding)
+        public static EntityReference CreateApplicationDocumentLocation(this IOrganizationService service, string applicationNumber, Guid parentLocation, EntityReference regarding)
         {
             Entity newLocation = new Entity("sharepointdocumentlocation");
             newLocation["name"] = applicationNumber;
@@ -78,6 +78,8 @@
             newLocation["regardingobjectid"] = regarding;
 
             newLocation.Id = service.Create(newLocation);
+
+            return newLocation.ToEntityReference();
         }
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.Xrm.Sdk;
 
 namespace Defra.Lp.Plugins
 {
+    using Model.Lp.Crm;
 
     /// <summary>
     /// ApplicationCreateSharePointDocumentLocation Plugin.
@@ -33,7 +34,6 @@ namespace Defra.Lp.Plugins
             : base(typeof(ApplicationCreateSharePointDocumentLocation))
         {
         }
-
 
         /// <summary>
         /// Main entry point for he business logic that the plug-in is to execute.
@@ -88,16 +88,20 @@ namespace Defra.Lp.Plugins
                 {
                     // Set the lookup on the Application to the Permit Document Location. Creating 
                     // a new entity so as not to trigger updates on all fields. 
-                    var updateApplication = new Entity("defra_application", target.Id);
-                    updateApplication["defra_permitdocumentlocation"] = permitLocation;
+                    var updateApplication = new Entity(Application.EntityLogicalName, target.Id);
+                    updateApplication[Application.PermitDocumentLocation] = permitLocation;
+
+                    // Now create Application document location 
+                    tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
+                    var applicationLocation = adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation.Id, target.ToEntityReference());
+                    if (applicationLocation != null)
+                    {
+                        updateApplication[Application.ApplicationDocumentLocation] = applicationLocation;
+                    }
                     if (context.Depth <= 1)
                     {
                         adminService.Update(updateApplication);
                     }
-
-                    // Now create Application document location 
-                    tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
-                    adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation.Id, target.ToEntityReference());
                 }
             }
             else
@@ -108,7 +112,16 @@ namespace Defra.Lp.Plugins
                 var parentRef = adminService.FindPermitListInSharePoint(permitListRef.ToString(), (string)target["defra_permitnumber"]);
                 tracing.Trace("Permit List in SharePoint document location = {0}", parentRef.ToString());
 
-                adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], parentRef, target.ToEntityReference());
+                var applicationLocation = adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], parentRef, target.ToEntityReference());
+                if (applicationLocation != null)
+                {
+                    var updateApplication = new Entity(Application.EntityLogicalName, target.Id);
+                    updateApplication[Application.ApplicationDocumentLocation] = applicationLocation;
+                    if (context.Depth <= 1)
+                    {
+                        adminService.Update(updateApplication);
+                    }
+                }
             }
         }
     }
