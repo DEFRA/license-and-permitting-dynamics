@@ -8,6 +8,8 @@ namespace Defra.Lp.Workflows
 {
     public class UploadIndividualAttachmentToSharePoint: WorkFlowActivityBase
     {
+        // This custom code activity is no longer used because we found that for files larger than 22MB
+        // calling the custom code activity caused errors. Smaller files work ok.
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext executionContext, LocalWorkflowContext crmWorkflowContext)
         {
             if (crmWorkflowContext == null)
@@ -30,7 +32,7 @@ namespace Defra.Lp.Workflows
 
                 tracingService.Trace(string.Format("Parent Entity = {0}; Parent Lookup = {1}", parentEntityName, parentLookupName));
 
-                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                var azureInterface = new AzureInterface(adminService, service, tracingService);
                 azureInterface.UploadFile(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), parentEntityName, parentLookupName);
             }
             catch (Exception ex)

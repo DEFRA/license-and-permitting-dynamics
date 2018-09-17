@@ -16,5 +16,14 @@ namespace Model.Lp.Crm
         /// </summary>
         public const string State = "statecode";
 
+        /// <summary>
+        /// Name field
+        /// </summary>
+        public const string Name = "defra_name";
+
+        /// <summary>
+        /// Permit Nuber field
+        /// </summary>
+        public const string PermitNumber = "defra_permitnumber";
     }
 }

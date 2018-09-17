@@ -34,7 +34,7 @@ namespace Core.CompaniesHouse.Api.Mappings
             if (companiesHouseMember.date_of_birth != null)
             {
                 crmContact[Contact.DobMonthCompaniesHouseField] = companiesHouseMember.date_of_birth.month;
-                crmContact[Contact.DobYearCompaniesHouseField] = companiesHouseMember.date_of_birth.year;
+                crmContact[Contact.DobYearCompaniesHouseField] = companiesHouseMember.date_of_birth.year.ToString();
             }
 
             if (!string.IsNullOrEmpty(companiesHouseMember.resigned_on))

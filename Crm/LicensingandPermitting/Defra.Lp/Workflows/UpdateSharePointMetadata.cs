@@ -97,7 +97,7 @@ namespace Defra.Lp.Workflows
                 }
                 tracingService.Trace("Customer = {0}; Site = {1}; Permit = {2}", customer, siteDetails, permitDetails);
                 
-                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                var azureInterface = new AzureInterface(adminService, service, tracingService);
                 azureInterface.UpdateMetaData(new EntityReference(context.PrimaryEntityName, context.PrimaryEntityId), customer, siteDetails, permitDetails);
             }
             catch (Exception ex)

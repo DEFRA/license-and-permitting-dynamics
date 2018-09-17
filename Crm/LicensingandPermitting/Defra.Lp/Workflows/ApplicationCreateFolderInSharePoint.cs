@@ -56,7 +56,7 @@ namespace Defra.Lp.Workflows
 
                 var application = this.Application.Get(executionContext);
 
-                AzureInterface azureInterface = new AzureInterface(adminService, service, tracingService);
+                var azureInterface = new AzureInterface(adminService, service, tracingService);
                 azureInterface.CreateFolder(application);
             }
             catch (Exception ex)
