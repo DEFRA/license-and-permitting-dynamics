@@ -164,17 +164,35 @@ var Applications = {
 
     // Called by the onload function, applies the Application Sub Type filter
     PreFilterLookup: function () {
+
         Xrm.Page.getControl("defra_application_subtype").addPreSearch(function () {
             Applications.AddLookupFilterToApplicationSubType();
         });
+
+        
+        //Check if the control exist on the form
+        if (Xrm.Page.getControl("header_process_defra_application_subtype") != null) {
+            // add the event handler for PreSearch Event
+            Xrm.Page.getControl("header_process_defra_application_subtype").addPreSearch(Applications.AddBfpLookupFilterToApplicationSubType);
+
+        }
     },
 
     // Checks the current appplication type and filters the sub type
     AddLookupFilterToApplicationSubType: function () {
         var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
         if (applicationType != null) {
-            fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
+            var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
             Xrm.Page.getControl("defra_application_subtype").addCustomFilter(fetchXml);
+        }
+    },
+
+    // Checks the current appplication type and filters the sub type
+    AddBfpLookupFilterToApplicationSubType: function () {
+        var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
+        if (applicationType != null) {
+            var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
+            Xrm.Page.getControl("header_process_defra_application_subtype").addCustomFilter(fetchXml);
         }
     }
 }
