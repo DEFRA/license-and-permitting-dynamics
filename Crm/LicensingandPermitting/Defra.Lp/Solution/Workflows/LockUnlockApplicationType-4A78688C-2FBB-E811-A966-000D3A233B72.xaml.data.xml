@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Workflow WorkflowId="{702762fa-a9b6-e811-a966-000d3a206976}" Name="New business rule" Description="Click to add description">
-  <XamlFileName>/Workflows/Newbusinessrule-702762FA-A9B6-E811-A966-000D3A206976.xaml</XamlFileName>
+<Workflow WorkflowId="{4a78688c-2fbb-e811-a966-000d3a233b72}" Name="Lock/Unlock Application Type" Description="Click to add description">
+  <XamlFileName>/Workflows/LockUnlockApplicationType-4A78688C-2FBB-E811-A966-000D3A233B72.xaml</XamlFileName>
   <Type>1</Type>
   <Subprocess>0</Subprocess>
   <Category>2</Category>
@@ -15,18 +15,34 @@
   <StatusCode>2</StatusCode>
   <RunAs>1</RunAs>
   <IsTransacted>1</IsTransacted>
-  <IntroducedVersion>1.0</IntroducedVersion>
+  <IntroducedVersion>1.2.1.44</IntroducedVersion>
   <IsCustomizable>1</IsCustomizable>
   <BusinessProcessType>0</BusinessProcessType>
   <PrimaryEntity>defra_application</PrimaryEntity>
   <LocalizedNames>
-    <LocalizedName languagecode="1033" description="New business rule" />
+    <LocalizedName languagecode="1033" description="Lock/Unlock Application Type" />
   </LocalizedNames>
   <Descriptions>
     <Description languagecode="1033" description="Click to add description" />
   </Descriptions>
   <ProcessTriggers>
-    <ProcessTrigger processtriggerid="{2cf55c00-aab6-e811-a966-000d3a206976}">
+    <ProcessTrigger processtriggerid="{4c9adb97-3ebb-e811-a966-000d3a233b72}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_permitid</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{4d9adb97-3ebb-e811-a966-000d3a233b72}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_application</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{4e9adb97-3ebb-e811-a966-000d3a233b72}">
       <controltype>1</controltype>
       <scope>1</scope>
       <controlname>defra_applicationtype</controlname>
@@ -35,7 +51,7 @@
       <iscustomizable>1</iscustomizable>
       <primaryentitytypecode>defra_application</primaryentitytypecode>
     </ProcessTrigger>
-    <ProcessTrigger processtriggerid="{2df55c00-aab6-e811-a966-000d3a206976}">
+    <ProcessTrigger processtriggerid="{4f9adb97-3ebb-e811-a966-000d3a233b72}">
       <scope>1</scope>
       <event>load</event>
       <pipelinestage>0</pipelinestage>
