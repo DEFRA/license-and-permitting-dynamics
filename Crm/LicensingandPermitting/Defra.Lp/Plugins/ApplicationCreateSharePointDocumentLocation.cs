@@ -9,19 +9,19 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 
-using Core.Configuration;
-using Defra.Lp.Common.SharePoint;
 using Lp.DataAccess;
-using Microsoft.Xrm.Sdk;
 
 namespace Defra.Lp.Plugins
 {
+    using Core.Configuration;
+    using Common.SharePoint;
+    using Microsoft.Xrm.Sdk;
     using Model.Lp.Crm;
 
     /// <summary>
     /// ApplicationCreateSharePointDocumentLocation Plugin.
     /// </summary>    
-    public class ApplicationCreateSharePointDocumentLocation: PluginBase
+    public class ApplicationCreateSharePointDocumentLocation : PluginBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationCreateSharePointDocumentLocation"/> class.
@@ -94,14 +94,9 @@ namespace Defra.Lp.Plugins
                     // Now create Application document location 
                     tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
                     var applicationLocation = adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], permitLocation.Id, target.ToEntityReference());
-                    if (applicationLocation != null)
-                    {
-                        updateApplication[Application.ApplicationDocumentLocation] = applicationLocation;
-                    }
-                    if (context.Depth <= 1)
-                    {
-                        adminService.Update(updateApplication);
-                    }
+
+                    tracing.Trace("Updating Application and Permit Document Location for Application Id = {0}", target.Id.ToString());
+                    adminService.UpdateDocumentLocations(context, target, applicationLocation, permitLocation);
                 }
             }
             else
@@ -113,15 +108,9 @@ namespace Defra.Lp.Plugins
                 tracing.Trace("Permit List in SharePoint document location = {0}", parentRef.ToString());
 
                 var applicationLocation = adminService.CreateApplicationDocumentLocation((string)target["defra_applicationnumber"], parentRef, target.ToEntityReference());
-                if (applicationLocation != null)
-                {
-                    var updateApplication = new Entity(Application.EntityLogicalName, target.Id);
-                    updateApplication[Application.ApplicationDocumentLocation] = applicationLocation;
-                    if (context.Depth <= 1)
-                    {
-                        adminService.Update(updateApplication);
-                    }
-                }
+
+                tracing.Trace("Updating Application Document Location for Application Id = {0}", target.Id.ToString());
+                adminService.UpdateDocumentLocations(context, target, applicationLocation, null);
             }
         }
     }
