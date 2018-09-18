@@ -165,34 +165,29 @@ var Applications = {
     // Called by the onload function, applies the Application Sub Type filter
     PreFilterLookup: function () {
 
-        Xrm.Page.getControl("defra_application_subtype").addPreSearch(function () {
-            Applications.AddLookupFilterToApplicationSubType();
-        });
-
+        // Filter main form application subtype lookup
+        var formLookupField = Xrm.Page.getControl("defra_application_subtype");
+        if (formLookupField != null) {
+            formLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("defra_application_subtype");
+            });
+        }
         
-        //Check if the control exist on the form
-        if (Xrm.Page.getControl("header_process_defra_application_subtype") != null) {
-            // add the event handler for PreSearch Event
-            Xrm.Page.getControl("header_process_defra_application_subtype").addPreSearch(Applications.AddBfpLookupFilterToApplicationSubType);
-
+        // Filter BPF application subtype lookup
+        var bpfLookupField = Xrm.Page.getControl("header_process_defra_application_subtype");
+        if (bpfLookupField != null) {
+            bpfLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("header_process_defra_application_subtype");
+            });
         }
     },
 
     // Checks the current appplication type and filters the sub type
-    AddLookupFilterToApplicationSubType: function () {
+    AddLookupFilterToApplicationSubType: function (lookupFieldNameToFilter) {
         var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
         if (applicationType != null) {
             var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
-            Xrm.Page.getControl("defra_application_subtype").addCustomFilter(fetchXml);
-        }
-    },
-
-    // Checks the current appplication type and filters the sub type
-    AddBfpLookupFilterToApplicationSubType: function () {
-        var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
-        if (applicationType != null) {
-            var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
-            Xrm.Page.getControl("header_process_defra_application_subtype").addCustomFilter(fetchXml);
+            Xrm.Page.getControl(lookupFieldNameToFilter).addCustomFilter(fetchXml);
         }
     }
 }
