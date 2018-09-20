@@ -11,5 +11,6 @@ namespace Model.Lp.Crm
         public const string Delete = "Delete";
         public const string SetState = "SetState";
         public const string SetStateDynamicEntity = "SetStateDynamicEntity";
+        public const string SendFileToSharePoint = "defra_sendfiletosharepoint";
     }
 }

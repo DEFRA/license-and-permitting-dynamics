@@ -118,7 +118,7 @@
                       "CRM_x0020_Record_x0020_ID": "@triggerBody()?['CrmId']",
                       "Email": "@not(empty(coalesce(triggerBody()?['EmailFrom'],triggerBody()?['EmailTo'])))",
                       "Email_x0020_From": "@triggerBody()?['EmailFrom']",
-                      "Email_x0020_To0": "@triggerBody()?['EmailTo']",
+                      "Email_x0020_To": "@triggerBody()?['EmailTo']",
                       "Regarding_x0020_Email_x0020_Subject": "@triggerBody()?['EmailLink']",
                       "Regarding_x0020__x002d__x0020_Emails_x0020_Only": {
                         "Value": "@triggerBody()?['EmailRegarding']"
@@ -128,7 +128,7 @@
                         "@@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType"
                       }
                     },
-                    "path": "[variables('spo').updateFilePropertiesConnection]"
+                    "path": "[variables('spo').updateFileProperties]"
                   },
                   "runAfter": {
                     "Upload_file_to_Application_folder_in_SharePoint": [
