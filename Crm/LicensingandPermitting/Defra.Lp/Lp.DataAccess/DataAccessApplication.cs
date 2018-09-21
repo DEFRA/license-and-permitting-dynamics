@@ -90,7 +90,6 @@ namespace Lp.DataAccess
         /// <param name="applicationLocation"></param>
         /// <param name="permitLocation"></param>
         public static void UpdateDocumentLocations(this IOrganizationService service,
-                                                   IPluginExecutionContext context,
                                                    Entity target,
                                                    EntityReference applicationLocation = null,
                                                    EntityReference permitLocation = null)
@@ -107,7 +106,7 @@ namespace Lp.DataAccess
                 updateApplication[Application.PermitDocumentLocation] = permitLocation;
                 doUpdate = true;
             }
-            if (doUpdate && context.Depth <= 1)
+            if (doUpdate)
             {
                 service.Update(updateApplication);
             }
