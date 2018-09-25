@@ -73,10 +73,12 @@ namespace Defra.Lp.Workflows
                     copier.CopyAs(
                         ApplicationLine.EntityLogicalName,
                         ApplicationLine.ApplicationId, 
-                        new []
-                        {
-                            PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule
-                        }, 
+                        new [] {
+                                PermitLine.Name,
+                                PermitLine.PermitType,
+                                PermitLine.StandardRule,
+                                PermitLine.Owner
+                            },
                         PermitLine.EntityLogicalName, 
                         PermitLine.Permit, 
                         true, new ConditionExpression(PermitLine.LineType, ConditionOperator.Equal, (int)LineTypes.RegulatedFacility));
