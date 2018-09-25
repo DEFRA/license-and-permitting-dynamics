@@ -4,7 +4,10 @@
 // <summary>Code activity copies reference data from the Permit to an Application, generating 
 // Application Lines as required</summary>
 
+using Core.Model.Entities;
 using Defra.Lp.Workflows.Helpers;
+using Model.Lp.Crm;
+
 
 namespace Defra.Lp.Workflows
 {
@@ -13,7 +16,7 @@ namespace Defra.Lp.Workflows
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk.Workflow;
-    using global::Model.Lp.Crm;
+
     using Location = global::Model.Lp.Crm.Location;
 
     public sealed class CopyPermitDataToApplication : WorkFlowActivityBase
@@ -66,7 +69,7 @@ namespace Defra.Lp.Workflows
                     copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Permit, Location.Application, true);
 
                     //LinkEntitiesToTarget Lines
-                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new string[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true, null);
+                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule, PermitLine.Owner}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true, null);
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)

@@ -12,6 +12,11 @@ namespace Model.Lp.Crm
         public const string EntityLogicalName = "defra_permit_lines";
 
         /// <summary>
+        /// Record owner
+        /// </summary>
+        public static string Owner = "ownerid";
+
+        /// <summary>
         /// State field
         /// </summary>
         public const string State = "statecode";
