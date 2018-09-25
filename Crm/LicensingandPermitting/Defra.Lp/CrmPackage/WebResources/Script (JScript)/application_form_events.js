@@ -23,7 +23,7 @@ var Applications = {
     CanRefresh: function () {
         var now = new Date().getTime();
         var msSinceLastRefresh = now - Applications.LastRefresh;
-     
+
         if (msSinceLastRefresh < 1000) {
             // Not refreshing
             return false;
