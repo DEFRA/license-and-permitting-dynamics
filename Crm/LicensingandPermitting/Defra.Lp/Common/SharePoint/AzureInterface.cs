@@ -7,11 +7,9 @@ using Model.Lp.Crm;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Defra.Lp.Common.SharePoint
 {
@@ -389,7 +387,7 @@ namespace Defra.Lp.Common.SharePoint
                 caseType = Query.GetCRMOptionsetText(AdminService, Case.EntityLogicalName, Case.CaseType, caseTypeCode.Value);
 
                 title = (string)((AliasedValue)queryRecord.Attributes["case.title"]).Value;
-                title = SpRemoveIllegalChars(title, false); // Used for folder name. Spaces ok.
+                title = title.SpRemoveIllegalChars();
            
                 caseNo = (string)((AliasedValue)queryRecord.Attributes["case.ticketnumber"]).Value;
             
@@ -504,7 +502,7 @@ namespace Defra.Lp.Common.SharePoint
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end. Also need to remove
             // any illegal charcter that SharePoint might complain about
-            fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
+            fileName = fileName.SpRemoveIllegalChars().AppendTimeStamp(createdDate);
 
             // Give it an HTML ending as we want to view it in SharePoint as HTML
             fileName = fileName + ".html";
@@ -520,7 +518,7 @@ namespace Defra.Lp.Common.SharePoint
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end. Also need to remove
             // any illegal charcter that SharePoint might complain about
-            fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
+            fileName = fileName.SpRemoveIllegalChars().AppendTimeStamp(createdDate);
 
             // Give it an HTML ending as we want to view it in SharePoint as HTML
             fileName = fileName + ".html";
@@ -553,7 +551,7 @@ namespace Defra.Lp.Common.SharePoint
                 // Filename needs to have a timestamp so that CRM doesn't overwrite if the
                 // user uploads something with the same name from front end. Also need to remove
                 // any illegal charcter that SharePoint might complain about
-                fileName = SpRemoveIllegalChars(fileName).AppendTimeStamp(createdDate);
+                fileName = fileName.SpRemoveIllegalChars().AppendTimeStamp(createdDate);
             }
             else if (queryRecord.Contains(Email.Subject))
             {
@@ -768,26 +766,11 @@ namespace Defra.Lp.Common.SharePoint
             }
         }
 
-        private string SpRemoveIllegalChars(string fileName)
-        {
-            return SpRemoveIllegalChars(fileName, true);
-        }
-
-        private string SpRemoveIllegalChars(string fileName, bool removeWhiteSpace)
-        {
-            fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
-            var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
-            fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
-            if (removeWhiteSpace)
-            {
-                fileName = Regex.Replace(fileName, @"\s", ""); // Removes whitespace
-            }
-            if (fileName.Length >= 76)
-            {
-                fileName = fileName.Remove(75);
-            }
-            return fileName;
-        }
+        //private string SpRemoveIllegalChars(string fileName)
+        //{
+        //    // Need to remove any leading or trailing spaces as not allowed
+        //    return fileName.SpRemoveIllegalChars();
+        //}
 
         /// <summary>
         /// Issue SendFileToSharePoint Message which will trigger the SendSingleAttachmentToSharePoint Plugin.

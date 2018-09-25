@@ -60,5 +60,15 @@ namespace Model.Lp.Crm
         /// Status code field
         /// </summary>
         public const string StatusCode = "statuscode";
+
+        /// <summary>
+        /// Permit Document Location field
+        /// </summary>
+        public const string PermitDocumentLocation = "defra_permitdocumentlocation";
+
+        /// <summary>
+        /// Application Document Location field
+        /// </summary>
+        public const string ApplicationDocumentLocation = "defra_applicationdocumentlocation";
     }
 }
