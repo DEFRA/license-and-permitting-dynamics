@@ -5,7 +5,9 @@ namespace Core.Helpers.Extensions
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// General string extensions
@@ -93,6 +95,24 @@ namespace Core.Helpers.Extensions
                 date.ToString("yyyyMMddHHmmssfff"),
                 Path.GetExtension(fileName)
                 );
+        }
+
+        /// <summary>
+        /// Removes characters that are not allowed to be used in filenames in 
+        /// SharePoint. Also restricts length to 75 characters.
+        /// </summary>
+        /// <param name="fileName">Original filename</param>
+        /// <returns>Filename without illegal chars</returns>
+        public static string SpRemoveIllegalChars(this string fileName)
+        {
+            fileName = new Regex(@"\.(?!(\w{3,4}$))").Replace(fileName, "");
+            var forbiddenChars = @"#%&*:<>?/{|}~".ToCharArray();
+            fileName = new string(fileName.Where(c => !forbiddenChars.Contains(c)).ToArray());
+            if (fileName.Length >= 76)
+            {
+                fileName = fileName.Remove(75);
+            }
+            return fileName.Trim();
         }
     }
 }

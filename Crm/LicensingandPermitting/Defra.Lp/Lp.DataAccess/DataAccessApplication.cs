@@ -1,4 +1,6 @@
-﻿namespace Lp.DataAccess
+﻿using Model.Lp.Crm;
+
+namespace Lp.DataAccess
 {
     using Microsoft.Xrm.Sdk;
 
@@ -48,10 +50,6 @@
                     var siteDetail = string.Empty;
                     var siteAddress = string.Empty;
                     var gridRef = string.Empty;
-                    if (results.Entities[i].Contains("location.defra_name"))
-                    {
-                        siteDetail = (string)results.Entities[i].GetAttributeValue<AliasedValue>("location.defra_name").Value;
-                    }
                     if (results.Entities[i].Contains("locationdetail.defra_gridreferenceid"))
                     {
                         gridRef = (string)results.Entities[i].GetAttributeValue<AliasedValue>("locationdetail.defra_gridreferenceid").Value;
@@ -62,7 +60,7 @@
                     }
                     if (!string.IsNullOrEmpty(siteAddress))
                     {
-                        siteDetail = string.Format("{0}, {1}", siteDetail, siteAddress);
+                        siteDetail = siteAddress;
                     }
                     if (!string.IsNullOrEmpty(gridRef))
                     {
@@ -75,6 +73,38 @@
             else
             {
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Updates the Application and Permit Document Locations if they are supplied. These lookups are 
+        /// used so workflows have easy access to document locations from Case and Permit.
+        /// </summary>
+        /// <param name="adminService"></param>
+        /// <param name="context"></param>
+        /// <param name="target"></param>
+        /// <param name="applicationLocation"></param>
+        /// <param name="permitLocation"></param>
+        public static void UpdateDocumentLocations(this IOrganizationService service,
+                                                   Entity target,
+                                                   EntityReference applicationLocation = null,
+                                                   EntityReference permitLocation = null)
+        {
+            var updateApplication = new Entity(Application.EntityLogicalName, target.Id);
+            var doUpdate = false;
+            if (applicationLocation != null)
+            {
+                updateApplication[Application.ApplicationDocumentLocation] = applicationLocation;
+                doUpdate = true;
+            }
+            if (permitLocation != null)
+            {
+                updateApplication[Application.PermitDocumentLocation] = permitLocation;
+                doUpdate = true;
+            }
+            if (doUpdate)
+            {
+                service.Update(updateApplication);
             }
         }
     }
