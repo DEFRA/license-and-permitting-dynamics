@@ -50,10 +50,6 @@ namespace Lp.DataAccess
                     var siteDetail = string.Empty;
                     var siteAddress = string.Empty;
                     var gridRef = string.Empty;
-                    //if (results.Entities[i].Contains("location.defra_name"))
-                    //{
-                    //    siteDetail = (string)results.Entities[i].GetAttributeValue<AliasedValue>("location.defra_name").Value;
-                    //}
                     if (results.Entities[i].Contains("locationdetail.defra_gridreferenceid"))
                     {
                         gridRef = (string)results.Entities[i].GetAttributeValue<AliasedValue>("locationdetail.defra_gridreferenceid").Value;
@@ -64,7 +60,7 @@ namespace Lp.DataAccess
                     }
                     if (!string.IsNullOrEmpty(siteAddress))
                     {
-                        siteDetail = string.Format("{0}, {1}", siteDetail, siteAddress);
+                        siteDetail = siteAddress;
                     }
                     if (!string.IsNullOrEmpty(gridRef))
                     {
