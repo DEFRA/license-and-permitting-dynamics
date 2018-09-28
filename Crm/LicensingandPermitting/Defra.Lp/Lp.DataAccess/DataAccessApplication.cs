@@ -1,4 +1,6 @@
-﻿using Model.Lp.Crm;
+﻿using System;
+using Microsoft.Xrm.Sdk.Query;
+using Model.Lp.Crm;
 
 namespace Lp.DataAccess
 {
@@ -110,6 +112,82 @@ namespace Lp.DataAccess
             {
                 service.Update(updateApplication);
             }
+        }
+
+
+        /// <summary>
+        /// Returns all the locations and location details linked to the given application
+        /// </summary>
+        /// <param name="service">CRM Organisation Service</param>
+        /// <param name="applicationId">Application Id to return locations for</param>
+        /// <returns>List of Locations and location details</returns>
+        public static EntityCollection GetApplicationSites(this IOrganizationService service, Guid applicationId)
+        {
+            // Instantiate QueryExpression 
+            QueryExpression qEdefraLocation = new QueryExpression("defra_location") {TopCount = 1000};
+
+            // Add columns tolocation
+            qEdefraLocation.ColumnSet.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_applicationid", "defra_locationid", "defra_permitid", "defra_highpublicinterest", "statuscode");
+
+            // Define filter 
+            qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, "c2af14ca-a95a-e811-a95f-000d3a2065c5");
+
+            // Add link-entity defra_locationdetails
+            LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
+            qEdefraLocationDefraLocationdetails.EntityAlias = "details";
+
+            // Add columns to defra_locationdetails
+            qEdefraLocationDefraLocationdetails.Columns.AddColumns("statecode", "defra_locationid", "defra_addressid", "defra_name", "defra_gridreferenceid", "statuscode", "defra_locationdetailsid", "ownerid");
+
+            // Query CRM
+            return  service.RetrieveMultiple(qEdefraLocation);
+        }
+
+        /// <summary>
+        /// Returns all the locations and location details linked to the given application
+        /// </summary>
+        /// <param name="service">CRM Organisation Service</param>
+        /// <param name="applicationId">Application Id to return locations for</param>
+        /// <returns>List of Locations and location details</returns>
+        public static void MirrorApplicationSitesToPermit(this IOrganizationService service, Guid applicationId)
+        {
+            // 1. Get Application PermitId
+            Entity applicationEntity = service.Retrieve(Application.EntityLogicalName, applicationId, new ColumnSet(Application.Permit));
+            EntityReference permitEntityReference = applicationEntity.Attributes.ContainsKey(Application.Permit)
+                ? applicationEntity[Application.Permit] as EntityReference
+                : null;
+            if (permitEntityReference == null || permitEntityReference.Id == Guid.Empty)
+            {
+                // No Permit linked to the application
+                return;
+            }
+            
+            // 2. Get Application Sites
+            EntityCollection applicationSites = service.GetApplicationSites(applicationId);
+
+            // 3. Get Permit Sites
+            // Instantiate QueryExpression QEdefra_permit
+            var QEdefra_permit = new QueryExpression("defra_permit");
+            QEdefra_permit.TopCount = 50;
+
+            // Add columns to QEdefra_permit.ColumnSet
+            QEdefra_permit.ColumnSet.AddColumns("defra_permitid");
+
+            // Define filter QEdefra_permit.Criteria
+            QEdefra_permit.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitEntityReference.Id);
+
+            // Add link-entity QEdefra_permit_defra_location
+            var QEdefra_permit_defra_location = QEdefra_permit.AddLink("defra_location", "defra_permitid", "defra_permitid");
+            QEdefra_permit_defra_location.EntityAlias = "permitLocation";
+
+            // Add columns to QEdefra_permit_defra_location.Columns
+            QEdefra_permit_defra_location.Columns.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_locationid", "defra_highpublicinterest", "statuscode", "ownerid");
+
+            EntityCollection permitSites = service.RetrieveMultiple(QEdefra_permit);
+
+            // 4. Deactivate Removed Permit Sites
+
+            // 5. Create New Permit Sites
         }
     }
 }

@@ -17,6 +17,11 @@ namespace Model.Lp.Crm
         public const string State = "statecode";
 
         /// <summary>
+        /// Primary name field
+        /// </summary>
+        public const string Name = "defra_name";
+
+        /// <summary>
         /// Lookup to the Application
         /// </summary>
         public const string Application = "defra_applicationid";
@@ -25,6 +30,8 @@ namespace Model.Lp.Crm
         /// Lookup to the Permit Entity
         /// </summary>
         public const string Permit = "defra_permitid";
+
         
+
     }
 }
