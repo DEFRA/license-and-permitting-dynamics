@@ -124,13 +124,13 @@ namespace Lp.DataAccess
         public static EntityCollection GetApplicationSites(this IOrganizationService service, Guid applicationId)
         {
             // Instantiate QueryExpression 
-            QueryExpression qEdefraLocation = new QueryExpression("defra_location") {TopCount = 1000};
+            QueryExpression qEdefraLocation = new QueryExpression("defra_location") { TopCount = 1000 };
 
             // Add columns tolocation
             qEdefraLocation.ColumnSet.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_applicationid", "defra_locationid", "defra_permitid", "defra_highpublicinterest", "statuscode");
 
             // Define filter 
-            qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, "c2af14ca-a95a-e811-a95f-000d3a2065c5");
+            qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, applicationId);
 
             // Add link-entity defra_locationdetails
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
@@ -140,7 +140,7 @@ namespace Lp.DataAccess
             qEdefraLocationDefraLocationdetails.Columns.AddColumns("statecode", "defra_locationid", "defra_addressid", "defra_name", "defra_gridreferenceid", "statuscode", "defra_locationdetailsid", "ownerid");
 
             // Query CRM
-            return  service.RetrieveMultiple(qEdefraLocation);
+            return service.RetrieveMultiple(qEdefraLocation);
         }
 
         /// <summary>
@@ -161,33 +161,59 @@ namespace Lp.DataAccess
                 // No Permit linked to the application
                 return;
             }
-            
+
             // 2. Get Application Sites
             EntityCollection applicationSites = service.GetApplicationSites(applicationId);
 
             // 3. Get Permit Sites
-            // Instantiate QueryExpression QEdefra_permit
-            var QEdefra_permit = new QueryExpression("defra_permit");
-            QEdefra_permit.TopCount = 50;
-
-            // Add columns to QEdefra_permit.ColumnSet
-            QEdefra_permit.ColumnSet.AddColumns("defra_permitid");
-
-            // Define filter QEdefra_permit.Criteria
-            QEdefra_permit.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitEntityReference.Id);
-
-            // Add link-entity QEdefra_permit_defra_location
-            var QEdefra_permit_defra_location = QEdefra_permit.AddLink("defra_location", "defra_permitid", "defra_permitid");
-            QEdefra_permit_defra_location.EntityAlias = "permitLocation";
-
-            // Add columns to QEdefra_permit_defra_location.Columns
-            QEdefra_permit_defra_location.Columns.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_locationid", "defra_highpublicinterest", "statuscode", "ownerid");
-
-            EntityCollection permitSites = service.RetrieveMultiple(QEdefra_permit);
+            EntityCollection permitSites = GetPermitSites(service, permitEntityReference);
 
             // 4. Deactivate Removed Permit Sites
+            DeactivateRemovedPermitSites(applicationSites, permitSites);
 
             // 5. Create New Permit Sites
+            CreateNewPermitSites(applicationSites, permitSites);
         }
+
+        private static EntityCollection GetPermitSites(IOrganizationService service, EntityReference permitEntityReference)
+        {
+            // Instantiate QueryExpression QEdefra_permit
+            var qEdefraPermit = new QueryExpression("defra_permit");
+            qEdefraPermit.TopCount = 50;
+
+            // Add columns to QEdefra_permit.ColumnSet
+            qEdefraPermit.ColumnSet.AddColumns("defra_permitid");
+
+            // Define filter QEdefra_permit.Criteria
+            qEdefraPermit.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitEntityReference.Id);
+
+            // Add link-entity QEdefra_permit_defra_location
+            var qEdefraPermitDefraLocation = qEdefraPermit.AddLink("defra_location", "defra_permitid", "defra_permitid");
+            qEdefraPermitDefraLocation.EntityAlias = "permitLocation";
+
+            // Add columns to QEdefra_permit_defra_location.Columns
+            qEdefraPermitDefraLocation.Columns.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_locationid",
+                "defra_highpublicinterest", "statuscode", "ownerid");
+
+            return service.RetrieveMultiple(qEdefraPermit);
+        }
+
+        private static void DeactivateRemovedPermitSites(EntityCollection applicationSites, EntityCollection permitSites)
+        {
+
+            foreach (var entity in permitSites.Entities)
+            {
+                
+  
+            }
+       
+
+        }
+
+        private static void CreateNewPermitSites(EntityCollection applicationSites, EntityCollection permitSites)
+        {
+
+        }
+
     }
 }
