@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using Model.Lp.Crm;
 
 namespace Lp.DataAccess.Tests
@@ -19,6 +20,7 @@ namespace Lp.DataAccess.Tests
     public class DataAccessApplicationIntegrationTests
     {
 
+        private KeyValuePair<string, Guid> recordsToDelete = new KeyValuePair<string, Guid>();
 
         [TestMethod]
         public void TestMethod1()
@@ -36,7 +38,7 @@ namespace Lp.DataAccess.Tests
 
 
             // 3. Create Application Location
-            Guid applicationLocationId = CreateApplicationLocation(service, newApplication.Id);
+            Guid applicationLocationId = CreateApplicationLocation(service, newApplication.Id,3);
 
             // 4. Create Permit 
             Guid permitId = CreatePermit(service);
@@ -67,7 +69,7 @@ namespace Lp.DataAccess.Tests
             return service.Create(entity);
         }
 
-        private Guid CreateApplicationLocation(IOrganizationService service, Guid newApplicationId)
+        private Guid CreateApplicationLocation(IOrganizationService service, Guid newApplicationId, int locationDetailCount)
         {
             // 1. Create Location
             Entity locationEntity = new Entity(Location.EntityLogicalName)
@@ -78,12 +80,17 @@ namespace Lp.DataAccess.Tests
             Guid locationId = service.Create(locationEntity);
 
             // 2. Create Location Detail
-            Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
+            for (int count = 0; count < locationDetailCount; count++)
             {
-                [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, locationId),
-                [Location.Name] = "Integration Test " + DateTime.Now
-            };
-            service.Create(locationDetailEntity);
+                Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
+                {
+                    [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, locationId),
+                    [Location.Name] = "Integration Test " + DateTime.Now,
+                    [LocationDetail.GridReference] = "ST-10000000" + count
+                };
+                service.Create(locationDetailEntity);
+            }
+
 
             return locationId;
         }
@@ -94,6 +101,7 @@ namespace Lp.DataAccess.Tests
 
         }
         */
+
         private static Entity CreateApplication(IOrganizationService service)
         {
             Entity newApplicationEntity =

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Crm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Model.Lp.Crm;
 
@@ -134,7 +137,7 @@ namespace Lp.DataAccess
 
             // Add link-entity defra_locationdetails
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
-            qEdefraLocationDefraLocationdetails.EntityAlias = "details";
+            qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
 
             // Add columns to defra_locationdetails
             qEdefraLocationDefraLocationdetails.Columns.AddColumns("statecode", "defra_locationid", "defra_addressid", "defra_name", "defra_gridreferenceid", "statuscode", "defra_locationdetailsid", "ownerid");
@@ -169,10 +172,10 @@ namespace Lp.DataAccess
             EntityCollection permitSites = GetPermitSites(service, permitEntityReference);
 
             // 4. Deactivate Removed Permit Sites
-            DeactivateRemovedPermitSites(applicationSites, permitSites);
+            Entity[] remainingPermitSites = DeactivatePermitSitesIfNeeded(service, applicationSites, permitSites);
 
             // 5. Create New Permit Sites
-            CreateNewPermitSites(applicationSites, permitSites);
+            CreateNewPermitSites(service, applicationSites.Entities.ToArray(), remainingPermitSites, permitEntityReference);
         }
 
         private static EntityCollection GetPermitSites(IOrganizationService service, EntityReference permitEntityReference)
@@ -189,7 +192,7 @@ namespace Lp.DataAccess
 
             // Add link-entity QEdefra_permit_defra_location
             var qEdefraPermitDefraLocation = qEdefraPermit.AddLink("defra_location", "defra_permitid", "defra_permitid");
-            qEdefraPermitDefraLocation.EntityAlias = "permitLocation";
+            qEdefraPermitDefraLocation.EntityAlias = LocationDetail.Alias;
 
             // Add columns to QEdefra_permit_defra_location.Columns
             qEdefraPermitDefraLocation.Columns.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_locationid",
@@ -198,22 +201,185 @@ namespace Lp.DataAccess
             return service.RetrieveMultiple(qEdefraPermit);
         }
 
-        private static void DeactivateRemovedPermitSites(EntityCollection applicationSites, EntityCollection permitSites)
+        private static Entity[] DeactivatePermitSitesIfNeeded(IOrganizationService service, EntityCollection applicationSitesAndDetails, EntityCollection permitSitesAndDetails)
         {
+            List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.Entities.ToList();
 
-            foreach (var entity in permitSites.Entities)
+            // 1. Iterate through permit sites
+            foreach (var permitSiteAndDetail in permitSitesAndDetails.Entities)
             {
-                
-  
+                // 2. Check if Permit Site Matches an Application Site
+                Entity applicationSiteAndDetail = GetMatchingLocation(permitSiteAndDetail, applicationSitesAndDetails.Entities.ToArray());
+
+                if (applicationSiteAndDetail == null)
+                {
+                    // 3. Unlink the Permit Site Detail in CRM
+                    UnlinkPermitSiteDetail(service, permitSiteAndDetail);
+
+                    // 4. Remove the the remaining permit site details
+                    remainingPermitSiteDetails.Remove(permitSiteAndDetail);
+                }
             }
-       
 
+            // 5. Check if we need to unlink permitLocations
+            foreach (var permitSiteAndDetail in permitSitesAndDetails.Entities)
+            {
+                // Does the permit Location record need to be unlinked from the permit? (i.e. there are not Side details left for that location
+                var permitLocationStillUsed = false;
+
+                foreach (var remainingPermitSideDetail in remainingPermitSiteDetails)
+                {
+                    if (remainingPermitSideDetail[Location.LocationId] == permitSiteAndDetail[Location.LocationId])
+                    {
+                        // Location still being used, let it stay
+                        permitLocationStillUsed = true;
+                        break;
+                    }
+                }
+
+                if (!permitLocationStillUsed)
+                {
+                    UnlinkPermitSite(service, permitSiteAndDetail);
+                }
+            }
+            return remainingPermitSiteDetails.ToArray();
         }
 
-        private static void CreateNewPermitSites(EntityCollection applicationSites, EntityCollection permitSites)
+        private static void CreateNewPermitSites(IOrganizationService service, Entity[] applicationSiteAndDetails, Entity[] permitSitesAndDetails, EntityReference permitEntityReference)
         {
+            List<Entity> newAndExistingPermitSites = permitSitesAndDetails.ToList();
 
+            // 1. Iterate through Application Site Details
+            foreach (var applicationSiteAndDetail in applicationSiteAndDetails)
+            {
+                // 2. Check if site already exists in Permit
+                Entity permitSite = GetMatchingLocation(applicationSiteAndDetail, newAndExistingPermitSites.ToArray());
+
+                Entity permitSiteAndDetail = GetMatchingLocationDetail(applicationSiteAndDetail, permitSitesAndDetails);
+
+                // 3. If Permit Location does not exist, create it
+                if (permitSite == null)
+                {
+                    permitSite = CopyLocation(service, applicationSiteAndDetail, null, permitEntityReference.Id);
+                    newAndExistingPermitSites.Add(permitSite);
+                }
+
+                // 4. If Permit Location detail does not exist, create it
+                if (permitSiteAndDetail == null)
+                {
+                    CopyLocationDetail(service, applicationSiteAndDetail, permitSite);
+                }
+            }
         }
 
+        private static Entity CopyLocation(IOrganizationService service, Entity locationToCopy, Guid? applicationId, Guid? permitId)
+        {
+            // 1. Mirror Location
+            Entity locationEntity = new Entity(Location.EntityLogicalName)
+            {
+                [Location.Name] = locationToCopy.Contains(Location.Name) ? locationToCopy[Location.Name]: null
+            };
+
+            if (applicationId != null)
+            {
+                locationEntity.Attributes.Add(Location.Application, new EntityReference(Application.EntityLogicalName, applicationId.Value));
+            }
+
+            if (permitId != null)
+            {
+                locationEntity.Attributes.Add(Location.Permit, new EntityReference(Permit.EntityLogicalName, permitId.Value));
+            }
+
+            if (locationToCopy.Contains(Location.HighPublicInterest))
+            {
+                locationEntity.Attributes.Add(Location.HighPublicInterest, locationToCopy[Location.HighPublicInterest]);
+            }
+
+            // 2. Create and return new location
+            locationEntity.Id = service.Create(locationEntity);
+            return locationEntity;
+        }
+
+        private static Entity CopyLocationDetail(IOrganizationService service, Entity locationDetailToCopy, Entity permitLocation)
+        {
+            // Check if there is a location detail to copy
+
+            if (!locationDetailToCopy.Contains(LocationDetail.Alias + "." + LocationDetail.Adress) &&
+                !locationDetailToCopy.Contains(LocationDetail.Alias + "." + LocationDetail.GridReference))
+            {
+                // No location detail to create;
+                return null;
+            }
+
+            // 1. Mirror Location Detail
+            Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
+            {
+                [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, permitLocation.Id),
+                [LocationDetail.Name] = locationDetailToCopy.Contains(LocationDetail.Alias + "." + LocationDetail.Name) ? ((AliasedValue)locationDetailToCopy[LocationDetail.Alias + "." + LocationDetail.Name]).Value : null,
+                [LocationDetail.GridReference] = locationDetailToCopy.Contains(LocationDetail.Alias + "." + LocationDetail.Name) ? ((AliasedValue)locationDetailToCopy[LocationDetail.Alias + "." + LocationDetail.GridReference]).Value : null,
+                [LocationDetail.Adress] = locationDetailToCopy.Contains(LocationDetail.Alias + "." + LocationDetail.Adress) ? ((AliasedValue)locationDetailToCopy[LocationDetail.Alias + "." + LocationDetail.Adress]).Value : null
+            };
+
+            // 2. Create and return new location detail 
+            locationDetailEntity.Id = service.Create(locationDetailEntity);
+            return locationDetailEntity;
+        }
+
+        private static Entity GetMatchingLocation(Entity locationToFind, Entity[] locationsToSearch)
+        {
+            foreach (Entity locationToSearch in locationsToSearch)
+            {
+
+                if (MatchesAttribute(locationToSearch, locationToFind, Location.Name)
+                    && MatchesAttribute(locationToSearch, locationToFind, Location.HighPublicInterest))
+                {
+                    return locationToSearch;
+                }
+            }
+            return null;
+        }
+
+
+        private static Entity GetMatchingLocationDetail(Entity locationDetailToFind, Entity[] locationDetailsToSearch)
+        {
+            foreach (Entity locationDetailToSearch in locationDetailsToSearch)
+            {
+
+                if (MatchesAttribute(locationDetailToSearch, locationDetailToFind, LocationDetail.Name)
+                    && MatchesAttribute(locationDetailToSearch, locationDetailToFind, LocationDetail.Adress)
+                    && MatchesAttribute(locationDetailToSearch, locationDetailToFind, LocationDetail.GridReference))
+                {
+                    return locationDetailToSearch;
+                }
+            }
+            return null;
+        }
+
+
+        private static bool MatchesAttribute(Entity entity1, Entity entity2, string attributeName)
+        {
+            var entityAttribute1 = entity1.Contains(attributeName) ? entity1[attributeName] : null;
+            var entityAttribute2 = entity2.Contains(attributeName) ? entity2[attributeName] : null;
+
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (entityAttribute1 == entityAttribute2)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        private static void UnlinkPermitSite(IOrganizationService service, Entity locationEntity)
+        {
+            locationEntity[Location.Permit] = null;
+            service.Update(locationEntity);
+        }
+
+        private static void UnlinkPermitSiteDetail(IOrganizationService service, Entity locationEntityAndDetail)
+        {
+            locationEntityAndDetail[LocationDetail.Location] = null;
+            service.Update(locationEntityAndDetail);
+        }
     }
 }

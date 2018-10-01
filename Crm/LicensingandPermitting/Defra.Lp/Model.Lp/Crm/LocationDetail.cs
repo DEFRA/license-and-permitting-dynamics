@@ -12,6 +12,11 @@ namespace Model.Lp.Crm
         public const string EntityLogicalName = "defra_locationdetails";
 
         /// <summary>
+        /// Alias to be used when linking
+        /// </summary>
+        public const string Alias = "locdetail";
+
+        /// <summary>
         /// State field
         /// </summary>
         public const string State = "statecode";
@@ -24,7 +29,7 @@ namespace Model.Lp.Crm
         /// <summary>
         /// Text Grid Ref
         /// </summary>
-        public const string Application = "defra_gridreferenceid";
+        public const string GridReference = "defra_gridreferenceid";
 
         /// <summary>
         /// Lookup to the Location Entity
@@ -35,8 +40,5 @@ namespace Model.Lp.Crm
         /// Lookup to the Address Entity
         /// </summary>
         public const string Adress = "defra_addressid";
-
-        
-
     }
 }
