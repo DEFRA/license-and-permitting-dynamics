@@ -68,6 +68,18 @@ namespace Defra.Lp.Workflows
 
                     //Copy Location
                     copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Application, Location.Permit, true);
+                    copier.CopyAs(
+                        Location.EntityLogicalName,
+                        Location.Application,
+                        new[] {
+                            Location.Name,
+                            Location.,
+                            Location.StandardRule,
+                            Location.Owner
+                        },
+                        PermitLine.EntityLogicalName,
+                        PermitLine.Permit,
+                        true, new ConditionExpression(PermitLine.LineType, ConditionOperator.Equal, (int)LineTypes.RegulatedFacility));
 
                     //Copy Lines
                     copier.CopyAs(

@@ -12,9 +12,19 @@ namespace Model.Lp.Crm
         public const string EntityLogicalName = "defra_location";
 
         /// <summary>
+        /// Primary key
+        /// </summary>
+        public const string LocationId = "defra_locationid";
+        
+        /// <summary>
         /// State field
         /// </summary>
         public const string State = "statecode";
+
+        /// <summary>
+        /// Primary name field
+        /// </summary>
+        public const string Name = "defra_name";
 
         /// <summary>
         /// Lookup to the Application
@@ -25,6 +35,10 @@ namespace Model.Lp.Crm
         /// Lookup to the Permit Entity
         /// </summary>
         public const string Permit = "defra_permitid";
-        
+
+        /// <summary>
+        /// Yes/No
+        /// </summary>
+        public const string HighPublicInterest = "defra_highpublicinterest";
     }
 }
