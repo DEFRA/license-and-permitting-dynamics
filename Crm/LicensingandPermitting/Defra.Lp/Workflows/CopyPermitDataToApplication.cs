@@ -6,6 +6,7 @@
 
 using Core.Model.Entities;
 using Defra.Lp.Workflows.Helpers;
+using Lp.DataAccess;
 using Model.Lp.Crm;
 
 
@@ -65,8 +66,8 @@ namespace Defra.Lp.Workflows
                     //Init the copier
                     RelationshipManager copier = new RelationshipManager(service, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id, Application.EntityLogicalName, application.Id);
 
-                    //LinkEntitiesToTarget Location
-                    copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Permit, Location.Application, true);
+                    //Copy Location and Location details from Permit to Application
+                    service.MirrorPermitSitesToApplication(application.Id);
 
                     //LinkEntitiesToTarget Lines
                     copier.CopyAs(

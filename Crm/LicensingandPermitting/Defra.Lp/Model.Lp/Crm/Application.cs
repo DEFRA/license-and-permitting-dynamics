@@ -71,4 +71,12 @@ namespace Model.Lp.Crm
         /// </summary>
         public const string ApplicationDocumentLocation = "defra_applicationdocumentlocation";
     }
+
+    public enum ApplicationTypes
+    {
+        NewApplication = 910400000,
+        Variation = 910400002,
+        Transfer = 910400003,
+        Surrender = 910400004
+    }
 }

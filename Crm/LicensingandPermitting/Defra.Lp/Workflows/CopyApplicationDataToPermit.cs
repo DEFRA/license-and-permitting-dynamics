@@ -5,6 +5,7 @@
 // Permit Lines as required</summary>
 
 using Defra.Lp.Workflows.Helpers;
+using Lp.DataAccess;
 
 namespace Defra.Lp.Workflows
 {
@@ -66,20 +67,8 @@ namespace Defra.Lp.Workflows
                     //Init the copier
                     RelationshipManager copier = new RelationshipManager(service, Application.EntityLogicalName, application.Id, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id);
 
-                    //Copy Location
-                    copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Application, Location.Permit, true);
-                    copier.CopyAs(
-                        Location.EntityLogicalName,
-                        Location.Application,
-                        new[] {
-                            Location.Name,
-                            Location.,
-                            Location.StandardRule,
-                            Location.Owner
-                        },
-                        PermitLine.EntityLogicalName,
-                        PermitLine.Permit,
-                        true, new ConditionExpression(PermitLine.LineType, ConditionOperator.Equal, (int)LineTypes.RegulatedFacility));
+                    //Copy Location and Location details from Application to Permit
+                    service.MirrorApplicationSitesToPermit(application.Id);
 
                     //Copy Lines
                     copier.CopyAs(

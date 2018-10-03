@@ -123,8 +123,9 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="service">CRM Organisation Service</param>
         /// <param name="applicationId">Application Id to return locations for</param>
+        /// <param name="permitId">Permit Id to return locations for</param>
         /// <returns>List of Locations and location details</returns>
-        public static EntityCollection GetApplicationSites(this IOrganizationService service, Guid applicationId)
+        public static EntityCollection GetSites(this IOrganizationService service, Guid? applicationId, Guid? permitId)
         {
             // Instantiate QueryExpression 
             QueryExpression qEdefraLocation = new QueryExpression("defra_location") { TopCount = 1000 };
@@ -133,7 +134,16 @@ namespace Lp.DataAccess
             qEdefraLocation.ColumnSet.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_applicationid", "defra_locationid", "defra_permitid", "defra_highpublicinterest", "statuscode");
 
             // Define filter 
-            qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, applicationId);
+            if (applicationId.HasValue)
+            {
+                qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, applicationId);
+            }
+
+            if (permitId.HasValue)
+            {
+                qEdefraLocation.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitId);
+            }
+
 
             // Add link-entity defra_locationdetails
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
@@ -165,10 +175,10 @@ namespace Lp.DataAccess
             }
 
             // 2. Get Application Sites
-            EntityCollection applicationSites = service.GetApplicationSites(applicationId);
+            EntityCollection applicationSites = service.GetSites(applicationId, null);
 
             // 3. Get Permit Sites
-            EntityCollection permitSites = GetPermitSites(service, permitEntityReference);
+            EntityCollection permitSites = service.GetSites(null, permitEntityReference.Id);
 
             // 4. Deactivate Removed Permit Sites
             Entity[] remainingPermitSites = DeactivatePermitSitesIfNeeded(service, applicationSites, permitSites);
@@ -195,38 +205,13 @@ namespace Lp.DataAccess
                 return;
             }
 
-            // 2. Get Application Sites
-            EntityCollection applicationSites = service.GetApplicationSites(applicationId);
-
             // 3. Get Permit Sites
-            EntityCollection permitSites = GetPermitSites(service, permitEntityReference);
+            EntityCollection permitSites = service.GetSites(null, permitEntityReference.Id);
 
             // 4. Create New Sites
             CreateNewApplicationtSites(service, permitSites.Entities.ToArray(), applicationId);
         }
 
-        private static EntityCollection GetPermitSites(IOrganizationService service, EntityReference permitEntityReference)
-        {
-            // Instantiate QueryExpression QEdefra_permit
-            var qEdefraPermit = new QueryExpression("defra_permit");
-            qEdefraPermit.TopCount = 50;
-
-            // Add columns to QEdefra_permit.ColumnSet
-            qEdefraPermit.ColumnSet.AddColumns("defra_permitid");
-
-            // Define filter QEdefra_permit.Criteria
-            qEdefraPermit.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitEntityReference.Id);
-
-            // Add link-entity QEdefra_permit_defra_location
-            var qEdefraPermitDefraLocation = qEdefraPermit.AddLink("defra_location", "defra_permitid", "defra_permitid");
-            qEdefraPermitDefraLocation.EntityAlias = LocationDetail.Alias;
-
-            // Add columns to QEdefra_permit_defra_location.Columns
-            qEdefraPermitDefraLocation.Columns.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_locationid",
-                "defra_highpublicinterest", "statuscode", "ownerid");
-
-            return service.RetrieveMultiple(qEdefraPermit);
-        }
 
         private static Entity[] DeactivatePermitSitesIfNeeded(IOrganizationService service, EntityCollection applicationSitesAndDetails, EntityCollection permitSitesAndDetails)
         {
@@ -303,13 +288,13 @@ namespace Lp.DataAccess
 
         private static void CreateNewApplicationtSites(IOrganizationService service, Entity[] permitSitesAndDetails, Guid applicationId)
         {
-            List<Entity> newAndExistingApplicationSites = permitSitesAndDetails.ToList();
+            List<Entity> applicationSites = new List<Entity>();
 
             // 1. Iterate through Application Site Details
             foreach (var permitSiteAndDetail in permitSitesAndDetails)
             {
                 // 2. Check if site already exists in Permit
-                Entity applicationSite = GetMatchingLocation(permitSiteAndDetail, newAndExistingApplicationSites.ToArray());
+                Entity applicationSite = GetMatchingLocation(permitSiteAndDetail, applicationSites.ToArray());
 
                 Entity applicationSiteAndDetail = GetMatchingLocationDetail(permitSiteAndDetail, permitSitesAndDetails);
 
@@ -317,7 +302,7 @@ namespace Lp.DataAccess
                 if (applicationSite == null)
                 {
                     applicationSite = CopyLocation(service, permitSiteAndDetail, applicationId, null);
-                    newAndExistingApplicationSites.Add(applicationSite);
+                    applicationSites.Add(applicationSite);
                 }
 
                 // 4. If Permit Location detail does not exist, create it
@@ -418,7 +403,7 @@ namespace Lp.DataAccess
             var entityAttribute2 = entity2.Contains(attributeName) ? entity2[attributeName] : null;
 
             // ReSharper disable once ConvertIfStatementToReturnStatement
-            if (entityAttribute1 == entityAttribute2)
+            if (entityAttribute1 != null && entityAttribute1.Equals(entityAttribute2))
             {
                 return true;
             }
