@@ -147,11 +147,10 @@ namespace Lp.DataAccess
         }
 
         /// <summary>
-        /// Returns all the locations and location details linked to the given application
+        /// Mirrors Location and Location Details from application to permit
         /// </summary>
         /// <param name="service">CRM Organisation Service</param>
-        /// <param name="applicationId">Application Id to return locations for</param>
-        /// <returns>List of Locations and location details</returns>
+        /// <param name="applicationId">Application Id to be processed</param>
         public static void MirrorApplicationSitesToPermit(this IOrganizationService service, Guid applicationId)
         {
             // 1. Get Application PermitId
@@ -176,6 +175,34 @@ namespace Lp.DataAccess
 
             // 5. Create New Permit Sites
             CreateNewPermitSites(service, applicationSites.Entities.ToArray(), remainingPermitSites, permitEntityReference);
+        }
+
+        /// <summary>
+        /// Mirrors Location and Location Details from permit to application
+        /// </summary>
+        /// <param name="service">CRM Organisation Service</param>
+        /// <param name="applicationId">Application Id to be processed</param>
+        public static void MirrorPermitSitesToApplication(this IOrganizationService service, Guid applicationId)
+        {
+            // 1. Get Application PermitId
+            Entity applicationEntity = service.Retrieve(Application.EntityLogicalName, applicationId, new ColumnSet(Application.Permit));
+            EntityReference permitEntityReference = applicationEntity.Attributes.ContainsKey(Application.Permit)
+                ? applicationEntity[Application.Permit] as EntityReference
+                : null;
+            if (permitEntityReference == null || permitEntityReference.Id == Guid.Empty)
+            {
+                // No Permit linked to the application
+                return;
+            }
+
+            // 2. Get Application Sites
+            EntityCollection applicationSites = service.GetApplicationSites(applicationId);
+
+            // 3. Get Permit Sites
+            EntityCollection permitSites = GetPermitSites(service, permitEntityReference);
+
+            // 4. Create New Sites
+            CreateNewApplicationtSites(service, permitSites.Entities.ToArray(), applicationId);
         }
 
         private static EntityCollection GetPermitSites(IOrganizationService service, EntityReference permitEntityReference)
@@ -268,6 +295,35 @@ namespace Lp.DataAccess
                 if (permitSiteAndDetail == null)
                 {
                     CopyLocationDetail(service, applicationSiteAndDetail, permitSite);
+                }
+            }
+        }
+
+
+
+        private static void CreateNewApplicationtSites(IOrganizationService service, Entity[] permitSitesAndDetails, Guid applicationId)
+        {
+            List<Entity> newAndExistingApplicationSites = permitSitesAndDetails.ToList();
+
+            // 1. Iterate through Application Site Details
+            foreach (var permitSiteAndDetail in permitSitesAndDetails)
+            {
+                // 2. Check if site already exists in Permit
+                Entity applicationSite = GetMatchingLocation(permitSiteAndDetail, newAndExistingApplicationSites.ToArray());
+
+                Entity applicationSiteAndDetail = GetMatchingLocationDetail(permitSiteAndDetail, permitSitesAndDetails);
+
+                // 3. If Application Location does not exist, create it
+                if (applicationSite == null)
+                {
+                    applicationSite = CopyLocation(service, permitSiteAndDetail, applicationId, null);
+                    newAndExistingApplicationSites.Add(applicationSite);
+                }
+
+                // 4. If Permit Location detail does not exist, create it
+                if (applicationSiteAndDetail == null)
+                {
+                    CopyLocationDetail(service, permitSiteAndDetail, applicationSite);
                 }
             }
         }
