@@ -14,13 +14,13 @@ namespace Lp.DataAccess.Tests
         // Sign in to your CRM org and click Settings, Customization, Developer Resources.
         // On Developer Resource page, find the discovery service address under Service Endpoints and organization unique name under Your Organization Information.
         private String _discoveryServiceAddress = "https://disco.crm4.dynamics.com/XRMServices/2011/Discovery.svc";
-        private String _organizationName = "-";
+        private String _organizationName = "";
         // Provide your user name and password.
-        private String _userName = "-";
-        private String _password = "-";
+        private String _userName = "";
+        private String _password = "";
 
         // Provide domain name for the On-Premises org.
-        private String _domain = "-";
+        private String _domain = "";
        
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Lp.DataAccess.Tests
 
             // Set the credentials.
             AuthenticationCredentials authCredentials = GetCredentials(serviceManagement, endpointType);
-
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             String organizationUri = String.Empty;
             // Get the discovery service proxy.
