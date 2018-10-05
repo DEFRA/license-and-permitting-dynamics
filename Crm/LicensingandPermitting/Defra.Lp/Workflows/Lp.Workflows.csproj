@@ -81,9 +81,14 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\DataAccessSecureConfiguration.cs">
-      <Link>Linked\DataAccess\Core\DataAccessSecureConfiguration.cs</Link>
+    <Compile Include="..\Lp.DataAccess\*.cs">
+      <Link>Linked\DataAccess\Lp\%(RecursiveDir)%(FileName)</Link>
     </Compile>
+	<Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\*.cs">
+      <Link>Linked\DataAccess\Core\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+
+
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
       <Link>Linked\Extensions\Core\%(FileName)</Link>
     </Compile>
@@ -102,35 +107,24 @@
     <Compile Include="..\Common\SharePoint\SharePointSecureConfigurationKeys.cs">
       <Link>Common\SharePoint\SharePointSecureConfigurationKeys.cs</Link>
     </Compile>
-    <Compile Include="..\Lp.DataAccess\DataAccessApplication.cs">
-      <Link>Linked\DataAccess\Lp\DataAccessApplication.cs</Link>
+
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.CardPayments.Model\*.cs">
+      <Link>Linked\Model\Core\CardPayments\%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Lp.DataAccess\DataAccessEmail.cs">
-      <Link>Linked\DataAccess\Lp\DataAccessEmail.cs</Link>
-    </Compile>
-    <Compile Include="..\Lp.DataAccess\Query.cs">
-      <Link>Linked\DataAccess\Lp\Query.cs</Link>
-    </Compile>
+
     <Compile Include="..\Model.lp\Crm\*.cs">
       <Link>Linked\Model\Lp\Crm\%(FileName)</Link>
     </Compile>
-	
-  <Compile Include="..\Model.lp\EarlyBound\*.cs">
+    <Compile Include="..\Model.lp\EarlyBound\*.cs">
       <Link>Linked\Model\Lp\EarlyBound\%(FileName)</Link>
-    </Compile>	
-	<Compile Include="..\Model.lp\EarlyBound\Entities\*.cs">
-	<Link>Linked\Model\Lp\EarlyBound\Entities\%(RecursiveDir)%(FileName)</Link>
-	</Compile>
-		<Compile Include="..\Model.lp\EarlyBound\OptionSets\*.cs">
-	<Link>Linked\Model\Lp\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
-	</Compile>
-	
-    <Compile Include="..\Lp.DataAccess\DataAccessUsers.cs">
-      <Link>Linked\DataAccess\Lp\DataAccessUsers.cs</Link>
     </Compile>
-    <Compile Include="..\Lp.DataAccess\DataAccessCase.cs">
-      <Link>Linked\DataAccess\Lp\DataAccessCase.cs</Link>
+    <Compile Include="..\Model.lp\EarlyBound\Entities\*.cs">
+      <Link>Linked\Model\Lp\EarlyBound\Entities\%(RecursiveDir)%(FileName)</Link>
     </Compile>
+    <Compile Include="..\Model.lp\EarlyBound\OptionSets\*.cs">
+      <Link>Linked\Model\Lp\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Common\SharePoint\AzureInterface.cs">
@@ -752,7 +746,6 @@
     <Compile Include="GetNextPermitApplicationNumber.cs" />
     <Compile Include="GetNextPermitNumber.cs" />
     <Compile Include="GetSiteNameAddress.cs" />
-    <Compile Include="Helpers\RelationshipManager.cs" />
     <Compile Include="LookupSaveAndReturnApplication.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\QueueItem.cs" />
@@ -776,6 +769,9 @@
     <None Include="app.config" />
     <None Include="Defra.Lp.Workflows.snk" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,4 @@
-﻿using Lp.DataAccess.Tests.Connector;
-
-namespace Lp.DataAccess.Tests
+﻿namespace Lp.DataAccess.Tests.Connector
 {
     using System;
     using System.ServiceModel.Description;

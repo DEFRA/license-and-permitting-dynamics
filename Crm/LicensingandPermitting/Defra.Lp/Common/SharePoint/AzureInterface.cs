@@ -3,13 +3,13 @@ using Core.Helpers.Extensions;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Model.Lp.Crm;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Common.SharePoint
 {

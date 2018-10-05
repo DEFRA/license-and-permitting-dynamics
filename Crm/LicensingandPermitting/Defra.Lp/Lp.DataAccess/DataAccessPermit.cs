@@ -2,17 +2,17 @@
 // </copyright>
 // <summary>Class is responsible for relinking and copying entities from a source parent to a target parent</summary>
 
-namespace Defra.Lp.Workflows.Helpers
-{
-    using System;
-    using System.Linq;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Xrm.Sdk.Query;
+using System;
+using System.Linq;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
+namespace Lp.DataAccess
+{
     /// <summary>
     /// Class is in charge of linking/copying child entities from a source parent to a target parent
     /// </summary>
-    public class RelationshipManager
+    public class DataAccessPermit
     {
         private IOrganizationService _Service { get; set; }
 
@@ -40,7 +40,7 @@ namespace Defra.Lp.Workflows.Helpers
             }
         }
 
-        public RelationshipManager(IOrganizationService service, string sourceEntityName, Guid sourceEntityId, string targetEntityName, Guid targetEntityId)
+        public DataAccessPermit(IOrganizationService service, string sourceEntityName, Guid sourceEntityId, string targetEntityName, Guid targetEntityId)
         {
             this._Service = service;
             this.SourceEntityName = sourceEntityName;

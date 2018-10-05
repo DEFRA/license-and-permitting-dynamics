@@ -1,5 +1,5 @@
 ﻿// Permit entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model

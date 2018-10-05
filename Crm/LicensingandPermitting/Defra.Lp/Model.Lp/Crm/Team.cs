@@ -1,4 +1,4 @@
-﻿namespace Lp.Model.Entities
+﻿namespace Lp.Model.Crm
 {
     public class Team
     {

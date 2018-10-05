@@ -1,5 +1,5 @@
 ﻿// Location Detail entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Location Detail entity model
@@ -39,6 +39,6 @@ namespace Model.Lp.Crm
         /// <summary>
         /// Lookup to the Address Entity
         /// </summary>
-        public const string Adress = "defra_addressid";
+        public const string Address = "defra_addressid";
     }
 }

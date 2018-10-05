@@ -4,8 +4,8 @@
 // <summary>Code activity copies reference data from the Application to a Permit, generating 
 // Permit Lines as required</summary>
 
-using Defra.Lp.Workflows.Helpers;
 using Lp.DataAccess;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Workflows
 {
@@ -14,8 +14,7 @@ namespace Defra.Lp.Workflows
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk.Workflow;
-     using global::Model.Lp.Crm;
-    using Location = global::Model.Lp.Crm.Location;
+
 
     /// <summary>
     /// Code Activity Man Class
@@ -65,10 +64,10 @@ namespace Defra.Lp.Workflows
                 if (application.Attributes.Contains(Application.Permit) && application[Application.Permit] != null)
                 {
                     //Init the copier
-                    RelationshipManager copier = new RelationshipManager(service, Application.EntityLogicalName, application.Id, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id);
+                    DataAccessPermit copier = new DataAccessPermit(service, Application.EntityLogicalName, application.Id, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id);
 
                     //Copy Location and Location details from Application to Permit
-                    service.MirrorApplicationSitesToPermit(application.Id);
+                    DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(service,application.Id);
 
                     //Copy Lines
                     copier.CopyAs(

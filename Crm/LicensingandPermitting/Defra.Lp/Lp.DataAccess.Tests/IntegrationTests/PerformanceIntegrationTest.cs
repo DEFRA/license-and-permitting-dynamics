@@ -1,21 +1,18 @@
-﻿
-using System.Collections.Generic;
-using Lp.Model.EarlyBound;
-using Microsoft.Xrm.Sdk.Client;
-using Microsoft.Xrm.Sdk.Query;
-using Model.Lp.Crm;
-
-namespace Lp.DataAccess.Tests
+﻿namespace Lp.DataAccess.Tests.IntegrationTests
 {
     using System;
+    using System.Collections.Generic;
+    using Connector;
+    using Model.Crm;
+    using Model.EarlyBound;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Xrm.Sdk;
-   
+    using Microsoft.Xrm.Sdk.Client;
+    using Microsoft.Xrm.Sdk.Query;
+
     [TestClass]
     public class LateBoundIntegrationTests
     {
-
-
         private static IOrganizationService _organizationService;
         private static IOrganizationService OrganizationService
         {
@@ -30,7 +27,6 @@ namespace Lp.DataAccess.Tests
                 return _organizationService;
             }
         }
-
 
         private static OrganizationServiceProxy _organizationServiceProxy;
         private static OrganizationServiceProxy OrganizationServiceProxy
@@ -51,14 +47,10 @@ namespace Lp.DataAccess.Tests
 
         #region Tests
 
-
         [TestMethod]
         public void LateBoundCreateApplicationAndPermitSuccess1()
         {
-            for (int count = 0; count < 1; count++)
-            {
-                CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
-            }
+            CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
         }
 
 
@@ -66,11 +58,7 @@ namespace Lp.DataAccess.Tests
         public void EarlyBoundCreateApplicationAndPermitSuccess1()
         {
             OrganizationServiceContext orgContext = new OrganizationServiceContext(OrganizationServiceProxy);
-
-            for (int count = 0; count < 1; count++)
-            {
-                EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
-            }
+            EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
         }
 
         [TestMethod]
@@ -82,73 +70,43 @@ namespace Lp.DataAccess.Tests
         [TestMethod]
         public void LateBoundCreateApplicationAndPermitSuccess2()
         {
-            for (int count = 0; count < 1; count++)
-            {
-                CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
-            }
+            CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
         }
 
         [TestMethod]
         public void EarlyBoundCreateApplicationAndPermitSuccess2()
         {
-
             OrganizationServiceContext orgContext = new OrganizationServiceContext(OrganizationServiceProxy);
-
-
-
-            for (int count = 0; count < 1; count++)
-            {
-                EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
-            }
+            EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
         }
 
         [TestMethod]
         public void LateBoundCreateApplicationAndPermitSuccess3()
         {
-            for (int count = 0; count < 1; count++)
-            {
-                CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
-            }
+            CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
         }
 
         [TestMethod]
         public void EarlyBoundCreateApplicationAndPermitSuccess3()
         {
-
             OrganizationServiceContext orgContext = new OrganizationServiceContext(OrganizationServiceProxy);
-
-
-
-            for (int count = 0; count < 1; count++)
-            {
-                EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
-            }
+            EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
         }
 
         [TestMethod]
         public void LateBoundCreateApplicationAndPermitSuccess4()
         {
-            for (int count = 0; count < 1; count++)
-            {
-                CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
-            }
+            CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
         }
 
         [TestMethod]
         public void EarlyBoundCreateApplicationAndPermitSuccess4()
         {
-
             OrganizationServiceContext orgContext = new OrganizationServiceContext(OrganizationServiceProxy);
-
-
-
-            for (int count = 0; count < 1; count++)
-            {
-                EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
-            }
+            EarlyBoundCreateApplication(orgContext, defra_ApplicationType.NewApplication);
         }
 
-        /*
+
         [TestMethod]
         public void LateBoundCreateApplicationAndPermitSuccess1000()
         {
@@ -170,13 +128,10 @@ namespace Lp.DataAccess.Tests
                 CreateApplication(OrganizationService, ApplicationTypes.NewApplication);
             }
         }
-        */
 
         #endregion
 
         #region Supporting Functions
-
-
 
         private Guid LateBoundCreateApplicationAndPermit(IOrganizationService service, int numberOfSiteDetails)
         {
@@ -247,7 +202,6 @@ namespace Lp.DataAccess.Tests
             }
         }
 
-
         private static Entity CreateApplication(IOrganizationService service, ApplicationTypes applicationType = ApplicationTypes.NewApplication, Guid? permitId = null)
         {
             Entity newApplicationEntity =
@@ -262,7 +216,6 @@ namespace Lp.DataAccess.Tests
             newApplicationEntity.Id = newApplicationId;
             return newApplicationEntity;
         }
-
 
         private static Entity EarlyBoundCreateApplication(OrganizationServiceContext service, defra_ApplicationType applicationType = defra_ApplicationType.NewApplication, Guid? permitId = null)
         {
@@ -279,9 +232,6 @@ namespace Lp.DataAccess.Tests
             service.SaveChanges();
             return newApplicationEntity;
         }
-
-
         #endregion
-
     }
 }
