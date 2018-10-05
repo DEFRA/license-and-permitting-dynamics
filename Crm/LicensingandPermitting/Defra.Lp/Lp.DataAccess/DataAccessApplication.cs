@@ -125,7 +125,7 @@ namespace Lp.DataAccess
         /// <param name="applicationId">Application Id to return locations for</param>
         /// <param name="permitId">Permit Id to return locations for</param>
         /// <returns>List of Locations and location details</returns>
-        public static EntityCollection GetSites(this IOrganizationService service, Guid? applicationId, Guid? permitId)
+        public static EntityCollection GetLocationAndLocationDetails(this IOrganizationService service, Guid? applicationId, Guid? permitId)
         {
             // Instantiate QueryExpression 
             QueryExpression qEdefraLocation = new QueryExpression("defra_location") { TopCount = 1000 };
@@ -143,7 +143,6 @@ namespace Lp.DataAccess
             {
                 qEdefraLocation.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitId);
             }
-
 
             // Add link-entity defra_locationdetails
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
@@ -175,15 +174,15 @@ namespace Lp.DataAccess
             }
 
             // 2. Get Application Sites
-            EntityCollection applicationSites = service.GetSites(applicationId, null);
+            EntityCollection applicationSites = service.GetLocationAndLocationDetails(applicationId, null);
 
             // 3. Get Permit Sites
-            EntityCollection permitSites = service.GetSites(null, permitEntityReference.Id);
+            EntityCollection permitSites = service.GetLocationAndLocationDetails(null, permitEntityReference.Id);
 
-            // 4. Deactivate Removed Permit Sites
+            // 4. Deactivate Removed Permit Sites and Details
             Entity[] remainingPermitSites = DeactivatePermitSitesIfNeeded(service, applicationSites, permitSites);
 
-            // 5. Create New Permit Sites
+            // 5. Create New Permit Sites and Details
             CreateNewPermitSites(service, applicationSites.Entities.ToArray(), remainingPermitSites, permitEntityReference);
         }
 
@@ -205,16 +204,17 @@ namespace Lp.DataAccess
                 return;
             }
 
-            // 3. Get Permit Sites
-            EntityCollection permitSites = service.GetSites(null, permitEntityReference.Id);
+            // 2. Get Permit Sites
+            EntityCollection permitSites = service.GetLocationAndLocationDetails(null, permitEntityReference.Id);
 
-            // 4. Create New Sites
+            // 3. Create New Sites
             CreateNewApplicationtSites(service, permitSites.Entities.ToArray(), applicationId);
         }
 
 
         private static Entity[] DeactivatePermitSitesIfNeeded(IOrganizationService service, EntityCollection applicationSitesAndDetails, EntityCollection permitSitesAndDetails)
         {
+            // What we have linked to the Permit at the moment
             List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.Entities.ToList();
 
             // 1. Iterate through permit sites
@@ -290,7 +290,7 @@ namespace Lp.DataAccess
         {
             List<Entity> applicationSites = new List<Entity>();
 
-            // 1. Iterate through Application Site Details
+            // 1. Iterate through Permit Site Details
             foreach (var permitSiteAndDetail in permitSitesAndDetails)
             {
                 // 2. Check if site already exists in Permit

@@ -21,7 +21,6 @@ namespace Lp.DataAccess.Tests
 
         // Provide domain name for the On-Premises org.
         private String _domain = "";
-       
 
         /// <summary>
         /// 
