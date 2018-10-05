@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lp.Model.EarlyBound;
 using Microsoft.Crm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Model.Lp.Crm;
@@ -132,6 +133,9 @@ namespace Lp.DataAccess
 
             // Add columns tolocation
             qEdefraLocation.ColumnSet.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_applicationid", "defra_locationid", "defra_permitid", "defra_highpublicinterest", "statuscode");
+            
+            // Only retrieve active locations
+            qEdefraLocation.Criteria.AddCondition("statecode", ConditionOperator.Equal, (int)defra_locationState.Active);
 
             // Define filter 
             if (applicationId.HasValue)
@@ -147,6 +151,9 @@ namespace Lp.DataAccess
             // Add link-entity defra_locationdetails
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
             qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
+
+            // Only retrieve active location details
+            qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition("statecode", ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
 
             // Add columns to defra_locationdetails
             qEdefraLocationDefraLocationdetails.Columns.AddColumns("statecode", "defra_locationid", "defra_addressid", "defra_name", "defra_gridreferenceid", "statuscode", "defra_locationdetailsid", "ownerid");

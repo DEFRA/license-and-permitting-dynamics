@@ -216,7 +216,7 @@ namespace Lp.Model.EarlyBound
 		/// Blind Carbon-copy (bcc) recipients of the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("bcc")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Bcc
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Bcc
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -225,7 +225,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -252,7 +252,7 @@ namespace Lp.Model.EarlyBound
 		/// Carbon-copy (cc) recipients of the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("cc")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Cc
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Cc
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -261,7 +261,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -354,7 +354,7 @@ namespace Lp.Model.EarlyBound
 		/// Customer with which the activity is associated.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customers")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Customers
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Customers
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -363,7 +363,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -496,7 +496,7 @@ namespace Lp.Model.EarlyBound
 		/// Person who the activity is from.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("from")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> From
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> From
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -505,7 +505,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -737,7 +737,7 @@ namespace Lp.Model.EarlyBound
 		/// List of optional attendees for the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("optionalattendees")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> OptionalAttendees
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> OptionalAttendees
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -746,7 +746,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -773,7 +773,7 @@ namespace Lp.Model.EarlyBound
 		/// Person who organized the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizer")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Organizer
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Organizer
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -782,7 +782,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -888,7 +888,7 @@ namespace Lp.Model.EarlyBound
 		/// Outsource vendor with which activity is associated.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("partners")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Partners
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Partners
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -897,7 +897,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -997,7 +997,7 @@ namespace Lp.Model.EarlyBound
 		/// List of required attendees for the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("requiredattendees")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> RequiredAttendees
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> RequiredAttendees
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -1006,7 +1006,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -1033,7 +1033,7 @@ namespace Lp.Model.EarlyBound
 		/// Users or facility/equipment that are required for the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("resources")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> Resources
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> Resources
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -1042,7 +1042,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -1356,7 +1356,7 @@ namespace Lp.Model.EarlyBound
 		/// Person who is the receiver of the activity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("to")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> To
+		public System.Collections.Generic.IEnumerable<Microsoft.Xrm.Sdk.Entity> To
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -1365,7 +1365,7 @@ namespace Lp.Model.EarlyBound
 				if (((collection != null) 
 							&& (collection.Entities != null)))
 				{
-					return System.Linq.Enumerable.Cast<Lp.Model.EarlyBound.ActivityParty>(collection.Entities);
+					return System.Linq.Enumerable.Cast<Microsoft.Xrm.Sdk.Entity>(collection.Entities);
 				}
 				else
 				{
@@ -1462,346 +1462,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N CampaignResponse_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("CampaignResponse_defra_notifications")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.CampaignResponse> CampaignResponse_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.CampaignResponse>("CampaignResponse_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("CampaignResponse_defra_notifications");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.CampaignResponse>("CampaignResponse_defra_notifications", null, value);
-				this.OnPropertyChanged("CampaignResponse_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_ActionCards
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_ActionCards")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActionCard> defra_notification_ActionCards
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.ActionCard>("defra_notification_ActionCards", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_ActionCards");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.ActionCard>("defra_notification_ActionCards", null, value);
-				this.OnPropertyChanged("defra_notification_ActionCards");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_activity_parties
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_activity_parties")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ActivityParty> defra_notification_activity_parties
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.ActivityParty>("defra_notification_activity_parties", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_activity_parties");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.ActivityParty>("defra_notification_activity_parties", null, value);
-				this.OnPropertyChanged("defra_notification_activity_parties");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_Annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_Annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_notification_Annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_notification_Annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_Annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_notification_Annotations", null, value);
-				this.OnPropertyChanged("defra_notification_Annotations");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_AsyncOperations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_AsyncOperations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.AsyncOperation> defra_notification_AsyncOperations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.AsyncOperation>("defra_notification_AsyncOperations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_AsyncOperations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.AsyncOperation>("defra_notification_AsyncOperations", null, value);
-				this.OnPropertyChanged("defra_notification_AsyncOperations");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_BulkDeleteFailures
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_BulkDeleteFailures")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.BulkDeleteFailure> defra_notification_BulkDeleteFailures
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.BulkDeleteFailure>("defra_notification_BulkDeleteFailures", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_BulkDeleteFailures");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.BulkDeleteFailure>("defra_notification_BulkDeleteFailures", null, value);
-				this.OnPropertyChanged("defra_notification_BulkDeleteFailures");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_connections1
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_connections1")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Connection> defra_notification_connections1
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Connection>("defra_notification_connections1", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_connections1");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Connection>("defra_notification_connections1", null, value);
-				this.OnPropertyChanged("defra_notification_connections1");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_connections2
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_connections2")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Connection> defra_notification_connections2
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Connection>("defra_notification_connections2", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_connections2");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Connection>("defra_notification_connections2", null, value);
-				this.OnPropertyChanged("defra_notification_connections2");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_DuplicateBaseRecord
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_DuplicateBaseRecord")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.DuplicateRecord> defra_notification_DuplicateBaseRecord
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.DuplicateRecord>("defra_notification_DuplicateBaseRecord", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_DuplicateBaseRecord");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.DuplicateRecord>("defra_notification_DuplicateBaseRecord", null, value);
-				this.OnPropertyChanged("defra_notification_DuplicateBaseRecord");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_DuplicateMatchingRecord
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_DuplicateMatchingRecord")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.DuplicateRecord> defra_notification_DuplicateMatchingRecord
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.DuplicateRecord>("defra_notification_DuplicateMatchingRecord", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_DuplicateMatchingRecord");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.DuplicateRecord>("defra_notification_DuplicateMatchingRecord", null, value);
-				this.OnPropertyChanged("defra_notification_DuplicateMatchingRecord");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_Feedback
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_Feedback")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Feedback> defra_notification_Feedback
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Feedback>("defra_notification_Feedback", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_Feedback");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Feedback>("defra_notification_Feedback", null, value);
-				this.OnPropertyChanged("defra_notification_Feedback");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_MailboxTrackingFolders
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_MailboxTrackingFolders")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.MailboxTrackingFolder> defra_notification_MailboxTrackingFolders
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.MailboxTrackingFolder>("defra_notification_MailboxTrackingFolders", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_MailboxTrackingFolders");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.MailboxTrackingFolder>("defra_notification_MailboxTrackingFolders", null, value);
-				this.OnPropertyChanged("defra_notification_MailboxTrackingFolders");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_PrincipalObjectAttributeAccesses
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_PrincipalObjectAttributeAccesses")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.PrincipalObjectAttributeAccess> defra_notification_PrincipalObjectAttributeAccesses
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.PrincipalObjectAttributeAccess>("defra_notification_PrincipalObjectAttributeAccesses", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_PrincipalObjectAttributeAccesses");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.PrincipalObjectAttributeAccess>("defra_notification_PrincipalObjectAttributeAccesses", null, value);
-				this.OnPropertyChanged("defra_notification_PrincipalObjectAttributeAccesses");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_ProcessSession
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_ProcessSession")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.ProcessSession> defra_notification_ProcessSession
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.ProcessSession>("defra_notification_ProcessSession", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_ProcessSession");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.ProcessSession>("defra_notification_ProcessSession", null, value);
-				this.OnPropertyChanged("defra_notification_ProcessSession");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_QueueItems
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_QueueItems")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> defra_notification_QueueItems
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_notification_QueueItems", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_QueueItems");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_notification_QueueItems", null, value);
-				this.OnPropertyChanged("defra_notification_QueueItems");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_SyncErrors
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_SyncErrors")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.SyncError> defra_notification_SyncErrors
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.SyncError>("defra_notification_SyncErrors", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_SyncErrors");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.SyncError>("defra_notification_SyncErrors", null, value);
-				this.OnPropertyChanged("defra_notification_SyncErrors");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_notification_UserEntityInstanceDatas
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_UserEntityInstanceDatas")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.UserEntityInstanceData> defra_notification_UserEntityInstanceDatas
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.UserEntityInstanceData>("defra_notification_UserEntityInstanceDatas", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_UserEntityInstanceDatas");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.UserEntityInstanceData>("defra_notification_UserEntityInstanceDatas", null, value);
-				this.OnPropertyChanged("defra_notification_UserEntityInstanceDatas");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 account_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -1823,174 +1483,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 activity_pointer_defra_notification
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activityid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("activity_pointer_defra_notification")]
-		public Lp.Model.EarlyBound.ActivityPointer activity_pointer_defra_notification
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.ActivityPointer>("activity_pointer_defra_notification", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("activity_pointer_defra_notification");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.ActivityPointer>("activity_pointer_defra_notification", null, value);
-				this.OnPropertyChanged("activity_pointer_defra_notification");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 bookableresourcebooking_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("bookableresourcebooking_defra_notifications")]
-		public Lp.Model.EarlyBound.BookableResourceBooking bookableresourcebooking_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.BookableResourceBooking>("bookableresourcebooking_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("bookableresourcebooking_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.BookableResourceBooking>("bookableresourcebooking_defra_notifications", null, value);
-				this.OnPropertyChanged("bookableresourcebooking_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 bookableresourcebookingheader_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("bookableresourcebookingheader_defra_notifications")]
-		public Lp.Model.EarlyBound.BookableResourceBookingHeader bookableresourcebookingheader_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.BookableResourceBookingHeader>("bookableresourcebookingheader_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("bookableresourcebookingheader_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.BookableResourceBookingHeader>("bookableresourcebookingheader_defra_notifications", null, value);
-				this.OnPropertyChanged("bookableresourcebookingheader_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 bulkoperation_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("bulkoperation_defra_notifications")]
-		public Lp.Model.EarlyBound.BulkOperation bulkoperation_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.BulkOperation>("bulkoperation_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("bulkoperation_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.BulkOperation>("bulkoperation_defra_notifications", null, value);
-				this.OnPropertyChanged("bulkoperation_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 campaign_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("campaign_defra_notifications")]
-		public Lp.Model.EarlyBound.Campaign campaign_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Campaign>("campaign_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("campaign_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Campaign>("campaign_defra_notifications", null, value);
-				this.OnPropertyChanged("campaign_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 campaignactivity_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("campaignactivity_defra_notifications")]
-		public Lp.Model.EarlyBound.CampaignActivity campaignactivity_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.CampaignActivity>("campaignactivity_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("campaignactivity_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.CampaignActivity>("campaignactivity_defra_notifications", null, value);
-				this.OnPropertyChanged("campaignactivity_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 contact_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_defra_notifications")]
-		public Lp.Model.EarlyBound.Contact contact_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("contact_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null, value);
-				this.OnPropertyChanged("contact_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 contract_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contract_defra_notifications")]
-		public Lp.Model.EarlyBound.Contract contract_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contract>("contract_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("contract_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Contract>("contract_defra_notifications", null, value);
-				this.OnPropertyChanged("contract_defra_notifications");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 defra_application_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -2008,209 +1500,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_notifications");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_notifications", null, value);
 				this.OnPropertyChanged("defra_application_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_businessunit_owningbusinessunit
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_businessunit_owningbusinessunit")]
-		public Lp.Model.EarlyBound.BusinessUnit defra_notification_businessunit_owningbusinessunit
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.BusinessUnit>("defra_notification_businessunit_owningbusinessunit", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_mailbox_sendermailboxid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sendermailboxid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_mailbox_sendermailboxid")]
-		public Lp.Model.EarlyBound.Mailbox defra_notification_mailbox_sendermailboxid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Mailbox>("defra_notification_mailbox_sendermailboxid", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_service_serviceid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("serviceid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_service_serviceid")]
-		public Lp.Model.EarlyBound.Service defra_notification_service_serviceid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Service>("defra_notification_service_serviceid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_service_serviceid");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Service>("defra_notification_service_serviceid", null, value);
-				this.OnPropertyChanged("defra_notification_service_serviceid");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_sla_slaid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_sla_slaid")]
-		public Lp.Model.EarlyBound.SLA defra_notification_sla_slaid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SLA>("defra_notification_sla_slaid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_sla_slaid");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.SLA>("defra_notification_sla_slaid", null, value);
-				this.OnPropertyChanged("defra_notification_sla_slaid");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_sla_slainvokedid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_sla_slainvokedid")]
-		public Lp.Model.EarlyBound.SLA defra_notification_sla_slainvokedid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SLA>("defra_notification_sla_slainvokedid", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_systemuser_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_createdby")]
-		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_systemuser_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_createdonbehalfby")]
-		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_systemuser_createdonbehalfby");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdonbehalfby", null, value);
-				this.OnPropertyChanged("defra_notification_systemuser_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_systemuser_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_modifiedby")]
-		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_systemuser_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_modifiedonbehalfby")]
-		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_systemuser_modifiedonbehalfby");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("defra_notification_systemuser_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_systemuser_owninguser
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_owninguser")]
-		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_owninguser
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_owninguser", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_team_owningteam
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_team_owningteam")]
-		public Lp.Model.EarlyBound.Team defra_notification_team_owningteam
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("defra_notification_team_owningteam", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 defra_notification_transactioncurrency_transactioncurrencyid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_transactioncurrency_transactioncurrencyid")]
-		public Lp.Model.EarlyBound.TransactionCurrency defra_notification_transactioncurrency_transactioncurrencyid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.TransactionCurrency>("defra_notification_transactioncurrency_transactioncurrencyid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_notification_transactioncurrency_transactioncurrencyid");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.TransactionCurrency>("defra_notification_transactioncurrency_transactioncurrencyid", null, value);
-				this.OnPropertyChanged("defra_notification_transactioncurrency_transactioncurrencyid");
 			}
 		}
 		
@@ -2257,48 +1546,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 entitlement_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("entitlement_defra_notifications")]
-		public Lp.Model.EarlyBound.Entitlement entitlement_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Entitlement>("entitlement_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("entitlement_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Entitlement>("entitlement_defra_notifications", null, value);
-				this.OnPropertyChanged("entitlement_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 entitlementtemplate_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("entitlementtemplate_defra_notifications")]
-		public Lp.Model.EarlyBound.EntitlementTemplate entitlementtemplate_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.EntitlementTemplate>("entitlementtemplate_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("entitlementtemplate_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.EntitlementTemplate>("entitlementtemplate_defra_notifications", null, value);
-				this.OnPropertyChanged("entitlementtemplate_defra_notifications");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 incident_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -2316,216 +1563,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("incident_defra_notifications");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Incident>("incident_defra_notifications", null, value);
 				this.OnPropertyChanged("incident_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 interactionforemail_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("interactionforemail_defra_notifications")]
-		public Lp.Model.EarlyBound.InteractionForEmail interactionforemail_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.InteractionForEmail>("interactionforemail_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("interactionforemail_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.InteractionForEmail>("interactionforemail_defra_notifications", null, value);
-				this.OnPropertyChanged("interactionforemail_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invoice_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invoice_defra_notifications")]
-		public Lp.Model.EarlyBound.Invoice invoice_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Invoice>("invoice_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invoice_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Invoice>("invoice_defra_notifications", null, value);
-				this.OnPropertyChanged("invoice_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 knowledgearticle_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("knowledgearticle_defra_notifications")]
-		public Lp.Model.EarlyBound.KnowledgeArticle knowledgearticle_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.KnowledgeArticle>("knowledgearticle_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("knowledgearticle_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.KnowledgeArticle>("knowledgearticle_defra_notifications", null, value);
-				this.OnPropertyChanged("knowledgearticle_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 knowledgebaserecord_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("knowledgebaserecord_defra_notifications")]
-		public Lp.Model.EarlyBound.KnowledgeBaseRecord knowledgebaserecord_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.KnowledgeBaseRecord>("knowledgebaserecord_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("knowledgebaserecord_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.KnowledgeBaseRecord>("knowledgebaserecord_defra_notifications", null, value);
-				this.OnPropertyChanged("knowledgebaserecord_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lead_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lead_defra_notifications")]
-		public Lp.Model.EarlyBound.Lead lead_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Lead>("lead_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lead_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Lead>("lead_defra_notifications", null, value);
-				this.OnPropertyChanged("lead_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 msdyn_postalbum_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msdyn_postalbum_defra_notifications")]
-		public Lp.Model.EarlyBound.msdyn_PostAlbum msdyn_postalbum_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.msdyn_PostAlbum>("msdyn_postalbum_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("msdyn_postalbum_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.msdyn_PostAlbum>("msdyn_postalbum_defra_notifications", null, value);
-				this.OnPropertyChanged("msdyn_postalbum_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 opportunity_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("opportunity_defra_notifications")]
-		public Lp.Model.EarlyBound.Opportunity opportunity_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Opportunity>("opportunity_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("opportunity_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Opportunity>("opportunity_defra_notifications", null, value);
-				this.OnPropertyChanged("opportunity_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 quote_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("quote_defra_notifications")]
-		public Lp.Model.EarlyBound.Quote quote_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Quote>("quote_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("quote_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Quote>("quote_defra_notifications", null, value);
-				this.OnPropertyChanged("quote_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 salesorder_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("salesorder_defra_notifications")]
-		public Lp.Model.EarlyBound.SalesOrder salesorder_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.SalesOrder>("salesorder_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("salesorder_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.SalesOrder>("salesorder_defra_notifications", null, value);
-				this.OnPropertyChanged("salesorder_defra_notifications");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 site_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("site_defra_notifications")]
-		public Lp.Model.EarlyBound.Site site_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Site>("site_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("site_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Site>("site_defra_notifications", null, value);
-				this.OnPropertyChanged("site_defra_notifications");
 			}
 		}
 		
