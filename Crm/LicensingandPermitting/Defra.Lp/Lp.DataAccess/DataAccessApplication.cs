@@ -422,9 +422,12 @@
             Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
             {
                 [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, targetLocationId),
-                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
-                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
-                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null
+                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) 
+                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
+                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.GridReference)) 
+                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
+                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) 
+                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null
             };
 
             // 2. Create and return new location detail 

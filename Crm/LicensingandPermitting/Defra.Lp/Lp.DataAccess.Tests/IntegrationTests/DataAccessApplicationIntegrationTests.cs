@@ -35,16 +35,15 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
         #region Tests
 
-
         [TestMethod]
         public void Integration_MirrorNewApplicationToPermit_Success()
         {
             var service = OrganizationService;
-            Guid permitId = CreateApplicationAndPermit(service, 2, 3);
+            Guid permitId = CreateApplicationAndPermit(service, 4, 1);
 
             // 4. Check the Permit now has all the original locations + the new ones
             Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
-            Assert.IsTrue(permitLocationAndDetails.Length == 6);
+            Assert.IsTrue(permitLocationAndDetails.Length == 4);
         }
 
         [TestMethod]
@@ -57,7 +56,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Entity variationApplication = CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 3. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService,variationApplication.Id);
+            DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
 
             // 4. Check the Application now has all the Permit locations
             Entity[] applicationLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, variationApplication.Id, null);
@@ -84,7 +83,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             for (int countSites = 0; countSites < additionalSites; countSites++)
             {
-                CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails);
+                CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails, countSites > 1 ? true : false);
             }
 
             // 6. Call MirrorApplicationSitesToPermit
@@ -158,7 +157,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             // 3. Create Application Locations
             for (int count = 0; count < numberOfSites; count++)
             {
-                CreateApplicationLocationAndDetails(service, newApplication.Id, "Main Location " + count, numberOfSiteDetails);
+                CreateApplicationLocationAndDetails(service, newApplication.Id, "Main Location " + count, numberOfSiteDetails, count > 1 ? true : false);
             }
 
             // 4. Create Permit 
@@ -172,7 +171,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             UpdateApplicationPermitLookup(service, newApplication, permitId);
 
             // 6. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService,newApplication.Id);
+            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, newApplication.Id);
 
             // 5.1 Test GetApplicationSites
             // var sites = service.GetLocationAndLocationDetails(newApplication.Id, null);
@@ -196,7 +195,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             return service.Create(entity);
         }
 
-        private Guid CreateApplicationLocationAndDetails(IOrganizationService service, Guid newApplicationId, string locationName, int locationDetailCount)
+        private Guid CreateApplicationLocationAndDetails(IOrganizationService service, Guid newApplicationId, string locationName, int locationDetailCount, bool createAddress)
         {
 
             // 1. Create Location
@@ -207,14 +206,13 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             };
             Guid locationId = service.Create(locationEntity);
 
-            CreateApplicationLocationDetails(service, locationDetailCount, locationId);
+            CreateApplicationLocationDetails(service, locationDetailCount, locationId, createAddress);
 
 
             return locationId;
         }
 
-        private static void CreateApplicationLocationDetails(IOrganizationService service, int locationDetailCount,
-            Guid locationId)
+        private static void CreateApplicationLocationDetails(IOrganizationService service, int locationDetailCount, Guid locationId, bool createAddress)
         {
             // 2. Create Location Detail
             for (int count = 0; count < locationDetailCount; count++)
@@ -222,11 +220,34 @@ namespace Lp.DataAccess.Tests.IntegrationTests
                 Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
                 {
                     [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, locationId),
-                    [Location.Name] = "Integration Test " + DateTime.Now,
-                    [LocationDetail.GridReference] = "ST-10000000" + count
+                    [LocationDetail.Name] = "Integration Test " + DateTime.Now
+                   
                 };
+
+                if (createAddress)
+                {
+                    Guid addressId = CreateAddress(service);
+                    locationDetailEntity.Attributes.Add(LocationDetail.Address,
+                        new EntityReference(Address.EntityLogicalName, addressId));
+                }
+                else
+                {
+                    locationDetailEntity.Attributes.Add(LocationDetail.GridReference, "ST-10000000" + count);
+                }
                 service.Create(locationDetailEntity);
             }
+        }
+
+
+        private static Guid CreateAddress(IOrganizationService service)
+        {
+            // Create Address
+
+            Entity locationDetailEntity = new Entity(Address.EntityLogicalName)
+            {
+                [Location.Name] = "Address " + DateTime.Now
+            };
+            return service.Create(locationDetailEntity);
         }
 
         /*
