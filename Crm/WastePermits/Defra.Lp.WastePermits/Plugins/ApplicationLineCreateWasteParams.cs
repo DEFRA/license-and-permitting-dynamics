@@ -230,10 +230,11 @@ namespace Defra.Lp.WastePermits.Plugins
                 }
                 else
                 {
-                    throw new InvalidPluginExecutionException("No price found for Standard Rule");
+                    throw new InvalidPluginExecutionException("No pricing found for the Application Type and Standard Rule combination. ");
                 }
             }
         }
+
         
 
         private void UpdateApplicationOnStatusChange(ApplicationLineStates newApplicationLineState)
