@@ -12,13 +12,13 @@
         // Sign in to your CRM org and click Settings, Customization, Developer Resources.
         // On Developer Resource page, find the discovery service address under Service Endpoints and organization unique name under Your Organization Information.
         private String _discoveryServiceAddress = "https://disco.crm4.dynamics.com/XRMServices/2011/Discovery.svc";
-        private String _organizationName = "ag-ea-lp-dev-waste";
+        private String _organizationName = "";
         // Provide your user name and password.
-        private String _userName = "hugo.herrera@defradev.onmicrosoft.com";
-        private String _password = "aDstomer-4!2";
+        private String _userName = "";
+        private String _password = "";
 
         // Provide domain name for the On-Premises org.
-        private String _domain = "https://ag-ea-lp-dev-waste.crm4.dynamics.com";
+        private String _domain = "";
 
         /// <summary>
         /// 
