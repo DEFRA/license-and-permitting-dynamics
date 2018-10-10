@@ -1,11 +1,12 @@
-﻿using Model.Lp.Crm;
+﻿
 
 namespace DAL
 {
+    using Lp.Model.Crm;
     using System;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using Model.Waste.Crm;
+    using WastePermits.Model.Crm;
 
     public static class DataAccessApplicationPrice
     {

@@ -1,9 +1,9 @@
-﻿namespace Model.Waste.Crm
+﻿namespace WastePermits.Model.Crm
 {
     /// <summary>
     /// CRM Application Price entity model
     /// </summary>
-    public class ApplicationPriceWaste : Lp.Crm.ApplicationPrice
+    public class ApplicationPriceWaste : Lp.Model.Crm.ApplicationPrice
     {
         /// <summary>
         /// Lookup to Standard Rule

@@ -1,10 +1,10 @@
 ﻿// Application entity model at the Wate Organisation Level
-namespace Model.Waste.Crm
+namespace WastePermits.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model
     /// </summary>
-    public class ApplicationLine : Lp.Crm.ApplicationLine
+    public class ApplicationLineWaste : Lp.Model.Crm.ApplicationLine
     {
         /// <summary>
         /// Location Screening Required Boolean field

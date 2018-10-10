@@ -10,14 +10,14 @@
 // </auto-generated>
 
 using System;
-using System.ServiceModel;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
 using DAL;
-// using DAL;
-using Microsoft.Crm.Sdk.Messages;
-using Model.Lp.Crm;
+using Lp.Model.Crm;
+using WastePermits.Model.Crm;
+using Application = Lp.Model.Crm.Application;
+
 
 namespace Defra.Lp.WastePermits.Plugins
 {
@@ -220,12 +220,14 @@ namespace Defra.Lp.WastePermits.Plugins
                 {
                     applicationSubType = targetAppLine[Application.ApplicationSubType] as EntityReference;
                 }
-               
+
                 // Get the price from the Application Price table
+                _TracingService.Trace("Getting Application Price for type {0} and subtype {1} and rule {2}", applicationType?.Value ?? 0, applicationSubType?.Id ?? Guid.Empty, standardRuleEntityReference?.Id ?? Guid.Empty);
                 Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference, applicationSubType);
+                
                 if (price != null)
                 {
-                    _TracingService.Trace("Setting Application Price to {0}", price);
+                    _TracingService.Trace("Setting Application Price to {0}", price.Value);
                     targetAppLine[ApplicationLine.Value] = price;
                 }
                 else
@@ -604,7 +606,7 @@ namespace Defra.Lp.WastePermits.Plugins
                 ColumnSet =
                     new ColumnSet(
                         ApplicationLine.NpsDetermination,
-                        Model.Waste.Crm.ApplicationLine.LocationScreeningRequired,
+                        ApplicationLineWaste.LocationScreeningRequired,
                         ApplicationLine.State,
                         ApplicationLine.LineType,
                         ApplicationLine.StandardRule),
@@ -649,7 +651,7 @@ namespace Defra.Lp.WastePermits.Plugins
             this.ApplicationEntity = _Service.Retrieve(
                 Application.EntityLogicalName,
                 applicationId.Value,
-                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Model.Waste.Crm.Application.ApplicationType));
+                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", ApplicationWaste.ApplicationType));
 
             //Initiate the updated application entity
             _TracingService.Trace("Application with Id {0} retrieved", applicationId);
