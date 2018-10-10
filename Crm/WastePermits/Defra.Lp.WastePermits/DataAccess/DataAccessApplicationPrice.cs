@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq;
+
 namespace DAL
 {
     using Lp.Model.Crm;
@@ -51,21 +53,25 @@ namespace DAL
 
             EntityCollection results =  service.RetrieveMultiple(priceQuery);
 
-            if (results == null || results.TotalRecordCount == 0)
+            if (results == null || results.Entities == null || results.Entities.Count == 0)
             {
                 return null;
             }
 
-            if (results.TotalRecordCount > 1)
+            if (results.Entities.Count > 1)
             {
-                throw new ApplicationException(string.Format(Messages.MultiplePricesFound, results.TotalRecordCount, applicationType.Value, standardRule.Id));
+               throw new InvalidPluginExecutionException(
+                   $"There were {results.TotalRecordCount} Application Price records found for ApplicationType {applicationType.Value} and Standard Rule {standardRule?.Id ?? Guid.Empty}. Expecting One Price only.");
             }
 
-            Entity priceEntity = results[0];
 
-            Money price = priceEntity[ApplicationPrice.Price] as Money;
+            Entity priceEntity = results.Entities.First();
+            if (priceEntity.Contains(ApplicationPrice.Price))
+            {
+                return priceEntity[ApplicationPrice.Price] as Money;
+            }
 
-            return price;
+            return null;
         }
     }
 }

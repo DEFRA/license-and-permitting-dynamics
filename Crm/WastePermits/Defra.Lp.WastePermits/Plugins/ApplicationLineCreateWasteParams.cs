@@ -146,8 +146,6 @@ namespace Defra.Lp.WastePermits.Plugins
                                 //Create the Duly Made record (if bespoke it will only create the record if it does not exist
                                 _TracingService.Trace("Calling UpdateDulyMadeChecklist");
                                 this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
-
-                               
                             }
 
                             //Update the Application
@@ -216,9 +214,9 @@ namespace Defra.Lp.WastePermits.Plugins
 
                 // Get the application sub type if it exists
                 EntityReference applicationSubType = null;
-                if (targetAppLine.Attributes.ContainsKey(Application.ApplicationSubType))
+                if (this.ApplicationEntity.Attributes.ContainsKey(Application.ApplicationSubType))
                 {
-                    applicationSubType = targetAppLine[Application.ApplicationSubType] as EntityReference;
+                    applicationSubType = this.ApplicationEntity[Application.ApplicationSubType] as EntityReference;
                 }
 
                 // Get the price from the Application Price table
@@ -371,6 +369,7 @@ namespace Defra.Lp.WastePermits.Plugins
             }
         }
 
+        /*
         /// <summary>
         /// Retrieves the Application entity
         /// </summary>
@@ -390,11 +389,12 @@ namespace Defra.Lp.WastePermits.Plugins
 
             //Retrieve the duly made record if exists
             _TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
-            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired"));
+            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Application.ApplicationType, Application.ApplicationSubType));
 
             //Initiate the updated application entity
             this.UpdatedApplicationEntity = new Entity(ApplicationEntity.LogicalName) { Id = ApplicationEntity.Id };
         }
+        */
 
         /// <summary>
         /// Retrieves the Standard Rule entity
@@ -651,10 +651,10 @@ namespace Defra.Lp.WastePermits.Plugins
             this.ApplicationEntity = _Service.Retrieve(
                 Application.EntityLogicalName,
                 applicationId.Value,
-                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", ApplicationWaste.ApplicationType));
+                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Application.ApplicationType, Application.ApplicationSubType));
 
             //Initiate the updated application entity
-            _TracingService.Trace("Application with Id {0} retrieved", applicationId);
+            _TracingService.Trace("Application with Id {0} successfully retrieved", applicationId);
             this.UpdatedApplicationEntity = new Entity(Application.EntityLogicalName) { Id = applicationId.Value };
         }
 
