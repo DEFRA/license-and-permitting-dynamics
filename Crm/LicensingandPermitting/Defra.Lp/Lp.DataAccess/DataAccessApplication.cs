@@ -64,7 +64,14 @@ namespace Lp.DataAccess
                     }
                     if (!string.IsNullOrEmpty(gridRef))
                     {
-                        siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                        if (string.IsNullOrEmpty(siteDetail))
+                        {
+                            siteDetail = gridRef;
+                        }
+                        else
+                        {
+                            siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                        }
                     }
                     returnData = (i == 0) ? siteDetail : returnData + "; " + siteDetail;
                 }
