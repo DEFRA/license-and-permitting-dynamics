@@ -332,7 +332,7 @@
                                     <Sequence DisplayName="StopWorkflowStep8: Stop Workflow Step">
                                       <Sequence.Variables>
                                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep8_1" />
-                                        <Variable x:TypeArguments="x:String" Default="b9282ffc-230d-481c-a916-c2fb18bd2469" Name="stepLabelLabelId" />
+                                        <Variable x:TypeArguments="x:String" Default="57f5ab2f-54c1-455e-9a08-50ac012b5201" Name="stepLabelLabelId" />
                                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                           <Variable.Default>
                                             <Literal x:TypeArguments="x:String" Value="" />
@@ -709,7 +709,7 @@
                                                     <Sequence DisplayName="StopWorkflowStep15: Stop Workflow Step">
                                                       <Sequence.Variables>
                                                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep15_1" />
-                                                        <Variable x:TypeArguments="x:String" Default="e4074d3d-ac38-4117-8c9e-e82db67b2f59" Name="stepLabelLabelId" />
+                                                        <Variable x:TypeArguments="x:String" Default="943c8714-9586-4e38-99f5-138e175cd4b9" Name="stepLabelLabelId" />
                                                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                                           <Variable.Default>
                                                             <Literal x:TypeArguments="x:String" Value="" />
@@ -1198,7 +1198,7 @@
                                                     <Sequence DisplayName="StopWorkflowStep24: Stop Workflow Step">
                                                       <Sequence.Variables>
                                                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep24_1" />
-                                                        <Variable x:TypeArguments="x:String" Default="358d1165-7f07-40f7-b9da-46f905515bef" Name="stepLabelLabelId" />
+                                                        <Variable x:TypeArguments="x:String" Default="fa280fd5-20c5-49a6-a14f-edbe122ae815" Name="stepLabelLabelId" />
                                                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                                           <Variable.Default>
                                                             <Literal x:TypeArguments="x:String" Value="" />
@@ -1422,6 +1422,8 @@
                                                         <Variable x:TypeArguments="x:Object" Name="CreateStep37_22" />
                                                         <Variable x:TypeArguments="x:Object" Name="CreateStep37_23" />
                                                         <Variable x:TypeArguments="x:Object" Name="CreateStep37_24" />
+                                                        <Variable x:TypeArguments="x:Object" Name="CreateStep37_25" />
+                                                        <Variable x:TypeArguments="x:Object" Name="CreateStep37_26" />
                                                       </Sequence.Variables>
                                                       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep37_localParameter#Temp&quot;)]" Value="[New Entity(&quot;phonecall&quot;)]" />
                                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
@@ -1689,6 +1691,30 @@
                                                           </InArgument>
                                                         </mxswa:SetEntityProperty.TargetType>
                                                       </mxswa:SetEntityProperty>
+                                                      <mxswa:GetEntityProperty Attribute="ownerid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="incident" Value="[CreateStep37_25]">
+                                                        <mxswa:GetEntityProperty.TargetType>
+                                                          <InArgument x:TypeArguments="s:Type">
+                                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                                                          </InArgument>
+                                                        </mxswa:GetEntityProperty.TargetType>
+                                                      </mxswa:GetEntityProperty>
+                                                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                                        <mxswa:ActivityReference.Arguments>
+                                                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep37_25 }]</InArgument>
+                                                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                                                          </InArgument>
+                                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep37_24]</OutArgument>
+                                                        </mxswa:ActivityReference.Arguments>
+                                                      </mxswa:ActivityReference>
+                                                      <mxswa:SetEntityProperty Attribute="ownerid" Entity="[CreatedEntities(&quot;CreateStep37_localParameter#Temp&quot;)]" EntityName="phonecall" Value="[CreateStep37_24]">
+                                                        <mxswa:SetEntityProperty.TargetType>
+                                                          <InArgument x:TypeArguments="s:Type">
+                                                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                                                          </InArgument>
+                                                        </mxswa:SetEntityProperty.TargetType>
+                                                      </mxswa:SetEntityProperty>
                                                       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                                                         <mxswa:ActivityReference.Arguments>
                                                           <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
@@ -1696,10 +1722,10 @@
                                                           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
                                                           </InArgument>
-                                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep37_24]</OutArgument>
+                                                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep37_26]</OutArgument>
                                                         </mxswa:ActivityReference.Arguments>
                                                       </mxswa:ActivityReference>
-                                                      <mxswa:SetEntityProperty Attribute="prioritycode" Entity="[CreatedEntities(&quot;CreateStep37_localParameter#Temp&quot;)]" EntityName="phonecall" Value="[CreateStep37_24]">
+                                                      <mxswa:SetEntityProperty Attribute="prioritycode" Entity="[CreatedEntities(&quot;CreateStep37_localParameter#Temp&quot;)]" EntityName="phonecall" Value="[CreateStep37_26]">
                                                         <mxswa:SetEntityProperty.TargetType>
                                                           <InArgument x:TypeArguments="s:Type">
                                                             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:OptionSetValue" />
@@ -1833,7 +1859,7 @@
                     <Sequence DisplayName="StopWorkflowStep29: Stop Workflow Step">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep29_1" />
-                        <Variable x:TypeArguments="x:String" Default="49b8ff43-dff7-4465-b2b5-c0bbaddb916e" Name="stepLabelLabelId" />
+                        <Variable x:TypeArguments="x:String" Default="0c9945ab-2d85-4937-b184-3d7b35fdc3ce" Name="stepLabelLabelId" />
                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                           <Variable.Default>
                             <Literal x:TypeArguments="x:String" Value="" />
