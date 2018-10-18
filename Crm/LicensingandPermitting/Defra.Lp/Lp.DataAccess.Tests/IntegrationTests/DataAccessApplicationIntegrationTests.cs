@@ -32,6 +32,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         }
 
         private KeyValuePair<string, Guid> recordsToDelete = new KeyValuePair<string, Guid>();
+        private readonly DataAccessIntegrationTestSupport _dataAccessIntegrationTestSupport = new DataAccessIntegrationTestSupport();
 
         #region Tests
 
@@ -39,7 +40,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         public void Integration_MirrorNewApplicationToPermit_Success()
         {
             var service = OrganizationService;
-            Guid permitId = CreateApplicationAndPermit(service, 4, 1);
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(service, 4, 1);
 
             // 4. Check the Permit now has all the original locations + the new ones
             Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
@@ -50,10 +51,10 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         public void Integration_MirrorPermitToVariation_Success()
         {
             // 1. Create application and permit
-            Guid permitId = CreateApplicationAndPermit(OrganizationService, 2, 5);
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, 2, 5);
 
             // 2. Create Variation
-            Entity variationApplication = CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
+            Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 3. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
@@ -71,10 +72,10 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             int additionalSites = 3;
             int additionalDetails = 2;
 
-            Guid permitId = CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
 
             // 1. Create Application
-            Entity variationApplication = CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
+            Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 2. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
@@ -83,7 +84,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             for (int countSites = 0; countSites < additionalSites; countSites++)
             {
-                CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails, countSites > 1 ? true : false);
+                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails, countSites > 1 ? true : false);
             }
 
             // 6. Call MirrorApplicationSitesToPermit
@@ -95,8 +96,6 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite + additionalSites * additionalDetails);
         }
 
-
-
         [TestMethod]
         public void Integration_MirrorVariationToPermit_RemoveLocations_Success()
         {
@@ -104,10 +103,10 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             int startDetailsPerSite = 2;
 
 
-            Guid permitId = CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
 
             // 1. Create Application
-            Entity variationApplication = CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
+            Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 2. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
@@ -115,7 +114,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             // 3. Remove 1 location from Application
             Entity[] applicationLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, variationApplication.Id, null);
 
-            DeactivateLocation(OrganizationService, applicationLocationAndDetails[0]);
+            _dataAccessIntegrationTestSupport.DeactivateLocation(OrganizationService, applicationLocationAndDetails[0]);
 
             // 6. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, variationApplication.Id);
@@ -125,152 +124,36 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite - startDetailsPerSite);
         }
 
-        private void DeactivateLocation(IOrganizationService service, Entity applicationLocationAndDetail)
+        [TestMethod]
+        public void Integration_GetCountForApplicationsLinkedToPermit_TestTwoActiveApplication_Success()
         {
-            // Create the Request Object
-            SetStateRequest state = new SetStateRequest();
+            // 1. Create application and permit
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, 2, 5);
 
-            // Set the Request Object's Properties
-            state.State = new OptionSetValue((int)defra_locationState.Inactive);
-            state.Status = new OptionSetValue((int)defra_location_StatusCode.Inactive);
+            // 2. Create Variation
+            DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
-            // Point the Request to the case whose state is being changed
-            state.EntityMoniker = applicationLocationAndDetail.ToEntityReference();
+            // 3. Call MirrorApplicationSitesToPermit
+            int appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+                OrganizationService,
+                permitId, 
+                new[]
+                {
+                    defra_application_StatusCode.Issued,
+                    defra_application_StatusCode.Withdrawn,
+                    defra_application_StatusCode.Issued,
+                    defra_application_StatusCode.Refused,
+                    defra_application_StatusCode.Returned,
+                    defra_application_StatusCode.ReturnedNotDulyMade
+                });
 
-            // Execute the Request
-            service.Execute(state);
+            Assert.IsTrue(appCount == 2);
         }
 
         #endregion
 
         #region Supporting Functions
 
-
-        private Guid CreateApplicationAndPermit(IOrganizationService service, int numberOfSites, int numberOfSiteDetails)
-        {
-            // 1. Create Application
-            Entity newApplication = CreateApplication(service);
-
-            // 2. Create Application Line
-            //Guid newApplicationLineId = CreatetApplicationLine(service, newApplicationId);
-
-            // 3. Create Application Locations
-            for (int count = 0; count < numberOfSites; count++)
-            {
-                CreateApplicationLocationAndDetails(service, newApplication.Id, "Main Location " + count, numberOfSiteDetails, count > 1 ? true : false);
-            }
-
-            // 4. Create Permit 
-            Entity application = OrganizationService.Retrieve(Application.EntityLogicalName, newApplication.Id,
-                new ColumnSet(Application.PermitNumber));
-            string permitNumber = application[Application.PermitNumber].ToString();
-
-            Guid permitId = CreatePermit(service, permitNumber);
-
-            // 5. Update Application Permit Lookup field
-            UpdateApplicationPermitLookup(service, newApplication, permitId);
-
-            // 6. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, newApplication.Id);
-
-            // 5.1 Test GetApplicationSites
-            // var sites = service.GetLocationAndLocationDetails(newApplication.Id, null);
-
-            return permitId;
-        }
-
-        private void UpdateApplicationPermitLookup(IOrganizationService service, Entity applicationEntity, Guid permitId)
-        {
-            applicationEntity[Application.Permit] = new EntityReference(Permit.EntityLogicalName, permitId);
-            service.Update(applicationEntity);
-        }
-
-        private Guid CreatePermit(IOrganizationService service, string permitNumber)
-        {
-            Entity entity = new Entity(Permit.EntityLogicalName)
-            {
-                [Permit.PermitNumber] = permitNumber,
-                [Permit.Name] = "Integration Test " + DateTime.Now
-            };
-            return service.Create(entity);
-        }
-
-        private Guid CreateApplicationLocationAndDetails(IOrganizationService service, Guid newApplicationId, string locationName, int locationDetailCount, bool createAddress)
-        {
-
-            // 1. Create Location
-            Entity locationEntity = new Entity(Location.EntityLogicalName)
-            {
-                [Location.Application] = new EntityReference(Application.EntityLogicalName, newApplicationId),
-                [Location.Name] = locationName
-            };
-            Guid locationId = service.Create(locationEntity);
-
-            CreateApplicationLocationDetails(service, locationDetailCount, locationId, createAddress);
-
-
-            return locationId;
-        }
-
-        private static void CreateApplicationLocationDetails(IOrganizationService service, int locationDetailCount, Guid locationId, bool createAddress)
-        {
-            // 2. Create Location Detail
-            for (int count = 0; count < locationDetailCount; count++)
-            {
-                Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
-                {
-                    [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, locationId),
-                    [LocationDetail.Name] = "Integration Test " + DateTime.Now
-                   
-                };
-
-                if (createAddress)
-                {
-                    Guid addressId = CreateAddress(service);
-                    locationDetailEntity.Attributes.Add(LocationDetail.Address,
-                        new EntityReference(Address.EntityLogicalName, addressId));
-                }
-                else
-                {
-                    locationDetailEntity.Attributes.Add(LocationDetail.GridReference, "ST-10000000" + count);
-                }
-                service.Create(locationDetailEntity);
-            }
-        }
-
-
-        private static Guid CreateAddress(IOrganizationService service)
-        {
-            // Create Address
-
-            Entity locationDetailEntity = new Entity(Address.EntityLogicalName)
-            {
-                [Location.Name] = "Address " + DateTime.Now
-            };
-            return service.Create(locationDetailEntity);
-        }
-
-        /*
-        private Guid CreatetApplicationLine(IOrganizationService service, Guid newApplicationId)
-        {
-
-        }
-        */
-
-        private static Entity CreateApplication(IOrganizationService service, ApplicationTypes applicationType = ApplicationTypes.NewApplication, Guid? permitId = null)
-        {
-            Entity newApplicationEntity =
-                new Entity(Application.EntityLogicalName)
-                {
-                    [Application.Name] = "Integration Test " + DateTime.Now,
-                    [Application.ApplicationType] = new OptionSetValue((int)applicationType),
-                    [Application.Permit] = permitId.HasValue ? new EntityReference(Permit.EntityLogicalName, permitId.Value) : null
-                };
-            Guid newApplicationId = service.Create(newApplicationEntity);
-
-            newApplicationEntity.Id = newApplicationId;
-            return newApplicationEntity;
-        }
 
         #endregion
 

@@ -1,4 +1,6 @@
-﻿namespace Lp.DataAccess
+﻿using System.CodeDom.Compiler;
+
+namespace Lp.DataAccess
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +9,7 @@
     using Microsoft.Crm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Lp.Model.Crm;
-
+    using Core.Helpers.Extensions;
     using Microsoft.Xrm.Sdk;
 
     public static class DataAccessApplication
@@ -542,6 +544,40 @@
             Entity locationDetail = new Entity(LocationDetail.EntityLogicalName, locationDetailId);
             locationDetail.Attributes.Add(LocationDetail.Location, null);
             service.Update(locationDetail);
+        }
+
+
+        /// <summary>
+        /// Returns the number of applications linked to a permit, with an optional status filter
+        /// </summary>
+        /// <param name="service">CRM Organisation service</param>
+        /// <param name="permitId">Permit Guid</param>
+        /// <param name="filterByStatusCodes">Optional filter applicationstatus codes </param>
+        /// <returns>Number of applications found</returns>
+        public static int GetCountForApplicationsLinkedToPermit(IOrganizationService service, Guid permitId, defra_application_StatusCode[] filterByStatusCodes = null)
+        {
+            // Query CRM for all applications linked to a permit
+            QueryExpression qe = new QueryExpression(defra_application.EntityLogicalName);
+            qe.Criteria.AddCondition(Application.Permit, ConditionOperator.Equal, permitId);
+
+            // And optionally, filter by status
+            if (filterByStatusCodes != null && filterByStatusCodes.Length > 0)
+            {
+                foreach (var filterStatusCode in filterByStatusCodes)
+                {
+                    qe.Criteria.AddCondition(Application.State, ConditionOperator.NotEqual, (int)filterStatusCode);
+                }
+            }
+
+            // Call CRM
+            EntityCollection result = service.RetrieveMultiple(qe);
+
+            // Return count
+            if (result?.Entities != null)
+            {
+                return result.Entities.Count;
+            }
+            return 0;
         }
     }
 }
