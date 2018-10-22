@@ -1,5 +1,4 @@
-﻿
-namespace Lp.DataAccess
+﻿namespace Lp.DataAccess
 {
 
     using Microsoft.Xrm.Sdk;

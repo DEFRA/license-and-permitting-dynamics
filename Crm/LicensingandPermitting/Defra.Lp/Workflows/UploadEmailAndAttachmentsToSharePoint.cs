@@ -8,9 +8,9 @@ using Defra.Lp.Common.SharePoint;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
-using Model.Lp.Crm;
 using System;
 using System.Activities;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Workflows
 {

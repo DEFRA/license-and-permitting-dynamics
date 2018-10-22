@@ -1,5 +1,5 @@
 ﻿// PermitLine entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model
@@ -10,6 +10,11 @@ namespace Model.Lp.Crm
         /// Logical name for Application entity
         /// </summary>
         public const string EntityLogicalName = "defra_permit_lines";
+
+        /// <summary>
+        /// Record owner
+        /// </summary>
+        public static string Owner = "ownerid";
 
         /// <summary>
         /// State field
