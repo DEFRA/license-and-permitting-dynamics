@@ -22,6 +22,11 @@ namespace Lp.Model.Crm
         public const string State = "statecode";
 
         /// <summary>
+        /// State field
+        /// </summary>
+        public const string Status = "statuscode";
+
+        /// <summary>
         /// Primary name field
         /// </summary>
         public const string Name = "defra_name";
@@ -40,5 +45,10 @@ namespace Lp.Model.Crm
         /// Yes/No
         /// </summary>
         public const string HighPublicInterest = "defra_highpublicinterest";
+
+        /// <summary>
+        ///  Location Code 
+        /// </summary>
+        public static string LocationCode = "defra_locationcode";
     }
 }

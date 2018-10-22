@@ -14,12 +14,22 @@ namespace Lp.Model.Crm
         /// <summary>
         /// Alias to be used when linking
         /// </summary>
+        public const string LocationDetailId = "defra_locationdetailsid";
+
+        /// <summary>
+        /// Alias to be used when linking
+        /// </summary>
         public const string Alias = "locdetail";
 
         /// <summary>
         /// State field
         /// </summary>
         public const string State = "statecode";
+
+        /// <summary>
+        /// Status field
+        /// </summary>
+        public const string Status = "statuscode";
 
         /// <summary>
         /// Primary name field
@@ -40,5 +50,10 @@ namespace Lp.Model.Crm
         /// Lookup to the Address Entity
         /// </summary>
         public const string Address = "defra_addressid";
+
+        /// <summary>
+        ///  Owner Id
+        /// </summary>
+        public static string Owner = "ownerid";
     }
 }

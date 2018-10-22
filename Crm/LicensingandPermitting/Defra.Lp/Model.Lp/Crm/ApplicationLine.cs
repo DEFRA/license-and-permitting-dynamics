@@ -17,6 +17,21 @@ namespace Lp.Model.Crm
         public const string State = "statecode";
 
         /// <summary>
+        /// Record owner
+        /// </summary>
+        public static string Owner = "ownerid";
+
+        /// <summary>
+        /// Name
+        /// </summary>
+        public const string Name = "defra_name";
+
+        /// <summary>
+        /// Permit Type
+        /// </summary>
+        public const string PermitType = "defra_permittype";
+
+        /// <summary>
         /// Entiy Id
         /// </summary>
         public const string ApplicationLineId = "defra_applicationlineid";

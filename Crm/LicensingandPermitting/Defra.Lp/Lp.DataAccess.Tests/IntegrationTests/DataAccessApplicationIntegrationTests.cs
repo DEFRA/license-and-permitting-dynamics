@@ -128,13 +128,63 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         public void Integration_GetCountForApplicationsLinkedToPermit_TestTwoActiveApplication_Success()
         {
             // 1. Create application and permit
-            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, 2, 5);
+            // 1. Create Application
+            Entity newApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService);
+
+            // 2. Create Application Line
+            //Guid newApplicationLineId = CreatetApplicationLine(service, newApplicationId);
+
+            // 3. Create Application Locations
+            for (int count = 0; count < 3; count++)
+            {
+                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, newApplication.Id, "Main Location " + count, 2, count > 1 ? true : false);
+            }
+
+            // 4. Create Permit 
+            Entity application = OrganizationService.Retrieve(Application.EntityLogicalName, newApplication.Id,
+                new ColumnSet(Application.PermitNumber));
+            string permitNumber = application[Application.PermitNumber].ToString();
+
+            Guid permitId = _dataAccessIntegrationTestSupport.CreatePermit(OrganizationService, permitNumber);
+
+            // 5. Update Application Permit Lookup field
+            _dataAccessIntegrationTestSupport.UpdateApplicationPermitLookup(OrganizationService, newApplication, permitId);
+
+            // 6. Call MirrorApplicationSitesToPermit
+            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, newApplication.Id);
+
+            // Change app status to issued
+            ChangeApplicationStatus(application, defra_application_StatusCode.DulyMaking);
+            ChangeApplicationStatus(application, defra_application_StatusCode.Determination);
+            ChangeApplicationStatus(application, defra_application_StatusCode.PeerReview);
+            ChangeApplicationStatus(application, defra_application_StatusCode.Issued);
+
+
+
+            // 3. Call MirrorApplicationSitesToPermit
+            int appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+                OrganizationService,
+                permitId,
+                new[]
+                {
+                    defra_application_StatusCode.Issued,
+                    defra_application_StatusCode.Withdrawn,
+                    defra_application_StatusCode.Issued,
+                    defra_application_StatusCode.Refused,
+                    defra_application_StatusCode.Returned,
+                    defra_application_StatusCode.ReturnedNotDulyMade
+                });
+
+            Assert.IsTrue(appCount == 0);
+
+
 
             // 2. Create Variation
             DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
+
             // 3. Call MirrorApplicationSitesToPermit
-            int appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+            appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
                 OrganizationService,
                 permitId, 
                 new[]
@@ -147,7 +197,18 @@ namespace Lp.DataAccess.Tests.IntegrationTests
                     defra_application_StatusCode.ReturnedNotDulyMade
                 });
 
-            Assert.IsTrue(appCount == 2);
+            Assert.IsTrue(appCount == 1);
+        }
+
+        private static void ChangeApplicationStatus(Entity application, defra_application_StatusCode status)
+        {
+            SetStateRequest request = new SetStateRequest
+            {
+                EntityMoniker = application.ToEntityReference(),
+                State = new OptionSetValue((int) defra_applicationState.Active),
+                Status = new OptionSetValue((int) status)
+            };
+            OrganizationService.Execute(request);
         }
 
         #endregion

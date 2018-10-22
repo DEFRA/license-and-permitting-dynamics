@@ -75,20 +75,24 @@ namespace Defra.Lp.Plugins
                 {
                     tracing.Trace("Retrieve the permit record");
                     EntityReference permitEntityReference = (EntityReference) target["defra_permitid"];
-                    int liveApplicationCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(service, permitEntityReference.Id,
-                        new[]
-                        {
-                            defra_application_StatusCode.Issued,
-                            defra_application_StatusCode.Withdrawn,
-                            defra_application_StatusCode.Issued,
-                            defra_application_StatusCode.Refused,
-                            defra_application_StatusCode.Returned,
-                            defra_application_StatusCode.ReturnedNotDulyMade
-                        });
-
-                    if (liveApplicationCount > 0)
+                    if (permitEntityReference != null)
                     {
-                        throw new InvalidPluginExecutionException("There are other applications in progress for this permit. A new application may not be created until in-progress applications are completed or cancelled.");
+                        int liveApplicationCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+                            service,
+                            permitEntityReference.Id,
+                            new[]
+                            {
+                                defra_application_StatusCode.Issued,
+                                defra_application_StatusCode.Withdrawn,
+                                defra_application_StatusCode.Refused,
+                                defra_application_StatusCode.Returned,
+                                defra_application_StatusCode.ReturnedNotDulyMade
+                            });
+
+                        if (liveApplicationCount > 0)
+                        {
+                            throw new InvalidPluginExecutionException("There are other applications in progress for this permit. A new application may not be created until in-progress applications are completed or cancelled.");
+                        }
                     }
                 }
 

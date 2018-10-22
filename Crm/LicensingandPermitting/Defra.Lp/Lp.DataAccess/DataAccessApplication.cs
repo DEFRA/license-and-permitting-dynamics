@@ -134,29 +134,28 @@ namespace Lp.DataAccess
         public static Entity[] GetLocationAndLocationDetails(IOrganizationService service, Guid? applicationId, Guid? permitId)
         {
             // Set-up Location Query
-            QueryExpression qEdefraLocation = new QueryExpression("defra_location") { TopCount = 1000 };
-            qEdefraLocation.ColumnSet.AddColumns("statecode", "defra_name", "defra_locationcode", "defra_applicationid", "defra_locationid", "defra_permitid", "defra_highpublicinterest", "statuscode");
-            qEdefraLocation.Criteria.AddCondition("statecode", ConditionOperator.Equal, (int)defra_locationState.Active);
+            QueryExpression qEdefraLocation = new QueryExpression(Location.EntityLogicalName) { TopCount = 1000 };
+            qEdefraLocation.ColumnSet.AddColumns(Location.State, Location.Name, Location.LocationCode, Location.Application, Location.LocationId, Location.Permit, Location.HighPublicInterest, Location.Status);
+            qEdefraLocation.Criteria.AddCondition(Location.State, ConditionOperator.Equal, (int)defra_locationState.Active);
 
             // Application Locations?
             if (applicationId.HasValue)
             {
-                qEdefraLocation.Criteria.AddCondition("defra_applicationid", ConditionOperator.Equal, applicationId);
+                qEdefraLocation.Criteria.AddCondition(Location.Application, ConditionOperator.Equal, applicationId);
             }
 
             // Permit Locations?
             if (permitId.HasValue)
             {
-                qEdefraLocation.Criteria.AddCondition("defra_permitid", ConditionOperator.Equal, permitId);
+                qEdefraLocation.Criteria.AddCondition(Location.Permit, ConditionOperator.Equal, permitId);
             }
 
             // Add link-entity defra_locationdetails
-            LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink("defra_locationdetails", "defra_locationid", "defra_locationid", JoinOperator.LeftOuter);
+            LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink(LocationDetail.EntityLogicalName, Location.LocationId, LocationDetail.LocationDetailId, JoinOperator.LeftOuter);
             qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
-            qEdefraLocationDefraLocationdetails.Columns.AddColumns("statecode", "defra_locationid", "defra_addressid", "defra_name", "defra_gridreferenceid", "statuscode", "defra_locationdetailsid", "ownerid");
-
+            qEdefraLocationDefraLocationdetails.Columns.AddColumns(LocationDetail.State, LocationDetail.Location, LocationDetail.Address, LocationDetail.Name, LocationDetail.GridReference, LocationDetail.Status, LocationDetail.LocationDetailId, LocationDetail.Owner);
             // Only retrieve active location details
-            qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition("statecode", ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
+            qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition(LocationDetail.State, ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
 
             // Query CRM
             return service.RetrieveMultiple(qEdefraLocation).Entities.ToArray();
@@ -187,6 +186,22 @@ namespace Lp.DataAccess
 
             // 5. Create New Permit Sites and Details
             CreateNewPermitLocationAndDetails(service, applicationSites, remainingPermitSites, permitEntityReference.Id);
+        }
+
+
+        /// <summary>
+        /// Mirrors Location and Location Details from application to permit
+        /// </summary>
+        /// <param name="service">CRM Organisation Service</param>
+        /// <param name="fromApplicationId">Application Id to be copied from</param>
+        /// <param name="toApplicationId">Application Id to copy to</param>
+        public static void MirrorApplicationLocationsAndDetailsToApplication(IOrganizationService service, Guid fromApplicationId, Guid toApplicationId)
+        {
+            // 1. Get Application Sites
+            Entity[] applicationSites = GetLocationAndLocationDetails(service, fromApplicationId, null);
+
+            // 2. Create Sites and Details on target application
+            CreateNewApplicationtLocationAndDetails(service, applicationSites, toApplicationId);
         }
 
         /// <summary>
@@ -558,14 +573,16 @@ namespace Lp.DataAccess
         {
             // Query CRM for all applications linked to a permit
             QueryExpression qe = new QueryExpression(defra_application.EntityLogicalName);
+            qe.ColumnSet = new ColumnSet(Application.StatusCode, Application.Name);
             qe.Criteria.AddCondition(Application.Permit, ConditionOperator.Equal, permitId);
+            qe.Criteria.FilterOperator = LogicalOperator.And;
 
             // And optionally, filter by status
             if (filterByStatusCodes != null && filterByStatusCodes.Length > 0)
             {
                 foreach (var filterStatusCode in filterByStatusCodes)
                 {
-                    qe.Criteria.AddCondition(Application.State, ConditionOperator.NotEqual, (int)filterStatusCode);
+                    qe.Criteria.AddCondition(Application.StatusCode, ConditionOperator.NotEqual, (int)filterStatusCode);
                 }
             }
 
