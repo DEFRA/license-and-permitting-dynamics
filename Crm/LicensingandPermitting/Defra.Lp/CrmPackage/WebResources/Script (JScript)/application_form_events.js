@@ -8,14 +8,22 @@
 var Applications = {
 
     BalanceAmount: 0,
-
+    AboutToRefresh: false,
     LastRefresh: new Date().getTime(),
 
+    // Called by the list views when they have changed/refreshed
     // Function refreshes the form so long as it it allowed by minimum refresh frequency
     Refresh: function () {
         if (Applications.CanRefresh()) {
+            console.log("Refreshing...");
+
+            // Refresh the screen to get the new updates fields
+            Applications.AboutToRefresh = true;
             Xrm.Page.data.refresh();
+            Applications.AboutToRefresh = false;
             Applications.LastRefresh = new Date().getTime();
+        } else {
+            console.log("Not refreshing: AboutToRefresh = " + Applications.AboutToRefresh);
         }
     },
 
@@ -23,13 +31,21 @@ var Applications = {
     CanRefresh: function () {
         var now = new Date().getTime();
         var msSinceLastRefresh = now - Applications.LastRefresh;
-     
-        if (msSinceLastRefresh < 1000) {
+
+        if (Applications.AboutToRefresh) {
+            // Not refreshing
+            console.log("CanRefresh = No because AboutToRefresh = " + Applications.AboutToRefresh);
+            return false;
+        }
+
+        if (msSinceLastRefresh < 10000) {
+            console.log("CanRefresh = No because msSinceLastRefresh = " + msSinceLastRefresh);
             // Not refreshing
             return false;
         }
 
         if (Xrm.Page.data.entity.getIsDirty()) {
+            console.log("CanRefresh = No because page is dirty");
             // Not refreshing, form has updates
             return false;
         }
@@ -38,15 +54,21 @@ var Applications = {
     },
 
     // Function sets the listeners for messages that the payment has been updated
-    OnLoad: function ()
-    {
+    OnLoad: function () {
+
+        // Set the refresh count to 0, ensure we are not re-using a value from another application
+        Applications.RefreshCnt = 0;
+
         // Wait 3 seconds before adding the onload events to prevent render issues.
         setTimeout(
-          function () {
-              Applications.LastRefresh = new Date().getTime();
-              Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
-              Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
-          }, 3000);
+            function () {
+                Applications.LastRefresh = new Date().getTime();
+                Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
+                Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
+            }, 3000);
+
+        // Add filter lookup for application sub type field
+        Applications.PreFilterLookup();
     },
 
     // On Save event
@@ -157,5 +179,34 @@ var Applications = {
             }
         };
         req.send(JSON.stringify(parameters));
+    },
+
+    // Called by the onload function, applies the Application Sub Type filter
+    PreFilterLookup: function () {
+
+        // Filter main form application subtype lookup
+        var formLookupField = Xrm.Page.getControl("defra_application_subtype");
+        if (formLookupField != null) {
+            formLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("defra_application_subtype");
+            });
+        }
+
+        // Filter BPF application subtype lookup
+        var bpfLookupField = Xrm.Page.getControl("header_process_defra_application_subtype");
+        if (bpfLookupField != null) {
+            bpfLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("header_process_defra_application_subtype");
+            });
+        }
+    },
+
+    // Checks the current appplication type and filters the sub type
+    AddLookupFilterToApplicationSubType: function (lookupFieldNameToFilter) {
+        var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
+        if (applicationType != null) {
+            var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
+            Xrm.Page.getControl(lookupFieldNameToFilter).addCustomFilter(fetchXml);
+        }
     }
 }
