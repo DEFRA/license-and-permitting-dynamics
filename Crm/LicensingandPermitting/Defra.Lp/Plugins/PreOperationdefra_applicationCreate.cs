@@ -10,6 +10,8 @@
 // </auto-generated>
 
 using Common.PermitNumbering;
+using Lp.DataAccess;
+using Lp.Model.EarlyBound;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -31,8 +33,6 @@ namespace Defra.Lp.Plugins
         public PreOperationdefra_applicationCreate(string unsecure, string secure)
             : base(typeof(PreOperationdefra_applicationCreate))
         {
-
-            // TODO: Implement your custom configuration handling.
         }
 
 
@@ -58,16 +58,45 @@ namespace Defra.Lp.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
-            // TODO: Implement your custom Plug-in business logic.
             IOrganizationService service = localContext.OrganizationService;
             IPluginExecutionContext context = localContext.PluginExecutionContext;
             ITracingService tracing = localContext.TracingService;
+
+
+
+
 
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
                 Entity target = (Entity)context.InputParameters["Target"];
 
+                // 1. Check if we can create the application, block if parallel variations/transfer/surrenders are in progress
+                if (target.Attributes.Contains("defra_permitid"))
+                {
+                    tracing.Trace("Retrieve the permit record");
+                    EntityReference permitEntityReference = (EntityReference) target["defra_permitid"];
+                    if (permitEntityReference != null)
+                    {
+                        int liveApplicationCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+                            service,
+                            permitEntityReference.Id,
+                            new[]
+                            {
+                                defra_application_StatusCode.Issued,
+                                defra_application_StatusCode.Withdrawn,
+                                defra_application_StatusCode.Refused,
+                                defra_application_StatusCode.Returned,
+                                defra_application_StatusCode.ReturnedNotDulyMade
+                            });
 
+                        if (liveApplicationCount > 0)
+                        {
+                            throw new InvalidPluginExecutionException("There are other applications in progress for this permit. A new application may not be created until in-progress applications are completed or cancelled.");
+                        }
+                    }
+                }
+
+                // 2. Perform application numbering
                 if (!target.Attributes.Contains("defra_applicationtype"))
                     throw new InvalidPluginExecutionException("Application Type does not contain value!");
 
@@ -139,8 +168,6 @@ namespace Defra.Lp.Plugins
                 target["defra_applicationnumber"] = PermitApplicationNumber;
                 target["defra_name"] = PermitApplicationNumber;
             }
-
-            //throw new InvalidPluginExecutionException("DEBUG");
         }
     }
 }

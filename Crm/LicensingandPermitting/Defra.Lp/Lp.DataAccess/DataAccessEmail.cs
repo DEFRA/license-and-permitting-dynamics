@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using Model.Lp.Crm;
-
-namespace Lp.DataAccess
+﻿namespace Lp.DataAccess
 {
+    using System;
+    using Lp.Model.Crm;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Query;
+
     public static class DataAccessEmail
     {
         public static EntityCollection GetEmailAndAttachmentsForId(this IOrganizationService service, Guid emailId)

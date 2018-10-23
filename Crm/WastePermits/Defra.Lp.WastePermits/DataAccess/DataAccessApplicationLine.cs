@@ -10,7 +10,7 @@
         public static int CountActiveApplicationLines(this IOrganizationService service, Guid applicationLineId)
         {
             var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false' aggregate='true'>";
-            fetchXml += "<entity name='" + Model.Lp.Crm.ApplicationLine.EntityLogicalName + "'>";
+            fetchXml += "<entity name='" + Lp.Model.Crm.ApplicationLine.EntityLogicalName + "'>";
             fetchXml += "<attribute name='defra_name' alias='recordcount' aggregate='count' />";
             fetchXml += "<filter type='and'>";
             fetchXml += "<condition attribute='statecode' operator='eq' value='0' />";
