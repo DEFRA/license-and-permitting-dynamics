@@ -23,7 +23,7 @@ var Applications = {
     CanRefresh: function () {
         var now = new Date().getTime();
         var msSinceLastRefresh = now - Applications.LastRefresh;
-     
+
         if (msSinceLastRefresh < 1000) {
             // Not refreshing
             return false;
@@ -47,6 +47,9 @@ var Applications = {
               Xrm.Page.getControl("ApplicationLines").addOnLoad(Applications.Refresh);
               Xrm.Page.getControl("Payments").addOnLoad(Applications.Refresh);
           }, 3000);
+
+        // Add filter lookup for application sub type field
+        Applications.PreFilterLookup();
     },
 
     // On Save event
@@ -157,5 +160,34 @@ var Applications = {
             }
         };
         req.send(JSON.stringify(parameters));
+    },
+
+    // Called by the onload function, applies the Application Sub Type filter
+    PreFilterLookup: function () {
+
+        // Filter main form application subtype lookup
+        var formLookupField = Xrm.Page.getControl("defra_application_subtype");
+        if (formLookupField != null) {
+            formLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("defra_application_subtype");
+            });
+        }
+        
+        // Filter BPF application subtype lookup
+        var bpfLookupField = Xrm.Page.getControl("header_process_defra_application_subtype");
+        if (bpfLookupField != null) {
+            bpfLookupField.addPreSearch(function () {
+                Applications.AddLookupFilterToApplicationSubType("header_process_defra_application_subtype");
+            });
+        }
+    },
+
+    // Checks the current appplication type and filters the sub type
+    AddLookupFilterToApplicationSubType: function (lookupFieldNameToFilter) {
+        var applicationType = Xrm.Page.getAttribute("defra_applicationtype").getValue();
+        if (applicationType != null) {
+            var fetchXml = "<filter type='and'><condition attribute='defra_application_type' operator='eq' value='" + applicationType + "' /></filter>";
+            Xrm.Page.getControl(lookupFieldNameToFilter).addCustomFilter(fetchXml);
+        }
     }
 }

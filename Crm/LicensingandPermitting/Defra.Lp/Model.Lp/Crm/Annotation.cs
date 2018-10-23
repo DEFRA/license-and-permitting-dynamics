@@ -1,4 +1,4 @@
-﻿namespace Model.Lp.Crm
+﻿namespace Lp.Model.Crm
 {
     public class Annotation
     {

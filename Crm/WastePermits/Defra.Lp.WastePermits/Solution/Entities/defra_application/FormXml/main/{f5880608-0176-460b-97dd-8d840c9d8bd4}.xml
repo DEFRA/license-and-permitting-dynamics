@@ -283,21 +283,17 @@
                   <row />
                 </rows>
               </section>
-            </sections>
-          </column>
-          <column width="33%">
-            <sections>
               <section name="tab_general_section_11" showlabel="true" showbar="false" locklevel="0" id="{973b21c7-9c71-c9a4-8d45-c173211ce29d}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
                 <labels>
                   <label description="Regulated Facilities" languagecode="1033" />
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{e85a108e-09ec-8ddc-a293-14210eceb579}" showlabel="false" labelid="{1a042805-b63d-418b-b4d7-e6eae79608d8}" rowspan="4" auto="false" colspan="1">
+                    <cell id="{54b47567-08c9-ea94-3e07-959cd83157d4}" showlabel="false" colspan="1" auto="false" rowspan="6">
                       <labels>
-                        <label description="Application Lines (Application)" languagecode="1033" />
+                        <label description="Regulated Facilities" languagecode="1033" />
                       </labels>
-                      <control id="ApplicationLines" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{7869e336-088a-b6ed-89ee-47259010aabe}" indicationOfSubgrid="true">
+                      <control id="RegulatedFacilities" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{beeb0c66-3774-b03d-d23d-1bd7baa7aa60}">
                         <parameters>
                           <ViewId>{C15766AD-73C2-E711-80EB-3863BB357FF8}</ViewId>
                           <IsUserView>false</IsUserView>
@@ -312,12 +308,14 @@
                           <VisualizationId />
                           <IsUserChart>false</IsUserChart>
                           <EnableChartPicker>false</EnableChartPicker>
-                          <RecordsPerPage>2</RecordsPerPage>
+                          <RecordsPerPage>4</RecordsPerPage>
                           <HeaderColorCode>#F5F5F5</HeaderColorCode>
                         </parameters>
                       </control>
                     </cell>
                   </row>
+                  <row></row>
+                  <row></row>
                   <row />
                   <row />
                   <row />
@@ -347,33 +345,39 @@
                   </row>
                 </rows>
               </section>
-              <section id="{925389c7-d23b-796b-3ed2-31c76a425299}" name="tab_general_section_7" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+            </sections>
+          </column>
+          <column width="66%">
+            <sections>
+              <section id="{d4266dd5-7982-53b9-7e18-dd318c85bc93}" name="{bca068a4-5707-4114-9524-fb1c241761c8}_section_3" IsUserDefined="0" locklevel="0" showlabel="false" labelid="{b3f6966b-c360-4614-9515-ff87c4126b98}" columns="1" showbar="false" layout="varwidth" labelwidth="115" height="auto">
                 <labels>
-                  <label description="Application Contacts" languagecode="1033" />
+                  <label description="Section" languagecode="1033" />
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{a6d193d4-cade-176d-e3d7-481760a1310a}" showlabel="false" rowspan="5" auto="false" colspan="1">
+                    <cell id="{7ae45ade-db92-4123-1157-c0a58339d6e5}" locklevel="0" showlabel="false" rowspan="20" auto="true" colspan="1">
                       <labels>
-                        <label description="Contact Details (Application)" languagecode="1033" />
+                        <label description="Note Text" languagecode="1033" />
                       </labels>
-                      <control id="ContactDetails" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{7ace6127-93c2-9cba-7082-e59492e4a72d}" indicationOfSubgrid="true">
+                      <control disabled="false" id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}" uniqueid="{4d4e6644-31ed-70ac-b687-6028b2128460}">
                         <parameters>
-                          <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
-                          <IsUserView>false</IsUserView>
-                          <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
-                          <TargetEntityType>defra_addressdetails</TargetEntityType>
-                          <AutoExpand>Fixed</AutoExpand>
-                          <EnableQuickFind>false</EnableQuickFind>
-                          <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
-                          <EnableJumpBar>false</EnableJumpBar>
-                          <ChartGridMode>All</ChartGridMode>
-                          <VisualizationId />
-                          <IsUserChart>false</IsUserChart>
-                          <EnableChartPicker>true</EnableChartPicker>
-                          <RecordsPerPage>3</RecordsPerPage>
-                          <HeaderColorCode>#F5F5F5</HeaderColorCode>
+                          <DefaultTabId>ActivitiesTab</DefaultTabId>
+                          <ShowArticleTab>false</ShowArticleTab>
+                          <SelectDefaultLanguage>00000000-0000-0000-0000-000000000000</SelectDefaultLanguage>
+                          <OrderByActivityWall>descending</OrderByActivityWall>
+                          <SortActivityWall>modifiedon</SortActivityWall>
+                          <UClientUniqueName>Timeline</UClientUniqueName>
+                          <UClientModules>Activities,Notes</UClientModules>
+                          <UClientDefaultModuleForCreateExperience>Notes</UClientDefaultModuleForCreateExperience>
+                          <UClientShowFilterPane>true</UClientShowFilterPane>
+                          <UClientExpandFilterPane>false</UClientExpandFilterPane>
+                          <UClientOrderBy>descending</UClientOrderBy>
+                          <UClientRecordPerPage>10</UClientRecordPerPage>
+                          <UClientSortActivitiesByValue>modifiedon</UClientSortActivitiesByValue>
+                          <UClientDisplayActivityHeaderUsing>defaultformat</UClientDisplayActivityHeaderUsing>
+                          <UClientCreateActivityUsing>quickcreateform</UClientCreateActivityUsing>
+                          <UClientDisplayActivityUsing>defaultfields</UClientDisplayActivityUsing>
+                          <EmailConversationView>true</EmailConversationView>
                         </parameters>
                       </control>
                     </cell>
@@ -382,6 +386,21 @@
                   <row />
                   <row />
                   <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row height="auto" />
                 </rows>
               </section>
               <section name="tab_general_section_13" showlabel="true" showbar="false" locklevel="0" id="{986136ca-e6d4-9189-8519-4927e884853c}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
@@ -452,64 +471,6 @@
                       <control id="defra_site_of_high_public_interest" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="defra_site_of_high_public_interest" disabled="false" uniqueid="{3908c8d4-7de5-798e-6045-39b4d6068a11}" />
                     </cell>
                   </row>
-                </rows>
-              </section>
-            </sections>
-          </column>
-          <column width="33%">
-            <sections>
-              <section id="{d4266dd5-7982-53b9-7e18-dd318c85bc93}" name="{bca068a4-5707-4114-9524-fb1c241761c8}_section_3" IsUserDefined="0" locklevel="0" showlabel="false" labelid="{b3f6966b-c360-4614-9515-ff87c4126b98}" columns="1" showbar="false" layout="varwidth" labelwidth="115" height="auto">
-                <labels>
-                  <label description="Section" languagecode="1033" />
-                </labels>
-                <rows>
-                  <row>
-                    <cell id="{7ae45ade-db92-4123-1157-c0a58339d6e5}" locklevel="0" showlabel="false" rowspan="20" auto="true" colspan="1">
-                      <labels>
-                        <label description="Note Text" languagecode="1033" />
-                      </labels>
-                      <control disabled="false" id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}" uniqueid="{4d4e6644-31ed-70ac-b687-6028b2128460}">
-                        <parameters>
-                          <DefaultTabId>ActivitiesTab</DefaultTabId>
-                          <ShowArticleTab>false</ShowArticleTab>
-                          <SelectDefaultLanguage>00000000-0000-0000-0000-000000000000</SelectDefaultLanguage>
-                          <OrderByActivityWall>descending</OrderByActivityWall>
-                          <SortActivityWall>modifiedon</SortActivityWall>
-                          <UClientUniqueName>Timeline</UClientUniqueName>
-                          <UClientModules>Activities,Notes</UClientModules>
-                          <UClientDefaultModuleForCreateExperience>Notes</UClientDefaultModuleForCreateExperience>
-                          <UClientShowFilterPane>true</UClientShowFilterPane>
-                          <UClientExpandFilterPane>false</UClientExpandFilterPane>
-                          <UClientOrderBy>descending</UClientOrderBy>
-                          <UClientRecordPerPage>10</UClientRecordPerPage>
-                          <UClientSortActivitiesByValue>modifiedon</UClientSortActivitiesByValue>
-                          <UClientDisplayActivityHeaderUsing>defaultformat</UClientDisplayActivityHeaderUsing>
-                          <UClientCreateActivityUsing>quickcreateform</UClientCreateActivityUsing>
-                          <UClientDisplayActivityUsing>defaultfields</UClientDisplayActivityUsing>
-                          <EmailConversationView>true</EmailConversationView>
-                        </parameters>
-                      </control>
-                    </cell>
-                  </row>
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row height="auto" />
                 </rows>
               </section>
               <section id="{13d305e8-add6-3b84-ce47-e32a8e1938a7}" name="tab_rfi" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
@@ -604,6 +565,57 @@
           </column>
         </columns>
       </tab>
+      <tab name="tab_10" id="{b4b72ab4-635b-35d6-5d51-db718b4122c6}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+        <labels>
+          <label description="APPLICATION CONTACTS" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="100%">
+            <sections>
+              <section name="tab_10_section_2" showlabel="false" showbar="false" locklevel="0" id="{2065ba26-3664-0674-110b-ddb2362da56e}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                <labels>
+                  <label description="Section" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{a6d193d4-cade-176d-e3d7-481760a1310a}" showlabel="false" rowspan="8" auto="false" colspan="1">
+                      <labels>
+                        <label description="Contact Details (Application)" languagecode="1033" />
+                      </labels>
+                      <control id="ContactDetails" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{7ace6127-93c2-9cba-7082-e59492e4a72d}" indicationOfSubgrid="true">
+                        <parameters>
+                          <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+                          <IsUserView>false</IsUserView>
+                          <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
+                          <TargetEntityType>defra_addressdetails</TargetEntityType>
+                          <AutoExpand>Fixed</AutoExpand>
+                          <EnableQuickFind>false</EnableQuickFind>
+                          <EnableViewPicker>false</EnableViewPicker>
+                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewIds>
+                          <EnableJumpBar>false</EnableJumpBar>
+                          <ChartGridMode>All</ChartGridMode>
+                          <VisualizationId />
+                          <IsUserChart>false</IsUserChart>
+                          <EnableChartPicker>true</EnableChartPicker>
+                          <RecordsPerPage>6</RecordsPerPage>
+                          <HeaderColorCode>#F5F5F5</HeaderColorCode>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
       <tab id="{4baa2180-0394-6d64-e998-8666ab330e94}" name="tab_customer" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true" labelid="{45feac16-a2da-491c-8073-d3ed38fe2026}">
         <labels>
           <label description="OPERATOR" languagecode="1033" />
@@ -627,14 +639,6 @@
                           <DisableMru>false</DisableMru>
                         </parameters>
                       </control>
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{4b5024e8-c40c-0164-3b1c-461504ee8c2b}" showlabel="true" locklevel="0">
-                      <labels>
-                        <label description="Operator Type" languagecode="1033" />
-                      </labels>
-                      <control id="defra_applicant_organisation_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_applicant_organisation_type" disabled="false" />
                     </cell>
                   </row>
                   <row>
@@ -733,7 +737,7 @@
                       </labels>
                       <control disabled="false" id="AccountQuickView" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid">
                         <parameters>
-                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;84ba3b39-7d48-4812-94fa-0a86deff9595&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;9f173f65-1fdb-42d3-8cf8-ad0683234234&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
                           <ControlMode>Edit</ControlMode>
                           <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
                         </parameters>
@@ -762,12 +766,12 @@
       </tab>
       <tab id="{b4cd821e-cd4a-6d78-1a1b-318176ab7b4c}" name="tab_finance" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true">
         <labels>
-          <label description="PAYMENTS AND REFUNDS" languagecode="1033" />
+          <label description="CHARGES AND PAYMENTS" languagecode="1033" />
         </labels>
         <columns>
           <column width="100%">
             <sections>
-              <section id="{4edaac63-05a2-6acb-1ce1-bdee5ddc7597}" name="tab_9_section_1" IsUserDefined="0" locklevel="0" showlabel="false" columns="11" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+              <section id="{4edaac63-05a2-6acb-1ce1-bdee5ddc7597}" name="tab_9_section_1" IsUserDefined="0" locklevel="0" showlabel="false" columns="11" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
                 <labels>
                   <label description="Section" languagecode="1033" />
                 </labels>
@@ -814,7 +818,37 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{38eca3d8-bd18-b575-610a-d7cad3dd8b47}" showlabel="false" rowspan="6" auto="false" colspan="2">
+                    <cell id="{e85a108e-09ec-8ddc-a293-14210eceb579}" showlabel="true" labelid="{1a042805-b63d-418b-b4d7-e6eae79608d8}" rowspan="5" auto="false" colspan="2">
+                      <labels>
+                        <label description="Charges" languagecode="1033" />
+                      </labels>
+                      <control id="ApplicationLines" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{7869e336-088a-b6ed-89ee-47259010aabe}" indicationOfSubgrid="true">
+                        <parameters>
+                          <ViewId>{C15766AD-73C2-E711-80EB-3863BB357FF8}</ViewId>
+                          <IsUserView>false</IsUserView>
+                          <RelationshipName>defra_application_defra_applicationline</RelationshipName>
+                          <TargetEntityType>defra_applicationline</TargetEntityType>
+                          <AutoExpand>Fixed</AutoExpand>
+                          <EnableQuickFind>false</EnableQuickFind>
+                          <EnableViewPicker>false</EnableViewPicker>
+                          <ViewIds>{25EEE541-D349-4C31-B7CD-81F4BF66DD39},{C15766AD-73C2-E711-80EB-3863BB357FF8}</ViewIds>
+                          <EnableJumpBar>false</EnableJumpBar>
+                          <ChartGridMode>Grid</ChartGridMode>
+                          <VisualizationId />
+                          <IsUserChart>false</IsUserChart>
+                          <EnableChartPicker>false</EnableChartPicker>
+                          <RecordsPerPage>2</RecordsPerPage>
+                          <HeaderColorCode>#F5F5F5</HeaderColorCode>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row></row>
+                  <row>
+                    <cell id="{38eca3d8-bd18-b575-610a-d7cad3dd8b47}" showlabel="true" rowspan="7" auto="false" colspan="2">
                       <labels>
                         <label description="Payments" languagecode="1033" />
                       </labels>
@@ -839,6 +873,7 @@
                       </control>
                     </cell>
                   </row>
+                  <row />
                   <row />
                   <row />
                   <row />
@@ -1270,6 +1305,58 @@
           </column>
         </columns>
       </tab>
+      <tab name="Transfers" id="{57792650-4cc8-157e-3ed8-bbd19e2e966a}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+        <labels>
+          <label description="TRANSFERS" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="50%">
+            <sections>
+              <section name="tab_11_section_2" showlabel="true" showbar="false" locklevel="0" id="{11239a4e-63a3-5015-a2d6-6a7e5ab4d724}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                <labels>
+                  <label description="New operator permit details" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{4957452a-753a-8d55-de51-bde658cc8dd1}" showlabel="false">
+                      <labels>
+                        <label description="" languagecode="1033" />
+                      </labels>
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+          <column width="50%">
+            <sections>
+              <section name="tab_11_section_3" showlabel="true" showbar="false" locklevel="0" id="{71ad501c-3bd8-6c50-1c51-9051c95c3372}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                <labels>
+                  <label description="Old operator permit details" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{c5690a18-9e7c-0e48-33a3-d350d70ae209}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Operator" languagecode="1033" />
+                      </labels>
+                      <control id="defra_customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_customerid" disabled="false" uniqueid="{8c89c815-e198-b014-e685-690c753bc547}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{a939823d-d05a-e97c-71e8-201471dd5d4e}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Permit" languagecode="1033" />
+                      </labels>
+                      <control id="defra_permitid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_permitid" disabled="false" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
       <tab id="{88bb5970-74d0-3696-bac1-da0048790b5c}" name="Hidden" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true" visible="false">
         <labels>
           <label description="Hidden" languagecode="1033" />
@@ -1480,7 +1567,79 @@
         </NavBarArea>
       </NavBarAreas>
     </Navigation>
-    <controlDescriptions />
+    <controlDescriptions>
+      <controlDescription forControl="{7ace6127-93c2-9cba-7082-e59492e4a72d}">
+        <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" formFactor="0">
+          <parameters>
+            <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+            <IsUserView>false</IsUserView>
+            <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
+            <TargetEntityType>defra_addressdetails</TargetEntityType>
+            <AutoExpand>Fixed</AutoExpand>
+            <EnableQuickFind>false</EnableQuickFind>
+            <EnableViewPicker>false</EnableViewPicker>
+            <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewIds>
+            <EnableJumpBar>false</EnableJumpBar>
+            <ChartGridMode>All</ChartGridMode>
+            <VisualizationId />
+            <IsUserChart>false</IsUserChart>
+            <EnableChartPicker>true</EnableChartPicker>
+            <RecordsPerPage>6</RecordsPerPage>
+            <HeaderColorCode>#F5F5F5</HeaderColorCode>
+          </parameters>
+        </customControl>
+        <customControl formFactor="1" name="MscrmControls.Grid.GridControl">
+          <parameters>
+            <data-set name="Grid">
+              <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+              <columnsDefaultView>
+                <cell entityName="defra_addressdetails" viewId="{7913CFF3-E2D2-E811-A96E-000D3A233B72}" attributeName="defra_address">
+                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
+                  <DependentAttributeType>defra_application</DependentAttributeType>
+                  <AllowFilterOff>false</AllowFilterOff>
+                  <DisableQuickFind>false</DisableQuickFind>
+                </cell>
+              </columnsDefaultView>
+              <IsUserView>false</IsUserView>
+              <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
+              <TargetEntityType>defra_addressdetails</TargetEntityType>
+              <EnableViewPicker>false</EnableViewPicker>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</FilteredViewIds>
+            </data-set>
+            <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
+            <EnableEditing static="true" type="Enum">yes</EnableEditing>
+            <ReflowBehavior static="true" type="Enum">GridOnly</ReflowBehavior>
+            <EnableFiltering static="true" type="Enum">yes</EnableFiltering>
+            <HideNestedGridColumnHeader static="true" type="Enum">yes</HideNestedGridColumnHeader>
+          </parameters>
+        </customControl>
+        <customControl formFactor="2" name="MscrmControls.Grid.GridControl">
+          <parameters>
+            <data-set name="Grid">
+              <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+              <columnsDefaultView>
+                <cell entityName="defra_addressdetails" viewId="{7913CFF3-E2D2-E811-A96E-000D3A233B72}" attributeName="defra_address">
+                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
+                  <DependentAttributeType>defra_application</DependentAttributeType>
+                  <AllowFilterOff>false</AllowFilterOff>
+                  <DisableQuickFind>false</DisableQuickFind>
+                </cell>
+              </columnsDefaultView>
+              <IsUserView>false</IsUserView>
+              <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
+              <TargetEntityType>defra_addressdetails</TargetEntityType>
+              <EnableViewPicker>false</EnableViewPicker>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</FilteredViewIds>
+            </data-set>
+            <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
+            <EnableEditing static="true" type="Enum">yes</EnableEditing>
+            <ReflowBehavior static="true" type="Enum">GridOnly</ReflowBehavior>
+            <EnableFiltering static="true" type="Enum">yes</EnableFiltering>
+            <HideNestedGridColumnHeader static="true" type="Enum">yes</HideNestedGridColumnHeader>
+          </parameters>
+        </customControl>
+      </controlDescription>
+    </controlDescriptions>
     <formLibraries>
       <Library name="defra_waste_application_form_events.js" libraryUniqueId="{a2a69e12-11da-a76a-29ee-e728db327980}" />
       <Library name="defra_/applications/application_form_events.js" libraryUniqueId="{9ba127ad-3e57-400d-b615-dde2580a9862}" />
