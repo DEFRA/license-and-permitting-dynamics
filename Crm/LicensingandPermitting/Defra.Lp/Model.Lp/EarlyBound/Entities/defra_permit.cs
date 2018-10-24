@@ -119,6 +119,26 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_area_team")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_area_team
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_area_team");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_area_team");
+				this.SetAttributeValue("defra_area_team", value);
+				this.OnPropertyChanged("defra_area_team");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_currentnumber")]
 		public System.Nullable<int> defra_currentnumber
 		{
@@ -690,6 +710,48 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_account_defra_permit_Customer");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Account>("defra_account_defra_permit_Customer", null, value);
 				this.OnPropertyChanged("defra_account_defra_permit_Customer");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_permit_Customer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_permit_Customer")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_permit_Customer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_permit_Customer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_permit_Customer");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_permit_Customer", null, value);
+				this.OnPropertyChanged("defra_contact_defra_permit_Customer");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_permit_primarycontactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_permit_primarycontactid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_permit_primarycontactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_permit_primarycontactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_permit_primarycontactid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_permit_primarycontactid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_permit_primarycontactid");
 			}
 		}
 		
