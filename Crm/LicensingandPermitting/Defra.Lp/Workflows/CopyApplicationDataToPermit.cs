@@ -4,7 +4,8 @@
 // <summary>Code activity copies reference data from the Application to a Permit, generating 
 // Permit Lines as required</summary>
 
-using Defra.Lp.Workflows.Helpers;
+using Lp.DataAccess;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Workflows
 {
@@ -13,8 +14,7 @@ namespace Defra.Lp.Workflows
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk.Workflow;
-     using global::Model.Lp.Crm;
-    using Location = global::Model.Lp.Crm.Location;
+
 
     /// <summary>
     /// Code Activity Man Class
@@ -64,19 +64,21 @@ namespace Defra.Lp.Workflows
                 if (application.Attributes.Contains(Application.Permit) && application[Application.Permit] != null)
                 {
                     //Init the copier
-                    RelationshipManager copier = new RelationshipManager(service, Application.EntityLogicalName, application.Id, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id);
+                    DataAccessPermit copier = new DataAccessPermit(service, Application.EntityLogicalName, application.Id, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id);
 
-                    //Copy Location
-                    copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Application, Location.Permit, true);
+                    //Copy Location and Location details from Application to Permit
+                    DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(service,application.Id);
 
                     //Copy Lines
                     copier.CopyAs(
                         ApplicationLine.EntityLogicalName,
                         ApplicationLine.ApplicationId, 
-                        new []
-                        {
-                            PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule
-                        }, 
+                        new [] {
+                                PermitLine.Name,
+                                PermitLine.PermitType,
+                                PermitLine.StandardRule,
+                                PermitLine.Owner
+                            },
                         PermitLine.EntityLogicalName, 
                         PermitLine.Permit, 
                         true, new ConditionExpression(PermitLine.LineType, ConditionOperator.Equal, (int)LineTypes.RegulatedFacility));

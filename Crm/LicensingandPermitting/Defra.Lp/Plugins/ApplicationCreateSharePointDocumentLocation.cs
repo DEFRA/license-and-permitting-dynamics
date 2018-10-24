@@ -10,13 +10,13 @@
 // </auto-generated>
 
 using Lp.DataAccess;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Plugins
 {
     using Core.Configuration;
     using Common.SharePoint;
     using Microsoft.Xrm.Sdk;
-    using Model.Lp.Crm;
 
     /// <summary>
     /// ApplicationCreateSharePointDocumentLocation Plugin.
