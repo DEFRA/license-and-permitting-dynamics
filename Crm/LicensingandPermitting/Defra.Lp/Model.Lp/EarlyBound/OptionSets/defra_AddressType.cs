@@ -34,6 +34,9 @@ namespace Lp.Model.EarlyBound
 		DesignatedMemberContactDetails = 910400008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Director = 910400011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MainUKBusinessAddress = 910400001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -44,5 +47,8 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrimaryContactTelephoneNumber = 910400007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ResponsibleContactDetails = 910400010,
 	}
 }

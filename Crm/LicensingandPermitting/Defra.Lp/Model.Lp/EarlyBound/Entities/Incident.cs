@@ -2226,6 +2226,48 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 contact_as_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_primary_contact")]
+		public Lp.Model.EarlyBound.Contact contact_as_primary_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_as_primary_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_as_primary_contact");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_as_primary_contact", null, value);
+				this.OnPropertyChanged("contact_as_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_as_responsible_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("responsiblecontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_responsible_contact")]
+		public Lp.Model.EarlyBound.Contact contact_as_responsible_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_as_responsible_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_as_responsible_contact");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_as_responsible_contact", null, value);
+				this.OnPropertyChanged("contact_as_responsible_contact");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 defra_application_incident_application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application")]
@@ -2264,6 +2306,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("incident_customer_accounts");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Account>("incident_customer_accounts", null, value);
 				this.OnPropertyChanged("incident_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 incident_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_customer_contacts")]
+		public Lp.Model.EarlyBound.Contact incident_customer_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("incident_customer_contacts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("incident_customer_contacts");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("incident_customer_contacts", null, value);
+				this.OnPropertyChanged("incident_customer_contacts");
 			}
 		}
 		
