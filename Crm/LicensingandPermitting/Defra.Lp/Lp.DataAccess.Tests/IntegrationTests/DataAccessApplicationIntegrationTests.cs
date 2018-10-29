@@ -84,7 +84,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             for (int countSites = 0; countSites < additionalSites; countSites++)
             {
-                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails, countSites > 1 ? true : false);
+                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + countSites, additionalDetails, countSites > 1 ? true : false);
             }
 
             // 6. Call MirrorApplicationSitesToPermit
@@ -154,12 +154,11 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, newApplication.Id);
 
             // Change app status to issued
-            ChangeApplicationStatus(application, defra_application_StatusCode.DulyMaking);
-            ChangeApplicationStatus(application, defra_application_StatusCode.Determination);
-            ChangeApplicationStatus(application, defra_application_StatusCode.PeerReview);
-            ChangeApplicationStatus(application, defra_application_StatusCode.Issued);
-
-
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.DulyMaking);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.Determination);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.PeerReview);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.Issued);
+            
 
             // 3. Call MirrorApplicationSitesToPermit
             int appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
@@ -200,16 +199,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Assert.IsTrue(appCount == 1);
         }
 
-        private static void ChangeApplicationStatus(Entity application, defra_application_StatusCode status)
-        {
-            SetStateRequest request = new SetStateRequest
-            {
-                EntityMoniker = application.ToEntityReference(),
-                State = new OptionSetValue((int) defra_applicationState.Active),
-                Status = new OptionSetValue((int) status)
-            };
-            OrganizationService.Execute(request);
-        }
+
 
         #endregion
 
@@ -217,6 +207,5 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
 
         #endregion
-
     }
 }

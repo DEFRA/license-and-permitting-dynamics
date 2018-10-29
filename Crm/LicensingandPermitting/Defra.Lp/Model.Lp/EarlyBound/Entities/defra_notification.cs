@@ -1483,27 +1483,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 contact_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_defra_notifications")]
-		public Lp.Model.EarlyBound.Contact contact_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("contact_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null, value);
-				this.OnPropertyChanged("contact_defra_notifications");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 defra_application_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
