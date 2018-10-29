@@ -182,10 +182,16 @@ namespace Lp.DataAccess
             // 3. Get Permit Sites
             Entity[] permitSites = GetLocationAndLocationDetails(service, null, permitEntityReference.Id);
 
-            // 4. Deactivate Removed Permit Sites and Details
-            Entity[] remainingPermitSites = DeactivatePermitLocationsAndDetailsIfNeeded(service, applicationSites, permitSites);
+            // 4. Deactivate Removed Permit Sites Details
+            DeactivatePermitLocationsDetailsIfNeeded(service, applicationSites, permitSites);
 
-            // 5. Create New Permit Sites and Details
+            // 5. Get Permit Sites after tidy up
+            permitSites = GetLocationAndLocationDetails(service, null, permitEntityReference.Id);
+
+            // 6. Deactivate Empty Permit Locations
+            Entity[] remainingPermitSites = DeactivatePermitLocationIfNeeded(service, permitSites);
+
+            // 7. Create New Permit Sites and Details
             CreateNewPermitLocationAndDetails(service, applicationSites, remainingPermitSites, permitEntityReference.Id);
         }
 
@@ -242,13 +248,13 @@ namespace Lp.DataAccess
         }
 
         /// <summary>
-        /// Removes the Permit location and location detail records that should no longer be there
+        /// Removes the Permit location detail records that should no longer be there
         /// </summary>
         /// <param name="service"></param>
         /// <param name="applicationSitesAndDetails"></param>
         /// <param name="permitSitesAndDetails"></param>
         /// <returns></returns>
-        private static Entity[] DeactivatePermitLocationsAndDetailsIfNeeded(IOrganizationService service, Entity[] applicationSitesAndDetails, Entity[] permitSitesAndDetails)
+        private static Entity[] DeactivatePermitLocationsDetailsIfNeeded(IOrganizationService service, Entity[] applicationSitesAndDetails, Entity[] permitSitesAndDetails)
         {
             // List of locations and location details currently linked to the permit, i.e. What we have linked to the Permit at the moment
             List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.ToList();
@@ -269,37 +275,44 @@ namespace Lp.DataAccess
                 var locationDetailToUnlink = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
                         ? ((AliasedValue) permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid ?
                         : null;
-                if (locationDetailToUnlink == null)
+                if (locationDetailToUnlink != null)
                 {
-                    continue;
+                    // There is Permit Location Detail to deactivate.
+                    DeactivatePermitLocationDetail(service, locationDetailToUnlink.Value);
                 }
-                DeactivatePermitLocationDetail(service, locationDetailToUnlink.Value);
-
-                // 3. Check if the Permit Location also needs to be deactivated
-                foreach (var siteAndDetail in permitSitesAndDetails)
-                {
-                    // Does the permit Location record need to be unlinked from the permit? (i.e. there are not Side details left for that location
-                    var permitLocationStillUsed = false;
-
-                    foreach (var remainingPermitSideDetail in remainingPermitSiteDetails)
-                    {
-                        if (remainingPermitSideDetail[Location.LocationId] == siteAndDetail[Location.LocationId])
-                        {
-                            // Location still being used, let it stay
-                            permitLocationStillUsed = true;
-                            break;
-                        }
-                    }
-
-                    if (!permitLocationStillUsed)
-                    {
-                        DeactivatePermitLocation(service, siteAndDetail.Id);
-                    }
-                }
-
+                
                 remainingPermitSiteDetails.Remove(permitSiteAndDetail);
             }
+            return remainingPermitSiteDetails.ToArray();
+        }
 
+        /// <summary>
+        /// Removes the Permit location records that should no longer be there
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="permitSitesAndDetails"></param>
+        /// <returns></returns>
+        private static Entity[] DeactivatePermitLocationIfNeeded(IOrganizationService service, Entity[] permitSitesAndDetails)
+        {
+            // List of locations and location details currently linked to the permit, i.e. What we have linked to the Permit at the moment
+            List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.ToList();
+
+            // Iterate through permit Location details
+            foreach (var permitSiteAndDetail in permitSitesAndDetails)
+            { 
+
+                // 2. Check if Permit Location has any Location Details
+                var permitLocationDetailId = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
+                    ? ((AliasedValue)permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid?
+                    : null;
+
+                if (permitLocationDetailId == null)
+                {
+                    // There is Permit Location Detail to deactivate.
+                    DeactivatePermitLocation(service, permitSiteAndDetail.Id);
+                    remainingPermitSiteDetails.Remove(permitSiteAndDetail);
+                }
+            }
             return remainingPermitSiteDetails.ToArray();
         }
 

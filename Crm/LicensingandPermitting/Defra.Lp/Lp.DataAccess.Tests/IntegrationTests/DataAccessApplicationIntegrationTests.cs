@@ -109,7 +109,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 2. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
+            //DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
 
             // 3. Remove 1 location from Application
             Entity[] applicationLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, variationApplication.Id, null);
