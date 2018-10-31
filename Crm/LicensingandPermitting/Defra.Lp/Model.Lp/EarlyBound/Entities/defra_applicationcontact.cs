@@ -514,6 +514,27 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 defra_contact_defra_applicationcontact_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_applicationcontact_contact")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_applicationcontact_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_applicationcontact_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_applicationcontact_contact");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_applicationcontact_contact", null, value);
+				this.OnPropertyChanged("defra_contact_defra_applicationcontact_contact");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>

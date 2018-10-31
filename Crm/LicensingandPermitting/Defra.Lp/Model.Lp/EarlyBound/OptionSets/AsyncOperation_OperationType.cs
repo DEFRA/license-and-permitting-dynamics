@@ -49,6 +49,9 @@ namespace Lp.Model.EarlyBound
 		CalculateRollupField = 57,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CallbackRegistrationExpanderOperation = 79,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CheckForLanguagePackUpdates = 42,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -164,6 +167,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ResourceBookingSync = 68,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RibbonClientMetadataOperation = 76,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SQMDataCollection = 9,

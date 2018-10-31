@@ -2491,6 +2491,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_defra_addressdetails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_addressdetails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_addressdetails> defra_application_defra_addressdetails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_addressdetails>("defra_application_defra_addressdetails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_defra_addressdetails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_addressdetails>("defra_application_defra_addressdetails", null, value);
+				this.OnPropertyChanged("defra_application_defra_addressdetails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_application_defra_application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_application", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -2770,6 +2790,69 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Referencingdefra_application_defra_application");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_application", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingdefra_application_defra_application");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_application_agentid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_agentid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_application_agentid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_application_agentid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_agentid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_application_agentid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_agentid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_application_agentid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_application_customerid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_application_customerid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_application_customerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_customerid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_application_customerid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_customerid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_application_customerid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_application_primarycontactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_application_primarycontactid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_application_primarycontactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_primarycontactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_application_primarycontactid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_application_primarycontactid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_application_primarycontactid");
 			}
 		}
 		

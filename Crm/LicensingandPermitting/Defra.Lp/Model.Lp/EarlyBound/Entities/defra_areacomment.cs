@@ -1503,6 +1503,27 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 contact_defra_areacomments
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_defra_areacomments")]
+		public Lp.Model.EarlyBound.Contact contact_defra_areacomments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_areacomments", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_defra_areacomments");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_areacomments", null, value);
+				this.OnPropertyChanged("contact_defra_areacomments");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 defra_application_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
