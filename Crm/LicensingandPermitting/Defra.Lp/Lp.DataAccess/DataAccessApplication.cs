@@ -136,7 +136,7 @@ namespace Lp.DataAccess
         {
             // Set-up Location Query
             QueryExpression qEdefraLocation = new QueryExpression(Location.EntityLogicalName) { TopCount = 1000 };
-            qEdefraLocation.ColumnSet.AddColumns(Location.State, Location.Name, Location.LocationCode, Location.Application, Location.LocationId, Location.Permit, Location.HighPublicInterest, Location.Status);
+            qEdefraLocation.ColumnSet.AddColumns(Location.State, Location.Name, Location.LocationCode, Location.Application, Location.LocationId, Location.Permit, Location.HighPublicInterest, Location.Status, Location.OwnerId);
             qEdefraLocation.Criteria.AddCondition(Location.State, ConditionOperator.Equal, (int)defra_locationState.Active);
 
             // Application Locations?
@@ -155,6 +155,7 @@ namespace Lp.DataAccess
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink(LocationDetail.EntityLogicalName, Location.LocationId, LocationDetail.Location, JoinOperator.LeftOuter);
             qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
             qEdefraLocationDefraLocationdetails.Columns.AddColumns(LocationDetail.State, LocationDetail.Location, LocationDetail.Address, LocationDetail.Name, LocationDetail.GridReference, LocationDetail.Status, LocationDetail.LocationDetailId, LocationDetail.Owner);
+            
             // Only retrieve active location details
             qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition(LocationDetail.State, ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
 
@@ -422,6 +423,8 @@ namespace Lp.DataAccess
                 locationEntity.Attributes.Add(Location.HighPublicInterest, locationToCopy[Location.HighPublicInterest]);
             }
 
+            locationEntity.Attributes.Add(Location.OwnerId, locationToCopy[Location.OwnerId]);
+
             // 2. Create and return new location
             locationEntity.Id = service.Create(locationEntity);
             return locationEntity;
@@ -448,12 +451,10 @@ namespace Lp.DataAccess
             Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
             {
                 [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, targetLocationId),
-                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
-                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.GridReference)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
-                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null
+                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
+                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.GridReference)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
+                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null,
+                [LocationDetail.Owner] = locationDetailToCopy[Location.OwnerId],
             };
 
             // 2. Create and return new location detail 
