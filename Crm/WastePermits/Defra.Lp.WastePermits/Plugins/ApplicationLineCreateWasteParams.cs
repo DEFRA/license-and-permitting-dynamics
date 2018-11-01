@@ -230,7 +230,7 @@ namespace Defra.Lp.WastePermits.Plugins
                 }
                 else
                 {
-                    throw new InvalidPluginExecutionException("No pricing found for the Application Type and Standard Rule combination. ");
+                    throw new InvalidPluginExecutionException("You can’t select that type of application for that permit. For example, you may have tried to start a substantial variation for a standard rule. Check you can select that application type for that rule set or activity and try again.\n \nNo need to contact support, but…");
                 }
             }
         }
