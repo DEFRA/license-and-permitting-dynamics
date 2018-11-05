@@ -567,7 +567,7 @@
       </tab>
       <tab name="tab_10" id="{b4b72ab4-635b-35d6-5d51-db718b4122c6}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
         <labels>
-          <label description="APPLICATION CONTACTS" languagecode="1033" />
+          <label description="CONTACTS" languagecode="1033" />
         </labels>
         <columns>
           <column width="100%">
@@ -584,14 +584,14 @@
                       </labels>
                       <control id="ContactDetails" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{7ace6127-93c2-9cba-7082-e59492e4a72d}" indicationOfSubgrid="true">
                         <parameters>
-                          <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+                          <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
                           <IsUserView>false</IsUserView>
                           <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
                           <TargetEntityType>defra_addressdetails</TargetEntityType>
                           <AutoExpand>Fixed</AutoExpand>
                           <EnableQuickFind>false</EnableQuickFind>
                           <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewIds>
+                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
                           <EnableJumpBar>false</EnableJumpBar>
                           <ChartGridMode>All</ChartGridMode>
                           <VisualizationId />
@@ -616,7 +616,7 @@
           </column>
         </columns>
       </tab>
-      <tab id="{4baa2180-0394-6d64-e998-8666ab330e94}" name="tab_customer" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true" labelid="{45feac16-a2da-491c-8073-d3ed38fe2026}">
+      <tab id="{4baa2180-0394-6d64-e998-8666ab330e94}" name="tab_customer" IsUserDefined="0" locklevel="0" expanded="true" showlabel="true" labelid="{45feac16-a2da-491c-8073-d3ed38fe2026}">
         <labels>
           <label description="OPERATOR" languagecode="1033" />
         </labels>
@@ -642,6 +642,20 @@
                     </cell>
                   </row>
                   <row>
+                    <cell id="{386247d7-3b44-2aac-9d99-00364bcd42b7}" showlabel="false" auto="false" colspan="1">
+                      <labels>
+                        <label description="OPERATOR DETAILS" languagecode="1033" />
+                      </labels>
+                      <control disabled="false" id="AccountQuickView" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid">
+                        <parameters>
+                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;096f21d4-531a-48ef-a261-c0c6fe38b5b5&lt;/QuickFormId&gt;&lt;QuickFormId entityname="contact"&gt;7f21fb3d-8935-48cb-8e18-b9141e1e646f&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                          <ControlMode>Edit</ControlMode>
+                          <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row>
                     <cell id="{39c1858a-14d0-39e0-3012-2db13928b108}" locklevel="0" showlabel="true">
                       <labels>
                         <label description="Trading Name" languagecode="1033" />
@@ -650,19 +664,41 @@
                     </cell>
                   </row>
                   <row>
-                    <cell id="{186ebb3a-085d-cb57-7982-491da4273c11}" locklevel="0" showlabel="true">
+                    <cell id="{992b19a0-6d87-25c8-33c8-b6b3d67c9ce0}" showlabel="true" locklevel="0" visible="false">
                       <labels>
-                        <label description="Primary Contact" languagecode="1033" />
+                        <label description="Operator Type" languagecode="1033" />
                       </labels>
-                      <control disabled="false" id="defra_primarycontactid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_primarycontactid" />
+                      <control id="defra_applicant_organisation_type" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_applicant_organisation_type" disabled="false" uniqueid="{2229e34b-9db3-2e79-d2d0-54242aae74cb}" />
                     </cell>
                   </row>
                   <row>
-                    <cell id="{70264e50-6745-d78b-0cbd-de045bb341e9}" locklevel="0" showlabel="true">
+                    <cell id="{186ebb3a-085d-cb57-7982-491da4273c11}" locklevel="0" showlabel="true" visible="false">
+                      <labels>
+                        <label description="Application contact" languagecode="1033" />
+                      </labels>
+                      <control disabled="true" id="defra_primarycontactid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_primarycontactid" uniqueid="{aed587a0-93a4-7cad-edb0-185debec4b95}">
+                        <parameters>
+                          <AutoResolve>true</AutoResolve>
+                          <DisableMru>false</DisableMru>
+                          <DisableQuickFind>false</DisableQuickFind>
+                          <DisableViewPicker>false</DisableViewPicker>
+                          <DefaultViewId>{A2D479C5-53E3-4C69-ADDD-802327E67A0D}</DefaultViewId>
+                          <AllowFilterOff>false</AllowFilterOff>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{70264e50-6745-d78b-0cbd-de045bb341e9}" locklevel="0" showlabel="true" visible="false">
                       <labels>
                         <label description="Agent" languagecode="1033" />
                       </labels>
-                      <control disabled="false" id="defra_agentid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_agentid" />
+                      <control disabled="false" id="defra_agentid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_agentid" uniqueid="{ce1a38d2-974a-2dae-8266-86ebb5b02d52}">
+                        <parameters>
+                          <AutoResolve>true</AutoResolve>
+                          <DisableMru>false</DisableMru>
+                        </parameters>
+                      </control>
                     </cell>
                   </row>
                   <row>
@@ -683,75 +719,23 @@
                   </row>
                 </rows>
               </section>
-              <section id="{0212a104-5ccc-3d04-8db3-8d0164020199}" name="tab_customer_section_3" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                <labels>
-                  <label description="Directors" languagecode="1033" />
-                </labels>
-                <rows>
-                  <row>
-                    <cell id="{48704e44-0a90-7385-ec73-8b1b63992d3b}" showlabel="false" rowspan="6" auto="false" colspan="1">
-                      <labels>
-                        <label description="Directors" languagecode="1033" />
-                      </labels>
-                      <control id="ApplicationContacts" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" uniqueid="{54d7751c-83d8-cbc8-ecc8-3d0573917070}" indicationOfSubgrid="true">
-                        <parameters>
-                          <ViewId>{2EA7E0C1-C70B-4E57-BB43-97C598BA2FED}</ViewId>
-                          <IsUserView>false</IsUserView>
-                          <RelationshipName>defra_application_defra_applicationcontact_application</RelationshipName>
-                          <TargetEntityType>defra_applicationcontact</TargetEntityType>
-                          <AutoExpand>Fixed</AutoExpand>
-                          <EnableQuickFind>false</EnableQuickFind>
-                          <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{2EA7E0C1-C70B-4E57-BB43-97C598BA2FED}</ViewIds>
-                          <EnableJumpBar>false</EnableJumpBar>
-                          <ChartGridMode>All</ChartGridMode>
-                          <VisualizationId />
-                          <IsUserChart>false</IsUserChart>
-                          <EnableChartPicker>true</EnableChartPicker>
-                          <RecordsPerPage>4</RecordsPerPage>
-                          <HeaderColorCode />
-                        </parameters>
-                      </control>
-                    </cell>
-                  </row>
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                  <row />
-                </rows>
-              </section>
             </sections>
           </column>
           <column width="50%">
             <sections>
-              <section id="{2d758bb8-a2ee-7592-361d-d2e20e31cea7}" name="tab_customer_section_2" IsUserDefined="0" locklevel="0" showlabel="false" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
+              <section id="{2d758bb8-a2ee-7592-361d-d2e20e31cea7}" name="tab_customer_section_2" IsUserDefined="0" locklevel="0" showlabel="true" columns="1" showbar="false" layout="varwidth" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
                 <labels>
-                  <label description="Section" languagecode="1033" />
+                  <label description="Operator address" languagecode="1033" />
                 </labels>
                 <rows>
                   <row>
-                    <cell id="{386247d7-3b44-2aac-9d99-00364bcd42b7}" showlabel="false" auto="false" colspan="1">
+                    <cell id="{a7380b57-3b67-61ed-7690-573c6d1ad6da}" showlabel="false" colspan="1" auto="false">
                       <labels>
-                        <label description="OPERATOR DETAILS" languagecode="1033" />
+                        <label description="Operator address" languagecode="1033" />
                       </labels>
-                      <control disabled="false" id="AccountQuickView" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid">
+                      <control id="OperatorAddressDetails" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid" disabled="false">
                         <parameters>
-                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;9f173f65-1fdb-42d3-8cf8-ad0683234234&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
-                          <ControlMode>Edit</ControlMode>
-                          <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
-                        </parameters>
-                      </control>
-                    </cell>
-                  </row>
-                  <row>
-                    <cell id="{cb32c781-5bad-45b2-ccde-38e87e3e0a2d}" showlabel="false" auto="false" colspan="1">
-                      <labels>
-                        <label description="CONTACT DETAILS" languagecode="1033" />
-                      </labels>
-                      <control disabled="false" id="ContactQuickView" classid="{5C5600E0-1D6E-4205-A272-BE80DA87FD42}" datafieldname="defra_customerid">
-                        <parameters>
-                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="contact"&gt;c82fe34b-a303-469b-86ad-1903e2c6c572&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
+                          <QuickForms>&lt;QuickFormIds&gt;&lt;QuickFormId entityname="account"&gt;8e383524-2d72-44d8-96e5-9ac8da89f7df&lt;/QuickFormId&gt;&lt;/QuickFormIds&gt;</QuickForms>
                           <ControlMode>Edit</ControlMode>
                           <DisplayAsCustomer360Tile>false</DisplayAsCustomer360Tile>
                         </parameters>
@@ -1559,14 +1543,14 @@
       <controlDescription forControl="{7ace6127-93c2-9cba-7082-e59492e4a72d}">
         <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" formFactor="0">
           <parameters>
-            <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
+            <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
             <IsUserView>false</IsUserView>
             <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
             <TargetEntityType>defra_addressdetails</TargetEntityType>
             <AutoExpand>Fixed</AutoExpand>
             <EnableQuickFind>false</EnableQuickFind>
             <EnableViewPicker>false</EnableViewPicker>
-            <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewIds>
+            <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
             <EnableJumpBar>false</EnableJumpBar>
             <ChartGridMode>All</ChartGridMode>
             <VisualizationId />
@@ -1579,20 +1563,13 @@
         <customControl formFactor="1" name="MscrmControls.Grid.GridControl">
           <parameters>
             <data-set name="Grid">
-              <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
-              <columnsDefaultView>
-                <cell entityName="defra_addressdetails" viewId="{7913CFF3-E2D2-E811-A96E-000D3A233B72}" attributeName="defra_address">
-                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
-                  <DependentAttributeType>defra_application</DependentAttributeType>
-                  <AllowFilterOff>false</AllowFilterOff>
-                  <DisableQuickFind>false</DisableQuickFind>
-                </cell>
-              </columnsDefaultView>
+              <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
+              <columnsDefaultView />
               <IsUserView>false</IsUserView>
               <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
               <TargetEntityType>defra_addressdetails</TargetEntityType>
               <EnableViewPicker>false</EnableViewPicker>
-              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</FilteredViewIds>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</FilteredViewIds>
             </data-set>
             <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
             <EnableEditing static="true" type="Enum">yes</EnableEditing>
@@ -1604,20 +1581,13 @@
         <customControl formFactor="2" name="MscrmControls.Grid.GridControl">
           <parameters>
             <data-set name="Grid">
-              <ViewId>{7913CFF3-E2D2-E811-A96E-000D3A233B72}</ViewId>
-              <columnsDefaultView>
-                <cell entityName="defra_addressdetails" viewId="{7913CFF3-E2D2-E811-A96E-000D3A233B72}" attributeName="defra_address">
-                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
-                  <DependentAttributeType>defra_application</DependentAttributeType>
-                  <AllowFilterOff>false</AllowFilterOff>
-                  <DisableQuickFind>false</DisableQuickFind>
-                </cell>
-              </columnsDefaultView>
+              <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
+              <columnsDefaultView />
               <IsUserView>false</IsUserView>
               <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
               <TargetEntityType>defra_addressdetails</TargetEntityType>
               <EnableViewPicker>false</EnableViewPicker>
-              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{7913CFF3-E2D2-E811-A96E-000D3A233B72}</FilteredViewIds>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</FilteredViewIds>
             </data-set>
             <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
             <EnableEditing static="true" type="Enum">yes</EnableEditing>
