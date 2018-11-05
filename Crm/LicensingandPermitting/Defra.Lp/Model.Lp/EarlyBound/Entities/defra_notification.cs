@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_notificationState
 	{
 		
@@ -33,7 +33,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_notification")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_notification : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1483,6 +1483,27 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 contact_defra_notifications
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_defra_notifications")]
+		public Lp.Model.EarlyBound.Contact contact_defra_notifications
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_defra_notifications");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_notifications", null, value);
+				this.OnPropertyChanged("contact_defra_notifications");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 defra_application_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -1563,6 +1584,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("incident_defra_notifications");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Incident>("incident_defra_notifications", null, value);
 				this.OnPropertyChanged("incident_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msdyn_playbookinstance_defra_notifications
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msdyn_playbookinstance_defra_notifications")]
+		public Lp.Model.EarlyBound.msdyn_playbookinstance msdyn_playbookinstance_defra_notifications
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.msdyn_playbookinstance>("msdyn_playbookinstance_defra_notifications", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_playbookinstance_defra_notifications");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.msdyn_playbookinstance>("msdyn_playbookinstance_defra_notifications", null, value);
+				this.OnPropertyChanged("msdyn_playbookinstance_defra_notifications");
 			}
 		}
 		

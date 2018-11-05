@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_applicationcontactState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_applicationcontact")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_applicationcontact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -510,6 +510,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_applicationcontact_application");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_applicationcontact_application", null, value);
 				this.OnPropertyChanged("defra_application_defra_applicationcontact_application");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_applicationcontact_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_applicationcontact_contact")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_applicationcontact_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_applicationcontact_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_applicationcontact_contact");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_applicationcontact_contact", null, value);
+				this.OnPropertyChanged("defra_contact_defra_applicationcontact_contact");
 			}
 		}
 		
