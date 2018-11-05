@@ -1,25 +1,34 @@
-﻿// Copyright (c) 2018 All Rights Reserved
-// </copyright>
-// <summary>Class is responsible for relinking and copying entities from a source parent to a target parent</summary>
-
-using System;
-using System.Linq;
-using Lp.Model.EarlyBound;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+﻿// Data access layer in charge of returning and managing contacts and contact details
 
 namespace Lp.DataAccess
 {
+    using System;
+    using System.Linq;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Query;
+    using Model.EarlyBound;
+
     /// <summary>
-    /// Class is in charge of linking/copying child entities from a source parent to a target parent
+    /// Main data access layer class for contact and contact detail related CRM transactions
     /// </summary>
     public class DataAccessContact
     {
+        /// <summary>
+        /// CRM Organisation Service
+        /// </summary>
         private IOrganizationService Service { get; }
 
+        /// <summary>
+        /// Plugin and Code Activity Tracing service
+        /// </summary>
         private ITracingService TracingService { get; }
 
 
+        /// <summary>
+        /// Constructor saves the CRm services
+        /// </summary>
+        /// <param name="service">CRM Organisation Service</param>
+        /// <param name="tracingService">CRM Trancing Service</param>
         public DataAccessContact(IOrganizationService service, ITracingService tracingService)
         {
             this.Service = service;
@@ -35,15 +44,15 @@ namespace Lp.DataAccess
         public EntityReference[] GetAccountContacts(Guid accountId, Contact_AccountRoleCode accountRoleCode)
         {
             // Prepare to query all active contacts of the given role and account
-            QueryExpression query = new QueryExpression(Contact.EntityLogicalName)
+            QueryExpression query = new QueryExpression(Model.EarlyBound.Contact.EntityLogicalName)
             {
                 Criteria = new FilterExpression(LogicalOperator.And)
                 {
                     Conditions =
                     {
-                        new ConditionExpression("accountid", ConditionOperator.Equal, accountId),
-                        new ConditionExpression("accountrolecode", ConditionOperator.Equal, (int)accountRoleCode),
-                        new ConditionExpression("statecode", ConditionOperator.Equal, (int)ContactState.Active)
+                        new ConditionExpression(Core.Model.Entities.Contact.AccountId, ConditionOperator.Equal, accountId),
+                        new ConditionExpression(Core.Model.Entities.Contact.AccountRoleCodeField, ConditionOperator.Equal, (int)accountRoleCode),
+                        new ConditionExpression(Core.Model.Entities.Contact.State, ConditionOperator.Equal, (int)ContactState.Active)
                     }
                 }
             };
@@ -59,6 +68,5 @@ namespace Lp.DataAccess
 
             return contacts.Entities.Select(e => e.ToEntityReference()).ToArray();
         }
-        
     }
 }
