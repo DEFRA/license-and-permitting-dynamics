@@ -565,7 +565,7 @@
           </column>
         </columns>
       </tab>
-      <tab name="tab_10" id="{b4b72ab4-635b-35d6-5d51-db718b4122c6}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+      <tab name="tab_10" id="{b4b72ab4-635b-35d6-5d51-db718b4122c6}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
         <labels>
           <label description="CONTACTS" languagecode="1033" />
         </labels>
@@ -584,14 +584,14 @@
                       </labels>
                       <control id="ContactDetails" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" uniqueid="{7ace6127-93c2-9cba-7082-e59492e4a72d}" indicationOfSubgrid="true">
                         <parameters>
-                          <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
+                          <ViewId>{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewId>
                           <IsUserView>false</IsUserView>
                           <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
                           <TargetEntityType>defra_addressdetails</TargetEntityType>
                           <AutoExpand>Fixed</AutoExpand>
                           <EnableQuickFind>false</EnableQuickFind>
                           <EnableViewPicker>false</EnableViewPicker>
-                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
+                          <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewIds>
                           <EnableJumpBar>false</EnableJumpBar>
                           <ChartGridMode>All</ChartGridMode>
                           <VisualizationId />
@@ -616,7 +616,7 @@
           </column>
         </columns>
       </tab>
-      <tab id="{4baa2180-0394-6d64-e998-8666ab330e94}" name="tab_customer" IsUserDefined="0" locklevel="0" expanded="true" showlabel="true" labelid="{45feac16-a2da-491c-8073-d3ed38fe2026}">
+      <tab id="{4baa2180-0394-6d64-e998-8666ab330e94}" name="tab_customer" IsUserDefined="0" locklevel="0" expanded="false" showlabel="true" labelid="{45feac16-a2da-491c-8073-d3ed38fe2026}">
         <labels>
           <label description="OPERATOR" languagecode="1033" />
         </labels>
@@ -1543,14 +1543,14 @@
       <controlDescription forControl="{7ace6127-93c2-9cba-7082-e59492e4a72d}">
         <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" formFactor="0">
           <parameters>
-            <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
+            <ViewId>{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewId>
             <IsUserView>false</IsUserView>
             <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
             <TargetEntityType>defra_addressdetails</TargetEntityType>
             <AutoExpand>Fixed</AutoExpand>
             <EnableQuickFind>false</EnableQuickFind>
             <EnableViewPicker>false</EnableViewPicker>
-            <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewIds>
+            <ViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewIds>
             <EnableJumpBar>false</EnableJumpBar>
             <ChartGridMode>All</ChartGridMode>
             <VisualizationId />
@@ -1563,13 +1563,20 @@
         <customControl formFactor="1" name="MscrmControls.Grid.GridControl">
           <parameters>
             <data-set name="Grid">
-              <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
-              <columnsDefaultView />
+              <ViewId>{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewId>
+              <columnsDefaultView>
+                <cell entityName="defra_addressdetails" viewId="{29B9C30A-30E1-E811-A993-000D3AB31AD6}" attributeName="defra_address">
+                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
+                  <DependentAttributeType>defra_application</DependentAttributeType>
+                  <AllowFilterOff>false</AllowFilterOff>
+                  <DisableQuickFind>true</DisableQuickFind>
+                </cell>
+              </columnsDefaultView>
               <IsUserView>false</IsUserView>
               <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
               <TargetEntityType>defra_addressdetails</TargetEntityType>
               <EnableViewPicker>false</EnableViewPicker>
-              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</FilteredViewIds>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{29B9C30A-30E1-E811-A993-000D3AB31AD6}</FilteredViewIds>
             </data-set>
             <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
             <EnableEditing static="true" type="Enum">yes</EnableEditing>
@@ -1581,13 +1588,20 @@
         <customControl formFactor="2" name="MscrmControls.Grid.GridControl">
           <parameters>
             <data-set name="Grid">
-              <ViewId>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</ViewId>
-              <columnsDefaultView />
+              <ViewId>{29B9C30A-30E1-E811-A993-000D3AB31AD6}</ViewId>
+              <columnsDefaultView>
+                <cell entityName="defra_addressdetails" viewId="{29B9C30A-30E1-E811-A993-000D3AB31AD6}" attributeName="defra_address">
+                  <DefaultViewId>{BC5ED7DB-8992-477E-B21D-8240D245CEA5}</DefaultViewId>
+                  <DependentAttributeType>defra_application</DependentAttributeType>
+                  <AllowFilterOff>false</AllowFilterOff>
+                  <DisableQuickFind>true</DisableQuickFind>
+                </cell>
+              </columnsDefaultView>
               <IsUserView>false</IsUserView>
               <RelationshipName>defra_application_defra_addressdetails</RelationshipName>
               <TargetEntityType>defra_addressdetails</TargetEntityType>
               <EnableViewPicker>false</EnableViewPicker>
-              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0}</FilteredViewIds>
+              <FilteredViewIds>{2C8C0C11-F8E5-43AB-8885-4B4DF09988D0},{29B9C30A-30E1-E811-A993-000D3AB31AD6}</FilteredViewIds>
             </data-set>
             <EnableGroupBy static="true" type="Enum">yes</EnableGroupBy>
             <EnableEditing static="true" type="Enum">yes</EnableEditing>
