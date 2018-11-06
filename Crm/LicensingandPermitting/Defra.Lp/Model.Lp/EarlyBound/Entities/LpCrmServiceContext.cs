@@ -5,7 +5,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-// Created via this command line: "C:\Users\Hugo\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"D:\GIT\DEFRA\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"hugo.herrera@defradev.onmicrosoft.com" /password:"***************" 
+// Created via this command line: "C:\Users\Hugo\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"C:\Dev\DEFRA\GIT\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"hugo.herrera@defradev.onmicrosoft.com" /password:"***************" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
@@ -462,18 +462,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.holidaywrapper"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.holidaywrapper> holidaywrapperSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.holidaywrapper>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Incident"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.Incident> IncidentSet
@@ -482,90 +470,6 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.Incident>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_callablecontext"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_callablecontext> msdyn_callablecontextSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_callablecontext>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_callablecontext_msdyn_playbooktemplate"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_callablecontext_msdyn_playbooktemplate> msdyn_callablecontext_msdyn_playbooktemplateSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_callablecontext_msdyn_playbooktemplate>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_playbookactivity"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_playbookactivity> msdyn_playbookactivitySet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_playbookactivity>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_playbookactivityattribute"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_playbookactivityattribute> msdyn_playbookactivityattributeSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_playbookactivityattribute>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_playbookcategory"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_playbookcategory> msdyn_playbookcategorySet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_playbookcategory>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_playbookinstance"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_playbookinstance> msdyn_playbookinstanceSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_playbookinstance>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.msdyn_playbooktemplate"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Lp.Model.EarlyBound.msdyn_playbooktemplate> msdyn_playbooktemplateSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Lp.Model.EarlyBound.msdyn_playbooktemplate>();
 			}
 		}
 	}

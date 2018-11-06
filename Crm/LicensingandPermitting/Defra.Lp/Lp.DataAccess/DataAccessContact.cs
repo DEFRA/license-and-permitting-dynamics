@@ -44,7 +44,7 @@ namespace Lp.DataAccess
         public EntityReference[] GetAccountContacts(Guid accountId, Contact_AccountRoleCode accountRoleCode)
         {
             // Prepare to query all active contacts of the given role and account
-            QueryExpression query = new QueryExpression(Model.EarlyBound.Contact.EntityLogicalName)
+            QueryExpression query = new QueryExpression(Contact.EntityLogicalName)
             {
                 Criteria = new FilterExpression(LogicalOperator.And)
                 {

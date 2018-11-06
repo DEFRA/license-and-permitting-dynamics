@@ -1588,27 +1588,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 msdyn_playbookinstance_defra_notifications
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msdyn_playbookinstance_defra_notifications")]
-		public Lp.Model.EarlyBound.msdyn_playbookinstance msdyn_playbookinstance_defra_notifications
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.msdyn_playbookinstance>("msdyn_playbookinstance_defra_notifications", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("msdyn_playbookinstance_defra_notifications");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.msdyn_playbookinstance>("msdyn_playbookinstance_defra_notifications", null, value);
-				this.OnPropertyChanged("msdyn_playbookinstance_defra_notifications");
-			}
-		}
-		
-		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
