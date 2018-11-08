@@ -1,4 +1,5 @@
 ﻿using System.CodeDom.Compiler;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace Lp.DataAccess
 {
@@ -135,7 +136,7 @@ namespace Lp.DataAccess
         {
             // Set-up Location Query
             QueryExpression qEdefraLocation = new QueryExpression(Location.EntityLogicalName) { TopCount = 1000 };
-            qEdefraLocation.ColumnSet.AddColumns(Location.State, Location.Name, Location.LocationCode, Location.Application, Location.LocationId, Location.Permit, Location.HighPublicInterest, Location.Status);
+            qEdefraLocation.ColumnSet.AddColumns(Location.State, Location.Name, Location.LocationCode, Location.Application, Location.LocationId, Location.Permit, Location.HighPublicInterest, Location.Status, Location.OwnerId);
             qEdefraLocation.Criteria.AddCondition(Location.State, ConditionOperator.Equal, (int)defra_locationState.Active);
 
             // Application Locations?
@@ -151,9 +152,10 @@ namespace Lp.DataAccess
             }
 
             // Add link-entity defra_locationdetails
-            LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink(LocationDetail.EntityLogicalName, Location.LocationId, LocationDetail.LocationDetailId, JoinOperator.LeftOuter);
+            LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink(LocationDetail.EntityLogicalName, Location.LocationId, LocationDetail.Location, JoinOperator.LeftOuter);
             qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
             qEdefraLocationDefraLocationdetails.Columns.AddColumns(LocationDetail.State, LocationDetail.Location, LocationDetail.Address, LocationDetail.Name, LocationDetail.GridReference, LocationDetail.Status, LocationDetail.LocationDetailId, LocationDetail.Owner);
+            
             // Only retrieve active location details
             qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition(LocationDetail.State, ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
 
@@ -181,10 +183,16 @@ namespace Lp.DataAccess
             // 3. Get Permit Sites
             Entity[] permitSites = GetLocationAndLocationDetails(service, null, permitEntityReference.Id);
 
-            // 4. Deactivate Removed Permit Sites and Details
-            Entity[] remainingPermitSites = DeactivatePermitLocationsAndDetailsIfNeeded(service, applicationSites, permitSites);
+            // 4. Deactivate Removed Permit Sites Details
+            DeactivatePermitLocationsDetailsIfNeeded(service, applicationSites, permitSites);
 
-            // 5. Create New Permit Sites and Details
+            // 5. Get Permit Sites after tidy up
+            permitSites = GetLocationAndLocationDetails(service, null, permitEntityReference.Id);
+
+            // 6. Deactivate Empty Permit Locations
+            Entity[] remainingPermitSites = DeactivatePermitLocationIfNeeded(service, permitSites);
+
+            // 7. Create New Permit Sites and Details
             CreateNewPermitLocationAndDetails(service, applicationSites, remainingPermitSites, permitEntityReference.Id);
         }
 
@@ -241,69 +249,71 @@ namespace Lp.DataAccess
         }
 
         /// <summary>
-        /// Removes the Permit location and location detail records that should no longer be there
+        /// Removes the Permit location detail records that should no longer be there
         /// </summary>
         /// <param name="service"></param>
         /// <param name="applicationSitesAndDetails"></param>
         /// <param name="permitSitesAndDetails"></param>
         /// <returns></returns>
-        private static Entity[] DeactivatePermitLocationsAndDetailsIfNeeded(IOrganizationService service, Entity[] applicationSitesAndDetails, Entity[] permitSitesAndDetails)
+        private static Entity[] DeactivatePermitLocationsDetailsIfNeeded(IOrganizationService service, Entity[] applicationSitesAndDetails, Entity[] permitSitesAndDetails)
         {
             // List of locations and location details currently linked to the permit, i.e. What we have linked to the Permit at the moment
             List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.ToList();
 
-            // Iterate through permit sites
+            // Iterate through permit Location details
             foreach (var permitSiteAndDetail in permitSitesAndDetails)
             {
-                // Check if Permit Site Matches an Application Site
+                // 1. Check if Permit Location Detail Matches an Application Site Detail
                 Entity applicationSiteAndDetail = GetMatchingLocation(permitSiteAndDetail, applicationSitesAndDetails);
 
                 if (applicationSiteAndDetail != null)
                 {
+                    // Permit Location Detail has matching Application Site Detail, keep it
                     continue;
                 }
-                // Unlink the Permit Site Detail in CRM
-                var locationDetailToUnlink =
-                    permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
-                        ? ((AliasedValue) permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid?
+
+                // 2. Permit Location Detail not in application, deactivate it
+                var locationDetailToUnlink = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
+                        ? ((AliasedValue) permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid ?
                         : null;
-
-                if (locationDetailToUnlink == null)
+                if (locationDetailToUnlink != null)
                 {
-                    continue;
+                    // There is Permit Location Detail to deactivate.
+                    DeactivatePermitLocationDetail(service, locationDetailToUnlink.Value);
                 }
-
-                // Remove the the remaining permit site details
-                UnlinkPermitLocationDetail(service, locationDetailToUnlink.Value);
                 
-                
-
-                // 2. Check if we need to unlink permitLocations
-                foreach (var siteAndDetail in permitSitesAndDetails)
-                {
-                    // Does the permit Location record need to be unlinked from the permit? (i.e. there are not Side details left for that location
-                    var permitLocationStillUsed = false;
-
-                    foreach (var remainingPermitSideDetail in remainingPermitSiteDetails)
-                    {
-                        if (remainingPermitSideDetail[Location.LocationId] == siteAndDetail[Location.LocationId])
-                        {
-                            // Location still being used, let it stay
-                            permitLocationStillUsed = true;
-                            break;
-                        }
-                    }
-
-                    if (!permitLocationStillUsed)
-                    {
-                        UnlinkPermitLocation(service, siteAndDetail.Id);
-                    }
-                }
-
                 remainingPermitSiteDetails.Remove(permitSiteAndDetail);
             }
+            return remainingPermitSiteDetails.ToArray();
+        }
 
-          
+        /// <summary>
+        /// Removes the Permit location records that should no longer be there
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="permitSitesAndDetails"></param>
+        /// <returns></returns>
+        private static Entity[] DeactivatePermitLocationIfNeeded(IOrganizationService service, Entity[] permitSitesAndDetails)
+        {
+            // List of locations and location details currently linked to the permit, i.e. What we have linked to the Permit at the moment
+            List<Entity> remainingPermitSiteDetails = permitSitesAndDetails.ToList();
+
+            // Iterate through permit Location details
+            foreach (var permitSiteAndDetail in permitSitesAndDetails)
+            { 
+
+                // 2. Check if Permit Location has any Location Details
+                var permitLocationDetailId = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
+                    ? ((AliasedValue)permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid?
+                    : null;
+
+                if (permitLocationDetailId == null)
+                {
+                    // There is Permit Location Detail to deactivate.
+                    DeactivatePermitLocation(service, permitSiteAndDetail.Id);
+                    remainingPermitSiteDetails.Remove(permitSiteAndDetail);
+                }
+            }
             return remainingPermitSiteDetails.ToArray();
         }
 
@@ -413,6 +423,8 @@ namespace Lp.DataAccess
                 locationEntity.Attributes.Add(Location.HighPublicInterest, locationToCopy[Location.HighPublicInterest]);
             }
 
+            locationEntity.Attributes.Add(Location.OwnerId, locationToCopy[Location.OwnerId]);
+
             // 2. Create and return new location
             locationEntity.Id = service.Create(locationEntity);
             return locationEntity;
@@ -439,12 +451,10 @@ namespace Lp.DataAccess
             Entity locationDetailEntity = new Entity(LocationDetail.EntityLogicalName)
             {
                 [LocationDetail.Location] = new EntityReference(Location.EntityLogicalName, targetLocationId),
-                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
-                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.GridReference)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
-                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) 
-                    ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null
+                [LocationDetail.Name] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Name)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Name)]).Value : null,
+                [LocationDetail.GridReference] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.GridReference)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.GridReference)]).Value : null,
+                [LocationDetail.Address] = locationDetailToCopy.Contains(GetAliasLocationDetailFieldName(LocationDetail.Address)) ? ((AliasedValue)locationDetailToCopy[GetAliasLocationDetailFieldName(LocationDetail.Address)]).Value : null,
+                [LocationDetail.Owner] = locationDetailToCopy[Location.OwnerId],
             };
 
             // 2. Create and return new location detail 
@@ -542,11 +552,13 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="service">CRM Organisation Service</param>
         /// <param name="locationId">location entity to unlink from a permit</param>
-        private static void UnlinkPermitLocation(IOrganizationService service, Guid locationId)
+        private static void DeactivatePermitLocation(IOrganizationService service, Guid locationId)
         {
-            Entity locationDetail = new Entity(Location.EntityLogicalName, locationId);
-            locationDetail.Attributes.Add(Location.Permit, null);
-            service.Update(locationDetail);
+            SetStateRequest state = new SetStateRequest();
+            state.State = new OptionSetValue((int)defra_locationState.Inactive);
+            state.Status = new OptionSetValue((int)defra_location_StatusCode.Inactive);
+            state.EntityMoniker = new EntityReference(defra_location.EntityLogicalName, locationId);
+            service.Execute(state);
         }
 
         /// <summary>
@@ -554,11 +566,13 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="service">CRM Org service</param>
         /// <param name="locationDetailId">Location Detail record id to be unlinked from it's location</param>
-        private static void UnlinkPermitLocationDetail(IOrganizationService service, Guid locationDetailId)
+        private static void DeactivatePermitLocationDetail(IOrganizationService service, Guid locationDetailId)
         {
-            Entity locationDetail = new Entity(LocationDetail.EntityLogicalName, locationDetailId);
-            locationDetail.Attributes.Add(LocationDetail.Location, null);
-            service.Update(locationDetail);
+            SetStateRequest state = new SetStateRequest();
+            state.State = new OptionSetValue((int)defra_locationdetailsState.Inactive);
+            state.Status = new OptionSetValue((int)defra_locationdetails_StatusCode.Inactive);
+            state.EntityMoniker = new EntityReference(defra_locationdetails.EntityLogicalName, locationDetailId);
+            service.Execute(state);
         }
 
 

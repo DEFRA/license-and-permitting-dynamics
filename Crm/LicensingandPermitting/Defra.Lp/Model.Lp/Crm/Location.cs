@@ -50,5 +50,10 @@ namespace Lp.Model.Crm
         ///  Location Code 
         /// </summary>
         public static string LocationCode = "defra_locationcode";
+
+        /// <summary>
+        /// Record owner
+        /// </summary>
+        public static string OwnerId = "ownerid";
     }
 }

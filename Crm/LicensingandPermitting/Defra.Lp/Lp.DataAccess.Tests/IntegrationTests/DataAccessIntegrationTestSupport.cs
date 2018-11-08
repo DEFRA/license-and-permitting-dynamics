@@ -41,9 +41,18 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             // 4. Create Permit 
             Entity application = service.Retrieve(Application.EntityLogicalName, newApplication.Id,
-                new ColumnSet(Application.PermitNumber));
-            string permitNumber = application[Application.PermitNumber].ToString();
+                new ColumnSet(Application.PermitNumber, Application.Permit));
 
+            // Change app status to issued
+            ChangeApplicationStatus(service, newApplication, defra_application_StatusCode.DulyMaking);
+            ChangeApplicationStatus(service, newApplication, defra_application_StatusCode.Determination);
+            ChangeApplicationStatus(service, newApplication, defra_application_StatusCode.PeerReview);
+            ChangeApplicationStatus(service, newApplication, defra_application_StatusCode.Issued);
+
+            string permitNumber = application[Application.PermitNumber].ToString();
+            //EntityReference permitEntityReference = application[Application.Permit] as EntityReference;
+            //return permitEntityReference.Id;
+            
             Guid permitId = CreatePermit(service, permitNumber);
 
             // 5. Update Application Permit Lookup field
@@ -55,7 +64,11 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             // 5.1 Test GetApplicationSites
             // var sites = service.GetLocationAndLocationDetails(newApplication.Id, null);
 
+
+
+
             return permitId;
+            
         }
 
         public void UpdateApplicationPermitLookup(IOrganizationService service, Entity applicationEntity, Guid permitId)
@@ -141,6 +154,17 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             newApplicationEntity.Id = newApplicationId;
             return newApplicationEntity;
+        }
+
+        public static void ChangeApplicationStatus(IOrganizationService service, Entity application, defra_application_StatusCode status)
+        {
+            SetStateRequest request = new SetStateRequest
+            {
+                EntityMoniker = application.ToEntityReference(),
+                State = new OptionSetValue((int)defra_applicationState.Active),
+                Status = new OptionSetValue((int)status)
+            };
+            service.Execute(request);
         }
     }
 }
