@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_applicationlineState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_applicationline")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_applicationline : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -209,6 +209,26 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemid")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_itemid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_itemid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_itemid");
+				this.SetAttributeValue("defra_itemid", value);
+				this.OnPropertyChanged("defra_itemid");
 			}
 		}
 		
@@ -916,6 +936,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_payment_defra_applicationline_payment");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_payment>("defra_defra_payment_defra_applicationline_payment", null, value);
 				this.OnPropertyChanged("defra_defra_payment_defra_applicationline_payment");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_item_defra_applicationline_itemid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_applicationline_itemid")]
+		public Lp.Model.EarlyBound.defra_item defra_item_defra_applicationline_itemid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_item>("defra_item_defra_applicationline_itemid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_item_defra_applicationline_itemid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_item>("defra_item_defra_applicationline_itemid", null, value);
+				this.OnPropertyChanged("defra_item_defra_applicationline_itemid");
 			}
 		}
 		

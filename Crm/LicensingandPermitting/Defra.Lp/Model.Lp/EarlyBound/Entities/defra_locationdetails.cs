@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_locationdetailsState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_locationdetails")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_locationdetails : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -489,6 +489,27 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_address_defra_locationdetails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_addressid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_address_defra_locationdetails")]
+		public Lp.Model.EarlyBound.defra_address defra_address_defra_locationdetails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_address>("defra_address_defra_locationdetails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_address_defra_locationdetails");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_address>("defra_address_defra_locationdetails", null, value);
+				this.OnPropertyChanged("defra_address_defra_locationdetails");
 			}
 		}
 		

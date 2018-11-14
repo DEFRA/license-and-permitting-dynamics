@@ -5,7 +5,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-// Created via this command line: "C:\Users\Hugo\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"D:\GIT\DEFRA GIT\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"hugo.herrera@defradev.onmicrosoft.com" /password:"************" 
+// Created via this command line: "C:\Users\Hugo\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"C:\Dev\DEFRA\GIT\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"hugo.herrera@defradev.onmicrosoft.com" /password:"***************" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
@@ -16,7 +16,7 @@ namespace Lp.Model.EarlyBound
 	/// <summary>
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class LpCrmServiceContext : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
 	{
 		
@@ -38,6 +38,42 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.Account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Contact"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.Contact> ContactSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.Contact>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_address"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_address> defra_addressSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_address>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_addressdetails"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_addressdetails> defra_addressdetailsSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_addressdetails>();
 			}
 		}
 		
@@ -138,6 +174,18 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_contact_account"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_contact_account> defra_contact_accountSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_contact_account>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_country"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_country> defra_countrySet
@@ -170,6 +218,54 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_exception>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_item"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_item> defra_itemSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_item>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemdetail"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemdetail> defra_itemdetailSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_itemdetail>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemdetailtype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemdetailtype> defra_itemdetailtypeSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_itemdetailtype>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemtype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemtype> defra_itemtypeSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_itemtype>();
 			}
 		}
 		
