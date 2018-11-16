@@ -2206,6 +2206,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Incident_QueueItem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_QueueItem")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> Incident_QueueItem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("Incident_QueueItem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_QueueItem");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("Incident_QueueItem", null, value);
+				this.OnPropertyChanged("Incident_QueueItem");
+			}
+		}
+		
+		/// <summary>
 		/// N:N defra_defra_requestcategory_incident
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_requestcategory_incident")]
