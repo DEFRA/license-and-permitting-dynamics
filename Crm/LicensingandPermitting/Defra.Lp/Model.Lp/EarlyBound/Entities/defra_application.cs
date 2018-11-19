@@ -2711,6 +2711,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_QueueItems
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_QueueItems")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> defra_application_QueueItems
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_application_QueueItems", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_QueueItems");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_application_QueueItems", null, value);
+				this.OnPropertyChanged("defra_application_QueueItems");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_defra_application_defra_payment
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_defra_payment")]

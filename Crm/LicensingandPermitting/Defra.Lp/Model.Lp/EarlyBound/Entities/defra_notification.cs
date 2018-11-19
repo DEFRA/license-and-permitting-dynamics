@@ -1462,6 +1462,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_notification_QueueItems
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_QueueItems")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> defra_notification_QueueItems
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_notification_QueueItems", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_notification_QueueItems");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_notification_QueueItems", null, value);
+				this.OnPropertyChanged("defra_notification_QueueItems");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 account_defra_notifications
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
