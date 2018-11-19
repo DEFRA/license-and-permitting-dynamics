@@ -97,13 +97,87 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                    <Sequence DisplayName="ChildWorkflowStep47: Recalculate roll up fields, prevents display issues on form">
+                    <Sequence DisplayName="UpdateStep51: Default To Charge Fields">
                       <Sequence.Variables>
-                        <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Default="[New Dictionary(Of System.String, System.Object)]" Name="ChildWorkflowStep47_1" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep51_1" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep51_2" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep51_3" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep51_4" />
                       </Sequence.Variables>
-                      <mxswa:StartChildWorkflow DisplayName="ChildWorkflowStep47: Recalculate roll up fields, prevents display issues on form" EntityId="[InputEntities(&quot;primaryEntity&quot;).Id]" EntityName="defra_application" InputParameters="[ChildWorkflowStep47_1]" WorkflowId="cae10efd-c678-43e1-bdab-6de814ef5d59" />
+                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;defra_application&quot;)]" />
+                      <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Money, "0" }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep51_1]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_balance_line_items" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep51_1]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Money, "0" }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep51_2]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_balance" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep51_2]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Money, "0" }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep51_3]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_balance_payments" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep51_3]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Money, "0" }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep51_4]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_balance_refunds" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep51_4]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:UpdateEntity DisplayName="UpdateStep51" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" />
+                      <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;primaryEntity&quot;)]" Value="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" />
+                      <Persist />
                     </Sequence>
-                    <Persist />
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
               </mxswa:ActivityReference>
@@ -923,7 +997,7 @@
                               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep43_2_converted]</OutArgument>
                             </mxswa:ActivityReference.Arguments>
                           </mxswa:ActivityReference>
-                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.MoveNextStage, Defra.Lp.Workflows, Version=1.1.77.1, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep43: Move to Determination Step">
+                          <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.MoveNextStage, Defra.Lp.Workflows, Version=1.1.77.15, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep43: Move to Determination Step">
                             <mxswa:ActivityReference.Arguments>
                               <InArgument x:TypeArguments="x:String" x:Key="BpfEntityName">[DirectCast(CustomActivityStep43_1_converted, System.String)]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="StageName">[DirectCast(CustomActivityStep43_2_converted, System.String)]</InArgument>
