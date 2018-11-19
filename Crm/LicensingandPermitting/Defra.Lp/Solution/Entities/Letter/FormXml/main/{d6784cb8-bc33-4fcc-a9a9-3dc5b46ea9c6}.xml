@@ -187,12 +187,12 @@
     <events>
       <event name="onload" application="true" active="true">
         <InternalHandlers>
-          <Handler functionName="Mscrm.Form_onload" libraryName="Letter_main_system_library.js" handlerUniqueId="06e19257-ff10-40fa-95d1-522475371db3" enabled="true" />
+          <Handler functionName="Activities.Letter.Form_onload" libraryName="Activities/SystemLibraries/Letter_main_system_library.js" handlerUniqueId="06e19257-ff10-40fa-95d1-522475371db3" enabled="true" parameters="" passExecutionContext="true" />
         </InternalHandlers>
       </event>
       <event name="onchange" application="true" active="true" attribute="directioncode">
         <InternalHandlers>
-          <Handler functionName="Mscrm.directioncode_onchange" libraryName="Letter_main_system_library.js" handlerUniqueId="3b001a4b-f13b-4b86-9ef8-b8ff2bf5ab68" enabled="true">
+          <Handler functionName="Activities.Letter.directionCodeOnChange" libraryName="Activities/SystemLibraries/Letter_main_system_library.js" handlerUniqueId="3b001a4b-f13b-4b86-9ef8-b8ff2bf5ab68" enabled="true" parameters="" passExecutionContext="true">
             <dependencies>
               <dependency id="to" />
               <dependency id="from" />
@@ -204,11 +204,14 @@
     <clientresources>
       <internalresources>
         <clientincludes>
-          <internaljscriptfile src="$webresource:Letter_main_system_library.js" />
+          <internaljscriptfile src="$webresource:Activities/SystemLibraries/Letter_main_system_library.js" />
           <internaljscriptfile src="$webresource:Service/Activities/activity.js" />
         </clientincludes>
       </internalresources>
     </clientresources>
+    <DisplayConditions FallbackForm="true" Order="2">
+      <Everyone />
+    </DisplayConditions>
     <Navigation>
       <NavBar></NavBar>
       <NavBarAreas>
@@ -239,9 +242,6 @@
         </NavBarArea>
       </NavBarAreas>
     </Navigation>
-    <DisplayConditions FallbackForm="true" Order="2">
-      <Everyone />
-    </DisplayConditions>
   </form>
   <LocalizedNames>
     <LocalizedName description="Letter" languagecode="1033" />
