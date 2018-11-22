@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_preapplicationState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_preapplication")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_preapplication : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -712,6 +712,69 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_preapplication_lastapplicationissuedid");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_preapplication_lastapplicationissuedid", null, value);
 				this.OnPropertyChanged("defra_application_defra_preapplication_lastapplicationissuedid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_preapplication_agentid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_agentid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_preapplication_agentid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_preapplication_agentid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_agentid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_preapplication_agentid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_agentid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_preapplication_agentid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_preapplication_customerid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_preapplication_customerid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_preapplication_customerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_customerid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_preapplication_customerid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_customerid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_preapplication_customerid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_contact_defra_preapplication_primarycontactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_defra_preapplication_primarycontactid")]
+		public Lp.Model.EarlyBound.Contact defra_contact_defra_preapplication_primarycontactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_primarycontactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_defra_preapplication_primarycontactid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("defra_contact_defra_preapplication_primarycontactid", null, value);
+				this.OnPropertyChanged("defra_contact_defra_preapplication_primarycontactid");
 			}
 		}
 		

@@ -70,6 +70,26 @@ namespace Lp.Model.Crm
         /// Application Document Location field
         /// </summary>
         public const string ApplicationDocumentLocation = "defra_applicationdocumentlocation";
+
+        /// <summary>
+        /// Total outbound payments
+        /// </summary>
+        public const string BalanceRefunds = "defra_balance_refunds";
+
+        /// <summary>
+        /// Total line item cost
+        /// </summary>
+        public const string BalanceLineItems = "defra_balance_line_items";
+
+        /// <summary>
+        /// Total inbound payments
+        /// </summary>
+        public const string BalancePayments = "defra_balance_payments";
+
+        /// <summary>
+        /// Payments balance
+        /// </summary>
+        public const string Balance = "defra_balance";
     }
 
     public enum ApplicationTypes
