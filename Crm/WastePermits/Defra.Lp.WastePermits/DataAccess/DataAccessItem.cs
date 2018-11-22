@@ -1,15 +1,20 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
+﻿using System;
+using Core.DataAccess.Base;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Lp.Model.EarlyBound;
-using System;
-using System.Linq;
+using WastePermits.DataAccess.Interfaces;
 
-namespace DAL
+namespace WastePermits.DataAccess
 {
-    public static class DataAccessItem
+    public class DataAccessItem : DataAccessBase, IDataAccessItem
     {
-        public static EntityCollection GetAssessmentsForActivity(this IOrganizationService service, Guid activity)
+
+        public DataAccessItem(IOrganizationService organisationService, ITracingService tracingService)
+            : base(organisationService, tracingService)
+        {
+        }
+
+        public EntityCollection GetAssessmentsForActivity( Guid activity)
         {
             // Instantiate QueryExpression QEdefra_itemdetail
             var qeIemDetail = new QueryExpression("defra_itemdetail");
@@ -27,7 +32,7 @@ namespace DAL
             qeItemDetailItemDetailType.Columns.AddColumns("defra_name");
 
             // Query CRM
-            return service.RetrieveMultiple(qeIemDetail);
+            return OrganisationService.RetrieveMultiple(qeIemDetail);
         }
     }
 }
