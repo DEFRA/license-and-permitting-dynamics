@@ -20,10 +20,8 @@ namespace DAL
         /// <param name="standardRule"></param>
         /// <param name="applicationSubType"></param>
         /// <returns></returns>
-        public static Money RetrieveApplicationPrice(this IOrganizationService service, OptionSetValue applicationType, EntityReference standardRule, EntityReference applicationSubType)
+        public static Money RetrieveApplicationPrice(this IOrganizationService service, OptionSetValue applicationType, EntityReference standardRule, EntityReference item, EntityReference applicationSubType)
         {
-
-
             // Get all the other application lines linked to the same application
             QueryExpression priceQuery = new QueryExpression(ApplicationPrice.EntityLogicalName)
             {
@@ -43,6 +41,12 @@ namespace DAL
             if (standardRule != null && standardRule.Id != Guid.Empty)
             {
                 priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule.Id));
+            }
+
+            // Add item filter if available
+            if (item != null && item.Id != Guid.Empty)
+            {
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPriceWaste.ItemId, ConditionOperator.Equal, item.Id));
             }
 
             // Add application sub type filter if available
