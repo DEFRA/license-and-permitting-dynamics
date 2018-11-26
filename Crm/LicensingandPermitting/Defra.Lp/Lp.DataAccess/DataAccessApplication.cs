@@ -61,14 +61,17 @@
                     if (results.Entities[i].Contains("location.defra_name"))
                     {
                         siteDetail = (string)results.Entities[i].GetAttributeValue<AliasedValue>("location.defra_name").Value;
+                        siteDetail = siteDetail.Trim();
                     }
                     if (results.Entities[i].Contains("locationdetail.defra_gridreferenceid"))
                     {
                         gridRef = (string)results.Entities[i].GetAttributeValue<AliasedValue>("locationdetail.defra_gridreferenceid").Value;
+                        gridRef = gridRef.Trim();
                     }
                     if (results.Entities[i].Contains("address.defra_name"))
                     {
                         siteAddress = (string)results.Entities[i].GetAttributeValue<AliasedValue>("address.defra_name").Value;
+                        siteAddress = siteAddress.Trim();
                     }
                     if (!string.IsNullOrEmpty(siteAddress))
                     {
@@ -85,7 +88,10 @@
                         }
                         else
                         {
-                            siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            if (!gridRef.Equals(siteDetail, StringComparison.OrdinalIgnoreCase))
+                            {
+                                siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            }
                         }
                     }
                     returnData = (i == 0) ? siteDetail : returnData + "; " + siteDetail;
