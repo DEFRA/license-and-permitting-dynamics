@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum AccountState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("account")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class Account : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -3210,6 +3210,46 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Contact> contact_customer_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Contact>("contact_customer_accounts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Contact>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_account_defra_addressdetails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_account_defra_addressdetails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_addressdetails> defra_account_defra_addressdetails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_addressdetails>("defra_account_defra_addressdetails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_account_defra_addressdetails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_addressdetails>("defra_account_defra_addressdetails", null, value);
+				this.OnPropertyChanged("defra_account_defra_addressdetails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_account_defra_application_agentid
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_account_defra_application_agentid")]
@@ -3330,6 +3370,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:N defra_contact_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_contact_account")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Contact> defra_contact_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Contact>("defra_contact_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_contact_account");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Contact>("defra_contact_account", null, value);
+				this.OnPropertyChanged("defra_contact_account");
+			}
+		}
+		
+		/// <summary>
 		/// N:N defra_parent_child_account_relationship
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_parent_child_account_relationship", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
@@ -3401,6 +3461,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Referencingaccount_parent_account");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public Lp.Model.EarlyBound.Contact account_primary_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("account_primary_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
 		

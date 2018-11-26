@@ -121,23 +121,30 @@ namespace Defra.Lp.WastePermits.Plugins
                         //Run only if Application Line
                         if (targetAppLine != null && targetAppLine.LogicalName == ApplicationLine.EntityLogicalName)
                         {
-                            //Retrieve the Application
+                            // 1. Retrieve the Application
                             Guid? applicationId = this.GetApplicationId(preImageEntity, targetAppLine);
                             this.GetApplication(applicationId);
 
-                            // Check for Duplicate Standard Rules on this Application
+                            // 2. Create Included Items as Application Lines
+                            // TODO
+
+                            // 3. Price the Application Line
+                            // TODO
+                            this.UpdateApplicationLinePrice(targetAppLine);
+
+                            // 4. Discount all Application Lines
+                            // TODO
+
+                            // 5. Check for Duplicate Standard Rules on this Application
                             CheckForDuplicateStandardRules(targetAppLine);
 
-                            //Run only if the standard rule is updated
-                            _TracingService.Trace("Checking for defra_standardruleid");
+                            // 6,7. Standard Rule Processing (Copy Waste Parameters to App Line, Create DMC)
+                            // ProcessStandardRule()
                             if (targetAppLine.Contains("defra_standardruleid"))
                             {
                                 //Retrieve the Standard Rule
                                 _TracingService.Trace("Calling RetrieveStandardRule");
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
-
-                                // Update Application Line Amount
-                                this.UpdateApplicationLinePrice(targetAppLine);
 
                                 //Create the Parameters record based on the Standard Rule Parameteres record
                                 _TracingService.Trace("Calling CrateApplicationLineParameters");
@@ -148,8 +155,9 @@ namespace Defra.Lp.WastePermits.Plugins
                                 this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
                             }
 
-                            //Update the Application
+                            // 8. Aggregate parameters onto Application
                             this.UpdateApplication(targetAppLine, null);
+
                         }
                         else
                         {
@@ -369,33 +377,6 @@ namespace Defra.Lp.WastePermits.Plugins
                 _Service.Update(dulyMade);
             }
         }
-
-        /*
-        /// <summary>
-        /// Retrieves the Application entity
-        /// </summary>
-        private void RetrieveApplicationEntity(Entity targetAppLine, Entity preImage)
-        {
-            //Get the Application
-            EntityReference applicationER = null;
-
-            if (_Context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_applicationid"))
-                applicationER = (EntityReference)preImage["defra_applicationid"];
-            if (targetAppLine.Attributes.Contains("defra_applicationid"))
-                applicationER = (EntityReference)targetAppLine["defra_applicationid"];
-
-            //Check if the Duly Made record exists. If not create it
-            if (applicationER == null)
-                return;
-
-            //Retrieve the duly made record if exists
-            _TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
-            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Application.ApplicationType, Application.ApplicationSubType));
-
-            //Initiate the updated application entity
-            this.UpdatedApplicationEntity = new Entity(ApplicationEntity.LogicalName) { Id = ApplicationEntity.Id };
-        }
-        */
 
         /// <summary>
         /// Retrieves the Standard Rule entity

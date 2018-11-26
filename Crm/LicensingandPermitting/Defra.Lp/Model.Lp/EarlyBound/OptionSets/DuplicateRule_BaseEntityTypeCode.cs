@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum DuplicateRule_BaseEntityTypeCode
 	{
 		
@@ -56,9 +56,6 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AnnualFiscalCalendar = 2000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		App = 9006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AppConfigMaster = 9011,
@@ -194,6 +191,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CalendarRule = 4004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CallbackRegistration = 301,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Campaign = 4400,
@@ -490,6 +490,9 @@ namespace Lp.Model.EarlyBound
 		HierarchySecurityConfiguration = 9919,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HolidayWrapper = 9996,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		icebreakersconfig = 10047,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -539,6 +542,18 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ISVConfig = 4705,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Item = 10059,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemDetail = 10061,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemDetailType = 10062,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemType = 10060,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		KnowledgeArticle = 9953,
@@ -634,6 +649,9 @@ namespace Lp.Model.EarlyBound
 		MetadataDifference = 4231,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		MicrosoftTeamsCollaborationentity = 10058,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MobileOfflineProfile = 9866,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -641,6 +659,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MobileOfflineProfileItemAssociation = 9868,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ModeldrivenApp = 9006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MonthlyFiscalCalendar = 2003,
@@ -755,6 +776,24 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PhoneToCaseProcess = 952,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Playbook = 10070,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Playbookactivity = 10067,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Playbookactivityattribute = 10068,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PlaybookCallableContext = 10066,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Playbookcategory = 10069,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Playbooktemplate = 10071,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PluginAssembly = 4605,
@@ -1102,10 +1141,10 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10051,
+		SolutionComponentDataSource = 10065,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10050,
+		SolutionComponentSummary = 10064,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,

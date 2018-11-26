@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum AsyncOperation_OperationType
 	{
 		
@@ -47,6 +47,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CalculateRollupField = 57,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CallbackRegistrationExpanderOperation = 79,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CheckForLanguagePackUpdates = 42,
@@ -164,6 +167,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ResourceBookingSync = 68,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RibbonClientMetadataOperation = 76,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SQMDataCollection = 9,

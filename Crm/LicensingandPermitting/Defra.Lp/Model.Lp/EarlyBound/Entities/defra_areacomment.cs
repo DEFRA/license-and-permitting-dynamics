@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public enum defra_areacommentState
 	{
 		
@@ -33,7 +33,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_areacomment")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9340")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
 	public partial class defra_areacomment : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1482,6 +1482,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_areacomment_QueueItems
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_QueueItems")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> defra_areacomment_QueueItems
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_areacomment_QueueItems", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_areacomment_QueueItems");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_areacomment_QueueItems", null, value);
+				this.OnPropertyChanged("defra_areacomment_QueueItems");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 account_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -1499,6 +1519,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("account_defra_areacomments");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Account>("account_defra_areacomments", null, value);
 				this.OnPropertyChanged("account_defra_areacomments");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_defra_areacomments
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_defra_areacomments")]
+		public Lp.Model.EarlyBound.Contact contact_defra_areacomments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_areacomments", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_defra_areacomments");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Contact>("contact_defra_areacomments", null, value);
+				this.OnPropertyChanged("contact_defra_areacomments");
 			}
 		}
 		
