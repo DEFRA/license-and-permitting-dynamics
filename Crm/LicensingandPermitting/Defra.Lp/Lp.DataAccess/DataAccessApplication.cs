@@ -35,6 +35,9 @@
                                             </filter>
                                             <link-entity name='defra_location' from='{2}' to='{2}' alias='location' >
                                               <attribute name='defra_name' />
+                                              <filter>
+                                                <condition attribute='statecode' operator='eq' value='0' />
+                                              </filter>
                                               <link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' alias='locationdetail' >
                                                 <attribute name='defra_gridreferenceid' />
                                                 <link-entity name='defra_address' from='defra_addressid' to='defra_addressid' link-type='outer' alias='address' >
