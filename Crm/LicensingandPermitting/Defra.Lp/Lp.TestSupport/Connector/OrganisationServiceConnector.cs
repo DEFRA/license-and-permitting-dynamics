@@ -1,4 +1,4 @@
-﻿namespace Lp.DataAccess.Tests.Connector
+﻿namespace Lp.TestSupport.Connector
 {
     using System;
     using System.ServiceModel.Description;
@@ -6,7 +6,7 @@
     using Microsoft.Xrm.Sdk.Client;
     using Microsoft.Xrm.Sdk.Discovery;
 
-    class OrganisationServiceConnector
+    public class OrganisationServiceConnector
     {
         // To get discovery service address and organization unique name, 
         // Sign in to your CRM org and click Settings, Customization, Developer Resources.

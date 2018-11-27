@@ -1,16 +1,15 @@
 ﻿//Data Access integration tests
 namespace Lp.DataAccess.Tests.IntegrationTests
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-
-    using Model.EarlyBound;
-    using Connector;
     using Model.Crm;
-    
+    using Model.EarlyBound;
+    using System;
+    using TestSupport.Connector;
+    using TestSupport.IntegrationTests;
+
     /// <summary>
     /// Main integration tests class
     /// </summary>
