@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xrm.Sdk;
 
-namespace WastePermits.DataAccess.Interfaces
+namespace Lp.DataAccess.Interfaces
 {
     public interface IDataAccessItem
     {

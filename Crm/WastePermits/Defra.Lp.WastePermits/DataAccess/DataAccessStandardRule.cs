@@ -1,9 +1,9 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-
-namespace DAL
+﻿namespace WastePermits.DataAccess
 {
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Messages;
+    using Microsoft.Xrm.Sdk.Query;
+
     public static class DataAccessStandardRule
     {
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef)

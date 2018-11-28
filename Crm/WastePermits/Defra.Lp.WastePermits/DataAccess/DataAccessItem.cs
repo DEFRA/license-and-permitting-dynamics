@@ -1,11 +1,15 @@
-﻿using System;
-using Core.DataAccess.Base;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using WastePermits.DataAccess.Interfaces;
-
+﻿
 namespace WastePermits.DataAccess
 {
+    using System;
+    using Core.DataAccess.Base;
+    using Lp.DataAccess.Interfaces;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Query;
+
+    /// <summary>
+    /// Data access class provides methods to query Item records
+    /// </summary>
     public class DataAccessItem : DataAccessBase, IDataAccessItem
     {
 
@@ -14,6 +18,11 @@ namespace WastePermits.DataAccess
         {
         }
 
+        /// <summary>
+        ///  Returns a list of assessment item records that are linked to a given activity
+        /// </summary>
+        /// <param name="activity"></param>
+        /// <returns></returns>
         public EntityCollection GetAssessmentsForActivity( Guid activity)
         {
             // Instantiate QueryExpression QEdefra_itemdetail

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xrm.Sdk;
-
-namespace Core.DataAccess.Base
+﻿namespace Core.DataAccess.Base
 {
-    public class DataAccessBase
+    using Microsoft.Xrm.Sdk;
+
+    /// <summary>
+    /// Base data access class, provides access to the CRM Org and Trace service
+    /// </summary>
+    public abstract class DataAccessBase
     {
         protected IOrganizationService OrganisationService { get; }
         protected ITracingService TracingService { get; }
 
-        public DataAccessBase(IOrganizationService organisationService, ITracingService tracingService)
+        protected DataAccessBase(IOrganizationService organisationService, ITracingService tracingService)
         {
             OrganisationService = organisationService;
             TracingService = tracingService;
