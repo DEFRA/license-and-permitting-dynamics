@@ -96,7 +96,7 @@
                           <Sequence DisplayName="StopWorkflowStep5: No Application">
                             <Sequence.Variables>
                               <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep5_1" />
-                              <Variable x:TypeArguments="x:String" Default="dab47f12-4bcd-4fc3-bd9a-41ab0bebb4a1" Name="stepLabelLabelId" />
+                              <Variable x:TypeArguments="x:String" Default="898b1d29-2f61-435f-b34c-50c299b32f4a" Name="stepLabelLabelId" />
                               <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                 <Variable.Default>
                                   <Literal x:TypeArguments="x:String" Value="" />
@@ -180,7 +180,7 @@
                     <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep6_3_converted]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetSiteNameAddress, Defra.Lp.Workflows, Version=1.1.77.14, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep6: Get Site Description">
+                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Workflows.GetSiteNameAddress, Defra.Lp.Workflows, Version=1.1.77.18, Culture=neutral, PublicKeyToken=30ed51a7675138f4" DisplayName="CustomActivityStep6: Get Site Description">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Application">[DirectCast(CustomActivityStep6_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
                     <InArgument x:TypeArguments="mxs:EntityReference" x:Key="Permit">[DirectCast(CustomActivityStep6_3_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
@@ -190,12 +190,38 @@
               </sco:Collection>
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
-          <Sequence DisplayName="UpdateStep7: Set Application Site Description">
+          <Sequence DisplayName="UpdateStep7: Set Application Site Description and Main Location">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Object" Name="UpdateStep7_1" />
+              <Variable x:TypeArguments="x:Object" Name="UpdateStep7_2" />
+              <Variable x:TypeArguments="x:Object" Name="UpdateStep7_3" />
             </Sequence.Variables>
             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" Value="[New Entity(&quot;defra_application&quot;)]" />
             <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;).Id]" Value="[InputEntities(&quot;related_defra_applicationid#defra_application&quot;).Id]" />
+            <mxswa:GetEntityProperty Attribute="defra_locationid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_location" Value="[UpdateStep7_2]">
+              <mxswa:GetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                </InArgument>
+              </mxswa:GetEntityProperty.TargetType>
+            </mxswa:GetEntityProperty>
+            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+              <mxswa:ActivityReference.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep7_2 }]</InArgument>
+                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                </InArgument>
+                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep7_1]</OutArgument>
+              </mxswa:ActivityReference.Arguments>
+            </mxswa:ActivityReference>
+            <mxswa:SetEntityProperty Attribute="defra_main_site" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep7_1]">
+              <mxswa:SetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                </InArgument>
+              </mxswa:SetEntityProperty.TargetType>
+            </mxswa:SetEntityProperty>
             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
               <mxswa:ActivityReference.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
@@ -203,10 +229,10 @@
                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                 </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep7_1]</OutArgument>
+                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep7_3]</OutArgument>
               </mxswa:ActivityReference.Arguments>
             </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_site_description" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep7_1]">
+            <mxswa:SetEntityProperty Attribute="defra_site_description" Entity="[CreatedEntities(&quot;related_defra_applicationid#defra_application#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep7_3]">
               <mxswa:SetEntityProperty.TargetType>
                 <InArgument x:TypeArguments="s:Type">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
