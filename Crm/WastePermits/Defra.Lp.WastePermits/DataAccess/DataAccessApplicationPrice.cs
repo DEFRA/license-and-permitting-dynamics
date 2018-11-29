@@ -1,11 +1,8 @@
-﻿
-
-using System.Linq;
-
-namespace DAL
+﻿namespace WastePermits.DataAccess
 {
-    using Lp.Model.Crm;
     using System;
+    using System.Linq;
+    using Lp.Model.Crm;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using WastePermits.Model.Crm;

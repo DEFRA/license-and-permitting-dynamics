@@ -13,7 +13,7 @@ using System;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
-using DAL;
+using Lp.DataAccess.Interfaces;
 using Lp.Model.Crm;
 using WastePermits.DataAccess;
 using WastePermits.Model.Crm;

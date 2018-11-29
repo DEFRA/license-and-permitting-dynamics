@@ -1,18 +1,17 @@
-﻿using System.CodeDom.Compiler;
-using Microsoft.Crm.Sdk.Messages;
-
-namespace Lp.DataAccess
+﻿namespace Lp.DataAccess
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Lp.Model.EarlyBound;
-    using Microsoft.Crm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using Lp.Model.Crm;
-    using Core.Helpers.Extensions;
     using Microsoft.Xrm.Sdk;
+    using Microsoft.Crm.Sdk.Messages;
+    using Model.EarlyBound;
+    using Model.Crm;
 
+    /// <summary>
+    /// Class that deals with CRM data access requests relating to Applications
+    /// </summary>
     public static class DataAccessApplication
     {
         public static string GetSiteDetails(this IOrganizationService service, EntityReference entityRef)
@@ -36,6 +35,9 @@ namespace Lp.DataAccess
                                             </filter>
                                             <link-entity name='defra_location' from='{2}' to='{2}' alias='location' >
                                               <attribute name='defra_name' />
+                                              <filter>
+                                                <condition attribute='statecode' operator='eq' value='0' />
+                                              </filter>
                                               <link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' alias='locationdetail' >
                                                 <attribute name='defra_gridreferenceid' />
                                                 <link-entity name='defra_address' from='defra_addressid' to='defra_addressid' link-type='outer' alias='address' >
@@ -59,17 +61,27 @@ namespace Lp.DataAccess
                     var siteDetail = string.Empty;
                     var siteAddress = string.Empty;
                     var gridRef = string.Empty;
+                    if (results.Entities[i].Contains("location.defra_name"))
+                    {
+                        siteDetail = (string)results.Entities[i].GetAttributeValue<AliasedValue>("location.defra_name").Value;
+                        siteDetail = siteDetail.Trim();
+                    }
                     if (results.Entities[i].Contains("locationdetail.defra_gridreferenceid"))
                     {
                         gridRef = (string)results.Entities[i].GetAttributeValue<AliasedValue>("locationdetail.defra_gridreferenceid").Value;
+                        gridRef = gridRef.Trim();
                     }
                     if (results.Entities[i].Contains("address.defra_name"))
                     {
                         siteAddress = (string)results.Entities[i].GetAttributeValue<AliasedValue>("address.defra_name").Value;
+                        siteAddress = siteAddress.Trim();
                     }
                     if (!string.IsNullOrEmpty(siteAddress))
                     {
-                        siteDetail = siteAddress;
+                        if (!siteAddress.Equals(siteDetail, StringComparison.OrdinalIgnoreCase))
+                        {
+                            siteDetail = string.Format("{0}, {1}", siteDetail, siteAddress);
+                        }
                     }
                     if (!string.IsNullOrEmpty(gridRef))
                     {
@@ -79,7 +91,10 @@ namespace Lp.DataAccess
                         }
                         else
                         {
-                            siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            if (!gridRef.Equals(siteDetail, StringComparison.OrdinalIgnoreCase))
+                            {
+                                siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            }
                         }
                     }
                     returnData = (i == 0) ? siteDetail : returnData + "; " + siteDetail;
@@ -155,7 +170,7 @@ namespace Lp.DataAccess
             LinkEntity qEdefraLocationDefraLocationdetails = qEdefraLocation.AddLink(LocationDetail.EntityLogicalName, Location.LocationId, LocationDetail.Location, JoinOperator.LeftOuter);
             qEdefraLocationDefraLocationdetails.EntityAlias = LocationDetail.Alias;
             qEdefraLocationDefraLocationdetails.Columns.AddColumns(LocationDetail.State, LocationDetail.Location, LocationDetail.Address, LocationDetail.Name, LocationDetail.GridReference, LocationDetail.Status, LocationDetail.LocationDetailId, LocationDetail.Owner);
-            
+
             // Only retrieve active location details
             qEdefraLocationDefraLocationdetails.LinkCriteria.AddCondition(LocationDetail.State, ConditionOperator.Equal, (int)defra_locationdetailsState.Active);
 
@@ -274,14 +289,14 @@ namespace Lp.DataAccess
 
                 // 2. Permit Location Detail not in application, deactivate it
                 var locationDetailToUnlink = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
-                        ? ((AliasedValue) permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid ?
+                        ? ((AliasedValue)permitSiteAndDetail[GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute)]).Value as Guid?
                         : null;
                 if (locationDetailToUnlink != null)
                 {
                     // There is Permit Location Detail to deactivate.
                     DeactivatePermitLocationDetail(service, locationDetailToUnlink.Value);
                 }
-                
+
                 remainingPermitSiteDetails.Remove(permitSiteAndDetail);
             }
             return remainingPermitSiteDetails.ToArray();
@@ -300,7 +315,7 @@ namespace Lp.DataAccess
 
             // Iterate through permit Location details
             foreach (var permitSiteAndDetail in permitSitesAndDetails)
-            { 
+            {
 
                 // 2. Check if Permit Location has any Location Details
                 var permitLocationDetailId = permitSiteAndDetail.Contains(GetAliasLocationDetailFieldName(defra_locationdetails.PrimaryIdAttribute))
@@ -336,7 +351,7 @@ namespace Lp.DataAccess
                 // 2. Check if site already exists in Permit
                 Entity permitSite = GetMatchingLocation(applicationSiteAndDetail, newAndExistingPermitSites.ToArray());
 
-                Entity permitSiteAndDetail = null; 
+                Entity permitSiteAndDetail = null;
 
                 // 3. If Permit Location does not exist, create it
                 if (permitSite == null)
@@ -405,7 +420,7 @@ namespace Lp.DataAccess
             // 1. Mirror Location
             Entity locationEntity = new Entity(Location.EntityLogicalName)
             {
-                [Location.Name] = locationToCopy.Contains(Location.Name) ? locationToCopy[Location.Name]: null
+                [Location.Name] = locationToCopy.Contains(Location.Name) ? locationToCopy[Location.Name] : null
             };
 
             if (targetApplicationId != null)
@@ -480,7 +495,7 @@ namespace Lp.DataAccess
             }
             return null;
         }
-        
+
         /// <summary>
         /// Try to find location detail in the given array that matches the location detail name, address and grid reference fields 
         /// </summary>
@@ -542,7 +557,6 @@ namespace Lp.DataAccess
             {
                 return true;
             }
-
 
             return false;
         }
@@ -609,6 +623,142 @@ namespace Lp.DataAccess
                 return result.Entities.Count;
             }
             return 0;
+        }
+
+        /// <summary>
+        /// Recalculates the application balance fields
+        /// </summary>
+        /// <param name="service">CRM service</param>
+        /// <param name="tracingService">CRM Tracing service</param>
+        /// <param name="applicationId">Id for application to recalculate fields on</param>
+        public static void RecalculateApplicationBalances(IOrganizationService service, ITracingService tracingService, Guid applicationId)
+        {
+            tracingService.Trace($"RecalculateApplicationBalances() Started using application id: {applicationId}");
+
+            // 1. Validation - Check the application is still active
+            Entity application = service.Retrieve(
+                defra_application.EntityLogicalName,
+                applicationId,
+                new ColumnSet(
+                    Application.State,
+                    Application.BalanceRefunds,
+                    Application.BalanceLineItems,
+                    Application.BalancePayments,
+                    Application.Balance));
+
+            if (application == null)
+            {
+                throw new InvalidPluginExecutionException(OperationStatus.Failed, "Could not recalculate application balances, could not find application with id " + applicationId);
+            }
+
+            if (!application.Contains(Application.State) || ((OptionSetValue)application[Application.State]).Value != (int)defra_applicationState.Active)
+            {
+                throw new InvalidPluginExecutionException(OperationStatus.Failed, "Could not recalculate application balances as application is no longer active, application id:  " + applicationId);
+            }
+
+            // 2. Get the Application Line Values
+            tracingService.Trace($"RecalculateApplicationBalances() Getting application lines");
+            EntityCollection applicationLines = DataAccessApplicationLine.GetApplicationLineValues(service, applicationId);
+
+            // 3. Get the Payment Values
+            tracingService.Trace($"RecalculateApplicationBalances() Getting completed payments");
+            EntityCollection payments = DataAccessPayments.GetPaymentValues(service, applicationId, new [] {defra_payment_StatusCode.RefundIssued, defra_payment_StatusCode.PaymentComplete});
+
+            // 4. Calculate Balances
+            Decimal balanceTotal;
+            Decimal balanceApplicationLines = 0;
+            Decimal balanceIncomingPayments = 0;
+            Decimal balanceOutgoingPayments = 0;
+
+            // Application Line Balance
+            tracingService.Trace($"RecalculateApplicationBalances() Summing up application lines");
+            if (applicationLines?.Entities != null)
+            {
+                foreach (Entity applicationLine in applicationLines.Entities)
+                {
+                    if (applicationLine.Contains(ApplicationLine.Value) &&
+                        applicationLine[ApplicationLine.Value] is Money)
+                    {
+                        Money appLineValue = (Money)applicationLine[ApplicationLine.Value];
+                        balanceApplicationLines = balanceApplicationLines + appLineValue.Value;
+                    }
+                }
+            }
+
+            // Payment Balances
+            tracingService.Trace($"RecalculateApplicationBalances() Summing up payments");
+            if (payments?.Entities != null)
+            {
+                foreach (Entity payment in payments.Entities)
+                {
+                    if (payment.Contains(Payment.PaymentValue) &&
+                        payment[Payment.PaymentValue] is Money)
+                    {
+                        Money paymentValue = (Money)payment[Payment.PaymentValue];
+
+                        if (paymentValue == null)
+                        {
+                            // No payment value
+                            continue;
+                        }
+
+                        // Added it to the incoming or outgoing payment balance
+                        if (paymentValue.Value > 0)
+                        {
+                            balanceIncomingPayments = balanceIncomingPayments + paymentValue.Value;
+                        }
+                        else
+                        {
+                            balanceOutgoingPayments = balanceOutgoingPayments + paymentValue.Value;
+                        }
+                    }
+                }
+            }
+
+            // Calculate total balance
+            balanceTotal = balanceApplicationLines - balanceIncomingPayments - balanceOutgoingPayments;
+            tracingService.Trace($"RecalculateApplicationBalances() balanceTotal={balanceTotal}, balanceApplicationLines={balanceApplicationLines}, balanceIncomingPayments={balanceIncomingPayments}, balanceOutgoingPayments={balanceOutgoingPayments}");
+
+            // 5. Set-up a new application entity to be updated (so we update just the balance fields, and revers the refunds field for display purposes
+            Entity applicationUpdateEntity = new Entity(application.LogicalName, application.Id);
+            AddAttributeToTargetApplicationIfChanged(tracingService, application, applicationUpdateEntity, Application.BalanceLineItems, balanceApplicationLines);
+            AddAttributeToTargetApplicationIfChanged(tracingService, application, applicationUpdateEntity, Application.BalancePayments, balanceIncomingPayments);
+            AddAttributeToTargetApplicationIfChanged(tracingService, application, applicationUpdateEntity, Application.BalanceRefunds, balanceOutgoingPayments * -1);
+            AddAttributeToTargetApplicationIfChanged(tracingService, application, applicationUpdateEntity, Application.Balance, balanceTotal);
+            
+            // 6. Update the application fields if required
+            if (application.Attributes.Count > 0)
+            {
+                tracingService.Trace("RecalculateApplicationBalances() Updating application...");
+                service.Update(applicationUpdateEntity);
+            }
+            else
+            {
+                tracingService.Trace("RecalculateApplicationBalances() Not updating application...");
+            }
+
+            tracingService.Trace("RecalculateApplicationBalances() End.");
+        }
+
+        /// <summary>
+        /// Helper function that adds attributes to the applicationToUpdate entity if
+        /// the new value is different to the value held by originalApplication
+        /// </summary>
+        /// <param name="tracingService">CRM Tracing service</param>
+        /// <param name="originalApplication">Application with original values</param>
+        /// <param name="applicationToUpdate">Application that will be used to updated CRM</param>
+        /// <param name="attributeName">Attribute being updated</param>
+        /// <param name="newValue">New value</param>
+        private static void AddAttributeToTargetApplicationIfChanged(ITracingService tracingService, Entity originalApplication, Entity applicationToUpdate, string attributeName, decimal newValue)
+        {
+            // Only update if attribute not set in source, or source needs updating
+            if (!originalApplication.Contains(attributeName)
+                || (originalApplication[attributeName] is Money
+                    && ((Money) originalApplication[attributeName]).Value != newValue))
+            {
+                applicationToUpdate.Attributes.Add(attributeName, new Money(newValue));
+                tracingService.Trace($"Updating {attributeName} = {newValue}");
+            }
         }
     }
 }

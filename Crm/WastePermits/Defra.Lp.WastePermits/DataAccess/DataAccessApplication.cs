@@ -1,11 +1,14 @@
-﻿using System;
-using Core.DataAccess.Base;
-using Lp.Model.Crm;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+﻿using Lp.Model.EarlyBound;
 
 namespace WastePermits.DataAccess
 {
+    using System;
+    using Core.DataAccess.Base;
+    using Lp.DataAccess.Interfaces;
+    using Lp.Model.Crm;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Query;
+
     public class DataAccessApplication : DataAccessBase, IDataAccessApplication
     {
 

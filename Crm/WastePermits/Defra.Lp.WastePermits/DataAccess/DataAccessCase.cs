@@ -1,8 +1,8 @@
-﻿namespace DAL
+﻿namespace WastePermits.DataAccess
 {
+    using System;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using System;
 
     public static class DataAccessCase
     {
