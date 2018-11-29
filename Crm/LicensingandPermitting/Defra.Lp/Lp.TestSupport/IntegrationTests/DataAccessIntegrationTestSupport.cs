@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Lp.DataAccess;
 using Lp.Model.Crm;
 using Lp.Model.EarlyBound;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using System;
 
-namespace Lp.DataAccess.Tests.IntegrationTests
+namespace Lp.TestSupport.IntegrationTests
 {
     public class DataAccessIntegrationTestSupport
     {

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Connector;
+    using Lp.TestSupport.Connector;
     using Model.Crm;
     using Model.EarlyBound;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
