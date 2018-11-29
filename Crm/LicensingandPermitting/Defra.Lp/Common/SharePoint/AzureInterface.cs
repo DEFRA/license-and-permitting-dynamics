@@ -119,17 +119,24 @@ namespace Defra.Lp.Common.SharePoint
                 }
 
                 AddInsertFileParametersToRequest(request, attachmentData);
-
-                var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
-                if (resultBody != null)
+                // Check there is a file to upload
+                if (request.HasBody())
                 {
-                    TracingService.Trace("Returned from LogicApp OK");
-                    if (attachmentData != null)
+                    var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
+                    if (resultBody != null)
                     {
-                        // Delete attachment from CRM
-                        attachmentData[ActivityMimeAttachment.Body] = string.Empty;
-                        Service.Update(attachmentData);
+                        TracingService.Trace("Returned from LogicApp OK");
+                        if (attachmentData != null)
+                        {
+                            // Delete attachment from CRM
+                            attachmentData[ActivityMimeAttachment.Body] = string.Empty;
+                            Service.Update(attachmentData);
+                        }
                     }
+                }
+                else
+                {
+                    TracingService.Trace("No file body found for Attachment. Logic app not called.");
                 }
             }
             else
@@ -192,20 +199,51 @@ namespace Defra.Lp.Common.SharePoint
                 throw new InvalidPluginExecutionException("No annotation data record returned from query");
             }
 
-            AddInsertFileParametersToRequest(request, annotationData);
-
-            var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
-            if (resultBody != null)
+            // Check that Note is regarding an application or a case
+            if (IsRegardingValidForNote(annotationData))
             {
-                TracingService.Trace("Returned from LogicApp OK");
-                if (annotationData != null)
+                AddInsertFileParametersToRequest(request, annotationData);
+                // Check there is a file to upload
+                if (request.HasBody())
                 {
-                    // Delete annotation from CRM and a note to say thats what we've done!
-                    annotationData[Annotation.NoteText] = "File has been uploaded to SharePoint.";
-                    annotationData[Annotation.DocumentBody] = string.Empty;
-                    Service.Update(annotationData);
+                    var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
+                    if (resultBody != null)
+                    {
+                        TracingService.Trace("Returned from LogicApp OK");
+                        if (annotationData != null)
+                        {
+                            // Delete annotation from CRM and a note to say thats what we've done!
+                            annotationData[Annotation.NoteText] = "File has been uploaded to SharePoint.";
+                            annotationData[Annotation.DocumentBody] = string.Empty;
+                            Service.Update(annotationData);
+                        }
+                    }
+                }
+                else
+                {
+                    TracingService.Trace("No file body found for Note. Logic app not called.");
                 }
             }
+        }
+
+        private bool IsRegardingValidForNote(Entity annotationData)
+        {
+            // Got an application, thats OK
+            if (annotationData.Contains("application.defra_applicationid") 
+                && !string.IsNullOrEmpty(((Guid)((AliasedValue)annotationData.Attributes["application.defra_applicationid"]).Value).ToString()))
+            {
+                TracingService.Trace("Got an application - OK.");
+                return true;
+            }
+            // Got a case, thats OK
+            if (annotationData.Contains("case.incidentid")
+                && !string.IsNullOrEmpty(((Guid)((AliasedValue)annotationData.Attributes["case.incidentid"]).Value).ToString()))
+            {
+                TracingService.Trace("Got a case - OK.");
+                return true;
+            }
+            TracingService.Trace("Note not processed as its not a case or an application.");
+            return false;
         }
 
         internal void UpdateMetaData(EntityReference entity, string customer, string siteDetails, string permitDetails)
@@ -655,8 +693,7 @@ namespace Defra.Lp.Common.SharePoint
             queryActivityMimeAttachment.Criteria.AddCondition(ActivityMimeAttachment.Id, ConditionOperator.Equal, recordId);
 
             // Add link-entity QEactivitymimeattachment_email. Inner join as it must be regarding an Email
-            var queryActivityMimeAttachmentEmail = queryActivityMimeAttachment.AddLink(Email.EntityLogicalName, 
-                                                                                  ActivityMimeAttachment.ObjectId,                                                             Email.ActivityId);
+            var queryActivityMimeAttachmentEmail = queryActivityMimeAttachment.AddLink(Email.EntityLogicalName, ActivityMimeAttachment.ObjectId, Email.ActivityId);
             queryActivityMimeAttachmentEmail.EntityAlias = "email";
 
             // Add columns to QEactivitymimeattachment_email.Columns

@@ -28,7 +28,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Lp.DataAccess.Tests.Connector
+namespace Lp.TestSupport.Connector
 {
     /// <summary>
     /// Management utility for the Device Id
