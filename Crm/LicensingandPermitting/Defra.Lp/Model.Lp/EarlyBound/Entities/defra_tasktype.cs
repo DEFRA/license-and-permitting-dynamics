@@ -12,7 +12,7 @@ namespace Lp.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum defra_townState
+	public enum defra_tasktypeState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -26,9 +26,9 @@ namespace Lp.Model.EarlyBound
 	/// 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_town")]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_tasktype")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public partial class defra_town : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	public partial class defra_tasktype : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		public static class Fields
@@ -36,10 +36,9 @@ namespace Lp.Model.EarlyBound
 			public const string CreatedBy = "createdby";
 			public const string CreatedOn = "createdon";
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
-			public const string defra_Country = "defra_country";
 			public const string defra_name = "defra_name";
-			public const string defra_townId = "defra_townid";
-			public const string Id = "defra_townid";
+			public const string defra_tasktypeId = "defra_tasktypeid";
+			public const string Id = "defra_tasktypeid";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedOn = "modifiedon";
@@ -54,25 +53,24 @@ namespace Lp.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
-			public const string defra_country_defra_town = "defra_country_defra_town";
 		}
 		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_town() : 
+		public defra_tasktype() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string EntityLogicalName = "defra_town";
+		public const string EntityLogicalName = "defra_tasktype";
 		
-		public const string PrimaryIdAttribute = "defra_townid";
+		public const string PrimaryIdAttribute = "defra_tasktypeid";
 		
 		public const string PrimaryNameAttribute = "defra_name";
 		
-		public const int EntityTypeCode = 10011;
+		public const int EntityTypeCode = 10080;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -143,26 +141,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_country")]
-		public Microsoft.Xrm.Sdk.EntityReference defra_Country
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_country");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_Country");
-				this.SetAttributeValue("defra_country", value);
-				this.OnPropertyChanged("defra_Country");
-			}
-		}
-		
-		/// <summary>
 		/// The name of the custom entity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_name")]
@@ -185,19 +163,19 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_townid")]
-		public System.Nullable<System.Guid> defra_townId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_tasktypeid")]
+		public System.Nullable<System.Guid> defra_tasktypeId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_townid");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_tasktypeid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_townId");
-				this.SetAttributeValue("defra_townid", value);
+				this.OnPropertyChanging("defra_tasktypeId");
+				this.SetAttributeValue("defra_tasktypeid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -206,11 +184,11 @@ namespace Lp.Model.EarlyBound
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("defra_townId");
+				this.OnPropertyChanged("defra_tasktypeId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_townid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_tasktypeid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -221,7 +199,7 @@ namespace Lp.Model.EarlyBound
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.defra_townId = value;
+				this.defra_tasktypeId = value;
 			}
 		}
 		
@@ -371,10 +349,10 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Status of the Town
+		/// Status of the Application Task Type
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<Lp.Model.EarlyBound.defra_townState> StateCode
+		public System.Nullable<Lp.Model.EarlyBound.defra_tasktypeState> StateCode
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -382,7 +360,7 @@ namespace Lp.Model.EarlyBound
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((Lp.Model.EarlyBound.defra_townState)(System.Enum.ToObject(typeof(Lp.Model.EarlyBound.defra_townState), optionSet.Value)));
+					return ((Lp.Model.EarlyBound.defra_tasktypeState)(System.Enum.ToObject(typeof(Lp.Model.EarlyBound.defra_tasktypeState), optionSet.Value)));
 				}
 				else
 				{
@@ -406,7 +384,7 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Town
+		/// Reason for the status of the Application Task Type
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -479,43 +457,42 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N defra_town_defra_address
+		/// 1:N defra_tasktype_defra_applicationtask_application_task_typeid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_town_defra_address")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_address> defra_town_defra_address
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_tasktype_defra_applicationtask_application_task_typeid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationtask> defra_tasktype_defra_applicationtask_application_task_typeid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_address>("defra_town_defra_address", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtask>("defra_tasktype_defra_applicationtask_application_task_typeid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_town_defra_address");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_address>("defra_town_defra_address", null, value);
-				this.OnPropertyChanged("defra_town_defra_address");
+				this.OnPropertyChanging("defra_tasktype_defra_applicationtask_application_task_typeid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtask>("defra_tasktype_defra_applicationtask_application_task_typeid", null, value);
+				this.OnPropertyChanged("defra_tasktype_defra_applicationtask_application_task_typeid");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 defra_country_defra_town
+		/// 1:N defra_tasktype_defra_applicationtaskdefinition_tasktypeid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_country")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_country_defra_town")]
-		public Lp.Model.EarlyBound.defra_country defra_country_defra_town
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_tasktype_defra_applicationtaskdefinition_tasktypeid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationtaskdefinition> defra_tasktype_defra_applicationtaskdefinition_tasktypeid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_country>("defra_country_defra_town", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtaskdefinition>("defra_tasktype_defra_applicationtaskdefinition_tasktypeid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_country_defra_town");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_country>("defra_country_defra_town", null, value);
-				this.OnPropertyChanged("defra_country_defra_town");
+				this.OnPropertyChanging("defra_tasktype_defra_applicationtaskdefinition_tasktypeid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtaskdefinition>("defra_tasktype_defra_applicationtaskdefinition_tasktypeid", null, value);
+				this.OnPropertyChanged("defra_tasktype_defra_applicationtaskdefinition_tasktypeid");
 			}
 		}
 		
@@ -524,7 +501,7 @@ namespace Lp.Model.EarlyBound
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_town(object anonymousType) : 
+		public defra_tasktype(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -542,9 +519,9 @@ namespace Lp.Model.EarlyBound
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["defra_townid"] = base.Id;
+                        Attributes["defra_tasktypeid"] = base.Id;
                         break;
-                    case "defra_townid":
+                    case "defra_tasktypeid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -562,12 +539,12 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public virtual defra_town_StatusCode? StatusCodeEnum
+		public virtual defra_tasktype_StatusCode? StatusCodeEnum
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((defra_town_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+				return ((defra_tasktype_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set

@@ -31,6 +31,47 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_preapplication : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_agentid = "defra_agentid";
+			public const string defra_applicationnumber = "defra_applicationnumber";
+			public const string defra_applicationtype = "defra_applicationtype";
+			public const string defra_customerid = "defra_customerid";
+			public const string defra_deactivatedon = "defra_deactivatedon";
+			public const string defra_lastapplicationissuedid = "defra_lastapplicationissuedid";
+			public const string defra_name = "defra_name";
+			public const string defra_preapplicationId = "defra_preapplicationid";
+			public const string Id = "defra_preapplicationid";
+			public const string defra_primarycontactid = "defra_primarycontactid";
+			public const string defra_siteid = "defra_siteid";
+			public const string defra_timespent = "defra_timespent";
+			public const string defra_totaltimespent = "defra_totaltimespent";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_account_defra_preapplication_agentid = "defra_account_defra_preapplication_agentid";
+			public const string defra_account_defra_preapplication_customerid = "defra_account_defra_preapplication_customerid";
+			public const string defra_application_defra_preapplication_lastapplicationissuedid = "defra_application_defra_preapplication_lastapplicationissuedid";
+			public const string defra_contact_defra_preapplication_agentid = "defra_contact_defra_preapplication_agentid";
+			public const string defra_contact_defra_preapplication_customerid = "defra_contact_defra_preapplication_customerid";
+			public const string defra_contact_defra_preapplication_primarycontactid = "defra_contact_defra_preapplication_primarycontactid";
+			public const string defra_location_defra_preapplication_siteid = "defra_location_defra_preapplication_siteid";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
