@@ -65,6 +65,11 @@ namespace Lp.Model.Crm
         /// Lookup
         /// </summary>
         public static string ItemId = "defra_itemid";
+
+        /// <summary>
+        /// Permit lookup
+        /// </summary>
+        public static string PermitId = "defra_permitid";
     }
 
     /// <summary>
