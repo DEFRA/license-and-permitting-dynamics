@@ -35,6 +35,9 @@
                                             </filter>
                                             <link-entity name='defra_location' from='{2}' to='{2}' alias='location' >
                                               <attribute name='defra_name' />
+                                              <filter>
+                                                <condition attribute='statecode' operator='eq' value='0' />
+                                              </filter>
                                               <link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' alias='locationdetail' >
                                                 <attribute name='defra_gridreferenceid' />
                                                 <link-entity name='defra_address' from='defra_addressid' to='defra_addressid' link-type='outer' alias='address' >
@@ -58,17 +61,27 @@
                     var siteDetail = string.Empty;
                     var siteAddress = string.Empty;
                     var gridRef = string.Empty;
+                    if (results.Entities[i].Contains("location.defra_name"))
+                    {
+                        siteDetail = (string)results.Entities[i].GetAttributeValue<AliasedValue>("location.defra_name").Value;
+                        siteDetail = siteDetail.Trim();
+                    }
                     if (results.Entities[i].Contains("locationdetail.defra_gridreferenceid"))
                     {
                         gridRef = (string)results.Entities[i].GetAttributeValue<AliasedValue>("locationdetail.defra_gridreferenceid").Value;
+                        gridRef = gridRef.Trim();
                     }
                     if (results.Entities[i].Contains("address.defra_name"))
                     {
                         siteAddress = (string)results.Entities[i].GetAttributeValue<AliasedValue>("address.defra_name").Value;
+                        siteAddress = siteAddress.Trim();
                     }
                     if (!string.IsNullOrEmpty(siteAddress))
                     {
-                        siteDetail = siteAddress;
+                        if (!siteAddress.Equals(siteDetail, StringComparison.OrdinalIgnoreCase))
+                        {
+                            siteDetail = string.Format("{0}, {1}", siteDetail, siteAddress);
+                        }
                     }
                     if (!string.IsNullOrEmpty(gridRef))
                     {
@@ -78,7 +91,10 @@
                         }
                         else
                         {
-                            siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            if (!gridRef.Equals(siteDetail, StringComparison.OrdinalIgnoreCase))
+                            {
+                                siteDetail = string.Format("{0}, {1}", siteDetail, gridRef);
+                            }
                         }
                     }
                     returnData = (i == 0) ? siteDetail : returnData + "; " + siteDetail;
