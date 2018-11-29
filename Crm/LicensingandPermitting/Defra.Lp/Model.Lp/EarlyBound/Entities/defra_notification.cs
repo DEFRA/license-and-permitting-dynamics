@@ -37,6 +37,83 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_notification : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string ActivityAdditionalParams = "activityadditionalparams";
+			public const string ActivityId = "activityid";
+			public const string Id = "activityid";
+			public const string ActivityTypeCode = "activitytypecode";
+			public const string ActualDurationMinutes = "actualdurationminutes";
+			public const string ActualEnd = "actualend";
+			public const string ActualStart = "actualstart";
+			public const string Bcc = "bcc";
+			public const string Cc = "cc";
+			public const string Community = "community";
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string Customers = "customers";
+			public const string DeliveryLastAttemptedOn = "deliverylastattemptedon";
+			public const string DeliveryPriorityCode = "deliveryprioritycode";
+			public const string Description = "description";
+			public const string ExchangeItemId = "exchangeitemid";
+			public const string ExchangeRate = "exchangerate";
+			public const string ExchangeWebLink = "exchangeweblink";
+			public const string From = "from";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string InstanceTypeCode = "instancetypecode";
+			public const string IsBilled = "isbilled";
+			public const string IsMapiPrivate = "ismapiprivate";
+			public const string IsRegularActivity = "isregularactivity";
+			public const string IsWorkflowCreated = "isworkflowcreated";
+			public const string LastOnHoldTime = "lastonholdtime";
+			public const string LeftVoiceMail = "leftvoicemail";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OnHoldTime = "onholdtime";
+			public const string OptionalAttendees = "optionalattendees";
+			public const string Organizer = "organizer";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string Partners = "partners";
+			public const string PostponeActivityProcessingUntil = "postponeactivityprocessinguntil";
+			public const string PriorityCode = "prioritycode";
+			public const string ProcessId = "processid";
+			public const string RegardingObjectId = "regardingobjectid";
+			public const string RequiredAttendees = "requiredattendees";
+			public const string Resources = "resources";
+			public const string ScheduledDurationMinutes = "scheduleddurationminutes";
+			public const string ScheduledEnd = "scheduledend";
+			public const string ScheduledStart = "scheduledstart";
+			public const string SenderMailboxId = "sendermailboxid";
+			public const string SentOn = "senton";
+			public const string SeriesId = "seriesid";
+			public const string ServiceId = "serviceid";
+			public const string SLAId = "slaid";
+			public const string SLAInvokedId = "slainvokedid";
+			public const string SortDate = "sortdate";
+			public const string StageId = "stageid";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string Subject = "subject";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string To = "to";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string TraversedPath = "traversedpath";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string account_defra_notifications = "account_defra_notifications";
+			public const string contact_defra_notifications = "contact_defra_notifications";
+			public const string defra_application_defra_notifications = "defra_application_defra_notifications";
+			public const string defra_payment_defra_notifications = "defra_payment_defra_notifications";
+			public const string defra_permit_defra_notifications = "defra_permit_defra_notifications";
+			public const string incident_defra_notifications = "incident_defra_notifications";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

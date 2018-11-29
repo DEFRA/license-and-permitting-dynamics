@@ -31,6 +31,36 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_itemdetail : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_itemdetailId = "defra_itemdetailid";
+			public const string Id = "defra_itemdetailid";
+			public const string defra_itemdetailtypeid = "defra_itemdetailtypeid";
+			public const string defra_itemid = "defra_itemid";
+			public const string defra_parentitemid = "defra_parentitemid";
+			public const string defra_value = "defra_value";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_item_defra_itemdetail_itemid = "defra_item_defra_itemdetail_itemid";
+			public const string defra_item_defra_itemdetail_parentitemid = "defra_item_defra_itemdetail_parentitemid";
+			public const string defra_itemdetailtype_defra_itemdetail_itemdetailtypeid = "defra_itemdetailtype_defra_itemdetail_itemdetailtypeid";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

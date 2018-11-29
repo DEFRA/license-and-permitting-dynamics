@@ -31,6 +31,46 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_dulymadechecklist : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_adequatesiteconditionreport = "defra_adequatesiteconditionreport";
+			public const string defra_adequatesiteplan = "defra_adequatesiteplan";
+			public const string defra_adequatetechnicalability = "defra_adequatetechnicalability";
+			public const string defra_appendix1completed = "defra_appendix1completed";
+			public const string defra_applicationId = "defra_applicationid";
+			public const string defra_baselinereportacceptable = "defra_baselinereportacceptable";
+			public const string defra_completedbyid = "defra_completedbyid";
+			public const string defra_completedon = "defra_completedon";
+			public const string defra_confirmedassrp = "defra_confirmedassrp";
+			public const string defra_dulymadechecklistId = "defra_dulymadechecklistid";
+			public const string Id = "defra_dulymadechecklistid";
+			public const string defra_fireplanadequate = "defra_fireplanadequate";
+			public const string defra_general_notes = "defra_general_notes";
+			public const string defra_miningwastemanagementplanacceptable = "defra_miningwastemanagementplanacceptable";
+			public const string defra_name = "defra_name";
+			public const string defra_rejectedstatusreason = "defra_rejectedstatusreason";
+			public const string defra_samplingreport = "defra_samplingreport";
+			public const string defra_wasterecoveryplanacceptable = "defra_wasterecoveryplanacceptable";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_application_defra_dulymadechecklist = "defra_application_defra_dulymadechecklist";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

@@ -31,6 +31,31 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_application_subtypes : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_application_subtypesId = "defra_application_subtypesid";
+			public const string Id = "defra_application_subtypesid";
+			public const string defra_application_type = "defra_application_type";
+			public const string defra_name = "defra_name";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -449,6 +474,31 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtype
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
+			"e")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
+						"e", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
+						"e");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
+						"e", null, value);
+				this.OnPropertyChanged("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
+						"e");
 			}
 		}
 		

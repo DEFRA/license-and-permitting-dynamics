@@ -60,6 +60,16 @@ namespace Lp.Model.Crm
         /// Application Line Type
         /// </summary>
         public const string LineType = "defra_linetype";
+
+        /// <summary>
+        /// Lookup
+        /// </summary>
+        public static string ItemId = "defra_itemid";
+
+        /// <summary>
+        /// Permit lookup
+        /// </summary>
+        public static string PermitId = "defra_permitid";
     }
 
     /// <summary>
