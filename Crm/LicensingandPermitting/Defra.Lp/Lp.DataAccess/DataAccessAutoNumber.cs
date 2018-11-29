@@ -23,7 +23,7 @@
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(defra_autonumbering.Fields.StateCode, ConditionOperator.Equal, defra_autonumberingState.Active),
+                        new ConditionExpression(defra_autonumbering.Fields.StateCode, ConditionOperator.Equal, (int)defra_autonumberingState.Active),
                         new ConditionExpression(defra_autonumbering.Fields.defra_name, ConditionOperator.Equal, autoNumberName)
                     }
                 }
@@ -79,6 +79,7 @@
             string paddedNumber = currentNumber.ToString("D" + numberLength);
             TracingService.Trace("CurrentNumber: {0}", paddedNumber);
             TracingService.Trace("Suffix: {0}", suffix);
+            TracingService.Trace("Max Digits: {0}, ready from db: {1} ", numberLength, lockedAutonumber.Contains(defra_autonumbering.Fields.defra_numberlength));
 
             var nextPermitNumber = $"{prefix}{paddedNumber}{suffix}";
 
