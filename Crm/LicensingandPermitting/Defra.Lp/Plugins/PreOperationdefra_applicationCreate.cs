@@ -215,9 +215,8 @@ namespace Defra.Lp.Plugins
             tracing.Trace("GetPermitNumber() start...");
 
             //Get the next permit number
-            PermitNumbering permitAutoNumbering = new PermitNumbering(context, tracing, service);
-            string permitNumber = permitAutoNumbering.GetNextPermitNumber();
-
+            DataAccessAutoNumber permitAutoNumbering = new DataAccessAutoNumber(service, tracing);
+            string permitNumber = permitAutoNumbering.GetNextPermitNumber("Waste");
             tracing.Trace("GetPermitNumber() Next permit number {0} hes been retrieved", permitNumber);
             return permitNumber;
         }

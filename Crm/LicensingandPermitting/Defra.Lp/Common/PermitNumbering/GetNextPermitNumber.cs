@@ -4,63 +4,62 @@
 // <author></author>
 // <date>3/18/2018 1:12:58 PM</date>
 // <summary>Implements the GetNextPermitNumber Workflow Activity.</summary>
-
-
-using Lp.Model.EarlyBound;
-
 namespace Common.PermitNumbering
 {
     using System;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using Core.DataAccess.Base;
 
-    public class DataAccessAutoNumber : DataAccessBase
+    public class PermitNumbering
     {
+        private IPluginExecutionContext Context { get; set; }
 
-        public DataAccessAutoNumber(IOrganizationService organisationService, ITracingService tracingService) : base(organisationService, tracingService)
+        private ITracingService TracingService { get; set; }
+
+        private IOrganizationService Service { get; set; }
+
+        public PermitNumbering(IPluginExecutionContext context, ITracingService tracingService, IOrganizationService service)
         {
+            this.Context = context;
+            this.TracingService = tracingService;
+            this.Service = service;
+
+            tracingService.Trace("Entered PermitNumbering, Correlation Id: {0}, Initiating User: {1}",
+                context.CorrelationId,
+                context.InitiatingUserId);
         }
 
-        public string GetNextPermitNumber(string autoNumberName)
+        public string GetNextPermitNumber()
         {
             //Retrieve the autonumbering record
-            QueryExpression query = new QueryExpression(defra_autonumbering.EntityLogicalName)
+            QueryExpression query = new QueryExpression("defra_autonumbering")
             {
-                ColumnSet = new ColumnSet(defra_autonumbering.Fields.defra_locked),
+                ColumnSet = new ColumnSet("defra_locked"),
                 Criteria = new FilterExpression()
                 {
-                    FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(defra_autonumbering.Fields.StateCode, ConditionOperator.Equal, defra_autonumberingState.Active),
-                        new ConditionExpression(defra_autonumbering.Fields.defra_name, ConditionOperator.Equal, autoNumberName)
+                        new ConditionExpression("statecode", ConditionOperator.Equal, 0)
+                        //new ConditionExpression("defra_name", ConditionOperator.Equal, "Waste");
                     }
                 }
             };
-
-            EntityCollection results = OrganisationService.RetrieveMultiple(query);
+            EntityCollection results = Service.RetrieveMultiple(query);
 
             //Throw an exception if the autonumbering record does not exist
             if (results.Entities.Count == 0)
-            {
                 throw new InvalidPluginExecutionException("The autonumbering record cannot be found!");
-            }
-                
 
             //Pre-lock the autonumbering table. Refer to the Microsoft Scalability White Paper for more details https://www.microsoft.com/en-us/download/details.aspx?id=45905
             Entity autoNum = new Entity(results.Entities[0].LogicalName) { Id = results.Entities[0].Id };
-            autoNum[defra_autonumbering.Fields.defra_locked] = true;
-            OrganisationService.Update(autoNum);
+            autoNum["defra_locked"] = true;
+            Service.Update(autoNum);
 
             //Retrieve safely the autonumbering record
-            var lockedAutonumber = OrganisationService.Retrieve(
-                autoNum.LogicalName, 
-                autoNum.Id, 
-                new ColumnSet(defra_autonumbering.Fields.defra_prefix, defra_autonumbering.Fields.defra_suffix, defra_autonumbering.Fields.defra_currentnumber));
-            var currentNumber = (int)lockedAutonumber[defra_autonumbering.Fields.defra_currentnumber];
-            var prefix = lockedAutonumber.GetAttributeValue<string>(defra_autonumbering.Fields.defra_prefix);
-            var suffix = lockedAutonumber.GetAttributeValue<string>(defra_autonumbering.Fields.defra_suffix);
+            var lockedAutonumber = Service.Retrieve(autoNum.LogicalName, autoNum.Id, new ColumnSet(new string[] { "defra_prefix", "defra_suffix", "defra_currentnumber" }));
+            var currentNumber = (int)lockedAutonumber["defra_currentnumber"];
+            var prefix = lockedAutonumber.GetAttributeValue<string>("defra_prefix");
+            var suffix = lockedAutonumber.GetAttributeValue<string>("defra_suffix");
 
             // Increment suffix
             if (currentNumber == 9999)
