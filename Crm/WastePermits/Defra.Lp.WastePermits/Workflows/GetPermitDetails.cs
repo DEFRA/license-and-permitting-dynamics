@@ -13,10 +13,11 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
+using WastePermits.DataAccess;
 
 namespace Defra.Lp.WastePermits.Workflows
 {
-    using DAL;
+
 
     /// </summary>    
     public class GetPermitDetails: WorkFlowActivityBase
@@ -42,7 +43,7 @@ namespace Defra.Lp.WastePermits.Workflows
         /// <summary>
         /// Executes the WorkFlow.
         /// </summary>
-        /// <param name="crmWorkflowContext">The <see cref="LocalWorkflowContext"/> which contains the
+        /// <param name="crmWorkflowContext">The <see cref="WorkFlowActivityBase.LocalWorkflowContext"/> which contains the
         /// <param name="executionContext" > <see cref="CodeActivityContext"/>
         /// </param>       
         /// <remarks>

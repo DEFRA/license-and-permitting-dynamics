@@ -1,5 +1,4 @@
-﻿
-namespace WastePermits.DataAccess
+﻿namespace WastePermits.DataAccess
 {
     using System;
     using Core.DataAccess.Base;
@@ -13,10 +12,13 @@ namespace WastePermits.DataAccess
     public class DataAccessItem : DataAccessBase, IDataAccessItem
     {
 
+        /// <summary>
+        /// Constructor for DAL class
+        /// </summary>
+        /// <param name="organisationService"></param>
+        /// <param name="tracingService"></param>
         public DataAccessItem(IOrganizationService organisationService, ITracingService tracingService)
-            : base(organisationService, tracingService)
-        {
-        }
+            : base(organisationService, tracingService) {}
 
         /// <summary>
         ///  Returns a list of assessment item records that are linked to a given activity
@@ -26,10 +28,10 @@ namespace WastePermits.DataAccess
         public EntityCollection GetAssessmentsForActivity( Guid activity)
         {
             // Instantiate QueryExpression QEdefra_itemdetail
-            var qeIemDetail = new QueryExpression("defra_itemdetail");
+            var qeIemDetail = new QueryExpression(defra_itemdetail.EntityLogicalName);
 
             // Add columns to QEdefra_itemdetail.ColumnSet
-            qeIemDetail.ColumnSet.AddColumns("defra_itemid", "defra_parentitemid");
+            qeIemDetail.ColumnSet.AddColumns(defra_itemdetail"defra_itemid", "defra_parentitemid");
 
             // Define filter QEdefra_itemdetail.Criteria
             qeIemDetail.Criteria.AddCondition("defra_parentitemid", ConditionOperator.Equal, activity.ToString());
