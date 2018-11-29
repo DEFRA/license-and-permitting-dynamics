@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using Lp.DataAccess.Interfaces;
 using Lp.Model.Crm;
 using WastePermits.DataAccess;
-using WastePermits.Model.Crm;
+using WastePermits.Model.EarlyBound;
 using Application = Lp.Model.Crm.Application;
 
 
@@ -619,19 +619,19 @@ namespace Defra.Lp.WastePermits.Plugins
             {
                 ColumnSet =
                     new ColumnSet(
-                        ApplicationLine.NpsDetermination,
-                        ApplicationLineWaste.LocationScreeningRequired,
-                        ApplicationLine.State,
-                        ApplicationLine.LineType,
-                        ApplicationLine.StandardRule),
+                        defra_applicationline.Fields.defra_npsdetermination,
+                        defra_applicationline.Fields.defra_locationscreeningrequired,
+                        defra_applicationline.Fields.StateCode,
+                        defra_applicationline.Fields.defra_linetype,
+                        defra_applicationline.Fields.defra_standardruleId),
                 Criteria = new FilterExpression()
                 {
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(ApplicationLine.ApplicationId, ConditionOperator.Equal, applicationId),
-                        new ConditionExpression(ApplicationLine.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
-                        new ConditionExpression(ApplicationLine.LineType, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
+                        new ConditionExpression(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal, applicationId),
+                        new ConditionExpression(defra_applicationline.Fields.StateCode, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
+                        new ConditionExpression(defra_applicationline.Fields.defra_linetype, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
                     }
                 }
             };

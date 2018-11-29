@@ -222,6 +222,30 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_applicationtask"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_applicationtask> defra_applicationtaskSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_applicationtask>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_applicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_applicationtaskdefinition> defra_applicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_applicationtaskdefinition>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_areacomment"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_areacomment> defra_areacommentSet
@@ -362,6 +386,18 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_item>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_itemapplicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition>();
 			}
 		}
 		
@@ -638,6 +674,18 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_standardruletype>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_tasktype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_tasktype> defra_tasktypeSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_tasktype>();
 			}
 		}
 		

@@ -4,6 +4,9 @@
     using Microsoft.Xrm.Sdk.Messages;
     using Microsoft.Xrm.Sdk.Query;
 
+    /// <summary>
+    /// Data access layer used to query CRM for standard rule related data
+    /// </summary>
     public static class DataAccessStandardRule
     {
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef)

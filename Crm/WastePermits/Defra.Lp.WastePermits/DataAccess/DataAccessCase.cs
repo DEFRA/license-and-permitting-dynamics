@@ -4,8 +4,19 @@
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
 
+    /// <summary>
+    /// Data access layer for CRM queries relating to Cases
+    /// </summary>
     public static class DataAccessCase
     {
+
+        /// <summary>
+        /// Returns a count of active cases of a given type linked to an application
+        /// </summary>
+        /// <param name="service">CRM service</param>
+        /// <param name="applicationId">Application to check</param>
+        /// <param name="caseTypes">Case type to filter by</param>
+        /// <returns>Case count</returns>
         public static Int32 CountActiveCasesOfType(this IOrganizationService service, Guid applicationId, string caseTypes)
         {
             var addressTypeXml = string.Empty;          

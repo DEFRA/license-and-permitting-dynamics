@@ -61,7 +61,6 @@
     <Compile Include="Crm\ApplicationWaste.cs" />
     <Compile Include="EarlyBound\Entities\Account.cs" />
     <Compile Include="EarlyBound\Entities\Contact.cs" />
-    <Compile Include="EarlyBound\Entities\CrmWasteServiceContext.cs" />
     <Compile Include="EarlyBound\Entities\defra_activity.cs" />
     <Compile Include="EarlyBound\Entities\defra_activitytype.cs" />
     <Compile Include="EarlyBound\Entities\defra_address.cs" />
@@ -75,6 +74,8 @@
     <Compile Include="EarlyBound\Entities\defra_applicationquestion.cs" />
     <Compile Include="EarlyBound\Entities\defra_applicationquestiongroup.cs" />
     <Compile Include="EarlyBound\Entities\defra_applicationquestionoption.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationtask.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationtaskdefinition.cs" />
     <Compile Include="EarlyBound\Entities\defra_application_subtypes.cs" />
     <Compile Include="EarlyBound\Entities\defra_areacomment.cs" />
     <Compile Include="EarlyBound\Entities\defra_autonumbering.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="EarlyBound\Entities\defra_facilitytype.cs" />
     <Compile Include="EarlyBound\Entities\defra_industryscheme.cs" />
     <Compile Include="EarlyBound\Entities\defra_item.cs" />
+    <Compile Include="EarlyBound\Entities\defra_itemapplicationtaskdefinition.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemdetail.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemdetailtype.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemtype.cs" />
@@ -111,13 +113,13 @@
     <Compile Include="EarlyBound\Entities\defra_sitemapsecurity.cs" />
     <Compile Include="EarlyBound\Entities\defra_standardrule.cs" />
     <Compile Include="EarlyBound\Entities\defra_standardruletype.cs" />
+    <Compile Include="EarlyBound\Entities\defra_tasktype.cs" />
     <Compile Include="EarlyBound\Entities\defra_town.cs" />
     <Compile Include="EarlyBound\Entities\defra_wasteparams.cs" />
     <Compile Include="EarlyBound\Entities\defra_wastetype.cs" />
     <Compile Include="EarlyBound\Entities\defra_wastetypedetail.cs" />
     <Compile Include="EarlyBound\Entities\defra_webdata.cs" />
     <Compile Include="EarlyBound\Entities\Incident.cs" />
-    <Compile Include="EarlyBound\Entities\WasteCrmServiceContext.cs" />
     <Compile Include="EarlyBound\Entities\WastePermitsCrmServiceContext.cs" />
     <Compile Include="EarlyBound\OptionSets\Account_AccountCategoryCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Account_AccountClassificationCode.cs" />
@@ -299,6 +301,9 @@
     <Compile Include="EarlyBound\OptionSets\defra_applicationquestionoption_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationquestion_defra_applies_if_parent_answer_condition.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationquestion_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_ApplicationTaskCompletion.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationtaskdefinition_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationtask_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_ApplicationType.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_applicant_type.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_areahandoverdocument.cs" />
@@ -314,6 +319,7 @@
     <Compile Include="EarlyBound\OptionSets\defra_application_question_types.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_subtypes_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_application_task_scope.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_defra_areacommentscategory.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_InstanceTypeCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_PriorityCode.cs" />
@@ -332,6 +338,7 @@
     <Compile Include="EarlyBound\OptionSets\defra_facilitytype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_facility_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_industryscheme_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_itemapplicationtaskdefinition_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemdetailtype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemdetail_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemtype_StatusCode.cs" />
@@ -368,6 +375,7 @@
     <Compile Include="EarlyBound\OptionSets\defra_standardruletype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_standardrule_defra_wamitabrisklevel.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_standardrule_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_tasktype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_town_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_wasteparams_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_wastetypedetail_StatusCode.cs" />
@@ -794,12 +802,6 @@
     <Compile Include="EarlyBound\OptionSets\Workflow_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Workflow_Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Lp.Model.csproj">
-      <Project>{5db8f9e1-5776-41ae-bec7-012f16bc77d8}</Project>
-      <Name>Lp.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="EarlyBound\EarlyBoundGeneratorSettings.xml" />

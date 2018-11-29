@@ -12,7 +12,7 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum defra_application_subtypesState
+	public enum defra_applicationtaskState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -26,9 +26,9 @@ namespace WastePermits.Model.EarlyBound
 	/// 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_application_subtypes")]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_applicationtask")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public partial class defra_application_subtypes : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	public partial class defra_applicationtask : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		public static class Fields
@@ -36,10 +36,15 @@ namespace WastePermits.Model.EarlyBound
 			public const string CreatedBy = "createdby";
 			public const string CreatedOn = "createdon";
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
-			public const string defra_application_subtypesId = "defra_application_subtypesid";
-			public const string Id = "defra_application_subtypesid";
-			public const string defra_application_type = "defra_application_type";
+			public const string defra_application_task_typeid = "defra_application_task_typeid";
+			public const string defra_applicationid = "defra_applicationid";
+			public const string defra_applicationline = "defra_applicationline";
+			public const string defra_applicationtaskdefinitionid = "defra_applicationtaskdefinitionid";
+			public const string defra_applicationtaskId = "defra_applicationtaskid";
+			public const string Id = "defra_applicationtaskid";
+			public const string defra_completed = "defra_completed";
 			public const string defra_name = "defra_name";
+			public const string defra_notes = "defra_notes";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedOn = "modifiedon";
@@ -54,24 +59,29 @@ namespace WastePermits.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
+			public const string defra_application_defra_applicationtask_applicationid = "defra_application_defra_applicationtask_applicationid";
+			public const string defra_applicationline_defra_applicationtask_applicationline = "defra_applicationline_defra_applicationtask_applicationline";
+			public const string defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefinitionid = "defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+		"tionid";
+			public const string defra_tasktype_defra_applicationtask_application_task_typeid = "defra_tasktype_defra_applicationtask_application_task_typeid";
 		}
 		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_application_subtypes() : 
+		public defra_applicationtask() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string EntityLogicalName = "defra_application_subtypes";
+		public const string EntityLogicalName = "defra_applicationtask";
 		
-		public const string PrimaryIdAttribute = "defra_application_subtypesid";
+		public const string PrimaryIdAttribute = "defra_applicationtaskid";
 		
 		public const string PrimaryNameAttribute = "defra_name";
 		
-		public const int EntityTypeCode = 10064;
+		public const int EntityTypeCode = 10097;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -142,21 +152,101 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Unique identifier for entity instances
+		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_subtypesid")]
-		public System.Nullable<System.Guid> defra_application_subtypesId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_task_typeid")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_application_task_typeid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_application_subtypesid");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_application_task_typeid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_application_subtypesId");
-				this.SetAttributeValue("defra_application_subtypesid", value);
+				this.OnPropertyChanging("defra_application_task_typeid");
+				this.SetAttributeValue("defra_application_task_typeid", value);
+				this.OnPropertyChanged("defra_application_task_typeid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationid")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applicationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationid");
+				this.SetAttributeValue("defra_applicationid", value);
+				this.OnPropertyChanged("defra_applicationid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationline")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_applicationline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applicationline");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationline");
+				this.SetAttributeValue("defra_applicationline", value);
+				this.OnPropertyChanged("defra_applicationline");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationtaskdefinitionid")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_applicationtaskdefinitionid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applicationtaskdefinitionid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationtaskdefinitionid");
+				this.SetAttributeValue("defra_applicationtaskdefinitionid", value);
+				this.OnPropertyChanged("defra_applicationtaskdefinitionid");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationtaskid")]
+		public System.Nullable<System.Guid> defra_applicationtaskId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_applicationtaskid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationtaskId");
+				this.SetAttributeValue("defra_applicationtaskid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -165,11 +255,11 @@ namespace WastePermits.Model.EarlyBound
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("defra_application_subtypesId");
+				this.OnPropertyChanged("defra_applicationtaskId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_subtypesid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationtaskid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -180,27 +270,27 @@ namespace WastePermits.Model.EarlyBound
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.defra_application_subtypesId = value;
+				this.defra_applicationtaskId = value;
 			}
 		}
 		
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_type")]
-		public Microsoft.Xrm.Sdk.OptionSetValue defra_application_type
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_completed")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_completed
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_application_type");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_completed");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_application_type");
-				this.SetAttributeValue("defra_application_type", value);
-				this.OnPropertyChanged("defra_application_type");
+				this.OnPropertyChanging("defra_completed");
+				this.SetAttributeValue("defra_completed", value);
+				this.OnPropertyChanged("defra_completed");
 			}
 		}
 		
@@ -221,6 +311,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_name");
 				this.SetAttributeValue("defra_name", value);
 				this.OnPropertyChanged("defra_name");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_notes")]
+		public string defra_notes
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_notes");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_notes");
+				this.SetAttributeValue("defra_notes", value);
+				this.OnPropertyChanged("defra_notes");
 			}
 		}
 		
@@ -370,10 +480,10 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Status of the Application Sub-type
+		/// Status of the Application Task
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<WastePermits.Model.EarlyBound.defra_application_subtypesState> StateCode
+		public System.Nullable<WastePermits.Model.EarlyBound.defra_applicationtaskState> StateCode
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -381,7 +491,7 @@ namespace WastePermits.Model.EarlyBound
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((WastePermits.Model.EarlyBound.defra_application_subtypesState)(System.Enum.ToObject(typeof(WastePermits.Model.EarlyBound.defra_application_subtypesState), optionSet.Value)));
+					return ((WastePermits.Model.EarlyBound.defra_applicationtaskState)(System.Enum.ToObject(typeof(WastePermits.Model.EarlyBound.defra_applicationtaskState), optionSet.Value)));
 				}
 				else
 				{
@@ -405,7 +515,7 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Application Sub-type
+		/// Reason for the status of the Application Task
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -478,67 +588,91 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtype
+		/// N:1 defra_application_defra_applicationtask_applicationid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
-			"e")]
-		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtype
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_applicationtask_applicationid")]
+		public WastePermits.Model.EarlyBound.defra_application defra_application_defra_applicationtask_applicationid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
-						"e", null);
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_application>("defra_application_defra_applicationtask_applicationid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
-						"e");
-				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
-						"e", null, value);
-				this.OnPropertyChanged("defra_application_subtypes_defra_itemapplicationtaskdefinition_application_subtyp" +
-						"e");
+				this.OnPropertyChanging("defra_application_defra_applicationtask_applicationid");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_application>("defra_application_defra_applicationtask_applicationid", null, value);
+				this.OnPropertyChanged("defra_application_defra_applicationtask_applicationid");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_defra_application_subtypes_defra_application_application_subtype
+		/// N:1 defra_applicationline_defra_applicationtask_applicationline
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_subtypes_defra_application_application_subtype")]
-		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_application> defra_defra_application_subtypes_defra_application_application_subtype
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationline")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationline_defra_applicationtask_applicationline")]
+		public WastePermits.Model.EarlyBound.defra_applicationline defra_applicationline_defra_applicationtask_applicationline
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_application>("defra_defra_application_subtypes_defra_application_application_subtype", null);
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_applicationline>("defra_applicationline_defra_applicationtask_applicationline", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_defra_application_subtypes_defra_application_application_subtype");
-				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_application>("defra_defra_application_subtypes_defra_application_application_subtype", null, value);
-				this.OnPropertyChanged("defra_defra_application_subtypes_defra_application_application_subtype");
+				this.OnPropertyChanging("defra_applicationline_defra_applicationtask_applicationline");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_applicationline>("defra_applicationline_defra_applicationtask_applicationline", null, value);
+				this.OnPropertyChanged("defra_applicationline_defra_applicationtask_applicationline");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_defra_application_subtypes_defra_applicationprice_application_subtype
+		/// N:1 defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefinitionid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_subtypes_defra_applicationprice_application_subtype")]
-		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_applicationprice> defra_defra_application_subtypes_defra_applicationprice_application_subtype
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationtaskdefinitionid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+			"tionid")]
+		public WastePermits.Model.EarlyBound.defra_applicationtaskdefinition defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefinitionid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationprice>("defra_defra_application_subtypes_defra_applicationprice_application_subtype", null);
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_applicationtaskdefinition>("defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+						"tionid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_defra_application_subtypes_defra_applicationprice_application_subtype");
-				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationprice>("defra_defra_application_subtypes_defra_applicationprice_application_subtype", null, value);
-				this.OnPropertyChanged("defra_defra_application_subtypes_defra_applicationprice_application_subtype");
+				this.OnPropertyChanging("defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+						"tionid");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_applicationtaskdefinition>("defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+						"tionid", null, value);
+				this.OnPropertyChanged("defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
+						"tionid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_tasktype_defra_applicationtask_application_task_typeid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_task_typeid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_tasktype_defra_applicationtask_application_task_typeid")]
+		public WastePermits.Model.EarlyBound.defra_tasktype defra_tasktype_defra_applicationtask_application_task_typeid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_tasktype>("defra_tasktype_defra_applicationtask_application_task_typeid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_tasktype_defra_applicationtask_application_task_typeid");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_tasktype>("defra_tasktype_defra_applicationtask_application_task_typeid", null, value);
+				this.OnPropertyChanged("defra_tasktype_defra_applicationtask_application_task_typeid");
 			}
 		}
 		
@@ -547,7 +681,7 @@ namespace WastePermits.Model.EarlyBound
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_application_subtypes(object anonymousType) : 
+		public defra_applicationtask(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -565,9 +699,9 @@ namespace WastePermits.Model.EarlyBound
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["defra_application_subtypesid"] = base.Id;
+                        Attributes["defra_applicationtaskid"] = base.Id;
                         break;
-                    case "defra_application_subtypesid":
+                    case "defra_applicationtaskid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -584,28 +718,28 @@ namespace WastePermits.Model.EarlyBound
             }
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_application_type")]
-		public virtual defra_ApplicationType? defra_application_typeEnum
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_completed")]
+		public virtual defra_ApplicationTaskCompletion? defra_completedEnum
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((defra_ApplicationType?)(EntityOptionSetEnum.GetEnum(this, "defra_application_type")));
+				return ((defra_ApplicationTaskCompletion?)(EntityOptionSetEnum.GetEnum(this, "defra_completed")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				defra_application_type = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+				defra_completed = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public virtual defra_application_subtypes_StatusCode? StatusCodeEnum
+		public virtual defra_applicationtask_StatusCode? StatusCodeEnum
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((defra_application_subtypes_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+				return ((defra_applicationtask_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set

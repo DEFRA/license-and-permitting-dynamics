@@ -2,11 +2,13 @@
 {
     using System;
     using System.Linq;
-    using Lp.Model.Crm;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using WastePermits.Model.Crm;
+    using Model.EarlyBound;
 
+    /// <summary>
+    /// Data access layer for CRM queries relating to Pricing
+    /// </summary>
     public static class DataAccessApplicationPrice
     {
         /// <summary>
@@ -20,16 +22,16 @@
         public static Money RetrieveApplicationPrice(this IOrganizationService service, OptionSetValue applicationType, EntityReference standardRule, EntityReference item, EntityReference applicationSubType)
         {
             // Get all the other application lines linked to the same application
-            QueryExpression priceQuery = new QueryExpression(ApplicationPrice.EntityLogicalName)
+            QueryExpression priceQuery = new QueryExpression(defra_applicationprice.EntityLogicalName)
             {
-                ColumnSet = new ColumnSet(ApplicationPrice.Price),
+                ColumnSet = new ColumnSet(defra_applicationprice.Fields.defra_price),
                 Criteria = new FilterExpression()
                 {
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(ApplicationPrice.ApplicationType, ConditionOperator.Equal, applicationType.Value),
-                        new ConditionExpression(ApplicationPrice.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active)
+                        new ConditionExpression(defra_applicationprice.Fields.defra_applicationtype, ConditionOperator.Equal, applicationType.Value),
+                        new ConditionExpression(defra_applicationprice.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationpriceState.Active)
                     }
                 }
             };
@@ -37,19 +39,19 @@
             // Add standard rule filter if available
             if (standardRule != null && standardRule.Id != Guid.Empty)
             {
-                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPriceWaste.StandardRule, ConditionOperator.Equal, standardRule.Id));
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(defra_applicationprice.Fields.defra_standardruleid, ConditionOperator.Equal, standardRule.Id));
             }
 
             // Add item filter if available
             if (item != null && item.Id != Guid.Empty)
             {
-                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPriceWaste.ItemId, ConditionOperator.Equal, item.Id));
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(defra_applicationprice.Fields.defra_itemid, ConditionOperator.Equal, item.Id));
             }
 
             // Add application sub type filter if available
             if (applicationSubType != null && applicationSubType.Id != Guid.Empty)
             {
-                priceQuery.Criteria.Conditions.Add(new ConditionExpression(ApplicationPrice.ApplicationSubType, ConditionOperator.Equal, applicationSubType.Id));
+                priceQuery.Criteria.Conditions.Add(new ConditionExpression(defra_applicationprice.Fields.defra_application_subtype, ConditionOperator.Equal, applicationSubType.Id));
             }
 
             EntityCollection results =  service.RetrieveMultiple(priceQuery);
@@ -67,9 +69,9 @@
 
 
             Entity priceEntity = results.Entities.First();
-            if (priceEntity.Contains(ApplicationPrice.Price))
+            if (priceEntity.Contains(defra_applicationprice.Fields.defra_price))
             {
-                return priceEntity[ApplicationPrice.Price] as Money;
+                return priceEntity[defra_applicationprice.Fields.defra_price] as Money;
             }
 
             return null;

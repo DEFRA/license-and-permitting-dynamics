@@ -1038,6 +1038,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_applicationline_defra_applicationtask_applicationline
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationline_defra_applicationtask_applicationline")]
+		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_applicationtask> defra_applicationline_defra_applicationtask_applicationline
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationtask>("defra_applicationline_defra_applicationtask_applicationline", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationline_defra_applicationtask_applicationline");
+				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationtask>("defra_applicationline_defra_applicationtask_applicationline", null, value);
+				this.OnPropertyChanged("defra_applicationline_defra_applicationtask_applicationline");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_applicationline_defra_exception_applicationlineid
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationline_defra_exception_applicationlineid")]
