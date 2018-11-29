@@ -216,7 +216,7 @@ namespace Defra.Lp.Common.SharePoint
 
             if (entity.LogicalName == Application.EntityLogicalName)
             {
-                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber }, entity);
+                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.EawmlNumber }, entity);
                 if (applicationEntity != null)
                 {
                     TracingService.Trace($"Permit Number = {applicationEntity[Application.PermitNumber]}; Application Number = {applicationEntity[Application.ApplicationNumber]}");
@@ -228,6 +228,7 @@ namespace Defra.Lp.Common.SharePoint
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataApplicationUpdateType;
+                    request.EawmlNo = applicationEntity.GetAttributeValue<string>(Application.EawmlNumber);
                 }
                 else
                 {
@@ -236,7 +237,7 @@ namespace Defra.Lp.Common.SharePoint
             }
             else if (entity.LogicalName == Permit.EntityLogicalName)
             {
-                var permitEntity = Query.RetrieveDataForEntityRef(Service, new[] { Permit.Name, Permit.PermitNumber }, entity);
+                var permitEntity = Query.RetrieveDataForEntityRef(Service, new[] { Permit.Name, Permit.PermitNumber, Permit.EawmlNumber }, entity);
                 if (permitEntity != null)
                 {
                     TracingService.Trace(string.Format("Permit Number = {0}", permitEntity[Permit.PermitNumber]));
@@ -248,6 +249,7 @@ namespace Defra.Lp.Common.SharePoint
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataPermitUpdateType;
+                    request.EawmlNo = permitEntity.GetAttributeValue<string>(Permit.EawmlNumber);
                 }
                 else
                 {

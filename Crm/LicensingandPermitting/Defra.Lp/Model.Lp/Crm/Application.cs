@@ -90,6 +90,11 @@ namespace Lp.Model.Crm
         /// Payments balance
         /// </summary>
         public const string Balance = "defra_balance";
+
+        /// <summary>
+        /// Eawml Number field
+        /// </summary>
+        public const string EawmlNumber = "defra_eawmlnumber";
     }
 
     public enum ApplicationTypes
