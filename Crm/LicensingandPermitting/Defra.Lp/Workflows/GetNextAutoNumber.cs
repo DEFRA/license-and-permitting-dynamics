@@ -48,7 +48,7 @@ namespace Lp.Workflows
 
             // Call CRM
             DataAccessAutoNumber dal = new DataAccessAutoNumber(service, tracingService);
-            string permitNumber = dal.GetNextPermitNumber(AutoNumberName.Get(executionContext));
+            string permitNumber = dal.GetNextAutoNumber(AutoNumberName.Get(executionContext));
 
             // Return the auto-number
             GeneratedNumber.Set(executionContext, permitNumber);

@@ -46,7 +46,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         public void Integration_TestEAWMLAutoNumberSuccess()
         {
             DataAccessAutoNumber dal = new DataAccessAutoNumber(OrganizationService, new MockTracingService());
-            string nextNumber = dal.GetNextPermitNumber("EAWML");
+            string nextNumber = dal.GetNextAutoNumber("EAWML");
             Assert.IsTrue(nextNumber.Length == 11);
         }
         

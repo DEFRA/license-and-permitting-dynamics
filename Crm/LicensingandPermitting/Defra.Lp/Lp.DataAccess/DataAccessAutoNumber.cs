@@ -12,7 +12,7 @@
         {
         }
 
-        public string GetNextPermitNumber(string autoNumberName)
+        public string GetNextAutoNumber(string autoNumberName)
         {
             //Retrieve the autonumbering record
             QueryExpression query = new QueryExpression(defra_autonumbering.EntityLogicalName)
