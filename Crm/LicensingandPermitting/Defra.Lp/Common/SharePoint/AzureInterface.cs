@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Lp.Model.Crm;
+using Lp.Model.EarlyBound;
 
 namespace Defra.Lp.Common.SharePoint
 {
@@ -252,9 +253,9 @@ namespace Defra.Lp.Common.SharePoint
 
             var request = new MetaDataRequest();
 
-            if (entity.LogicalName == Application.EntityLogicalName)
+            if (entity.LogicalName == defra_application.EntityLogicalName)
             {
-                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.EawmlNumber }, entity);
+                var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber, defra_application.Fields.defra_eawmlnumber }, entity);
                 if (applicationEntity != null)
                 {
                     TracingService.Trace($"Permit Number = {applicationEntity[Application.PermitNumber]}; Application Number = {applicationEntity[Application.ApplicationNumber]}");
@@ -266,16 +267,16 @@ namespace Defra.Lp.Common.SharePoint
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataApplicationUpdateType;
-                    request.EawmlNo = applicationEntity.GetAttributeValue<string>(Application.EawmlNumber);
+                    request.EawmlNo = applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_eawmlnumber);
                 }
                 else
                 {
                     throw new InvalidPluginExecutionException(string.Format("No Application exists for entity reference {0}", entity.Id.ToString()));
                 }
             }
-            else if (entity.LogicalName == Permit.EntityLogicalName)
+            else if (entity.LogicalName == defra_permit.EntityLogicalName)
             {
-                var permitEntity = Query.RetrieveDataForEntityRef(Service, new[] { Permit.Name, Permit.PermitNumber, Permit.EawmlNumber }, entity);
+                var permitEntity = Query.RetrieveDataForEntityRef(Service, new[] { Permit.Name, Permit.PermitNumber, defra_permit.Fields.defra_eawmlnumber }, entity);
                 if (permitEntity != null)
                 {
                     TracingService.Trace(string.Format("Permit Number = {0}", permitEntity[Permit.PermitNumber]));
@@ -287,7 +288,7 @@ namespace Defra.Lp.Common.SharePoint
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
                     request.UpdateType = AzureInterfaceConstants.MetaDataPermitUpdateType;
-                    request.EawmlNo = permitEntity.GetAttributeValue<string>(Permit.EawmlNumber);
+                    request.EawmlNo = permitEntity.GetAttributeValue<string>(defra_permit.Fields.defra_eawmlnumber);
                 }
                 else
                 {

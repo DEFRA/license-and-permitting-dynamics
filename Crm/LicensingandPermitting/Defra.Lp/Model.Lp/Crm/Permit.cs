@@ -25,10 +25,5 @@ namespace Lp.Model.Crm
         /// Permit Number field
         /// </summary>
         public const string PermitNumber = "defra_permitnumber";
-
-        /// <summary>
-        /// Eawml Number field
-        /// </summary>
-        public const string EawmlNumber = "defra_eawmlnumber";
     }
 }
