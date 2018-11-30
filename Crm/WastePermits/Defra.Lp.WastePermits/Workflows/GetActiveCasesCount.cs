@@ -9,15 +9,17 @@
 //     Runtime Version:4.0.30319.1
 // </auto-generated>
 
+using System;
+using System.Activities;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Workflow;
+using WastePermits.DataAccess;
+
 namespace Defra.Lp.WastePermits.Workflows
 {
-    using System;
-    using System.Activities;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Xrm.Sdk.Workflow;
-    using DAL;
-
-    /// </summary>    
+    /// <summary>
+    /// Code activity returns a count of all active cases for a given application
+    /// </summary>
     public class GetActiveCasesCount: WorkFlowActivityBase
     {
         [RequiredArgument]

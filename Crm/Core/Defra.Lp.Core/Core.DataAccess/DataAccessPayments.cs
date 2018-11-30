@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Core.CardPayments.Model;
-using Core.Model;
-using Core.Model.Entities;
-using Microsoft.Xrm.Sdk.Messages;
+﻿using Microsoft.Xrm.Sdk.Messages;
 
 namespace Core.Configuration
 {
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-
+    using Core.CardPayments.Model;
     /// <summary>
     /// Data access for all Secure Configuration related data access methods
     /// </summary>

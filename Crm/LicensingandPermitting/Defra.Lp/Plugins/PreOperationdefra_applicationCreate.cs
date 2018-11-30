@@ -10,6 +10,9 @@
 // </auto-generated>
 
 using Common.PermitNumbering;
+using Lp.DataAccess;
+using Lp.Model.Crm;
+using Lp.Model.EarlyBound;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -31,26 +34,13 @@ namespace Defra.Lp.Plugins
         public PreOperationdefra_applicationCreate(string unsecure, string secure)
             : base(typeof(PreOperationdefra_applicationCreate))
         {
-
-            // TODO: Implement your custom configuration handling.
         }
 
 
         /// <summary>
-        /// Main entry point for he business logic that the plug-in is to execute.
+        /// Main Code Activity Method
         /// </summary>
-        /// <param name="localContext">The <see cref="LocalPluginContext"/> which contains the
-        /// <see cref="IPluginExecutionContext"/>,
-        /// <see cref="IOrganizationService"/>
-        /// and <see cref="ITracingService"/>
-        /// </param>
-        /// <remarks>
-        /// For improved performance, Microsoft Dynamics 365 caches plug-in instances.
-        /// The plug-in's Execute method should be written to be stateless as the constructor
-        /// is not called for every invocation of the plug-in. Also, multiple system threads
-        /// could execute the plug-in at the same time. All per invocation state information
-        /// is stored in the context. This means that you should not use global variables in plug-ins.
-        /// </remarks>
+        /// <param name="localContext"></param>
         protected override void ExecuteCrmPlugin(LocalPluginContext localContext)
         {
             if (localContext == null)
@@ -58,7 +48,6 @@ namespace Defra.Lp.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
-            // TODO: Implement your custom Plug-in business logic.
             IOrganizationService service = localContext.OrganizationService;
             IPluginExecutionContext context = localContext.PluginExecutionContext;
             ITracingService tracing = localContext.TracingService;
@@ -67,80 +56,169 @@ namespace Defra.Lp.Plugins
             {
                 Entity target = (Entity)context.InputParameters["Target"];
 
+                // 1. Check if we can create the application, block if parallel variations/transfer/surrenders are in progress
+                ValidateApplication(target, tracing, service);
 
-                if (!target.Attributes.Contains("defra_applicationtype"))
-                    throw new InvalidPluginExecutionException("Application Type does not contain value!");
+                // 2. Perform application numbering
+                AutoNumberApplication(target, tracing, context, service);
+            }
+        }
 
-                //Cast the Application Type
-                OptionSetValue applicationType = (OptionSetValue)target["defra_applicationtype"];
-                string applicationTypeStr = string.Empty;
-                switch (applicationType.Value)
+        /// <summary>
+        /// Validates the application, ensure we are able to create it
+        /// </summary>
+        /// <param name="target">Plugin target application</param>
+        /// <param name="tracing">Tracing service</param>
+        /// <param name="service">Organisation service</param>
+        private static void ValidateApplication(Entity target, ITracingService tracing, IOrganizationService service)
+        {
+            tracing.Trace("ValidateApplication() Started");
+            if (target.Attributes.Contains(Application.Permit))
+            {
+                tracing.Trace("Permit reference found, checking parallel applications");
+                EntityReference permitEntityReference = (EntityReference) target[Application.Permit];
+                if (permitEntityReference != null)
                 {
-                    case 910400000: //New Application
-                        applicationTypeStr = "A";
+                    int liveApplicationCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
+                        service,
+                        permitEntityReference.Id,
+                        new[]
+                        {
+                            defra_application_StatusCode.Issued,
+                            defra_application_StatusCode.Withdrawn,
+                            defra_application_StatusCode.Refused,
+                            defra_application_StatusCode.Returned,
+                            defra_application_StatusCode.ReturnedNotDulyMade
+                        });
 
-                        tracing.Trace("Retrieve the next permit number");
-
-                        //Get the next permit number
-                        PermitNumbering permitAutoNumbering = new PermitNumbering(context, tracing, service);
-                        string PermitNumber = permitAutoNumbering.GetNextPermitNumber(); 
-
-                        tracing.Trace("Next permit number {0} hes been retrieved", PermitNumber);
-
-                        //Update the permit number field
-                        target["defra_permitnumber"] = PermitNumber;
-                        break;
-                    case 910400001:
-                        applicationTypeStr = "V";
-                        break;
-                    case 910400002:
-                        applicationTypeStr = "V";
-                        break;
-                    case 910400003:
-                        applicationTypeStr = "T";
-                        break;
-                    case 910400004:
-                        applicationTypeStr = "S";
-                        break;
-
-                    default:
-                        applicationTypeStr = string.Empty;
-                        break;
-                }
-
-                //If no permit number is specified try retrieve it from the lookup to permit. If permit number cannot be found throw an exception
-                if (!target.Attributes.Contains("defra_permitnumber"))
-                {
-                    //If only the lookup is specified
-                    if (target.Attributes.Contains("defra_permitid"))
+                    if (liveApplicationCount > 0)
                     {
-                        tracing.Trace("Retrieve the permit record");
-
-                        Entity permit = service.Retrieve("defra_permit", ((EntityReference)target["defra_permitid"]).Id, new ColumnSet("defra_permitnumber"));
-
-                        if (permit.Attributes.Contains("defra_permitnumber") && permit.Attributes["defra_permitnumber"] != null)
-                            target["defra_permitnumber"] = (string)permit.Attributes["defra_permitnumber"];
+                        throw new InvalidPluginExecutionException(
+                            "There are other applications in progress for this permit. A new application may not be created until in-progress applications are completed or cancelled.");
                     }
-
-                    if (!target.Attributes.Contains("defra_permitnumber"))
-                        throw new InvalidPluginExecutionException("The application does not have valid permit number");
                 }
+            }
+            tracing.Trace("ValidateApplication() Complete");
+        }
 
+        /// <summary>
+        /// Function performs Permit and Application AutoNumbering
+        /// </summary>
+        /// <param name="target">Plugin target application</param>
+        /// <param name="tracing">Tracing service</param>
+        /// <param name="context">Plugin context</param>
+        /// <param name="service">Organisation service</param>
+        private static void AutoNumberApplication(Entity target, ITracingService tracing, IPluginExecutionContext context, IOrganizationService service)
+        {
+            tracing.Trace("AutoNumberApplication() Started");
 
-                tracing.Trace("Retrieve the next application number");
+            if (!target.Attributes.Contains(Application.ApplicationType))
+                throw new InvalidPluginExecutionException("Application Type does not contain value!");
 
-                PermitApplicationNumbering pAppAutonumbering = new PermitApplicationNumbering(context, tracing, service, (string)target["defra_permitnumber"], applicationTypeStr);
+            //Cast the Application Type
+            OptionSetValue applicationType = (OptionSetValue)target[Application.ApplicationType];
+            string applicationTypeStr;
+            switch (applicationType.Value)
+            {
+                case (int)defra_ApplicationType.NewApplication: //New Application
+                    applicationTypeStr = "A";
+                    // New application, generate a new permit number
+                    target[Application.PermitNumber] = GetPermitNumber(tracing, context, service);
+                    break;
 
-                string PermitApplicationNumber = pAppAutonumbering.GetNextPermitApplicationNumber();
+                case (int)defra_ApplicationType.Variation:
+                    applicationTypeStr = "V";
+                    break;
 
-                tracing.Trace("Next application number {0} hes been retrieved", PermitApplicationNumber);
+                case (int)defra_ApplicationType.Transfer:
+                    applicationTypeStr = "T";
 
-                //Update the permit number field
-                target["defra_applicationnumber"] = PermitApplicationNumber;
-                target["defra_name"] = PermitApplicationNumber;
+                    // Transfer, check if the permit has been set
+                    string permitNumber = GetPermitNumberFromPermit(tracing, service, target);
+                    if (string.IsNullOrWhiteSpace(permitNumber))
+                    {
+                        // This transfer request does not have a permit, e.g. partial transfer target.
+                        // so generate a new permit number
+                        permitNumber = GetPermitNumber(tracing, context, service);
+                    }
+                    target[Application.PermitNumber] = permitNumber;
+                    break;
+
+                case (int)defra_ApplicationType.Surrender:
+                    applicationTypeStr = "S";
+                    break;
+
+                default:
+                    applicationTypeStr = string.Empty;
+                    break;
             }
 
-            //throw new InvalidPluginExecutionException("DEBUG");
+            //If no permit number is specified try retrieve it from the lookup to permit. If permit number cannot be found throw an exception
+            if (!target.Attributes.Contains(Application.PermitNumber))
+            {
+                //If only the lookup is specified
+                if (target.Attributes.Contains(Application.Permit))
+                {
+                    // Get the permit number from the Permit itself
+                    target[Application.PermitNumber] = GetPermitNumberFromPermit(tracing, service, target);
+                }
+
+                if (!target.Attributes.Contains(Application.PermitNumber))
+                {
+                    throw new InvalidPluginExecutionException("The application does not have valid permit number");
+                }
+            }
+
+            tracing.Trace("Retrieve the next application number");
+            PermitApplicationNumbering pAppAutonumbering = new PermitApplicationNumbering(context, tracing, service, (string)target[Application.PermitNumber], applicationTypeStr);
+            string permitApplicationNumber = pAppAutonumbering.GetNextPermitApplicationNumber();
+            tracing.Trace("Next application number {0} hes been retrieved", permitApplicationNumber);
+
+            //Update the permit number field
+            target[Application.ApplicationNumber] = permitApplicationNumber;
+            target[Application.Name] = permitApplicationNumber;
+            tracing.Trace("AutoNumberApplication() Application Number = {0}, Complete", permitApplicationNumber);
+        }
+
+
+        /// <summary>
+        /// Attempts to retrieve the permit number from the linked permit record
+        /// if it exists
+        /// </summary>
+        /// <param name="tracing"></param>
+        /// <param name="service"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private static string GetPermitNumberFromPermit(ITracingService tracing, IOrganizationService service, Entity target)
+        {
+            tracing.Trace("GetPermitNumberFromPermit() start...");
+
+            if (!target.Contains(Application.Permit) || target[Application.Permit] == null)
+            {
+                // No linked permit to this application
+                return null;
+            }
+
+            string permitNumber = null;
+            Entity permit = service.Retrieve(Permit.EntityLogicalName, ((EntityReference) target[Application.Permit]).Id, new ColumnSet(Permit.PermitNumber));
+            if (permit.Attributes.Contains(Permit.PermitNumber) && permit.Attributes[Permit.PermitNumber] != null)
+            {
+                permitNumber = (string) permit.Attributes[Permit.PermitNumber];
+            }
+            tracing.Trace("GetPermitNumberFromPermit() = permitNumber. End.");
+            return permitNumber;
+        }
+
+        private static string GetPermitNumber(ITracingService tracing, IPluginExecutionContext context,
+            IOrganizationService service)
+        {
+            tracing.Trace("GetPermitNumber() start...");
+
+            //Get the next permit number
+            DataAccessAutoNumber permitAutoNumbering = new DataAccessAutoNumber(service, tracing);
+            string permitNumber = permitAutoNumbering.GetNextAutoNumber("Waste");
+            tracing.Trace("GetPermitNumber() Next permit number {0} hes been retrieved", permitNumber);
+            return permitNumber;
         }
     }
 }

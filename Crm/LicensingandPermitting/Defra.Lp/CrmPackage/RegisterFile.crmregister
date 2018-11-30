@@ -15,7 +15,7 @@
         <Plugin Description="Plug-in to Update of defra_application" FriendlyName="Update of defra_application" Name="Defra.Lp.Plugins.PeerReviewValidation" Id="3d65c2e6-0026-e811-a951-000d3ab3984f" TypeName="Defra.Lp.Plugins.PeerReviewValidation">
           <Steps>
             <clear />
-            <Step AsyncAutoDelete="false" Name="Update of defra_application" Description="Update of defra_application" Id="789ad52e-d37d-e811-a968-000d3a233e06" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Update" Mode="Synchronous" PrimaryEntityName="defra_application" Rank="1" Stage="PreOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+            <Step AsyncAutoDelete="false" Name="Update of defra_application" Description="Update of defra_application" FilteringAttributes="defra_reviewerid,defra_permittingteamleaderid" Id="789ad52e-d37d-e811-a968-000d3a233e06" ImpersonatingUserId="00000000-0000-0000-0000-000000000000" MessageName="Update" Mode="Synchronous" PrimaryEntityName="defra_application" Rank="1" Stage="PreOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
               <Images>
                 <Image EntityAlias="preImage" Name="preImage" Id="1ef8fb52-8cd6-e711-80eb-3863bb34fad0" MessagePropertyName="Target" ImageType="PreImage" />
               </Images>
@@ -59,6 +59,45 @@
             </Step>
           </Steps>
         </Plugin>
+        <Plugin Description="Plug-in to Update of defra_payment" FriendlyName="Update of defra_payment" Name="Defra.Lp.Plugins.RecalculateApplicationBalanceFields" Id="1e524534-6a7e-4130-8596-509d04b0d344" TypeName="Defra.Lp.Plugins.RecalculateApplicationBalanceFields">
+          <Steps>
+            <clear />
+            <Step AsyncAutoDelete="false" Name="Delete of defra_applicationline" Description="Delete of defra_applicationline" Id="8f5d7266-ebeb-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Delete" Mode="Synchronous" PrimaryEntityName="defra_applicationline" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="7a40a383-f025-e811-a955-000d3a20838a">
+              <Images>
+                <Image Attributes="defra_applicationid,defra_applicationlineid" EntityAlias="preImage" Name="preImage" Id="37e1cec5-ebeb-e811-a972-000d3a20838a" MessagePropertyName="Target" ImageType="PreImage" />
+              </Images>
+            </Step>
+            <Step AsyncAutoDelete="false" Name="SetState of defra_applicationline" Description="SetState of defra_applicationline" Id="e2baba91-efeb-e811-a96e-000d3a206976" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="SetState" Mode="Synchronous" PrimaryEntityName="defra_applicationline" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="7f40a383-f025-e811-a955-000d3a20838a">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="SetStateDynamicEntity of defra_applicationline" Description="SetStateDynamicEntity of defra_applicationline" Id="6e4557c1-efeb-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="SetStateDynamicEntity" Mode="Synchronous" PrimaryEntityName="defra_applicationline" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="8540a383-f025-e811-a955-000d3a20838a">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="Create of defra_applicationline" Description="Create of defra_applicationline" Id="4409483a-c2e9-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Create" Mode="Synchronous" PrimaryEntityName="defra_applicationline" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="Create of defra_payment" Description="Create of defra_payment" Id="4bb5af26-ffeb-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Create" Mode="Synchronous" PrimaryEntityName="defra_payment" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="e541a383-f025-e811-a955-000d3a20838a">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="Delete of defra_payment" Description="Delete of defra_payment" Id="ebf415f3-00ec-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Delete" Mode="Synchronous" PrimaryEntityName="defra_payment" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="e841a383-f025-e811-a955-000d3a20838a">
+              <Images>
+                <Image EntityAlias="preImage" Name="preImage" Id="dc31bbfd-00ec-e811-a985-000d3a2065c5" MessagePropertyName="Target" ImageType="PreImage" />
+              </Images>
+            </Step>
+            <Step AsyncAutoDelete="false" Name="SetState of defra_payment" Description="SetState of defra_payment" Id="25f9b01e-08ec-e811-a972-000d3a20838a" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="SetState" Mode="Synchronous" PrimaryEntityName="defra_payment" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="ef41a383-f025-e811-a955-000d3a20838a">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="SetStateDynamicEntity of defra_payment" Description="SetStateDynamicEntity of defra_payment" Id="b14b2933-08ec-e811-a96e-000d3a206976" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="SetStateDynamicEntity" Mode="Synchronous" PrimaryEntityName="defra_payment" Rank="1" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="f141a383-f025-e811-a955-000d3a20838a">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="Update of defra_applicationline" Description="Update of defra_applicationline" FilteringAttributes="defra_applicationid,statuscode,defra_value" Id="64d560b8-00ec-e811-a97a-000d3a233e06" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Update" Mode="Synchronous" PrimaryEntityName="defra_applicationline" Rank="1000" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+            <Step AsyncAutoDelete="false" Name="Update of defra_payment" Description="Update of defra_payment" FilteringAttributes="defra_applicationid,defra_paymentvalue,statuscode" Id="3c8d5a38-ffeb-e811-a970-000d3a233b72" ImpersonatingUserId="871e0939-fa86-45e0-9f92-93d9b8b74bab" MessageName="Update" Mode="Synchronous" PrimaryEntityName="defra_payment" Rank="1000" Stage="PostOutsideTransaction" SupportedDeployment="ServerOnly" MessageEntityId="00000000-0000-0000-0000-000000000000">
+              <Images />
+            </Step>
+          </Steps>
+        </Plugin>
       </PluginTypes>
     </Solution>
     <Solution Assembly="Defra.Lp.Workflows.dll" Id="16d4cdb7-1070-41a8-a4e2-21c7d997aa23" IsolationMode="Sandbox" SourceType="Database">
@@ -88,6 +127,13 @@
         <WorkflowType FriendlyName="GetActiveCaseCount" Name="GetActiveCaseCount" Description="GetActiveCaseCount" WorkflowActivityGroupName="Application" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.GetActiveCaseCount" />
         <WorkflowType FriendlyName="SubString" Name="SubString" Description="Returns a substring" WorkflowActivityGroupName="Common" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.SubString" />
         <WorkflowType FriendlyName="TriggerSendFileToLogicApp" Name="TriggerSendFileToLogicApp" Description="TriggerSendFileToLogicApp" WorkflowActivityGroupName="SharePointDocumentRelay" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.TriggerSendFileToLogicApp" />
+        <WorkflowType FriendlyName="RemoveSharePointIllegalChars" Name="RemoveSharePointIllegalChars" Description="RemoveSharePointIllegalChars" WorkflowActivityGroupName="SharePointDocumentRelay" WorkflowActivityProjectName="Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.RemoveSharePointIllegalChars" />
+        <WorkflowType FriendlyName="CopyApplicationDataToApplication" Name="CopyApplicationDataToApplication" Description="Copies application data to another application" WorkflowActivityGroupName="Application" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.CopyApplicationDataToApplication" />
+        <WorkflowType FriendlyName="GetApplicationContactDetail" Name="GetApplicationContactDetail" Description="GetApplicationContactDetail" WorkflowActivityGroupName="Application" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.GetApplicationContactDetail" />
+        <WorkflowType FriendlyName="Get Account Contacts" Name="GetAccountContacts" Description="Gets up to 15 account contacts for a given Account" WorkflowActivityGroupName="ContactManagement" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.GetAccountContacts" />
+        <WorkflowType FriendlyName="Remove from Queues" Name="RemoveFromQueues" Description="Deactivates all queue items for a given record" WorkflowActivityGroupName="Common" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.RemoveFromQueues" />
+        <WorkflowType FriendlyName="Recalculate Application Balance Fields" Name="RecalculateApplicationBalanceFields" Description="Reads application lines and payment records, and writes to the application balance fields." WorkflowActivityGroupName="Application" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Defra.Lp.Workflows.RecalculateApplicationBalanceFields" />
+        <WorkflowType FriendlyName="Get Next Auto Number" Name="GetNextAutoNumber" Description="Generates an auto number for the given key" WorkflowActivityGroupName="Common" WorkflowActivityProjectName="Lp.Workflows" Id="00000000-0000-0000-0000-000000000000" TypeName="Lp.Workflows.GetNextAutoNumber" />
       </WorkflowTypes>
     </Solution>
     <Solution Assembly="Defra.Lp.SiteMap.dll" Id="00000000-0000-0000-0000-000000000000" IsolationMode="Sandbox" SourceType="Database" />

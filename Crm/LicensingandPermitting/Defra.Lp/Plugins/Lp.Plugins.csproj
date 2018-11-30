@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -64,11 +64,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
@@ -96,14 +96,35 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\DataAccessSecureConfiguration.cs">
-      <Link>Linked\DataAccess\DataAccessSecureConfiguration.cs</Link>
+    <Compile Include="..\Lp.DataAccess\*.cs">
+      <Link>Linked\DataAccess\Lp\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\StringExtensions.cs">
-      <Link>Linked\Helpers\StringExtensions.cs</Link>
+	    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
+      <Link>Linked\DataAccess\Core\Base\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Model\Entities\SecureConfiguration.cs">
-      <Link>Linked\DataAccess\SecureConfiguration.cs</Link>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\*.cs">
+      <Link>Linked\DataAccess\Core\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\Crm\*.cs">
+      <Link>Linked\Model\Lp\Crm\%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\EarlyBound\*.cs">
+      <Link>Linked\Model\Lp\EarlyBound\%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\EarlyBound\Entities\*.cs">
+      <Link>Linked\Model\Lp\EarlyBound\Entities\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\EarlyBound\OptionSets\*.cs">
+      <Link>Linked\Model\Lp\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
+      <Link>Linked\Extensions\Core\%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Model\Entities\*.cs">
+      <Link>Linked\Model\Core\Entities\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.CardPayments.Model\*.cs">
+      <Link>Linked\Model\Core\CardPayments\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Common\PermitNumbering\GetNextPermitApplicationNumber.cs">
       <Link>Common\PermitNumbering\GetNextPermitApplicationNumber.cs</Link>
@@ -125,36 +146,6 @@
     </Compile>
     <Compile Include="..\Common\SharePoint\SharePointSecureConfigurationKeys.cs">
       <Link>Common\SharePoint\SharePointSecureConfigurationKeys.cs</Link>
-    </Compile>
-    <Compile Include="..\Lp.DataAccess\DataAccessSharePointDocumentLocation.cs">
-      <Link>Linked\DataAccess\DataAccessSharePointDocumentLocation.cs</Link>
-    </Compile>
-    <Compile Include="..\Lp.DataAccess\Query.cs">
-      <Link>Linked\DataAccess\Query.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\ActivityMimeAttachment.cs">
-      <Link>Linked\Model\Lp\ActivityMimeAttachment.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\Annotation.cs">
-      <Link>Linked\Model\Lp\Annotation.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\Application.cs">
-      <Link>Linked\Model\Lp\Application.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\Case.cs">
-      <Link>Linked\Model\Lp\Case.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\Email.cs">
-      <Link>Linked\Model\Lp\Email.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\Permit.cs">
-      <Link>Linked\Model\Lp\Permit.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\PluginInputParams.cs">
-      <Link>Linked\Model\Lp\PluginInputParams.cs</Link>
-    </Compile>
-    <Compile Include="..\Model.Lp\Crm\PluginMessages.cs">
-      <Link>Linked\Model\Lp\PluginMessages.cs</Link>
     </Compile>
     <Compile Include="..\Newtonsoft.Json\Bson\BsonBinaryType.cs">
       <Link>Newtonsoft.Json\Bson\BsonBinaryType.cs</Link>
@@ -761,6 +752,7 @@
     </Compile>
     <Compile Include="ApplicationCreateSharePointDocumentLocation.cs" />
     <Compile Include="PeerReviewValidation.cs" />
+    <Compile Include="RecalculateApplicationBalanceFields.cs" />
     <Compile Include="PreOperationdefra_applicationCreate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PluginBase.cs" />
@@ -783,7 +775,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

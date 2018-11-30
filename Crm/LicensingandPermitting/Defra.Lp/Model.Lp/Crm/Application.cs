@@ -1,5 +1,5 @@
 ﻿// Application entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model
@@ -26,6 +26,11 @@ namespace Model.Lp.Crm
         /// </summary>
         public const string ApplicationType = "defra_applicationtype";
 
+        /// <summary>
+        /// Application SubType Lookup
+        /// </summary>
+        public const string ApplicationSubType = "defra_application_subtype";
+        
         /// <summary>
         /// Lookup to the Permit Entity
         /// </summary>
@@ -55,5 +60,43 @@ namespace Model.Lp.Crm
         /// Status code field
         /// </summary>
         public const string StatusCode = "statuscode";
+
+        /// <summary>
+        /// Permit Document Location field
+        /// </summary>
+        public const string PermitDocumentLocation = "defra_permitdocumentlocation";
+
+        /// <summary>
+        /// Application Document Location field
+        /// </summary>
+        public const string ApplicationDocumentLocation = "defra_applicationdocumentlocation";
+
+        /// <summary>
+        /// Total outbound payments
+        /// </summary>
+        public const string BalanceRefunds = "defra_balance_refunds";
+
+        /// <summary>
+        /// Total line item cost
+        /// </summary>
+        public const string BalanceLineItems = "defra_balance_line_items";
+
+        /// <summary>
+        /// Total inbound payments
+        /// </summary>
+        public const string BalancePayments = "defra_balance_payments";
+
+        /// <summary>
+        /// Payments balance
+        /// </summary>
+        public const string Balance = "defra_balance";
+    }
+
+    public enum ApplicationTypes
+    {
+        NewApplication = 910400000,
+        Variation = 910400002,
+        Transfer = 910400003,
+        Surrender = 910400004
     }
 }

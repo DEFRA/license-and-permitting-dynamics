@@ -5,7 +5,10 @@
     /// </summary>
     public class Contact
     {
+        
         public const string EntityLogicalName = "contact";
+
+        public const string State = "statecode";
 
         public const string FromCompaniesHouseField = "defra_fromcompanieshouse";
 
@@ -25,11 +28,13 @@
 
         public const string DobMonthCompaniesHouseField = "defra_dobmonthcompanieshouse";
 
-        public const string DobYearCompaniesHouseField = "defra_dobyearcompanieshouse";
+        public const string DobYearCompaniesHouseField = "defra_dobyearcompanieshouse_text";
 
         public const string ResignedOnCompaniesHouseField = "defra_resignedoncompanieshouse";
 
         public const string ParentCustomerIdField = "parentcustomerid";
+
+        public const string AccountId = "accountid";
     }
 
     /// <summary>

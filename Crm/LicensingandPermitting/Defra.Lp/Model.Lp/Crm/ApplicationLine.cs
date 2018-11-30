@@ -1,5 +1,5 @@
 ﻿// Application entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model
@@ -15,6 +15,21 @@ namespace Model.Lp.Crm
         /// State field
         /// </summary>
         public const string State = "statecode";
+
+        /// <summary>
+        /// Record owner
+        /// </summary>
+        public static string Owner = "ownerid";
+
+        /// <summary>
+        /// Name
+        /// </summary>
+        public const string Name = "defra_name";
+
+        /// <summary>
+        /// Permit Type
+        /// </summary>
+        public const string PermitType = "defra_permittype";
 
         /// <summary>
         /// Entiy Id
@@ -45,6 +60,16 @@ namespace Model.Lp.Crm
         /// Application Line Type
         /// </summary>
         public const string LineType = "defra_linetype";
+
+        /// <summary>
+        /// Lookup
+        /// </summary>
+        public static string ItemId = "defra_itemid";
+
+        /// <summary>
+        /// Permit lookup
+        /// </summary>
+        public static string PermitId = "defra_permitid";
     }
 
     /// <summary>

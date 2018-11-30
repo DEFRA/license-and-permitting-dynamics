@@ -9,12 +9,13 @@
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_applicationid">
-        <cell name="defra_applicationnumber" width="100" />
+        <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_regime" width="100" />
         <cell name="defra_applicationtype" width="100" />
         <cell name="defra_source" width="100" />
         <cell name="defra_penfolddate" width="125" imageproviderfunctionname="Views.DisplayApplicationPendfoldIcon" imageproviderwebresource="$webresource:defra_view_functions" />
         <cell name="defra_customerid" width="100" />
+        <cell name="defra_applicant_organisation_type" width="100" />
         <cell name="defra_primarycontactid" width="100" />
         <cell name="statuscode" width="100" />
         <cell name="defra_payment_required" width="100" />
@@ -23,7 +24,6 @@
         <cell name="ownerid" width="100" />
         <cell name="defra_permitid" width="100" />
         <cell name="createdon" width="125" />
-        <cell name="a_3b672e0abfcbe71180eb3863bb34fad0.stagename" width="100" disableSorting="1" />
       </row>
     </grid>
   </layoutxml>
@@ -32,7 +32,7 @@
     <fetch version="1.0" mapping="logical">
       <entity name="defra_application">
         <attribute name="createdon" />
-        <order attribute="defra_applicationnumber" descending="false" />
+        <order attribute="createdon" descending="true" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
@@ -47,11 +47,9 @@
         <attribute name="defra_applicationnumber" />
         <attribute name="defra_primarycontactid" />
         <attribute name="defra_customerid" />
-        <link-entity alias="a_3b672e0abfcbe71180eb3863bb34fad0" name="processstage" from="processstageid" to="stageid" link-type="outer" visible="false">
-          <attribute name="stagename" />
-        </link-entity>
         <attribute name="defra_payment_required" />
         <attribute name="defra_penfolddate" />
+        <attribute name="defra_applicant_organisation_type" />
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>

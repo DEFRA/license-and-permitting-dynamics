@@ -1,5 +1,5 @@
 ﻿// Permit entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application entity model
@@ -22,7 +22,7 @@ namespace Model.Lp.Crm
         public const string Name = "defra_name";
 
         /// <summary>
-        /// Permit Nuber field
+        /// Permit Number field
         /// </summary>
         public const string PermitNumber = "defra_permitnumber";
     }

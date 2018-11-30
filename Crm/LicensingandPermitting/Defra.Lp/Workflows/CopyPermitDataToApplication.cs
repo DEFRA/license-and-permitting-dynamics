@@ -4,18 +4,16 @@
 // <summary>Code activity copies reference data from the Permit to an Application, generating 
 // Application Lines as required</summary>
 
-using Defra.Lp.Workflows.Helpers;
+using System.Activities;
+using System.ServiceModel;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Sdk.Workflow;
+using Lp.DataAccess;
+using Lp.Model.Crm;
 
 namespace Defra.Lp.Workflows
 {
-    using System.Activities;
-    using System.ServiceModel;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Xrm.Sdk.Query;
-    using Microsoft.Xrm.Sdk.Workflow;
-    using global::Model.Lp.Crm;
-    using Location = global::Model.Lp.Crm.Location;
-
     public sealed class CopyPermitDataToApplication : WorkFlowActivityBase
     {
         /// <summary>
@@ -60,13 +58,25 @@ namespace Defra.Lp.Workflows
                 if (application.Attributes.Contains(Application.Permit) && application[Application.Permit] != null)
                 {
                     //Init the copier
-                    RelationshipManager copier = new RelationshipManager(service, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id, Application.EntityLogicalName, application.Id);
+                    DataAccessPermit copier = new DataAccessPermit(service, Permit.EntityLogicalName, ((EntityReference)application[Application.Permit]).Id, Application.EntityLogicalName, application.Id);
 
-                    //LinkEntitiesToTarget Location
-                    copier.LinkEntitiesToTarget(Location.EntityLogicalName, Location.Permit, Location.Application, true);
+                    //Copy Location and Location details from Permit to Application
+                    DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(service,application.Id);
 
                     //LinkEntitiesToTarget Lines
-                    copier.CopyAs(PermitLine.EntityLogicalName, PermitLine.Permit, new string[] { PermitLine.Name, PermitLine.PermitType, PermitLine.StandardRule}, ApplicationLine.EntityLogicalName, ApplicationLine.ApplicationId, true, null);
+                    copier.CopyAs(
+                        PermitLine.EntityLogicalName, 
+                        PermitLine.Permit, 
+                        new[] {
+                                PermitLine.Name,
+                                PermitLine.PermitType,
+                                PermitLine.StandardRule,
+                                PermitLine.Owner
+                            }, 
+                        ApplicationLine.EntityLogicalName, 
+                        ApplicationLine.ApplicationId, 
+                        true, 
+                        null);
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)

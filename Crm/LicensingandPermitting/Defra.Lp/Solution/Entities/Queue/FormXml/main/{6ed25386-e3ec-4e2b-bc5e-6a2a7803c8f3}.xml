@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <systemform unmodified="1">
   <formid>{6ed25386-e3ec-4e2b-bc5e-6a2a7803c8f3}</formid>
-  <IntroducedVersion>6.1.0.0</IntroducedVersion>
+  <IntroducedVersion>9.0.0.0</IntroducedVersion>
   <FormPresentation>1</FormPresentation>
   <FormActivationState>1</FormActivationState>
   <form>
@@ -13,7 +13,7 @@
     <tabs>
       <tab name="general" verticallayout="true" id="{26ee6844-370e-41e0-97f4-66afd3d838b9}" IsUserDefined="0">
         <labels>
-          <label description="" languagecode="1033" />
+          <label description="Summary" languagecode="1033" />
         </labels>
         <columns>
           <column width="34%">
@@ -56,7 +56,7 @@
                     </cell>
                   </row>
                   <row>
-                    <cell colspan="2" showlabel="true" rowspan="5" id="{d69d808e-6aad-4db5-b772-6693cf7ce512}">
+                    <cell colspan="2" showlabel="true" rowspan="3" id="{d69d808e-6aad-4db5-b772-6693cf7ce512}">
                       <labels>
                         <label description="Description" languagecode="1033" />
                       </labels>
@@ -65,8 +65,6 @@
                   </row>
                   <row />
                   <row />
-                  <row />
-                  <row height="auto" />
                 </rows>
               </section>
               <section name="incoming email" showlabel="true" showbar="false" locklevel="0" id="{90b8dd85-867b-4aca-8d30-7c00117e693a}" IsUserDefined="0" labelwidth="200">
@@ -92,7 +90,7 @@
                   </row>
                 </rows>
               </section>
-              <section name="RecordCreationAndUpdateRule" showlabel="false" showbar="false" id="{3d635828-2587-4f94-bfe2-e80e36366e71}" IsUserDefined="0" labelwidth="200">
+              <section name="RecordCreationAndUpdateRule" showlabel="true" showbar="false" id="{3d635828-2587-4f94-bfe2-e80e36366e71}" IsUserDefined="0" labelwidth="200">
                 <labels>
                   <label description="" languagecode="1033" />
                 </labels>
@@ -216,15 +214,7 @@
                 <labels>
                   <label description="Members" languagecode="1033" />
                 </labels>
-                <rows>
-                  <row>
-                    <cell id="{1F27D760-101B-41B7-8E07-2FA0B58ACEAC}" showlabel="true" colspan="1" auto="false">
-                      <labels>
-                        <label description="Public queues are visible to all users." languagecode="1033" />
-                      </labels>
-                    </cell>
-                  </row>
-                </rows>
+                <rows></rows>
               </section>
             </sections>
           </column>
@@ -234,7 +224,7 @@
     <events>
       <event name="onload" application="true" active="true">
         <InternalHandlers>
-          <Handler functionName="Mscrm.Form_onload" libraryName="Queue_main_system_library.js" handlerUniqueId="98c24a4e-c03e-458d-80a3-e0c92fd050c6" enabled="true">
+          <Handler functionName="Mscrm.Form_onload" libraryName="$webresource:AppCommon/Queue/Queue_main_system_library.js" handlerUniqueId="98c24a4e-c03e-458d-80a3-e0c92fd050c6" enabled="true">
             <dependencies>
               <dependency id="queueviewtype" />
               <dependency id="queuemembersgrid" />
@@ -244,7 +234,7 @@
       </event>
       <event name="onsave" application="true" active="true">
         <InternalHandlers>
-          <Handler functionName="Mscrm.Form_onsave" libraryName="Queue_main_system_library.js" handlerUniqueId="98c24a4e-c03e-458d-80a3-e0c92fd050c6" enabled="true">
+          <Handler functionName="Mscrm.Form_onsave" libraryName="$webresource:AppCommon/Queue/Queue_main_system_library.js" handlerUniqueId="98c24a4e-c03e-458d-80a3-e0c92fd050c6" enabled="true">
             <dependencies>
               <dependency id="queueviewtype" />
               <dependency id="queuemembersgrid" />
@@ -254,7 +244,7 @@
       </event>
       <event name="onchange" application="true" active="true" attribute="queueviewtype">
         <InternalHandlers>
-          <Handler functionName="Mscrm.queueviewtype_onchange" libraryName="Queue_main_system_library.js" handlerUniqueId="bd1c2a5f-7cc3-44a9-a11d-5c5a1552099c" enabled="true">
+          <Handler functionName="Mscrm.queueviewtype_onchange" libraryName="$webresource:AppCommon/Queue/Queue_main_system_library.js" handlerUniqueId="bd1c2a5f-7cc3-44a9-a11d-5c5a1552099c" enabled="true">
             <dependencies>
               <dependency id="queueviewtype" />
               <dependency id="queuemembersgrid" />
@@ -266,7 +256,7 @@
     <clientresources>
       <internalresources>
         <clientincludes>
-          <internaljscriptfile src="$webresource:Queue_main_system_library.js" />
+          <internaljscriptfile src="$webresource:AppCommon/Queue/Queue_main_system_library.js" />
         </clientincludes>
       </internalresources>
     </clientresources>

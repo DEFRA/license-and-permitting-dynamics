@@ -8,6 +8,7 @@
     {
         public string ApplicationNo { get; internal set; }
         public string Customer { get; internal set; }
+        public string EawmlNo { get; internal set; }
         public string ListName { get; internal set; }
         public string PermitDetails { get; internal set; }
         public string PermitNo { get; internal set; }

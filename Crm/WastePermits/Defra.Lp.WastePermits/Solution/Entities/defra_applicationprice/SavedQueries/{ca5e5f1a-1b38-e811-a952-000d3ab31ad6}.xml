@@ -9,11 +9,12 @@
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
       <row name="result" id="defra_applicationpriceid">
+        <cell name="defra_itemid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_standardruleid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_applicationtype" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_application_subtype" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_price" width="100" />
         <cell name="ownerid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_name" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
       </row>
     </grid>
   </layoutxml>
@@ -21,18 +22,19 @@
   <fetchxml>
     <fetch version="1.0" output-format="xml-platform" mapping="logical">
       <entity name="defra_applicationprice">
-        <attribute name="defra_name" />
-        <order attribute="defra_name" descending="false" />
+        <order attribute="defra_standardruleid" descending="false" />
         <attribute name="defra_standardruleid" />
         <attribute name="defra_price" />
         <attribute name="ownerid" />
         <attribute name="defra_applicationtype" />
+        <attribute name="defra_application_subtype" />
+        <attribute name="defra_itemid" />
         <attribute name="defra_applicationpriceid" />
       </entity>
     </fetch>
   </fetchxml>
   <IntroducedVersion>1.2.0.5</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="Standard Rule Price Matrix" languagecode="1033" />
+    <LocalizedName description="Pricing Matrix" languagecode="1033" />
   </LocalizedNames>
 </savedquery>

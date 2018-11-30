@@ -5,14 +5,14 @@
 // <date>3/20/2018 3:08:09 PM</date>
 // <summary>Implements the GetActiveLinesCount Plugin. Counts active lines lined to an application</summary>
 
+using System;
+using System.Activities;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Workflow;
+using WastePermits.DataAccess;
+
 namespace Defra.Lp.WastePermits.Workflows
 {
-    using System;
-    using System.Activities;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Xrm.Sdk.Workflow;
-    using DAL;
-
     /// <summary>
     /// Counts active lines lined to an application
     /// </summary>
