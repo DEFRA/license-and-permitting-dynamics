@@ -2564,6 +2564,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_Annotations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_Annotations")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_application_Annotations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_application_Annotations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_Annotations");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_application_Annotations", null, value);
+				this.OnPropertyChanged("defra_application_Annotations");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_application_defra_addressdetails
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_addressdetails")]

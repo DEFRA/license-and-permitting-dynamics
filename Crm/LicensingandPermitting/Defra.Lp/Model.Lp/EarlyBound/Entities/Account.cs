@@ -3302,6 +3302,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Account_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Annotation")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Account_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Account_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Account_Annotation");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Account_Annotation", null, value);
+				this.OnPropertyChanged("Account_Annotation");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N account_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_defra_areacomments")]

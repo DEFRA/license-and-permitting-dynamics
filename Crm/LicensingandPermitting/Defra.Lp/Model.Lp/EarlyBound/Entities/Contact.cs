@@ -4162,6 +4162,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Contact_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Annotation")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Contact_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Annotation");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null, value);
+				this.OnPropertyChanged("Contact_Annotation");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N contact_as_primary_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_primary_contact")]

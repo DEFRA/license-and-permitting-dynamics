@@ -1539,6 +1539,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_notification_Annotations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_Annotations")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_notification_Annotations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_notification_Annotations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_notification_Annotations");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_notification_Annotations", null, value);
+				this.OnPropertyChanged("defra_notification_Annotations");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_notification_QueueItems
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_QueueItems")]

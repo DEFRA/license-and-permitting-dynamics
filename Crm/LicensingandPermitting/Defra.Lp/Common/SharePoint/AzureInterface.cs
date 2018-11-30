@@ -214,8 +214,8 @@ namespace Defra.Lp.Common.SharePoint
                         if (annotationData != null)
                         {
                             // Delete annotation from CRM and a note to say thats what we've done!
-                            annotationData[Annotation.NoteText] = "File has been uploaded to SharePoint.";
-                            annotationData[Annotation.DocumentBody] = string.Empty;
+                            annotationData[Annotation.Fields.NoteText] = "File has been uploaded to SharePoint.";
+                            annotationData[Annotation.Fields.DocumentBody] = string.Empty;
                             Service.Update(annotationData);
                         }
                     }
@@ -442,9 +442,9 @@ namespace Defra.Lp.Common.SharePoint
         {
             var crmId = string.Empty;
             // Annotation
-            if (queryRecord.Contains(Annotation.Id))
+            if (queryRecord.Contains(Annotation.Fields.Id))
             {
-                crmId = queryRecord.GetAttributeValue<Guid>(Annotation.Id).ToString();
+                crmId = queryRecord.GetAttributeValue<Guid>(Annotation.Fields.Id).ToString();
             }
             // Email
             if (queryRecord.Contains(Email.ActivityId))
@@ -646,20 +646,20 @@ namespace Defra.Lp.Common.SharePoint
             queryAnnotation.TopCount = 1;
 
             // Add columns to annotation entity
-            queryAnnotation.ColumnSet.AddColumns(Annotation.Subject, Annotation.DocumentBody, Annotation.Filename, Annotation.Id, Annotation.NoteText, Annotation.FileSize, Annotation.IsDocument, Annotation.CreatedOn);
+            queryAnnotation.ColumnSet.AddColumns(Annotation.Fields.Subject, Annotation.Fields.DocumentBody, Annotation.Fields.FileName, Annotation.Fields.Id, Annotation.Fields.NoteText, Annotation.Fields.FileSize, Annotation.Fields.IsDocument, Annotation.Fields.CreatedOn);
 
             // Define filter on Primary key
-            queryAnnotation.Criteria.AddCondition(Annotation.Id, ConditionOperator.Equal, recordId);
+            queryAnnotation.Criteria.AddCondition(Annotation.Fields.Id, ConditionOperator.Equal, recordId);
 
             // Add link-entity to defra_application. Outer join as it might be regarding a case or application
-            var queryExpressionAnnotationApp = queryAnnotation.AddLink(Application.EntityLogicalName, Annotation.RegardingObjectId, Application.ApplicationId, JoinOperator.LeftOuter);
+            var queryExpressionAnnotationApp = queryAnnotation.AddLink(Application.EntityLogicalName, Annotation.Fields.ObjectId, Application.ApplicationId, JoinOperator.LeftOuter);
             queryExpressionAnnotationApp.EntityAlias = "application";
 
             // Add columns to Application entity
             queryExpressionAnnotationApp.Columns.AddColumns(Application.ApplicationId, Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.StatusCode);
 
             // Add link-entity to Case. Outer join as it might be regarding case or application
-            var queryExpressionAnnotationIncident = queryAnnotation.AddLink(Case.EntityLogicalName, Annotation.RegardingObjectId, Case.IncidentId, JoinOperator.LeftOuter);
+            var queryExpressionAnnotationIncident = queryAnnotation.AddLink(Case.EntityLogicalName, Annotation.Fields.ObjectId, Case.IncidentId, JoinOperator.LeftOuter);
             queryExpressionAnnotationIncident.EntityAlias = "case";
 
             // Add columns to Case entity

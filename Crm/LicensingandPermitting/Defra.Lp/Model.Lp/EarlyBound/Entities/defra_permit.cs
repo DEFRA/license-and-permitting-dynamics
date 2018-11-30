@@ -689,6 +689,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_permit_Annotations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_permit_Annotations")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_permit_Annotations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_permit_Annotations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_permit_Annotations");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_permit_Annotations", null, value);
+				this.OnPropertyChanged("defra_permit_Annotations");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_permit_defra_application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_permit_defra_application")]

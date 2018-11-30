@@ -2226,6 +2226,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Incident_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Annotation")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Incident_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_Annotation");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null, value);
+				this.OnPropertyChanged("Incident_Annotation");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N incident_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_defra_areacomments")]

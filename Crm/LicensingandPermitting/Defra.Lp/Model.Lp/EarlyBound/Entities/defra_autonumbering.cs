@@ -43,7 +43,6 @@ namespace Lp.Model.EarlyBound
 			public const string defra_locked = "defra_locked";
 			public const string defra_name = "defra_name";
 			public const string defra_numberlength = "defra_numberlength";
-			public const string defra_numberofdigits = "defra_numberofdigits";
 			public const string defra_prefix = "defra_prefix";
 			public const string defra_suffix = "defra_suffix";
 			public const string ImportSequenceNumber = "importsequencenumber";
@@ -284,26 +283,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_numberlength");
 				this.SetAttributeValue("defra_numberlength", value);
 				this.OnPropertyChanged("defra_numberlength");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_numberofdigits")]
-		public System.Nullable<int> defra_numberofdigits
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("defra_numberofdigits");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_numberofdigits");
-				this.SetAttributeValue("defra_numberofdigits", value);
-				this.OnPropertyChanged("defra_numberofdigits");
 			}
 		}
 		
