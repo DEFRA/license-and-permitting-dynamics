@@ -13,6 +13,7 @@ using Defra.Lp.Common.SharePoint;
 using Lp.DataAccess;
 using Microsoft.Xrm.Sdk;
 using Lp.Model.Crm;
+using Lp.Model.EarlyBound;
 using System;
 
 namespace Defra.Lp.Plugins

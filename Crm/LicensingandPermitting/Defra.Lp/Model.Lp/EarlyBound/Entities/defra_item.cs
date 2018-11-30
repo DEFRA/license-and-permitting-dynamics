@@ -31,6 +31,41 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_item : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_canapplyfor = "defra_canapplyfor";
+			public const string defra_canapplyonline = "defra_canapplyonline";
+			public const string defra_code = "defra_code";
+			public const string defra_description = "defra_description";
+			public const string defra_description2 = "defra_description2";
+			public const string defra_displayname = "defra_displayname";
+			public const string defra_itemId = "defra_itemid";
+			public const string Id = "defra_itemid";
+			public const string defra_itemtypeid = "defra_itemtypeid";
+			public const string defra_name = "defra_name";
+			public const string defra_officialname = "defra_officialname";
+			public const string defra_shortname = "defra_shortname";
+			public const string defra_suffix = "defra_suffix";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_itemtype_defra_item_itemtypeid = "defra_itemtype_defra_item_itemtypeid";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -649,6 +684,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_item_defra_applicationline_itemid");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationline>("defra_item_defra_applicationline_itemid", null, value);
 				this.OnPropertyChanged("defra_item_defra_applicationline_itemid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_item_defra_itemapplicationtaskdefinition_itemid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_itemapplicationtaskdefinition_itemid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_item_defra_itemapplicationtaskdefinition_itemid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_item_defra_itemapplicationtaskdefinition_itemid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_item_defra_itemapplicationtaskdefinition_itemid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_item_defra_itemapplicationtaskdefinition_itemid", null, value);
+				this.OnPropertyChanged("defra_item_defra_itemapplicationtaskdefinition_itemid");
 			}
 		}
 		

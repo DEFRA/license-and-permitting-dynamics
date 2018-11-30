@@ -19,6 +19,15 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_contact_account : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string accountid = "accountid";
+			public const string contactid = "contactid";
+			public const string defra_contact_accountId = "defra_contact_accountid";
+			public const string Id = "defra_contact_accountid";
+			public const string VersionNumber = "versionnumber";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
