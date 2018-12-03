@@ -31,6 +31,36 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_log : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_detail = "defra_detail";
+			public const string defra_importance = "defra_importance";
+			public const string defra_logId = "defra_logid";
+			public const string Id = "defra_logid";
+			public const string defra_nextaction = "defra_nextaction";
+			public const string defra_relatedentity = "defra_relatedentity";
+			public const string defra_sourcesystem = "defra_sourcesystem";
+			public const string defra_summary = "defra_summary";
+			public const string defra_targetsystem = "defra_targetsystem";
+			public const string defra_type = "defra_type";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OrganizationId = "organizationid";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_defra_logsystem_defra_log_sourcesystem = "defra_defra_logsystem_defra_log_sourcesystem";
+			public const string defra_defra_logsystem_defra_log_targetsystem = "defra_defra_logsystem_defra_log_targetsystem";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

@@ -31,6 +31,149 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_application : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_agentid = "defra_agentid";
+			public const string defra_applicant_organisation_type = "defra_applicant_organisation_type";
+			public const string defra_applicant_type = "defra_applicant_type";
+			public const string defra_application_subtype = "defra_application_subtype";
+			public const string defra_applicationdeclaration = "defra_applicationdeclaration";
+			public const string defra_applicationdocumentlocation = "defra_applicationdocumentlocation";
+			public const string defra_applicationId = "defra_applicationid";
+			public const string Id = "defra_applicationid";
+			public const string defra_applicationnumber = "defra_applicationnumber";
+			public const string defra_applicationtype = "defra_applicationtype";
+			public const string defra_areaid = "defra_areaid";
+			public const string defra_areasignoff = "defra_areasignoff";
+			public const string defra_balance = "defra_balance";
+			public const string defra_balance_Base = "defra_balance_base";
+			public const string defra_balance_line_items = "defra_balance_line_items";
+			public const string defra_balance_line_items_Base = "defra_balance_line_items_base";
+			public const string defra_balance_payments = "defra_balance_payments";
+			public const string defra_balance_payments_Base = "defra_balance_payments_base";
+			public const string defra_balance_refunds = "defra_balance_refunds";
+			public const string defra_balance_refunds_Base = "defra_balance_refunds_base";
+			public const string defra_bankruptcydeclaration = "defra_bankruptcydeclaration";
+			public const string defra_bankruptcydeclarationdetails = "defra_bankruptcydeclarationdetails";
+			public const string defra_completeddulymade = "defra_completeddulymade";
+			public const string defra_confidentialitydeclaration = "defra_confidentialitydeclaration";
+			public const string defra_confidentialitydeclarationdetails = "defra_confidentialitydeclarationdetails";
+			public const string defra_consultationcompleted = "defra_consultationcompleted";
+			public const string defra_consultationrequired = "defra_consultationrequired";
+			public const string defra_containsbespokepermit = "defra_containsbespokepermit";
+			public const string defra_containsstandardpermit = "defra_containsstandardpermit";
+			public const string defra_convictionscheckscompletedby = "defra_convictionscheckscompletedby";
+			public const string defra_convictionscheckscompletedon = "defra_convictionscheckscompletedon";
+			public const string defra_convictionsdeclaration = "defra_convictionsdeclaration";
+			public const string defra_convictionsdeclarationdetails = "defra_convictionsdeclarationdetails";
+			public const string defra_convictionsfound = "defra_convictionsfound";
+			public const string defra_customerid = "defra_customerid";
+			public const string defra_decisiondocumentcompleted = "defra_decisiondocumentcompleted";
+			public const string defra_decisiondocumentcompletedon = "defra_decisiondocumentcompletedon";
+			public const string defra_determinationcompleteddate = "defra_determinationcompleteddate";
+			public const string defra_determinedbyid = "defra_determinedbyid";
+			public const string defra_dulymadechecklistid = "defra_dulymadechecklistid";
+			public const string defra_dulymadecompletedate = "defra_dulymadecompletedate";
+			public const string defra_eawmlnumber = "defra_eawmlnumber";
+			public const string defra_extensionrequested = "defra_extensionrequested";
+			public const string defra_extensionrequestedon = "defra_extensionrequestedon";
+			public const string defra_facility_description = "defra_facility_description";
+			public const string defra_inprogressflag = "defra_inprogressflag";
+			public const string defra_internalconsultationcompleted = "defra_internalconsultationcompleted";
+			public const string defra_internalconsultationcompletedon = "defra_internalconsultationcompletedon";
+			public const string defra_internalconsultationrequired = "defra_internalconsultationrequired";
+			public const string defra_lastpaymentid = "defra_lastpaymentid";
+			public const string defra_managementsystemid = "defra_managementsystemid";
+			public const string defra_name = "defra_name";
+			public const string defra_npsdetermination = "defra_npsdetermination";
+			public const string defra_payment_required = "defra_payment_required";
+			public const string defra_peerreviewed = "defra_peerreviewed";
+			public const string defra_peerreviewedon = "defra_peerreviewedon";
+			public const string defra_penfolddate = "defra_penfolddate";
+			public const string defra_permit_document_creation_date = "defra_permit_document_creation_date";
+			public const string defra_permitdocumentcompleted = "defra_permitdocumentcompleted";
+			public const string defra_permitdocumentcompletedon = "defra_permitdocumentcompletedon";
+			public const string defra_permitdocumentlocation = "defra_permitdocumentlocation";
+			public const string defra_permitId = "defra_permitid";
+			public const string defra_permitnumber = "defra_permitnumber";
+			public const string defra_permittingteamleaderid = "defra_permittingteamleaderid";
+			public const string defra_permittingteamleadersignedoffon = "defra_permittingteamleadersignedoffon";
+			public const string defra_permittingteamleadersignoff = "defra_permittingteamleadersignoff";
+			public const string defra_preapplicationid = "defra_preapplicationid";
+			public const string defra_primarycontactid = "defra_primarycontactid";
+			public const string defra_published = "defra_published";
+			public const string defra_publishedon = "defra_publishedon";
+			public const string defra_raguscore = "defra_raguscore";
+			public const string defra_reasonforreturn = "defra_reasonforreturn";
+			public const string defra_regime = "defra_regime";
+			public const string defra_regulatedfacilitiescount = "defra_regulatedfacilitiescount";
+			public const string defra_regulatedfacilitiescount_Date = "defra_regulatedfacilitiescount_date";
+			public const string defra_regulatedfacilitiescount_State = "defra_regulatedfacilitiescount_state";
+			public const string defra_reviewerid = "defra_reviewerid";
+			public const string defra_revisedfromapplicationid = "defra_revisedfromapplicationid";
+			public const string defra_rficount = "defra_rficount";
+			public const string defra_rficount_Date = "defra_rficount_date";
+			public const string defra_rficount_State = "defra_rficount_state";
+			public const string defra_rfipending = "defra_rfipending";
+			public const string defra_saveandreturn = "defra_saveandreturn";
+			public const string defra_saveandreturnemail = "defra_saveandreturnemail";
+			public const string defra_schedule5count = "defra_schedule5count";
+			public const string defra_schedule5count_Date = "defra_schedule5count_date";
+			public const string defra_schedule5count_State = "defra_schedule5count_state";
+			public const string defra_schedule5pending = "defra_schedule5pending";
+			public const string defra_schedule5required = "defra_schedule5required";
+			public const string defra_site_address = "defra_site_address";
+			public const string defra_site_description = "defra_site_description";
+			public const string defra_site_grid_reference = "defra_site_grid_reference";
+			public const string defra_site_of_high_public_interest = "defra_site_of_high_public_interest";
+			public const string defra_source = "defra_source";
+			public const string defra_submittedon = "defra_submittedon";
+			public const string defra_technicalability = "defra_technicalability";
+			public const string defra_technicalabilitydetails = "defra_technicalabilitydetails";
+			public const string defra_tradingname = "defra_tradingname";
+			public const string defra_tradingnameused = "defra_tradingnameused";
+			public const string ExchangeRate = "exchangerate";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string LastOnHoldTime = "lastonholdtime";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OnHoldTime = "onholdtime";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string processid = "processid";
+			public const string slaid = "slaid";
+			public const string slainvokedid = "slainvokedid";
+			public const string stageid = "stageid";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string traversedpath = "traversedpath";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_account_defra_application_agentid = "defra_account_defra_application_agentid";
+			public const string defra_account_defra_application_customerid = "defra_account_defra_application_customerid";
+			public const string defra_address_defra_application_site_address = "defra_address_defra_application_site_address";
+			public const string Referencingdefra_application_defra_application = "defra_application_defra_application";
+			public const string defra_contact_defra_application_agentid = "defra_contact_defra_application_agentid";
+			public const string defra_contact_defra_application_customerid = "defra_contact_defra_application_customerid";
+			public const string defra_contact_defra_application_primarycontactid = "defra_contact_defra_application_primarycontactid";
+			public const string defra_defra_application_subtypes_defra_application_application_subtype = "defra_defra_application_subtypes_defra_application_application_subtype";
+			public const string defra_defra_preapplication_defra_application = "defra_defra_preapplication_defra_application";
+			public const string defra_dulymadechecklist_defra_application_dulymadechecklistid = "defra_dulymadechecklist_defra_application_dulymadechecklistid";
+			public const string defra_managementsystem_defra_application_managementsystem = "defra_managementsystem_defra_application_managementsystem";
+			public const string defra_payment_defra_application_lastpaymentid = "defra_payment_defra_application_lastpaymentid";
+			public const string defra_permit_defra_application = "defra_permit_defra_application";
+			public const string defra_saveandreturn_defra_application_saveandreturn = "defra_saveandreturn_defra_application_saveandreturn";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -389,6 +532,105 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_line_items")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_line_items
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_line_items");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_balance_line_items");
+				this.SetAttributeValue("defra_balance_line_items", value);
+				this.OnPropertyChanged("defra_balance_line_items");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Line Items Total in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_line_items_base")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_line_items_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_line_items_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_payments")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_payments
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_payments");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_balance_payments");
+				this.SetAttributeValue("defra_balance_payments", value);
+				this.OnPropertyChanged("defra_balance_payments");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Balance Payments in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_payments_base")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_payments_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_payments_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_refunds")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_refunds
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_refunds");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_balance_refunds");
+				this.SetAttributeValue("defra_balance_refunds", value);
+				this.OnPropertyChanged("defra_balance_refunds");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Balance Refunds in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_balance_refunds_base")]
+		public Microsoft.Xrm.Sdk.Money defra_balance_refunds_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_balance_refunds_base");
 			}
 		}
 		
@@ -813,6 +1055,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Will be used by downstream systems
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_eawmlnumber")]
+		public string defra_eawmlnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_eawmlnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_eawmlnumber");
+				this.SetAttributeValue("defra_eawmlnumber", value);
+				this.OnPropertyChanged("defra_eawmlnumber");
+			}
+		}
+		
+		/// <summary>
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_extensionrequested")]
@@ -975,58 +1237,6 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_lineitemstotalamount")]
-		public Microsoft.Xrm.Sdk.Money defra_lineitemstotalamount
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_lineitemstotalamount");
-			}
-		}
-		
-		/// <summary>
-		/// Value of the Line Items Total Amount in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_lineitemstotalamount_base")]
-		public Microsoft.Xrm.Sdk.Money defra_lineitemstotalamount_Base
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_lineitemstotalamount_base");
-			}
-		}
-		
-		/// <summary>
-		/// Last Updated time of rollup field Line Items Total Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_lineitemstotalamount_date")]
-		public System.Nullable<System.DateTime> defra_lineitemstotalamount_Date
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_lineitemstotalamount_date");
-			}
-		}
-		
-		/// <summary>
-		/// State of rollup field Line Items Total Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_lineitemstotalamount_state")]
-		public System.Nullable<int> defra_lineitemstotalamount_State
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("defra_lineitemstotalamount_state");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_managementsystemid")]
 		public Microsoft.Xrm.Sdk.EntityReference defra_managementsystemid
 		{
@@ -1061,39 +1271,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_name");
 				this.SetAttributeValue("defra_name", value);
 				this.OnPropertyChanged("defra_name");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_nettotalpaid")]
-		public Microsoft.Xrm.Sdk.Money defra_nettotalpaid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_nettotalpaid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_nettotalpaid");
-				this.SetAttributeValue("defra_nettotalpaid", value);
-				this.OnPropertyChanged("defra_nettotalpaid");
-			}
-		}
-		
-		/// <summary>
-		/// Value of the Net Total Paid in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_nettotalpaid_base")]
-		public Microsoft.Xrm.Sdk.Money defra_nettotalpaid_Base
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_nettotalpaid_base");
 			}
 		}
 		
@@ -1937,110 +2114,6 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalpaidamount")]
-		public Microsoft.Xrm.Sdk.Money defra_totalpaidamount
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_totalpaidamount");
-			}
-		}
-		
-		/// <summary>
-		/// Value of the Total Paid Amount in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalpaidamount_base")]
-		public Microsoft.Xrm.Sdk.Money defra_totalpaidamount_Base
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_totalpaidamount_base");
-			}
-		}
-		
-		/// <summary>
-		/// Last Updated time of rollup field Total Paid Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalpaidamount_date")]
-		public System.Nullable<System.DateTime> defra_totalpaidamount_Date
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_totalpaidamount_date");
-			}
-		}
-		
-		/// <summary>
-		/// State of rollup field Total Paid Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalpaidamount_state")]
-		public System.Nullable<int> defra_totalpaidamount_State
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("defra_totalpaidamount_state");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalrefundedamount")]
-		public Microsoft.Xrm.Sdk.Money defra_totalrefundedamount
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_totalrefundedamount");
-			}
-		}
-		
-		/// <summary>
-		/// Value of the Total Refunded Amount in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalrefundedamount_base")]
-		public Microsoft.Xrm.Sdk.Money defra_totalrefundedamount_Base
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_totalrefundedamount_base");
-			}
-		}
-		
-		/// <summary>
-		/// Last Updated time of rollup field Total Refunded Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalrefundedamount_date")]
-		public System.Nullable<System.DateTime> defra_totalrefundedamount_Date
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_totalrefundedamount_date");
-			}
-		}
-		
-		/// <summary>
-		/// State of rollup field Total Refunded Amount.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_totalrefundedamount_state")]
-		public System.Nullable<int> defra_totalrefundedamount_State
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("defra_totalrefundedamount_state");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_tradingname")]
 		public string defra_tradingname
 		{
@@ -2491,6 +2564,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_Annotations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_Annotations")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_application_Annotations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_application_Annotations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_Annotations");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_application_Annotations", null, value);
+				this.OnPropertyChanged("defra_application_Annotations");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_application_defra_addressdetails
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_addressdetails")]
@@ -2567,6 +2660,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_applicationline");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationline>("defra_application_defra_applicationline", null, value);
 				this.OnPropertyChanged("defra_application_defra_applicationline");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_application_defra_applicationtask_applicationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_applicationtask_applicationid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationtask> defra_application_defra_applicationtask_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtask>("defra_application_defra_applicationtask_applicationid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_defra_applicationtask_applicationid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtask>("defra_application_defra_applicationtask_applicationid", null, value);
+				this.OnPropertyChanged("defra_application_defra_applicationtask_applicationid");
 			}
 		}
 		

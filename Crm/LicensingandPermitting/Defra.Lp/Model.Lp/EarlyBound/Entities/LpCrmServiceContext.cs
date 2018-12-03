@@ -5,7 +5,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-// Created via this command line: "C:\Users\Hugo\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"D:\GIT\DEFRA\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"hugo.herrera@defradev.onmicrosoft.com" /password:"****************" 
+// Created via this command line: "C:\Users\cj\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\CrmSvcUtil Ref\crmsvcutil.exe" /url:"https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com/XRMServices/2011/Organization.svc" /namespace:"Lp.Model.EarlyBound" /out:"C:\Source\Repos\license-and-permitting-dynamics\Crm\LicensingandPermitting\Defra.Lp\Model.Lp\EarlyBound\Entities\LpCrmServiceContext.cs" /servicecontextname:"LpCrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /username:"chris.jibb@defradev.onmicrosoft.com" /password:"*********" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
@@ -38,6 +38,18 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.Account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Annotation"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.Annotation> AnnotationSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.Annotation>();
 			}
 		}
 		
@@ -138,6 +150,30 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationtask"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationtask> defra_applicationtaskSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationtask>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationtaskdefinition> defra_applicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationtaskdefinition>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_areacomment"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_areacomment> defra_areacommentSet
@@ -230,6 +266,18 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_item>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_itemapplicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>();
 			}
 		}
 		
@@ -446,6 +494,18 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_secureconfiguration>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_tasktype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_tasktype> defra_tasktypeSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_tasktype>();
 			}
 		}
 		
