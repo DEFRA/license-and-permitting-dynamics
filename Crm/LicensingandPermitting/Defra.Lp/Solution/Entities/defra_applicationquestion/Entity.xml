@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Entity>
-  <Name LocalizedName="Application Question Option" OriginalName="Application Question Option">defra_applicationquestionoption</Name>
+  <Name LocalizedName="Application Question" OriginalName="Application Question">defra_applicationquestion</Name>
   <EntityInfo>
-    <entity Name="defra_applicationquestionoption">
+    <entity Name="defra_applicationquestion">
       <LocalizedNames>
-        <LocalizedName description="Application Question Option" languagecode="1033" />
+        <LocalizedName description="Application Question" languagecode="1033" />
       </LocalizedNames>
       <LocalizedCollectionNames>
-        <LocalizedCollectionName description="Application Question Options" languagecode="1033" />
+        <LocalizedCollectionName description="Application Questions" languagecode="1033" />
       </LocalizedCollectionNames>
       <Descriptions>
         <Description description="" languagecode="1033" />
@@ -113,45 +113,10 @@
             <Description description="Unique identifier of the delegate user who created the record." languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="defra_applicationquestion">
-          <Type>lookup</Type>
-          <Name>defra_applicationquestion</Name>
-          <LogicalName>defra_applicationquestion</LogicalName>
-          <RequiredLevel>none</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.2.1.82</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
-          <IsSortableEnabled>0</IsSortableEnabled>
-          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
-          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
-          <IsDataSourceSecret>0</IsDataSourceSecret>
-          <AutoNumberFormat></AutoNumberFormat>
-          <LookupStyle>single</LookupStyle>
-          <LookupTypes />
-          <displaynames>
-            <displayname description="Application Question" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="defra_applicationquestionoptionId">
+        <attribute PhysicalName="defra_applicationquestionId">
           <Type>primarykey</Type>
-          <Name>defra_applicationquestionoptionid</Name>
-          <LogicalName>defra_applicationquestionoptionid</LogicalName>
+          <Name>defra_applicationquestionid</Name>
+          <LogicalName>defra_applicationquestionid</LogicalName>
           <RequiredLevel>systemrequired</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
@@ -174,16 +139,178 @@
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
           <displaynames>
-            <displayname description="Application Question Option" languagecode="1033" />
+            <displayname description="Application Question" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="Unique identifier for entity instances" languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="defra_option">
+        <attribute PhysicalName="defra_applies_if_application_type">
+          <Type>picklist</Type>
+          <Name>defra_applies_if_application_type</Name>
+          <LogicalName>defra_applies_if_application_type</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.1</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <AppDefaultValue>-1</AppDefaultValue>
+          <OptionSetName>defra_applicationtype</OptionSetName>
+          <displaynames>
+            <displayname description="Applies if application type" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_applies_if_parent_question">
+          <Type>lookup</Type>
+          <Name>defra_applies_if_parent_question</Name>
+          <LogicalName>defra_applies_if_parent_question</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.2.1.83</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <LookupStyle>single</LookupStyle>
+          <LookupTypes />
+          <displaynames>
+            <displayname description="Applies if Parent Question" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_group">
+          <Type>lookup</Type>
+          <Name>defra_group</Name>
+          <LogicalName>defra_group</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.2.1.83</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <LookupStyle>single</LookupStyle>
+          <LookupTypes />
+          <displaynames>
+            <displayname description="Section" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_is_mandatory">
+          <Type>bit</Type>
+          <Name>defra_is_mandatory</Name>
+          <LogicalName>defra_is_mandatory</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.2.1.83</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <AppDefaultValue>0</AppDefaultValue>
+          <optionset Name="defra_applicationquestion_defra_is_mandatory">
+            <OptionSetType>bit</OptionSetType>
+            <IntroducedVersion>1.2.1.83</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <displaynames>
+              <displayname description="Is Mandatory" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+            <options>
+              <option value="0" Color="#0000ff">
+                <labels>
+                  <label description="No" languagecode="1033" />
+                </labels>
+              </option>
+              <option value="1" Color="#0000ff">
+                <labels>
+                  <label description="Yes" languagecode="1033" />
+                </labels>
+              </option>
+            </options>
+          </optionset>
+          <displaynames>
+            <displayname description="Is Mandatory" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_question">
           <Type>nvarchar</Type>
-          <Name>defra_option</Name>
-          <LogicalName>defra_option</LogicalName>
+          <Name>defra_question</Name>
+          <LogicalName>defra_question</LogicalName>
           <RequiredLevel>required</RequiredLevel>
           <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
           <ImeMode>auto</ImeMode>
@@ -207,13 +334,48 @@
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
           <Format>text</Format>
-          <MaxLength>1000</MaxLength>
-          <Length>2000</Length>
+          <MaxLength>200</MaxLength>
+          <Length>400</Length>
           <displaynames>
-            <displayname description="Option" languagecode="1033" />
+            <displayname description="Question" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="The name of the custom entity." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_question_display_text">
+          <Type>ntext</Type>
+          <Name>defra_question_display_text</Name>
+          <LogicalName>defra_question_display_text</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.2.1.83</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <Format></Format>
+          <MaxLength>4000</MaxLength>
+          <displaynames>
+            <displayname description="Question Display Text" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="defra_shortname">
@@ -243,10 +405,45 @@
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
           <Format>text</Format>
-          <MaxLength>59</MaxLength>
-          <Length>118</Length>
+          <MaxLength>50</MaxLength>
+          <Length>100</Length>
           <displaynames>
             <displayname description="Short Name" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="defra_type">
+          <Type>picklist</Type>
+          <Name>defra_type</Name>
+          <LogicalName>defra_type</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.2.1.82</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <AppDefaultValue>-1</AppDefaultValue>
+          <OptionSetName>defra_application_question_types</OptionSetName>
+          <displaynames>
+            <displayname description="Type" languagecode="1033" />
           </displaynames>
           <Descriptions>
             <Description description="" languagecode="1033" />
@@ -583,7 +780,7 @@
           <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
-          <optionset Name="defra_applicationquestionoption_statecode">
+          <optionset Name="defra_applicationquestion_statecode">
             <OptionSetType>state</OptionSetType>
             <IntroducedVersion>1.2.1.82</IntroducedVersion>
             <IsCustomizable>1</IsCustomizable>
@@ -591,7 +788,7 @@
               <displayname description="Status" languagecode="1033" />
             </displaynames>
             <Descriptions>
-              <Description description="Status of the Application Question Option" languagecode="1033" />
+              <Description description="Status of the Application Question" languagecode="1033" />
             </Descriptions>
             <states>
               <state value="0" defaultstatus="1" invariantname="Active">
@@ -610,7 +807,7 @@
             <displayname description="Status" languagecode="1033" />
           </displaynames>
           <Descriptions>
-            <Description description="Status of the Application Question Option" languagecode="1033" />
+            <Description description="Status of the Application Question" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="statuscode">
@@ -639,7 +836,7 @@
           <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
           <IsDataSourceSecret>0</IsDataSourceSecret>
           <AutoNumberFormat></AutoNumberFormat>
-          <optionset Name="defra_applicationquestionoption_statuscode">
+          <optionset Name="defra_applicationquestion_statuscode">
             <OptionSetType>status</OptionSetType>
             <IntroducedVersion>1.2.1.82</IntroducedVersion>
             <IsCustomizable>1</IsCustomizable>
@@ -647,7 +844,7 @@
               <displayname description="Status Reason" languagecode="1033" />
             </displaynames>
             <Descriptions>
-              <Description description="Reason for the status of the Application Question Option" languagecode="1033" />
+              <Description description="Reason for the status of the Application Question" languagecode="1033" />
             </Descriptions>
             <statuses>
               <status value="1" state="0">
@@ -666,7 +863,7 @@
             <displayname description="Status Reason" languagecode="1033" />
           </displaynames>
           <Descriptions>
-            <Description description="Reason for the status of the Application Question Option" languagecode="1033" />
+            <Description description="Reason for the status of the Application Question" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="TimeZoneRuleVersionNumber">
@@ -740,7 +937,7 @@
           </Descriptions>
         </attribute>
       </attributes>
-      <EntitySetName>defra_applicationquestionoptions</EntitySetName>
+      <EntitySetName>defra_applicationquestions</EntitySetName>
       <IsDuplicateCheckSupported>1</IsDuplicateCheckSupported>
       <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
       <IsRequiredOffline>0</IsRequiredOffline>
@@ -794,6 +991,9 @@
       <CanCreateViews>1</CanCreateViews>
       <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
       <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+      <IconMediumName>defra_applicationanswer32.png</IconMediumName>
+      <IconSmallName>defra_applicationanswer16.png</IconSmallName>
+      <IconVectorName>defra_applicationanswer16.png</IconVectorName>
       <EnforceStateTransitions>0</EnforceStateTransitions>
       <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
       <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
@@ -808,7 +1008,7 @@
   <RibbonDiffXml />
   <CustomControlDefaultConfigs>
     <CustomControlDefaultConfig>
-      <CustomControlDefaultConfigId>{9716aeb6-d7c0-e811-a97b-000d3ab311f1}</CustomControlDefaultConfigId>
+      <CustomControlDefaultConfigId>{6f3ca629-81c3-49ca-8880-1c827d7cbd9c}</CustomControlDefaultConfigId>
       <ControlDescriptionXML>
         <controlDescriptions />
       </ControlDescriptionXML>
