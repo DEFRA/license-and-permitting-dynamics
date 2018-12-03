@@ -2844,6 +2844,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_defra_application_defra_applicationanswer_Application
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_defra_applicationanswer_Application")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationanswer> defra_defra_application_defra_applicationanswer_Application
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_application_defra_applicationanswer_Application", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_defra_application_defra_applicationanswer_Application");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_application_defra_applicationanswer_Application", null, value);
+				this.OnPropertyChanged("defra_defra_application_defra_applicationanswer_Application");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_defra_application_defra_payment
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_defra_payment")]
