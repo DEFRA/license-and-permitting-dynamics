@@ -9,7 +9,8 @@
     using Model.EarlyBound;
 
     /// <summary>
-    /// Code activity sets an application answer
+    /// Code activity sets an application answer by looking up the question and option codes
+    /// Creates the application answer if it does not already exist based on boolean parameter
     /// </summary>
     public class SetApplicationAnswer: WorkFlowActivityBase
     {
