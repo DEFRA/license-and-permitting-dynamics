@@ -31,6 +31,32 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_secureconfiguration : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_description = "defra_description";
+			public const string defra_key = "defra_key";
+			public const string defra_secureconfigurationId = "defra_secureconfigurationid";
+			public const string Id = "defra_secureconfigurationid";
+			public const string defra_value = "defra_value";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

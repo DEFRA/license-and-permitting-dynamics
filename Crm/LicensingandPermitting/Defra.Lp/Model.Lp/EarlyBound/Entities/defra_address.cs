@@ -31,6 +31,46 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_address : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_address_search_criteria = "defra_address_search_criteria";
+			public const string defra_addressId = "defra_addressid";
+			public const string Id = "defra_addressid";
+			public const string defra_Country = "defra_country";
+			public const string defra_fromaddresslookup = "defra_fromaddresslookup";
+			public const string defra_fromcompanieshouse = "defra_fromcompanieshouse";
+			public const string defra_Locality = "defra_locality";
+			public const string defra_name = "defra_name";
+			public const string defra_normalised_postcode = "defra_normalised_postcode";
+			public const string defra_Postcode = "defra_postcode";
+			public const string defra_Premises = "defra_premises";
+			public const string defra_Street = "defra_street";
+			public const string defra_Town = "defra_town";
+			public const string defra_towntext = "defra_towntext";
+			public const string defra_UPRN = "defra_uprn";
+			public const string defra_X = "defra_x";
+			public const string defra_Y = "defra_y";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_country_defra_address = "defra_country_defra_address";
+			public const string defra_town_defra_address = "defra_town_defra_address";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

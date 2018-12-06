@@ -31,6 +31,35 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_saveandreturn : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_application = "defra_application";
+			public const string defra_name = "defra_name";
+			public const string defra_saveandreturnId = "defra_saveandreturnid";
+			public const string Id = "defra_saveandreturnid";
+			public const string defra_suffix = "defra_suffix";
+			public const string defra_url = "defra_url";
+			public const string EmailAddress = "emailaddress";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_application_defra_saveandreturn_application = "defra_application_defra_saveandreturn_application";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

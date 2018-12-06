@@ -31,6 +31,46 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_paymenttransaction : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_payment = "defra_payment";
+			public const string defra_paymenttransactionId = "defra_paymenttransactionid";
+			public const string Id = "defra_paymenttransactionid";
+			public const string defra_requestamount = "defra_requestamount";
+			public const string defra_requestamount_Base = "defra_requestamount_base";
+			public const string defra_requestdescription = "defra_requestdescription";
+			public const string defra_requestreturnurl = "defra_requestreturnurl";
+			public const string defra_responsepaymentcancelurlhref = "defra_responsepaymentcancelurlhref";
+			public const string defra_responsepaymentcancelurlmethod = "defra_responsepaymentcancelurlmethod";
+			public const string defra_responsepaymentfinished = "defra_responsepaymentfinished";
+			public const string defra_responsepaymentid = "defra_responsepaymentid";
+			public const string defra_responsepaymentnexturlhref = "defra_responsepaymentnexturlhref";
+			public const string defra_responsepaymentnexturlmethod = "defra_responsepaymentnexturlmethod";
+			public const string defra_responsepaymentprovider = "defra_responsepaymentprovider";
+			public const string defra_responsepaymentstatus = "defra_responsepaymentstatus";
+			public const string defra_transactionref = "defra_transactionref";
+			public const string ExchangeRate = "exchangerate";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_defra_payment_defra_paymenttransaction_payment = "defra_defra_payment_defra_paymenttransaction_payment";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

@@ -31,6 +31,35 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_locationdetails : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_addressId = "defra_addressid";
+			public const string defra_gridreferenceid = "defra_gridreferenceid";
+			public const string defra_locationdetailsId = "defra_locationdetailsid";
+			public const string Id = "defra_locationdetailsid";
+			public const string defra_locationId = "defra_locationid";
+			public const string defra_name = "defra_name";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_address_defra_locationdetails = "defra_address_defra_locationdetails";
+			public const string defra_defra_location_defra_locationdetails = "defra_defra_location_defra_locationdetails";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
