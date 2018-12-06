@@ -4,7 +4,6 @@
     using Model.EarlyBound;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk;
-    using Model.Crm;
     using Core.DataAccess.Base;
 
     /// <summary>
@@ -182,7 +181,8 @@
             string applicationAnswerOptionCode, 
             string applciationAnswerText,
             EntityReference application, 
-            EntityReference applicationLine, bool createIfNotExists)
+            EntityReference applicationLine, 
+            bool createIfNotExists)
         {
             // 1. Check if answer already exists
             Entity existingApplicationAnswer = GetApplicationAnswer(applicationQuestionCode, application, applicationLine);

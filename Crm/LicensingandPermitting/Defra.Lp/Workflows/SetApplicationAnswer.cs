@@ -63,7 +63,8 @@
                 AnswerOptionCode.Get<string>(executionContext),
                 AnswerOptionText.Get<string>(executionContext),
                 AnswerApplication.Get<EntityReference>(executionContext),
-                AnswerApplicationLine.Get<EntityReference>(executionContext));
+                AnswerApplicationLine.Get<EntityReference>(executionContext),
+                true);
 
             // 3. Return
             ApplicationAnswer.Set(executionContext, new EntityReference(defra_applicationanswer.EntityLogicalName, answerId));
