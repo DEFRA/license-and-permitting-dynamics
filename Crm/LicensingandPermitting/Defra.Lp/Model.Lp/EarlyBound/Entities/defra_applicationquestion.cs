@@ -607,6 +607,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_applicationquestion_defra_item_application_question_applicationquestionid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationquestion_defra_item_application_question_applicationquestionid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_item_application_question> defra_applicationquestion_defra_item_application_question_applicationquestionid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationquestion_defra_item_application_question_applicationquestionid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null, value);
+				this.OnPropertyChanged("defra_applicationquestion_defra_item_application_question_applicationquestionid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_defra_applicationquestion_defra_applicationanswer_question
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationanswer_question")]

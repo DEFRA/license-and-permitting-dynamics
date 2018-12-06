@@ -568,6 +568,9 @@ namespace Lp.Model.EarlyBound
 		Item = 10059,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10087,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemApplicationTaskDefinition = 10079,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -1165,10 +1168,10 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10076,
+		SolutionComponentDataSource = 10086,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10075,
+		SolutionComponentSummary = 10085,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,

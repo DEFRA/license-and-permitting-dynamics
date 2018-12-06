@@ -318,6 +318,18 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_item_application_question"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_item_application_question> defra_item_application_questionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_item_application_question>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_itemapplicationtaskdefinitionSet

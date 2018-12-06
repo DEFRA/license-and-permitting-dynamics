@@ -30,7 +30,6 @@ namespace Lp.DataAccess.Tests.IntegrationTests
                 return _organizationService;
             }
         }
-
         #endregion
 
         #region Tests

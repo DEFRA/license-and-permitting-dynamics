@@ -1,4 +1,8 @@
-﻿namespace Lp.DataAccess
+﻿using System.Linq;
+using Lp.DataAccess.Extensions;
+using Lp.Model.Internal;
+
+namespace Lp.DataAccess
 {
     using System;
     using Model.EarlyBound;
@@ -329,6 +333,103 @@
 
             // Tell CRM to create the answer record, and return it's Id
             return OrganisationService.Create(newAnswer);
+        }
+
+
+        public ApplicationQuestionsAndLines[] GetApplicableApplicationQuestions(Guid applicationId)
+        {
+            // Prepare query, start with application line
+            QueryExpression query = new QueryExpression(defra_applicationline.EntityLogicalName);
+            query.ColumnSet.AddColumns(defra_applicationline.Fields.defra_applicationlineId);
+            query.Criteria.AddCondition(defra_applicationline.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationlineState.Active);
+            query.Criteria.AddCondition(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal, applicationId);
+
+            // Link to Item
+            LinkEntity linkItem = query.AddLink(defra_item.EntityLogicalName, defra_item.Fields.defra_itemId, defra_item.Fields.defra_itemId);
+            linkItem.LinkCriteria.AddCondition(defra_item.Fields.StateCode, ConditionOperator.Equal, (int)defra_itemState.Active);
+
+            // Link to Item Application Question linker table
+            LinkEntity linkItemApplicationQuestion = linkItem.AddLink(defra_item_application_question.EntityLogicalName, defra_item.Fields.defra_itemId, defra_item_application_question.Fields.defra_itemid);
+            linkItemApplicationQuestion.LinkCriteria.AddCondition(defra_item_application_question.Fields.StateCode, ConditionOperator.Equal, (int)defra_item_application_questionState.Active);
+            linkItemApplicationQuestion.Columns.AddColumns(defra_item_application_question.Fields.);
+            // Link to Application Question
+            LinkEntity linkQuestion = linkItemApplicationQuestion.AddLink(
+                defra_applicationquestion.EntityLogicalName, 
+                defra_item_application_question.Fields.defra_applicationquestionid, 
+                defra_applicationquestion.Fields.defra_applicationquestionId); // TODO Add scope
+            linkQuestion.EntityAlias = "question"; 
+            linkQuestion.Columns.AddColumns(defra_applicationquestion.Fields.defra_applicationquestionId);
+            linkQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
+
+            // Talk to CRM, get results
+            EntityCollection resultEntities = OrganisationService.RetrieveMultiple(query);
+
+            // No results
+            if (resultEntities?.Entities == null || resultEntities.Entities.Count < 1)
+            {
+                return null;
+            }
+
+            // Return simple model result
+            return resultEntities.Entities.Select(entity =>
+                new ApplicationQuestionsAndLines
+                {
+                    ApplicationLineId = ((EntityReference) entity.Attributes[defra_applicationline.Fields.defra_applicationlineId]).Id,
+                    ApplicationQuestionId = (Guid) entity.GetAttributeValue<AliasedValue>($"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}").Value
+                }).ToArray();
+        }
+
+        public ApplicationAnswer[] GetApplicationAnswers(Guid applicationId)
+        {
+            // Prepare query, quer applications answer key fields
+            QueryExpression query = new QueryExpression(defra_applicationanswer.EntityLogicalName);
+
+            query.ColumnSet.AddColumns(
+                defra_applicationanswer.Fields.defra_answer_option, 
+                defra_applicationanswer.Fields.defra_answertext, 
+                defra_applicationanswer.Fields.defra_applicationanswerId,
+                defra_applicationanswer.Fields.defra_applicationlineid,
+                defra_applicationanswer.Fields.defra_question);
+
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal, defra_applicationanswerState.Active);
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal, applicationId);
+                
+            // Talk to CRM, get results
+            EntityCollection resultEntities = OrganisationService.RetrieveMultiple(query);
+
+            // No results
+            if (resultEntities?.Entities == null || resultEntities.Entities.Count < 1)
+            {
+                return null;
+            }
+
+            // Return simple model result
+            return resultEntities.Entities.Select(entity =>
+                new ApplicationAnswer
+                {
+                    ApplicationAnswerId = entity.Id,
+                    ApplicationQuestionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_question),
+                    ApplicationQuestionOptionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_answer_option),
+                    ApplicationLineId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_applicationlineid),
+                    AnswerText = entity.GetAttributeText(defra_applicationanswer.Fields.defra_answertext),
+                }).ToArray();
+        }
+
+
+        public void RefreshApplicationAnswers(Guid applicationId)
+        {
+            // Get the list of questions that should be there
+            ApplicationQuestionsAndLines[] applicableQuestionsAndLines = GetApplicableApplicationQuestions(applicationId);
+
+            // And the list of questions that are linked to the application
+            ApplicationAnswer[] getCurrentApplicationAnswers = GetApplicationAnswers(applicationId);
+
+            // Now work out which application answers should be deleted
+            ApplicationAnswer[] applicationAnswersToDelete = getCurrentApplicationAnswers.Where(a => a.ApplicationQuestionId  )
+
+            // And work out which application answers should be created
+
+
         }
     }
 }
