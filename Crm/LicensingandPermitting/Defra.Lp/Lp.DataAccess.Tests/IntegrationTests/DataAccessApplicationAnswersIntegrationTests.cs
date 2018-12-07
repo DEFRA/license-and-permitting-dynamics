@@ -1,4 +1,5 @@
 ﻿//Data Access App Answer integration tests
+using Lp.Model.Internal;
 using Lp.TestSupport.Mock;
 
 namespace Lp.DataAccess.Tests.IntegrationTests
@@ -58,7 +59,49 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Assert.IsTrue(answedId3 != Guid.Empty);
             Assert.IsTrue(answedId4 != Guid.Empty);
         }
+
+
+        [TestMethod]
+        public void Integration_GetApplicableApplicationQuestions_Success()
+        {
+            Entity application = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService);
+
+            DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
+
+            ApplicationQuestionsAndLines[] result = dal.GetApplicableApplicationQuestions(application.Id);
+
+            Assert.IsTrue(result == null);
+        }
+
+        [TestMethod]
+        public void Integration_GetApplicationAnswers_Success()
+        {
+            Entity application = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService);
+
+            DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
+
+            var result = dal.GetApplicationAnswers(application.Id);
+
+            Assert.IsTrue(result == null);
+        }
+
+        [TestMethod]
+        public void Integration_RefreshApplicationAnswers_Success()
+        {
+            Entity application = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService);
+
+            DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
+
+            dal.RefreshApplicationAnswers(application.Id);
+        }
         
+        [TestMethod]
+        public void Integration_RefreshApplicationAnswers_DummyDataTest()
+        {
+            DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
+            dal.RefreshApplicationAnswers(new Guid("yourguidhere"));
+        }
+
         #endregion
     }
 }

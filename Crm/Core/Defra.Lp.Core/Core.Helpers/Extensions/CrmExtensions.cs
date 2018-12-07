@@ -1,7 +1,8 @@
-﻿namespace Lp.DataAccess.Extensions
+﻿namespace Core.Helpers.Extensions
 {
     using System;
     using Microsoft.Xrm.Sdk;
+
 
     public static class CrmExtensions
     {

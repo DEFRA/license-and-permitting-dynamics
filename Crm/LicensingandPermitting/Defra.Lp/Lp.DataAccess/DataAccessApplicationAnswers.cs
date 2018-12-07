@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Lp.DataAccess.Extensions;
+using Core.Helpers.Extensions;
 using Lp.Model.Internal;
 
 namespace Lp.DataAccess
@@ -335,7 +335,12 @@ namespace Lp.DataAccess
             return OrganisationService.Create(newAnswer);
         }
 
-
+        /// <summary>
+        /// Returns a list of application questions that are applicable to an application 
+        /// based on the application lines and items linked to the application
+        /// </summary>
+        /// <param name="applicationId">Guid for the application to check</param>
+        /// <returns>A simplified array of application questions and application line ids that are applicable</returns>
         public ApplicationQuestionsAndLines[] GetApplicableApplicationQuestions(Guid applicationId)
         {
             // Prepare query, start with application line
@@ -351,12 +356,14 @@ namespace Lp.DataAccess
             // Link to Item Application Question linker table
             LinkEntity linkItemApplicationQuestion = linkItem.AddLink(defra_item_application_question.EntityLogicalName, defra_item.Fields.defra_itemId, defra_item_application_question.Fields.defra_itemid);
             linkItemApplicationQuestion.LinkCriteria.AddCondition(defra_item_application_question.Fields.StateCode, ConditionOperator.Equal, (int)defra_item_application_questionState.Active);
-            linkItemApplicationQuestion.Columns.AddColumns(defra_item_application_question.Fields.);
+            linkItemApplicationQuestion.Columns.AddColumns(defra_item_application_question.Fields.defra_scope);
+            linkItemApplicationQuestion.EntityAlias = "linker";
+
             // Link to Application Question
             LinkEntity linkQuestion = linkItemApplicationQuestion.AddLink(
                 defra_applicationquestion.EntityLogicalName, 
                 defra_item_application_question.Fields.defra_applicationquestionid, 
-                defra_applicationquestion.Fields.defra_applicationquestionId); // TODO Add scope
+                defra_applicationquestion.Fields.defra_applicationquestionId);
             linkQuestion.EntityAlias = "question"; 
             linkQuestion.Columns.AddColumns(defra_applicationquestion.Fields.defra_applicationquestionId);
             linkQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
@@ -374,11 +381,17 @@ namespace Lp.DataAccess
             return resultEntities.Entities.Select(entity =>
                 new ApplicationQuestionsAndLines
                 {
-                    ApplicationLineId = ((EntityReference) entity.Attributes[defra_applicationline.Fields.defra_applicationlineId]).Id,
-                    ApplicationQuestionId = (Guid) entity.GetAttributeValue<AliasedValue>($"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}").Value
+                    ApplicationLineId = (Guid)entity.Attributes[defra_applicationline.Fields.defra_applicationlineId],
+                    ApplicationQuestionId = (Guid)entity.GetAttributeValue<AliasedValue>($"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}").Value,
+                    Scope = ((OptionSetValue)entity.GetAttributeValue<AliasedValue>($"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}").Value).Value,
                 }).ToArray();
         }
 
+        /// <summary>
+        /// Returns a list of application answer records currently linked to an application
+        /// </summary>
+        /// <param name="applicationId">Guid for the application to query</param>
+        /// <returns>A simplified model that contains answer records</returns>
         public ApplicationAnswer[] GetApplicationAnswers(Guid applicationId)
         {
             // Prepare query, quer applications answer key fields
@@ -391,7 +404,7 @@ namespace Lp.DataAccess
                 defra_applicationanswer.Fields.defra_applicationlineid,
                 defra_applicationanswer.Fields.defra_question);
 
-            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal, defra_applicationanswerState.Active);
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationanswerState.Active);
             query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal, applicationId);
                 
             // Talk to CRM, get results
@@ -415,21 +428,83 @@ namespace Lp.DataAccess
                 }).ToArray();
         }
 
-
+        /// <summary>
+        /// Function takes care of removing application answers that are no longer applicable
+        /// to an application, and adds new answer records depending on the application lines
+        /// linked to the application
+        /// </summary>
+        /// <param name="applicationId">Guid for the application to process</param>
         public void RefreshApplicationAnswers(Guid applicationId)
         {
             // Get the list of questions that should be there
-            ApplicationQuestionsAndLines[] applicableQuestionsAndLines = GetApplicableApplicationQuestions(applicationId);
+            ApplicationQuestionsAndLines[] applicableQuestionsAndLines = GetApplicableApplicationQuestions(applicationId) ?? new ApplicationQuestionsAndLines[0];
 
             // And the list of questions that are linked to the application
-            ApplicationAnswer[] getCurrentApplicationAnswers = GetApplicationAnswers(applicationId);
+            ApplicationAnswer[] currentApplicationAnswers = GetApplicationAnswers(applicationId) ?? new ApplicationAnswer[0];
 
-            // Now work out which application answers should be deleted
-            ApplicationAnswer[] applicationAnswersToDelete = getCurrentApplicationAnswers.Where(a => a.ApplicationQuestionId  )
+            // Now work out which application answers should be removed
+            if (currentApplicationAnswers != null) { }
+            foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
+            {
+                // Check if the existing application answer still applies
+                ApplicationQuestionsAndLines applicableQuestionAndLine =
+                    applicableQuestionsAndLines.FirstOrDefault(
+                        q => q.ApplicationLineId == appAnswer.ApplicationLineId &&
+                             q.ApplicationQuestionId == appAnswer.ApplicationQuestionId);
+
+                if (applicableQuestionAndLine == null)
+                {
+                    // Application answer no longer applies, deactivate it
+                    SetStatusAndState(
+                        new EntityReference(defra_applicationanswer.EntityLogicalName,appAnswer.ApplicationAnswerId), 
+                        (int)defra_applicationanswerState.Inactive, 
+                        (int)defra_applicationanswer_StatusCode.Inactive);
+                }
+            }
 
             // And work out which application answers should be created
+            foreach (ApplicationQuestionsAndLines appQuestionAndLine in applicableQuestionsAndLines)
+            {
+                // Check if answer already exists
+                ApplicationAnswer appAnswer =
+                    currentApplicationAnswers.FirstOrDefault(
+                        q => q.ApplicationLineId == appQuestionAndLine.ApplicationLineId &&
+                             q.ApplicationQuestionId == appQuestionAndLine.ApplicationQuestionId);
 
+                // Create the Answer record if it does not already exist
+                if (appAnswer == null)
+                {
+                    CreateAnswerRecord(applicationId, appQuestionAndLine);
+                }
+            }
+        }
 
+        /// <summary>
+        /// Creates an answer record with the given parameters
+        /// </summary>
+        /// <param name="applicationId">Application to link the answer to</param>
+        /// <param name="appQuestionAndLine">Details of the question and line if applicable</param>
+        public void CreateAnswerRecord(Guid applicationId, ApplicationQuestionsAndLines appQuestionAndLine)
+        {
+            // Application answer does not exist, create it
+            Entity newAnswerEntity = new Entity(defra_applicationanswer.EntityLogicalName);
+            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_application, new EntityReference(defra_application.EntityLogicalName, applicationId));
+            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_question, new EntityReference(defra_applicationquestion.EntityLogicalName, appQuestionAndLine.ApplicationQuestionId));
+
+            // If Question is at the Item level, link the answer to the corresponding application line
+            if (appQuestionAndLine.ApplicationLineId.HasValue 
+                && appQuestionAndLine.Scope.HasValue 
+                && appQuestionAndLine.Scope.Value == (int) defra_application_task_scope.Item)
+            {
+                newAnswerEntity.Attributes.Add(
+                    defra_applicationanswer.Fields.defra_applicationlineid,
+                    new EntityReference(
+                        defra_applicationline.EntityLogicalName, 
+                        appQuestionAndLine.ApplicationLineId.Value));
+            }
+
+            // Talk to CRM, create the answer record
+            OrganisationService.Create(newAnswerEntity);
         }
     }
 }
