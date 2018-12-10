@@ -425,18 +425,15 @@
             }
 
             // Return simple model result
+            string scopeAttributeName = $"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}";
+            string questionIdAttributeName = $"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}";
+
             return resultEntities.Entities.Select(entity =>
                 new ApplicationQuestionsAndLines
                 {
-                    ApplicationLineId = (Guid)entity.Attributes[defra_applicationline.Fields.defra_applicationlineId],
-                    ApplicationQuestionId = (Guid)entity
-                        .GetAttributeValue<AliasedValue>(
-                            $"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}")
-                        .Value,
-                    Scope = ((OptionSetValue)entity
-                        .GetAttributeValue<AliasedValue>(
-                            $"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}")
-                        .Value).Value,
+                    ApplicationLineId = entity.GetAttributeGuid(defra_applicationline.Fields.defra_applicationlineId),
+                    ApplicationQuestionId = entity.GetAliasedAttributeId(questionIdAttributeName),
+                    Scope = entity.GetAliasedOptionSetValue(scopeAttributeName),
                 }).ToList();
         }
 
@@ -477,8 +474,7 @@
                 {
                     ApplicationAnswerId = entity.Id,
                     ApplicationQuestionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_question),
-                    ApplicationQuestionOptionId =
-                        entity.GetAttributeId(defra_applicationanswer.Fields.defra_answer_option),
+                    ApplicationQuestionOptionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_answer_option),
                     ApplicationLineId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_applicationlineid),
                     AnswerText = entity.GetAttributeText(defra_applicationanswer.Fields.defra_answertext),
                 }).ToList();
@@ -554,9 +550,13 @@
             Entity newAnswerEntity = new Entity(defra_applicationanswer.EntityLogicalName);
             newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_application,
                 new EntityReference(defra_application.EntityLogicalName, applicationId));
-            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_question,
-                new EntityReference(defra_applicationquestion.EntityLogicalName,
-                    appQuestionAndLine.ApplicationQuestionId));
+
+            if (appQuestionAndLine.ApplicationQuestionId.HasValue)
+            {
+                newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_question,
+                    new EntityReference(defra_applicationquestion.EntityLogicalName,
+                        appQuestionAndLine.ApplicationQuestionId.Value));
+            }
 
             // If Question is at the Item level, link the answer to the corresponding application line
             if (appQuestionAndLine.ApplicationLineId.HasValue

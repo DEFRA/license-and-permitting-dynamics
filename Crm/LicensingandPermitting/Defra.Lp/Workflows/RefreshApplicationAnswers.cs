@@ -43,16 +43,18 @@ namespace Defra.Lp.Workflows
 
             if (applicatEntityReference == null)
             {
-                TracingService.Trace("Account parameter not set.");
-
+                TracingService.Trace("Application parameter not set.");
                 return;
             }
 
-            TracingService.Trace("Getting Contacts for Application {0} ", applicatEntityReference.Id);
+            TracingService.Trace("Refreshing Answers for Application {0} ", applicatEntityReference.Id);
 
             // 2. Processing - add and remove application answers as dictated by the application lines
             DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(this.Service, this.TracingService);
             dal.RefreshApplicationAnswers(applicatEntityReference.Id);
+
+            TracingService.Trace("Done refreshing Answers for Application {0} ", applicatEntityReference.Id);
+
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         public void Integration_RefreshApplicationAnswers_DummyDataTest()
         {
             DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
-            dal.RefreshApplicationAnswers(new Guid("yourguidhere"));
+            dal.RefreshApplicationAnswers(new Guid("4ffa909e-84fc-e811-a983-000d3ab3984f "));
         }
 
         #endregion

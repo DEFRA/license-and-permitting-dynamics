@@ -15,7 +15,7 @@
         /// <summary>
         /// Primary key for application questions
         /// </summary>
-        public Guid ApplicationQuestionId { get; set; }
+        public Guid? ApplicationQuestionId { get; set; }
 
         /// <summary>
         /// Scope optionset

@@ -13,10 +13,45 @@
         /// </summary>
         /// <param name="entity">The Entity that contains the attribute</param>
         /// <param name="attribute">Attribute name to retrieve</param>
-        /// <returns></returns>
+        /// <returns>Guid</returns>
         public static Guid? GetAttributeId(this Entity entity, string attribute)
         {
             return entity.Contains(attribute) ? ((EntityReference)entity[attribute]).Id : (Guid?)null;
+        }
+
+        /// <summary>
+        /// Returns an attribute as aGuid if it exists
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Guid</returns>
+        public static Guid? GetAttributeGuid(this Entity entity, string attribute)
+        {
+            return entity.Contains(attribute) ? ((Guid)entity[attribute]) : (Guid?)null;
+        }
+
+        /// <summary>
+        /// Returns an Aliased Entity Ref attribute's Guid if it exists
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Guid</returns>
+        public static Guid? GetAliasedAttributeId(this Entity entity, string attribute)
+        {
+            return entity.Contains(attribute) ? (Guid)entity.GetAttributeValue<AliasedValue>(attribute).Value : (Guid?)null;
+        }
+
+        /// <summary>
+        /// Returns an Aliased OptionSet attribute'Value Guid if it exists
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Optionset Int Value</returns>
+        public static int? GetAliasedOptionSetValue(this Entity entity, string attribute)
+        {
+            return entity.Contains(attribute) ? ((OptionSetValue)entity
+                .GetAttributeValue<AliasedValue>(attribute)
+                .Value).Value : (int?)null;
         }
 
         /// <summary>
