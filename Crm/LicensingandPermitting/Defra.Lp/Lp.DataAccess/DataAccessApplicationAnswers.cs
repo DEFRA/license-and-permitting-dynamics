@@ -1,17 +1,17 @@
-﻿using System.Linq;
-using Core.Helpers.Extensions;
-using Lp.Model.Internal;
-
-namespace Lp.DataAccess
+﻿namespace Lp.DataAccess
 {
     using System;
-    using Model.EarlyBound;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk;
+    using Core.Helpers.Extensions;
+    using Model.EarlyBound;
     using Core.DataAccess.Base;
+    using Model.Internal;
 
     /// <summary>
-    /// Data access layer for Application Answers
+    /// Data access layer for Application Answer related CRM queries
     /// </summary>
     public class DataAccessApplicationAnswers : DataAccessBase
     {
@@ -20,6 +20,7 @@ namespace Lp.DataAccess
         /// Internal alias used for CRM joins
         /// </summary>
         private const string QuestionEntityAlias = "question";
+
         private const string QuestionOptionEntityAlias = "option";
 
         /// <summary>
@@ -27,8 +28,10 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="organisationService">CRM organisation service</param>
         /// <param name="tracingService">CRM trace service</param>
-        public DataAccessApplicationAnswers(IOrganizationService organisationService, ITracingService tracingService) : base(organisationService, tracingService)
-        {}
+        public DataAccessApplicationAnswers(IOrganizationService organisationService,
+            ITracingService tracingService) : base(organisationService, tracingService)
+        {
+        }
 
         /// <summary>
         /// Returns a defra_application_answer record for the given application, application line and question code
@@ -37,40 +40,52 @@ namespace Lp.DataAccess
         /// <param name="application">The application to lookup the answer by</param>
         /// <param name="applicationLine">The application line to lookup the answer by</param>
         /// <returns></returns>
-        public Entity GetApplicationAnswer(string applicationQuestionCode, EntityReference application, EntityReference applicationLine)
+        public Entity GetApplicationAnswer(string applicationQuestionCode, EntityReference application,
+            EntityReference applicationLine)
         {
 
             // Prep the CRM query
-            var query = new QueryExpression(defra_applicationanswer.EntityLogicalName) {TopCount = 1};
+            var query = new QueryExpression(defra_applicationanswer.EntityLogicalName) { TopCount = 1 };
             query.ColumnSet.AddColumns(
-                defra_applicationanswer.Fields.defra_answer_option, 
-                defra_applicationanswer.Fields.defra_applicationlineid, 
-                defra_applicationanswer.Fields.defra_application, 
-                defra_applicationanswer.Fields.defra_answertext, 
+                defra_applicationanswer.Fields.defra_answer_option,
+                defra_applicationanswer.Fields.defra_applicationlineid,
+                defra_applicationanswer.Fields.defra_application,
+                defra_applicationanswer.Fields.defra_answertext,
                 defra_applicationanswer.Fields.defra_applicationanswerId,
                 defra_applicationanswer.Fields.defra_question);
 
             // Filter by application and get only active records
-            query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal, application.Id);
-            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationanswerState.Active);
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal,
+                application.Id);
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationanswerState.Active);
 
             // If application line is specified, also filter by it. Only used for answers that are application line specific
             if (applicationLine != null)
             {
-                query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_applicationlineid, ConditionOperator.Equal, applicationLine.Id);
+                query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_applicationlineid,
+                    ConditionOperator.Equal, applicationLine.Id);
             }
-            
+
             // Join with the defra_application_question entity to match against the question code
-            var linkToQuestion = query.AddLink(defra_applicationquestion.EntityLogicalName, defra_applicationanswer.Fields.defra_question, defra_applicationquestion.Fields.defra_applicationquestionId);
+            var linkToQuestion = query.AddLink(defra_applicationquestion.EntityLogicalName,
+                defra_applicationanswer.Fields.defra_question,
+                defra_applicationquestion.Fields.defra_applicationquestionId);
             linkToQuestion.EntityAlias = QuestionEntityAlias;
-            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
-            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.defra_shortname, ConditionOperator.Equal, applicationQuestionCode);
+            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode,
+                ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
+            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.defra_shortname,
+                ConditionOperator.Equal, applicationQuestionCode);
 
             // Join with the defra_application_question_option entity to retrieve the option code if set, hence the outer join here
-            var linkToAnswerOption = query.AddLink(defra_applicationquestionoption.EntityLogicalName, defra_applicationanswer.Fields.defra_answer_option, defra_applicationquestionoption.Fields.defra_applicationquestionoptionId, JoinOperator.LeftOuter);
+            var linkToAnswerOption = query.AddLink(defra_applicationquestionoption.EntityLogicalName,
+                defra_applicationanswer.Fields.defra_answer_option,
+                defra_applicationquestionoption.Fields.defra_applicationquestionoptionId, JoinOperator.LeftOuter);
             linkToAnswerOption.EntityAlias = QuestionOptionEntityAlias;
-            linkToAnswerOption.Columns.AddColumns(defra_applicationquestionoption.Fields.defra_option, defra_applicationquestionoption.Fields.defra_shortname);
-            linkToAnswerOption.LinkCriteria.AddCondition(defra_applicationquestionoption.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionoptionState.Active);
+            linkToAnswerOption.Columns.AddColumns(defra_applicationquestionoption.Fields.defra_option,
+                defra_applicationquestionoption.Fields.defra_shortname);
+            linkToAnswerOption.LinkCriteria.AddCondition(defra_applicationquestionoption.Fields.StateCode,
+                ConditionOperator.Equal, (int)defra_applicationquestionoptionState.Active);
 
             // Talk to CRM, get the answer record, and return it
             EntityCollection result = OrganisationService.RetrieveMultiple(query);
@@ -92,12 +107,14 @@ namespace Lp.DataAccess
             var query = new QueryExpression(defra_applicationquestion.EntityLogicalName)
             {
                 TopCount = 1,
-                Criteria = {FilterOperator = LogicalOperator.And}
+                Criteria = { FilterOperator = LogicalOperator.And }
             };
 
             // Got only the matching active question 
-            query.Criteria.AddCondition(defra_applicationquestion.Fields.defra_shortname, ConditionOperator.Equal, code);
-            query.Criteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
+            query.Criteria.AddCondition(defra_applicationquestion.Fields.defra_shortname, ConditionOperator.Equal,
+                code);
+            query.Criteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationquestionState.Active);
 
             // Talk to CRM, return the question record if found
             EntityCollection result = OrganisationService.RetrieveMultiple(query);
@@ -123,8 +140,10 @@ namespace Lp.DataAccess
             };
 
             // Got only the matching active question option
-            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.defra_shortname, ConditionOperator.Equal, code);
-            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionoptionState.Active);
+            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.defra_shortname, ConditionOperator.Equal,
+                code);
+            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationquestionoptionState.Active);
 
             // Talk to CRM, return the question option record if found
             EntityCollection result = OrganisationService.RetrieveMultiple(query);
@@ -136,30 +155,35 @@ namespace Lp.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// Returns an Application Question and Option entity for the given option code and question code
         /// </summary>
-        /// <param name="questionCode"></param>
-        /// <param name="questionOptionCode"></param>
-        /// <returns></returns>
+        /// <param name="questionCode">Question code for the question to be retrieved</param>
+        /// <param name="questionOptionCode">Option code for the question to be retrieved</param>
+        /// <returns>Entity containing application.</returns>
         public Entity GetApplicationQuestionAndOption(string questionCode, string questionOptionCode)
         {
-            var query = new QueryExpression(defra_applicationquestionoption.EntityLogicalName);
-            query.TopCount = 1;
+            var query = new QueryExpression(defra_applicationquestionoption.EntityLogicalName) { TopCount = 1 };
 
             query.ColumnSet.AddColumns(defra_applicationquestionoption.Fields.defra_applicationquestionoptionId);
-            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionoptionState.Active);
-            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.defra_shortname, ConditionOperator.Equal, questionOptionCode);
+            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationquestionoptionState.Active);
+            query.Criteria.AddCondition(defra_applicationquestionoption.Fields.defra_shortname, ConditionOperator.Equal,
+                questionOptionCode);
 
             // link to Question
-            var linkToQuestion = query.AddLink(defra_applicationquestion.EntityLogicalName, defra_applicationquestionoption.Fields.defra_applicationquestion, defra_applicationquestion.Fields.defra_applicationquestionId);
+            var linkToQuestion = query.AddLink(defra_applicationquestion.EntityLogicalName,
+                defra_applicationquestionoption.Fields.defra_applicationquestion,
+                defra_applicationquestion.Fields.defra_applicationquestionId);
             linkToQuestion.EntityAlias = QuestionEntityAlias;
 
             // Add columns to QEdefra_applicationquestionoption_defra_applicationquestion.Columns
             linkToQuestion.Columns.AddColumns(defra_applicationquestion.Fields.defra_applicationquestionId);
 
             // Define filter QEdefra_applicationquestionoption_defra_applicationquestion.LinkCriteria
-            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
-            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.defra_shortname, ConditionOperator.Equal, questionCode);
+            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode,
+                ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
+            linkToQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.defra_shortname,
+                ConditionOperator.Equal, questionCode);
 
             EntityCollection result = OrganisationService.RetrieveMultiple(query);
             if (result?.Entities != null && result.Entities.Count > 0)
@@ -181,30 +205,34 @@ namespace Lp.DataAccess
         /// <param name="createIfNotExists">If true it will create the application record if it does not exist</param>
         /// <returns></returns>
         public Guid SetApplicationAnswer(
-            string applicationQuestionCode, 
-            string applicationAnswerOptionCode, 
+            string applicationQuestionCode,
+            string applicationAnswerOptionCode,
             string applciationAnswerText,
-            EntityReference application, 
-            EntityReference applicationLine, 
+            EntityReference application,
+            EntityReference applicationLine,
             bool createIfNotExists)
         {
             // 1. Check if answer already exists
-            Entity existingApplicationAnswer = GetApplicationAnswer(applicationQuestionCode, application, applicationLine);
+            Entity existingApplicationAnswer =
+                GetApplicationAnswer(applicationQuestionCode, application, applicationLine);
 
             if (existingApplicationAnswer == null)
             {
                 // 2. Create Answer
                 if (createIfNotExists)
                 {
-                    return CreateApplicationAnswer(applicationQuestionCode, applicationAnswerOptionCode, applciationAnswerText, application, applicationLine);
+                    return CreateApplicationAnswer(applicationQuestionCode, applicationAnswerOptionCode,
+                        applciationAnswerText, application, applicationLine);
                 }
 
                 // We should not create it if it doesn't exist, throw exception
-                throw new InvalidPluginExecutionException($"Could not find application answer record for appliction {application?.Id}, question code {applicationQuestionCode} and application line {applicationLine?.Id}");
+                throw new InvalidPluginExecutionException(
+                    $"Could not find application answer record for appliction {application?.Id}, question code {applicationQuestionCode} and application line {applicationLine?.Id}");
             }
 
             // 3. Update Answer
-            return UpdateApplicationAnswer(applicationQuestionCode, applicationAnswerOptionCode, applciationAnswerText, existingApplicationAnswer);
+            return UpdateApplicationAnswer(applicationQuestionCode, applicationAnswerOptionCode, applciationAnswerText,
+                existingApplicationAnswer);
         }
 
         /// <summary>
@@ -216,27 +244,32 @@ namespace Lp.DataAccess
         /// <param name="existingApplicationAnswer"></param>
         /// <returns></returns>
         private Guid UpdateApplicationAnswer(
-            string applicationQuestionCode, 
+            string applicationQuestionCode,
             string applicationAnswerOptionCode,
-            string applciationAnswerText, 
+            string applciationAnswerText,
             Entity existingApplicationAnswer)
         {
             // Prepare the application answer entity to be updated
-            Entity applicationAnswerToUpdate = new Entity(defra_applicationanswer.EntityLogicalName, existingApplicationAnswer.Id);
+            Entity applicationAnswerToUpdate = new Entity(defra_applicationanswer.EntityLogicalName,
+                existingApplicationAnswer.Id);
 
             // Set Application Lookup
-            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_application, existingApplicationAnswer[defra_applicationanswer.Fields.defra_application]);
+            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_application,
+                existingApplicationAnswer[defra_applicationanswer.Fields.defra_application]);
 
             // Set Answer Text
-            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_answertext, applciationAnswerText);
+            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_answertext,
+                applciationAnswerText);
 
             // Set Question Lookup
-            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_question, existingApplicationAnswer[defra_applicationanswer.Fields.defra_question]);
+            applicationAnswerToUpdate.Attributes.Add(defra_applicationanswer.Fields.defra_question,
+                existingApplicationAnswer[defra_applicationanswer.Fields.defra_question]);
 
             // Set Answer Option?
             if (!string.IsNullOrWhiteSpace(applicationAnswerOptionCode))
             {
-                Entity answerOption = GetApplicationQuestionAndOption(applicationQuestionCode, applicationAnswerOptionCode);
+                Entity answerOption =
+                    GetApplicationQuestionAndOption(applicationQuestionCode, applicationAnswerOptionCode);
 
                 if (answerOption == null)
                 {
@@ -259,15 +292,15 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="applicationQuestionCode">Question code to set in the newly created applciation answer record</param>
         /// <param name="applicationAnswerOptionCode">Answer Option code to set in the new record, may be null</param>
-        /// <param name="applciationAnswerText">Answer plain text to be set, may be null</param>
+        /// <param name="applicationAnswerText">Answer plain text to be set, may be null</param>
         /// <param name="application">Application to link to</param>
         /// <param name="applicationLine">Application Line to link to, may be null</param>
         /// <returns>Guid for the newly created application answer record</returns>
         private Guid CreateApplicationAnswer(
-            string applicationQuestionCode, 
+            string applicationQuestionCode,
             string applicationAnswerOptionCode,
-            string applciationAnswerText, 
-            EntityReference application, 
+            string applicationAnswerText,
+            EntityReference application,
             EntityReference applicationLine)
         {
             // Prep the new entity for creation
@@ -277,7 +310,7 @@ namespace Lp.DataAccess
             newAnswer.Attributes.Add(defra_applicationanswer.Fields.defra_application, application);
 
             // Set Answer Text
-            newAnswer.Attributes.Add(defra_applicationanswer.Fields.defra_answertext, applciationAnswerText);
+            newAnswer.Attributes.Add(defra_applicationanswer.Fields.defra_answertext, applicationAnswerText);
 
             // Set Application Line
             if (applicationLine != null)
@@ -288,9 +321,10 @@ namespace Lp.DataAccess
             // Set Answer Option and Question
             if (!string.IsNullOrWhiteSpace(applicationAnswerOptionCode))
             {
-                
+
                 // Get the corresponding application question option, and the question in one go, save query time by doing one query
-                Entity questionAndOptionEntities = GetApplicationQuestionAndOption(applicationQuestionCode, applicationAnswerOptionCode);
+                Entity questionAndOptionEntities =
+                    GetApplicationQuestionAndOption(applicationQuestionCode, applicationAnswerOptionCode);
 
                 if (questionAndOptionEntities == null)
                 {
@@ -302,15 +336,21 @@ namespace Lp.DataAccess
                 if (questionAndOptionEntities.Contains(defra_applicationquestionoption.Fields
                     .defra_applicationquestionoptionId))
                 {
-                    EntityReference optionEntityReference = new EntityReference(defra_applicationquestionoption.EntityLogicalName, questionAndOptionEntities.GetAttributeValue<Guid>(defra_applicationquestionoption.Fields.defra_applicationquestionoptionId));
+                    EntityReference optionEntityReference =
+                        new EntityReference(defra_applicationquestionoption.EntityLogicalName,
+                            questionAndOptionEntities.GetAttributeValue<Guid>(defra_applicationquestionoption.Fields
+                                .defra_applicationquestionoptionId));
                     newAnswer.Attributes.Add(defra_applicationanswer.Fields.defra_answer_option, optionEntityReference);
                 }
 
                 // Set the Question
-                string questionAttribute = $"{QuestionEntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}";
+                string questionAttribute =
+                    $"{QuestionEntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}";
                 if (questionAndOptionEntities.Contains(questionAttribute))
                 {
-                    EntityReference questionEntityReference = new EntityReference(defra_applicationquestionoption.EntityLogicalName, (Guid)questionAndOptionEntities.GetAttributeValue<AliasedValue>(questionAttribute).Value);
+                    EntityReference questionEntityReference =
+                        new EntityReference(defra_applicationquestionoption.EntityLogicalName,
+                            (Guid)questionAndOptionEntities.GetAttributeValue<AliasedValue>(questionAttribute).Value);
                     newAnswer.Attributes.Add(defra_applicationanswer.Fields.defra_question, questionEntityReference);
                 }
             }
@@ -346,27 +386,34 @@ namespace Lp.DataAccess
             // Prepare query, start with application line
             QueryExpression query = new QueryExpression(defra_applicationline.EntityLogicalName);
             query.ColumnSet.AddColumns(defra_applicationline.Fields.defra_applicationlineId);
-            query.Criteria.AddCondition(defra_applicationline.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationlineState.Active);
-            query.Criteria.AddCondition(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal, applicationId);
+            query.Criteria.AddCondition(defra_applicationline.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationlineState.Active);
+            query.Criteria.AddCondition(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal,
+                applicationId);
 
             // Link to Item
-            LinkEntity linkItem = query.AddLink(defra_item.EntityLogicalName, defra_item.Fields.defra_itemId, defra_item.Fields.defra_itemId);
-            linkItem.LinkCriteria.AddCondition(defra_item.Fields.StateCode, ConditionOperator.Equal, (int)defra_itemState.Active);
+            LinkEntity linkItem = query.AddLink(defra_item.EntityLogicalName, defra_item.Fields.defra_itemId,
+                defra_item.Fields.defra_itemId);
+            linkItem.LinkCriteria.AddCondition(defra_item.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_itemState.Active);
 
             // Link to Item Application Question linker table
-            LinkEntity linkItemApplicationQuestion = linkItem.AddLink(defra_item_application_question.EntityLogicalName, defra_item.Fields.defra_itemId, defra_item_application_question.Fields.defra_itemid);
-            linkItemApplicationQuestion.LinkCriteria.AddCondition(defra_item_application_question.Fields.StateCode, ConditionOperator.Equal, (int)defra_item_application_questionState.Active);
+            LinkEntity linkItemApplicationQuestion = linkItem.AddLink(defra_item_application_question.EntityLogicalName,
+                defra_item.Fields.defra_itemId, defra_item_application_question.Fields.defra_itemid);
+            linkItemApplicationQuestion.LinkCriteria.AddCondition(defra_item_application_question.Fields.StateCode,
+                ConditionOperator.Equal, (int)defra_item_application_questionState.Active);
             linkItemApplicationQuestion.Columns.AddColumns(defra_item_application_question.Fields.defra_scope);
             linkItemApplicationQuestion.EntityAlias = "linker";
 
             // Link to Application Question
             LinkEntity linkQuestion = linkItemApplicationQuestion.AddLink(
-                defra_applicationquestion.EntityLogicalName, 
-                defra_item_application_question.Fields.defra_applicationquestionid, 
+                defra_applicationquestion.EntityLogicalName,
+                defra_item_application_question.Fields.defra_applicationquestionid,
                 defra_applicationquestion.Fields.defra_applicationquestionId);
-            linkQuestion.EntityAlias = "question"; 
+            linkQuestion.EntityAlias = "question";
             linkQuestion.Columns.AddColumns(defra_applicationquestion.Fields.defra_applicationquestionId);
-            linkQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationquestionState.Active);
+            linkQuestion.LinkCriteria.AddCondition(defra_applicationquestion.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationquestionState.Active);
 
             // Talk to CRM, get results
             EntityCollection resultEntities = OrganisationService.RetrieveMultiple(query);
@@ -382,8 +429,14 @@ namespace Lp.DataAccess
                 new ApplicationQuestionsAndLines
                 {
                     ApplicationLineId = (Guid)entity.Attributes[defra_applicationline.Fields.defra_applicationlineId],
-                    ApplicationQuestionId = (Guid)entity.GetAttributeValue<AliasedValue>($"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}").Value,
-                    Scope = ((OptionSetValue)entity.GetAttributeValue<AliasedValue>($"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}").Value).Value,
+                    ApplicationQuestionId = (Guid)entity
+                        .GetAttributeValue<AliasedValue>(
+                            $"{linkQuestion.EntityAlias}.{defra_applicationquestion.Fields.defra_applicationquestionId}")
+                        .Value,
+                    Scope = ((OptionSetValue)entity
+                        .GetAttributeValue<AliasedValue>(
+                            $"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}")
+                        .Value).Value,
                 }).ToArray();
         }
 
@@ -392,21 +445,23 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="applicationId">Guid for the application to query</param>
         /// <returns>A simplified model that contains answer records</returns>
-        public ApplicationAnswer[] GetApplicationAnswers(Guid applicationId)
+        public List<ApplicationAnswer> GetApplicationAnswers(Guid applicationId)
         {
             // Prepare query, quer applications answer key fields
             QueryExpression query = new QueryExpression(defra_applicationanswer.EntityLogicalName);
 
             query.ColumnSet.AddColumns(
-                defra_applicationanswer.Fields.defra_answer_option, 
-                defra_applicationanswer.Fields.defra_answertext, 
+                defra_applicationanswer.Fields.defra_answer_option,
+                defra_applicationanswer.Fields.defra_answertext,
                 defra_applicationanswer.Fields.defra_applicationanswerId,
                 defra_applicationanswer.Fields.defra_applicationlineid,
                 defra_applicationanswer.Fields.defra_question);
 
-            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationanswerState.Active);
-            query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal, applicationId);
-                
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.StateCode, ConditionOperator.Equal,
+                (int)defra_applicationanswerState.Active);
+            query.Criteria.AddCondition(defra_applicationanswer.Fields.defra_application, ConditionOperator.Equal,
+                applicationId);
+
             // Talk to CRM, get results
             EntityCollection resultEntities = OrganisationService.RetrieveMultiple(query);
 
@@ -422,10 +477,11 @@ namespace Lp.DataAccess
                 {
                     ApplicationAnswerId = entity.Id,
                     ApplicationQuestionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_question),
-                    ApplicationQuestionOptionId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_answer_option),
+                    ApplicationQuestionOptionId =
+                        entity.GetAttributeId(defra_applicationanswer.Fields.defra_answer_option),
                     ApplicationLineId = entity.GetAttributeId(defra_applicationanswer.Fields.defra_applicationlineid),
                     AnswerText = entity.GetAttributeText(defra_applicationanswer.Fields.defra_answertext),
-                }).ToArray();
+                }).ToList();
         }
 
         /// <summary>
@@ -437,13 +493,14 @@ namespace Lp.DataAccess
         public void RefreshApplicationAnswers(Guid applicationId)
         {
             // Get the list of questions that should be there
-            ApplicationQuestionsAndLines[] applicableQuestionsAndLines = GetApplicableApplicationQuestions(applicationId) ?? new ApplicationQuestionsAndLines[0];
+            ApplicationQuestionsAndLines[] applicableQuestionsAndLines =
+                GetApplicableApplicationQuestions(applicationId) ?? new ApplicationQuestionsAndLines[0];
 
             // And the list of questions that are linked to the application
-            ApplicationAnswer[] currentApplicationAnswers = GetApplicationAnswers(applicationId) ?? new ApplicationAnswer[0];
+            List<ApplicationAnswer> currentApplicationAnswers =
+                GetApplicationAnswers(applicationId) ?? new List<ApplicationAnswer>();
 
             // Now work out which application answers should be removed
-            if (currentApplicationAnswers != null) { }
             foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
             {
                 // Check if the existing application answer still applies
@@ -456,8 +513,8 @@ namespace Lp.DataAccess
                 {
                     // Application answer no longer applies, deactivate it
                     SetStatusAndState(
-                        new EntityReference(defra_applicationanswer.EntityLogicalName,appAnswer.ApplicationAnswerId), 
-                        (int)defra_applicationanswerState.Inactive, 
+                        new EntityReference(defra_applicationanswer.EntityLogicalName, appAnswer.ApplicationAnswerId),
+                        (int)defra_applicationanswerState.Inactive,
                         (int)defra_applicationanswer_StatusCode.Inactive);
                 }
             }
@@ -474,7 +531,10 @@ namespace Lp.DataAccess
                 // Create the Answer record if it does not already exist
                 if (appAnswer == null)
                 {
-                    CreateAnswerRecord(applicationId, appQuestionAndLine);
+                    appAnswer = CreateAnswerRecord(applicationId, appQuestionAndLine);
+
+                    // Save the newly created application answer, so that we don't create a duplicate
+                    currentApplicationAnswers.Add(appAnswer);
                 }
             }
         }
@@ -484,27 +544,39 @@ namespace Lp.DataAccess
         /// </summary>
         /// <param name="applicationId">Application to link the answer to</param>
         /// <param name="appQuestionAndLine">Details of the question and line if applicable</param>
-        public void CreateAnswerRecord(Guid applicationId, ApplicationQuestionsAndLines appQuestionAndLine)
+        public ApplicationAnswer CreateAnswerRecord(Guid applicationId, ApplicationQuestionsAndLines appQuestionAndLine)
         {
+            ApplicationAnswer newAnswer = new ApplicationAnswer
+            {
+                ApplicationQuestionId = appQuestionAndLine.ApplicationQuestionId,
+                ApplicationLineId = appQuestionAndLine.ApplicationLineId
+            };
+
             // Application answer does not exist, create it
             Entity newAnswerEntity = new Entity(defra_applicationanswer.EntityLogicalName);
-            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_application, new EntityReference(defra_application.EntityLogicalName, applicationId));
-            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_question, new EntityReference(defra_applicationquestion.EntityLogicalName, appQuestionAndLine.ApplicationQuestionId));
+            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_application,
+                new EntityReference(defra_application.EntityLogicalName, applicationId));
+            newAnswerEntity.Attributes.Add(defra_applicationanswer.Fields.defra_question,
+                new EntityReference(defra_applicationquestion.EntityLogicalName,
+                    appQuestionAndLine.ApplicationQuestionId));
 
             // If Question is at the Item level, link the answer to the corresponding application line
-            if (appQuestionAndLine.ApplicationLineId.HasValue 
-                && appQuestionAndLine.Scope.HasValue 
-                && appQuestionAndLine.Scope.Value == (int) defra_application_task_scope.Item)
+            if (appQuestionAndLine.ApplicationLineId.HasValue
+                && appQuestionAndLine.Scope.HasValue
+                && appQuestionAndLine.Scope.Value == (int)defra_application_task_scope.Item)
             {
                 newAnswerEntity.Attributes.Add(
                     defra_applicationanswer.Fields.defra_applicationlineid,
                     new EntityReference(
-                        defra_applicationline.EntityLogicalName, 
+                        defra_applicationline.EntityLogicalName,
                         appQuestionAndLine.ApplicationLineId.Value));
             }
 
             // Talk to CRM, create the answer record
-            OrganisationService.Create(newAnswerEntity);
+            newAnswer.ApplicationAnswerId = OrganisationService.Create(newAnswerEntity);
+
+            // Return answer
+            return newAnswer;
         }
     }
 }

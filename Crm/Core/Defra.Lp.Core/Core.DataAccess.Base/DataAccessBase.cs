@@ -1,7 +1,8 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿
 
 namespace Core.DataAccess.Base
 {
+    using Microsoft.Crm.Sdk.Messages;
     using Microsoft.Xrm.Sdk;
 
     /// <summary>
@@ -19,11 +20,11 @@ namespace Core.DataAccess.Base
         }
 
         /// <summary>
-        /// 
+        /// Sets the status for any entity
         /// </summary>
-        /// <param name="entityReference"></param>
-        /// <param name="state"></param>
-        /// <param name="status"></param>
+        /// <param name="entityReference">The entity ref that will change status</param>
+        /// <param name="state">New state</param>
+        /// <param name="status">New status</param>
         protected void SetStatusAndState(EntityReference entityReference, int state, int status)
         {
             SetStateRequest request = new SetStateRequest
