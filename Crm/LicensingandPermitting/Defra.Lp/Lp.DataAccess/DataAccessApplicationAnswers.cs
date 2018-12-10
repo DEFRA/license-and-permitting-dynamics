@@ -381,9 +381,9 @@
         /// </summary>
         /// <param name="applicationId">Guid for the application to check</param>
         /// <returns>A simplified array of application questions and application line ids that are applicable</returns>
-        public ApplicationQuestionsAndLines[] GetApplicableApplicationQuestions(Guid applicationId)
+        public List<ApplicationQuestionsAndLines> GetApplicableApplicationQuestions(Guid applicationId)
         {
-            // Prepare query, start with application line
+            // 1. Prepare query, start with application line
             QueryExpression query = new QueryExpression(defra_applicationline.EntityLogicalName);
             query.ColumnSet.AddColumns(defra_applicationline.Fields.defra_applicationlineId);
             query.Criteria.AddCondition(defra_applicationline.Fields.StateCode, ConditionOperator.Equal,
@@ -391,13 +391,13 @@
             query.Criteria.AddCondition(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal,
                 applicationId);
 
-            // Link to Item
+            // 2. Link to Item
             LinkEntity linkItem = query.AddLink(defra_item.EntityLogicalName, defra_item.Fields.defra_itemId,
                 defra_item.Fields.defra_itemId);
             linkItem.LinkCriteria.AddCondition(defra_item.Fields.StateCode, ConditionOperator.Equal,
                 (int)defra_itemState.Active);
 
-            // Link to Item Application Question linker table
+            // 3. Link to Item Application Question linker table
             LinkEntity linkItemApplicationQuestion = linkItem.AddLink(defra_item_application_question.EntityLogicalName,
                 defra_item.Fields.defra_itemId, defra_item_application_question.Fields.defra_itemid);
             linkItemApplicationQuestion.LinkCriteria.AddCondition(defra_item_application_question.Fields.StateCode,
@@ -405,7 +405,7 @@
             linkItemApplicationQuestion.Columns.AddColumns(defra_item_application_question.Fields.defra_scope);
             linkItemApplicationQuestion.EntityAlias = "linker";
 
-            // Link to Application Question
+            // 4. Link to Application Question
             LinkEntity linkQuestion = linkItemApplicationQuestion.AddLink(
                 defra_applicationquestion.EntityLogicalName,
                 defra_item_application_question.Fields.defra_applicationquestionid,
@@ -437,7 +437,7 @@
                         .GetAttributeValue<AliasedValue>(
                             $"{linkItemApplicationQuestion.EntityAlias}.{defra_item_application_question.Fields.defra_scope}")
                         .Value).Value,
-                }).ToArray();
+                }).ToList();
         }
 
         /// <summary>
@@ -493,12 +493,10 @@
         public void RefreshApplicationAnswers(Guid applicationId)
         {
             // Get the list of questions that should be there
-            ApplicationQuestionsAndLines[] applicableQuestionsAndLines =
-                GetApplicableApplicationQuestions(applicationId) ?? new ApplicationQuestionsAndLines[0];
+            List<ApplicationQuestionsAndLines> applicableQuestionsAndLines = GetApplicableApplicationQuestions(applicationId) ?? new List<ApplicationQuestionsAndLines>();
 
             // And the list of questions that are linked to the application
-            List<ApplicationAnswer> currentApplicationAnswers =
-                GetApplicationAnswers(applicationId) ?? new List<ApplicationAnswer>();
+            List<ApplicationAnswer> currentApplicationAnswers = GetApplicationAnswers(applicationId) ?? new List<ApplicationAnswer>();
 
             // Now work out which application answers should be removed
             foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)

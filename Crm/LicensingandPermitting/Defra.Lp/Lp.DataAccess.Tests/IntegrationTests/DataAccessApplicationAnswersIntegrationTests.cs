@@ -1,4 +1,7 @@
 ﻿//Data Access App Answer integration tests
+
+using System.Collections.Generic;
+using System.Windows.Documents;
 using Lp.Model.Internal;
 using Lp.TestSupport.Mock;
 
@@ -68,7 +71,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             DataAccessApplicationAnswers dal = new DataAccessApplicationAnswers(OrganizationService, new MockTracingService());
 
-            ApplicationQuestionsAndLines[] result = dal.GetApplicableApplicationQuestions(application.Id);
+            List<ApplicationQuestionsAndLines> result = dal.GetApplicableApplicationQuestions(application.Id);
 
             Assert.IsTrue(result == null);
         }
