@@ -498,12 +498,7 @@
             foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
             {
                 // Check if the existing application answer still applies
-                ApplicationQuestionsAndLines applicableQuestionAndLine =
-                    applicableQuestionsAndLines.FirstOrDefault(
-                        q => q.ApplicationLineId == appAnswer.ApplicationLineId &&
-                             q.ApplicationQuestionId == appAnswer.ApplicationQuestionId);
-
-                if (applicableQuestionAndLine == null)
+                if (!HasMatchingApplicationQuestion(applicableQuestionsAndLines, appAnswer))
                 {
                     // Application answer no longer applies, deactivate it
                     SetStatusAndState(
@@ -516,21 +511,49 @@
             // And work out which application answers should be created
             foreach (ApplicationQuestionsAndLines appQuestionAndLine in applicableQuestionsAndLines)
             {
-                // Check if answer already exists
-                ApplicationAnswer appAnswer =
-                    currentApplicationAnswers.FirstOrDefault(
-                        q => q.ApplicationLineId == appQuestionAndLine.ApplicationLineId &&
-                             q.ApplicationQuestionId == appQuestionAndLine.ApplicationQuestionId);
-
-                // Create the Answer record if it does not already exist
-                if (appAnswer == null)
+                // Check if answer already exists, create the Answer record if it does not already exist
+                if (!HasMatchingApplicationAnswer(currentApplicationAnswers, appQuestionAndLine))
                 {
-                    appAnswer = CreateAnswerRecord(applicationId, appQuestionAndLine);
+                    ApplicationAnswer newAppAnswer = CreateAnswerRecord(applicationId, appQuestionAndLine);
 
                     // Save the newly created application answer, so that we don't create a duplicate
-                    currentApplicationAnswers.Add(appAnswer);
+                    currentApplicationAnswers.Add(newAppAnswer);
                 }
             }
+        }
+
+        private static bool HasMatchingApplicationQuestion(List<ApplicationQuestionsAndLines> applicableQuestionsAndLines, ApplicationAnswer appAnswer)
+        {
+            return applicableQuestionsAndLines.Any(
+                q => q.ApplicationQuestionId == appAnswer.ApplicationQuestionId
+                // If scope of question is at the Item level, also check the application line
+                && (!q.Scope.HasValue || q.Scope.Value == (int)defra_application_task_scope.Item && q.ApplicationLineId == appAnswer.ApplicationLineId));
+        }
+
+        private static bool HasMatchingApplicationAnswer(List<ApplicationAnswer> currentApplicationAnswers, ApplicationQuestionsAndLines appQuestionAndLine)
+        {
+            foreach (var currentApplicationAnswer in currentApplicationAnswers)
+            {
+                if (currentApplicationAnswer.ApplicationQuestionId != appQuestionAndLine.ApplicationQuestionId)
+                {
+                    // Not the same question
+                    continue;
+                }
+
+                if (appQuestionAndLine.Scope == (int) defra_application_task_scope.Item &&
+                    currentApplicationAnswer.ApplicationLineId == appQuestionAndLine.ApplicationLineId)
+                {
+                    // Question is at the item/activity level, check for an exact match against the application line
+                    return true;
+                }
+
+                if (!appQuestionAndLine.Scope.HasValue || appQuestionAndLine.Scope.Value == (int) defra_application_task_scope.Application)
+                {
+                    // Question is at the application level, check for answers not linked to an application line
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
