@@ -70,6 +70,9 @@ namespace Lp.Model.EarlyBound
 		Application = 10013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationAnswer = 10081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationContact = 10014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -80,6 +83,15 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationPrice = 10016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestion = 10082,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionGroup = 10083,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionOption = 10084,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationRibbons = 1120,
@@ -554,6 +566,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Item = 10059,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10087,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemApplicationTaskDefinition = 10079,
@@ -1153,10 +1168,10 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10076,
+		SolutionComponentDataSource = 10086,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10075,
+		SolutionComponentSummary = 10085,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,
