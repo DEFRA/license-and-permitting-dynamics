@@ -12,7 +12,7 @@ namespace Lp.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum defra_itemState
+	public enum defra_applicationquestionState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -26,9 +26,9 @@ namespace Lp.Model.EarlyBound
 	/// 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_item")]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_applicationquestion")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public partial class defra_item : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	public partial class defra_applicationquestion : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		public static class Fields
@@ -36,19 +36,16 @@ namespace Lp.Model.EarlyBound
 			public const string CreatedBy = "createdby";
 			public const string CreatedOn = "createdon";
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
-			public const string defra_canapplyfor = "defra_canapplyfor";
-			public const string defra_canapplyonline = "defra_canapplyonline";
-			public const string defra_code = "defra_code";
-			public const string defra_description = "defra_description";
-			public const string defra_description2 = "defra_description2";
-			public const string defra_displayname = "defra_displayname";
-			public const string defra_itemId = "defra_itemid";
-			public const string Id = "defra_itemid";
-			public const string defra_itemtypeid = "defra_itemtypeid";
-			public const string defra_name = "defra_name";
-			public const string defra_officialname = "defra_officialname";
+			public const string defra_applicationquestionId = "defra_applicationquestionid";
+			public const string Id = "defra_applicationquestionid";
+			public const string defra_applies_if_application_type = "defra_applies_if_application_type";
+			public const string defra_applies_if_parent_question = "defra_applies_if_parent_question";
+			public const string defra_group = "defra_group";
+			public const string defra_is_mandatory = "defra_is_mandatory";
+			public const string defra_question = "defra_question";
+			public const string defra_question_display_text = "defra_question_display_text";
 			public const string defra_shortname = "defra_shortname";
-			public const string defra_suffix = "defra_suffix";
+			public const string defra_type = "defra_type";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedOn = "modifiedon";
@@ -63,25 +60,27 @@ namespace Lp.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
-			public const string defra_itemtype_defra_item_itemtypeid = "defra_itemtype_defra_item_itemtypeid";
+			public const string Referencingdefra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question = "defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+		"ion";
+			public const string defra_defra_applicationquestiongroup_defra_applicationquestion_group = "defra_defra_applicationquestiongroup_defra_applicationquestion_group";
 		}
 		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_item() : 
+		public defra_applicationquestion() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string EntityLogicalName = "defra_item";
+		public const string EntityLogicalName = "defra_applicationquestion";
 		
-		public const string PrimaryIdAttribute = "defra_itemid";
+		public const string PrimaryIdAttribute = "defra_applicationquestionid";
 		
-		public const string PrimaryNameAttribute = "defra_name";
+		public const string PrimaryNameAttribute = "defra_question";
 		
-		public const int EntityTypeCode = 10059;
+		public const int EntityTypeCode = 10082;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -152,141 +151,21 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_canapplyfor")]
-		public System.Nullable<bool> defra_canapplyfor
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("defra_canapplyfor");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_canapplyfor");
-				this.SetAttributeValue("defra_canapplyfor", value);
-				this.OnPropertyChanged("defra_canapplyfor");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_canapplyonline")]
-		public System.Nullable<bool> defra_canapplyonline
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("defra_canapplyonline");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_canapplyonline");
-				this.SetAttributeValue("defra_canapplyonline", value);
-				this.OnPropertyChanged("defra_canapplyonline");
-			}
-		}
-		
-		/// <summary>
-		/// Official code used to refer to item
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_code")]
-		public string defra_code
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("defra_code");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_code");
-				this.SetAttributeValue("defra_code", value);
-				this.OnPropertyChanged("defra_code");
-			}
-		}
-		
-		/// <summary>
-		/// Item description
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_description")]
-		public string defra_description
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("defra_description");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_description");
-				this.SetAttributeValue("defra_description", value);
-				this.OnPropertyChanged("defra_description");
-			}
-		}
-		
-		/// <summary>
-		/// Additional description containing text that may need to be appended to main description
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_description2")]
-		public string defra_description2
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("defra_description2");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_description2");
-				this.SetAttributeValue("defra_description2", value);
-				this.OnPropertyChanged("defra_description2");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_displayname")]
-		public string defra_displayname
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("defra_displayname");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_displayname");
-				this.SetAttributeValue("defra_displayname", value);
-				this.OnPropertyChanged("defra_displayname");
-			}
-		}
-		
-		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemid")]
-		public System.Nullable<System.Guid> defra_itemId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationquestionid")]
+		public System.Nullable<System.Guid> defra_applicationquestionId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_itemid");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("defra_applicationquestionid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_itemId");
-				this.SetAttributeValue("defra_itemid", value);
+				this.OnPropertyChanging("defra_applicationquestionId");
+				this.SetAttributeValue("defra_applicationquestionid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -295,11 +174,11 @@ namespace Lp.Model.EarlyBound
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("defra_itemId");
+				this.OnPropertyChanged("defra_applicationquestionId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationquestionid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -310,72 +189,132 @@ namespace Lp.Model.EarlyBound
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.defra_itemId = value;
+				this.defra_applicationquestionId = value;
 			}
 		}
 		
 		/// <summary>
-		/// Unique identifier of the item type
+		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemtypeid")]
-		public Microsoft.Xrm.Sdk.EntityReference defra_itemtypeid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_application_type")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_applies_if_application_type
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_itemtypeid");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_applies_if_application_type");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_itemtypeid");
-				this.SetAttributeValue("defra_itemtypeid", value);
-				this.OnPropertyChanged("defra_itemtypeid");
+				this.OnPropertyChanging("defra_applies_if_application_type");
+				this.SetAttributeValue("defra_applies_if_application_type", value);
+				this.OnPropertyChanged("defra_applies_if_application_type");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_question")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_applies_if_parent_question
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applies_if_parent_question");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applies_if_parent_question");
+				this.SetAttributeValue("defra_applies_if_parent_question", value);
+				this.OnPropertyChanged("defra_applies_if_parent_question");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_group")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_group
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_group");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_group");
+				this.SetAttributeValue("defra_group", value);
+				this.OnPropertyChanged("defra_group");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_is_mandatory")]
+		public System.Nullable<bool> defra_is_mandatory
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("defra_is_mandatory");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_is_mandatory");
+				this.SetAttributeValue("defra_is_mandatory", value);
+				this.OnPropertyChanged("defra_is_mandatory");
 			}
 		}
 		
 		/// <summary>
 		/// The name of the custom entity.
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_name")]
-		public string defra_name
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_question")]
+		public string defra_question
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("defra_name");
+				return this.GetAttributeValue<string>("defra_question");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_name");
-				this.SetAttributeValue("defra_name", value);
-				this.OnPropertyChanged("defra_name");
+				this.OnPropertyChanging("defra_question");
+				this.SetAttributeValue("defra_question", value);
+				this.OnPropertyChanged("defra_question");
 			}
 		}
 		
 		/// <summary>
-		/// Officially agreed name for use in official documents. Usually longer and more verbose.
+		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_officialname")]
-		public string defra_officialname
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_question_display_text")]
+		public string defra_question_display_text
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("defra_officialname");
+				return this.GetAttributeValue<string>("defra_question_display_text");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_officialname");
-				this.SetAttributeValue("defra_officialname", value);
-				this.OnPropertyChanged("defra_officialname");
+				this.OnPropertyChanging("defra_question_display_text");
+				this.SetAttributeValue("defra_question_display_text", value);
+				this.OnPropertyChanged("defra_question_display_text");
 			}
 		}
 		
 		/// <summary>
-		/// Short name for internal or system use in queries
+		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortname")]
 		public string defra_shortname
@@ -397,20 +336,20 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_suffix")]
-		public string defra_suffix
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_type")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_type
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("defra_suffix");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_type");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_suffix");
-				this.SetAttributeValue("defra_suffix", value);
-				this.OnPropertyChanged("defra_suffix");
+				this.OnPropertyChanging("defra_type");
+				this.SetAttributeValue("defra_type", value);
+				this.OnPropertyChanged("defra_type");
 			}
 		}
 		
@@ -560,10 +499,10 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Status of the Item
+		/// Status of the Application Question
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<Lp.Model.EarlyBound.defra_itemState> StateCode
+		public System.Nullable<Lp.Model.EarlyBound.defra_applicationquestionState> StateCode
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -571,7 +510,7 @@ namespace Lp.Model.EarlyBound
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((Lp.Model.EarlyBound.defra_itemState)(System.Enum.ToObject(typeof(Lp.Model.EarlyBound.defra_itemState), optionSet.Value)));
+					return ((Lp.Model.EarlyBound.defra_applicationquestionState)(System.Enum.ToObject(typeof(Lp.Model.EarlyBound.defra_applicationquestionState), optionSet.Value)));
 				}
 				else
 				{
@@ -595,7 +534,7 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Item
+		/// Reason for the status of the Application Question
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -668,123 +607,139 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N defra_defra_item_defra_item_application_question_itemid
+		/// 1:N defra_applicationquestion_defra_item_application_question_applicationquestionid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_item_defra_item_application_question_itemid")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_item_application_question> defra_defra_item_defra_item_application_question_itemid
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationquestion_defra_item_application_question_applicationquestionid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_item_application_question> defra_applicationquestion_defra_item_application_question_applicationquestionid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_defra_item_defra_item_application_question_itemid", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_defra_item_defra_item_application_question_itemid");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_defra_item_defra_item_application_question_itemid", null, value);
-				this.OnPropertyChanged("defra_defra_item_defra_item_application_question_itemid");
+				this.OnPropertyChanging("defra_applicationquestion_defra_item_application_question_applicationquestionid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null, value);
+				this.OnPropertyChanged("defra_applicationquestion_defra_item_application_question_applicationquestionid");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_item_defra_applicationline_itemid
+		/// 1:N defra_defra_applicationquestion_defra_applicationanswer_question
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_applicationline_itemid")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationline> defra_item_defra_applicationline_itemid
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationanswer_question")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationanswer> defra_defra_applicationquestion_defra_applicationanswer_question
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationline>("defra_item_defra_applicationline_itemid", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_applicationquestion_defra_applicationanswer_question", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_item_defra_applicationline_itemid");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationline>("defra_item_defra_applicationline_itemid", null, value);
-				this.OnPropertyChanged("defra_item_defra_applicationline_itemid");
+				this.OnPropertyChanging("defra_defra_applicationquestion_defra_applicationanswer_question");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_applicationquestion_defra_applicationanswer_question", null, value);
+				this.OnPropertyChanged("defra_defra_applicationquestion_defra_applicationanswer_question");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_item_defra_itemapplicationtaskdefinition_itemid
+		/// 1:N defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_itemapplicationtaskdefinition_itemid")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_item_defra_itemapplicationtaskdefinition_itemid
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+			"ion", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationquestion> Referenceddefra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_item_defra_itemapplicationtaskdefinition_itemid", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationquestion>("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+						"ion", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_item_defra_itemapplicationtaskdefinition_itemid");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_item_defra_itemapplicationtaskdefinition_itemid", null, value);
-				this.OnPropertyChanged("defra_item_defra_itemapplicationtaskdefinition_itemid");
+				this.OnPropertyChanging("Referenceddefra_defra_applicationquestion_defra_applicationquestion_applies_if_pa" +
+						"rent_question");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationquestion>("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+						"ion", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referenceddefra_defra_applicationquestion_defra_applicationquestion_applies_if_pa" +
+						"rent_question");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_item_defra_itemdetail_itemid
+		/// 1:N defra_defra_applicationquestion_defra_applicationquestionoption_applicationquestion
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_itemdetail_itemid")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_itemdetail> defra_item_defra_itemdetail_itemid
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
+			"on")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationquestionoption> defra_defra_applicationquestion_defra_applicationquestionoption_applicationquestion
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_itemdetail>("defra_item_defra_itemdetail_itemid", null);
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationquestionoption>("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
+						"on", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_item_defra_itemdetail_itemid");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_itemdetail>("defra_item_defra_itemdetail_itemid", null, value);
-				this.OnPropertyChanged("defra_item_defra_itemdetail_itemid");
+				this.OnPropertyChanging("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
+						"on");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationquestionoption>("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
+						"on", null, value);
+				this.OnPropertyChanged("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
+						"on");
 			}
 		}
 		
 		/// <summary>
-		/// 1:N defra_item_defra_itemdetail_parentitemid
+		/// N:1 defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_item_defra_itemdetail_parentitemid")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_itemdetail> defra_item_defra_itemdetail_parentitemid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_question")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+			"ion", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public Lp.Model.EarlyBound.defra_applicationquestion Referencingdefra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_itemdetail>("defra_item_defra_itemdetail_parentitemid", null);
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_applicationquestion>("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+						"ion", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_item_defra_itemdetail_parentitemid");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_itemdetail>("defra_item_defra_itemdetail_parentitemid", null, value);
-				this.OnPropertyChanged("defra_item_defra_itemdetail_parentitemid");
+				this.OnPropertyChanging("Referencingdefra_defra_applicationquestion_defra_applicationquestion_applies_if_p" +
+						"arent_question");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_applicationquestion>("defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
+						"ion", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingdefra_defra_applicationquestion_defra_applicationquestion_applies_if_p" +
+						"arent_question");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 defra_itemtype_defra_item_itemtypeid
+		/// N:1 defra_defra_applicationquestiongroup_defra_applicationquestion_group
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_itemtypeid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_itemtype_defra_item_itemtypeid")]
-		public Lp.Model.EarlyBound.defra_itemtype defra_itemtype_defra_item_itemtypeid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_group")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestiongroup_defra_applicationquestion_group")]
+		public Lp.Model.EarlyBound.defra_applicationquestiongroup defra_defra_applicationquestiongroup_defra_applicationquestion_group
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_itemtype>("defra_itemtype_defra_item_itemtypeid", null);
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_applicationquestiongroup>("defra_defra_applicationquestiongroup_defra_applicationquestion_group", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_itemtype_defra_item_itemtypeid");
-				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_itemtype>("defra_itemtype_defra_item_itemtypeid", null, value);
-				this.OnPropertyChanged("defra_itemtype_defra_item_itemtypeid");
+				this.OnPropertyChanging("defra_defra_applicationquestiongroup_defra_applicationquestion_group");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_applicationquestiongroup>("defra_defra_applicationquestiongroup_defra_applicationquestion_group", null, value);
+				this.OnPropertyChanged("defra_defra_applicationquestiongroup_defra_applicationquestion_group");
 			}
 		}
 		
@@ -793,7 +748,7 @@ namespace Lp.Model.EarlyBound
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public defra_item(object anonymousType) : 
+		public defra_applicationquestion(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -811,9 +766,9 @@ namespace Lp.Model.EarlyBound
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["defra_itemid"] = base.Id;
+                        Attributes["defra_applicationquestionid"] = base.Id;
                         break;
-                    case "defra_itemid":
+                    case "defra_applicationquestionid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
@@ -830,13 +785,43 @@ namespace Lp.Model.EarlyBound
             }
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public virtual defra_item_StatusCode? StatusCodeEnum
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_application_type")]
+		public virtual defra_ApplicationType? defra_applies_if_application_typeEnum
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((defra_item_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
+				return ((defra_ApplicationType?)(EntityOptionSetEnum.GetEnum(this, "defra_applies_if_application_type")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				defra_applies_if_application_type = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_type")]
+		public virtual defra_application_question_types? defra_typeEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((defra_application_question_types?)(EntityOptionSetEnum.GetEnum(this, "defra_type")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				defra_type = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public virtual defra_applicationquestion_StatusCode? StatusCodeEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((defra_applicationquestion_StatusCode?)(EntityOptionSetEnum.GetEnum(this, "statuscode")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
