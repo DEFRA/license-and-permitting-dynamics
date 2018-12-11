@@ -41,6 +41,7 @@ namespace Lp.Model.EarlyBound
 			public const string defra_code = "defra_code";
 			public const string defra_currentnumber = "defra_currentnumber";
 			public const string defra_locked = "defra_locked";
+			public const string defra_maxnumber = "defra_maxnumber";
 			public const string defra_name = "defra_name";
 			public const string defra_numberlength = "defra_numberlength";
 			public const string defra_prefix = "defra_prefix";
@@ -243,6 +244,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_locked");
 				this.SetAttributeValue("defra_locked", value);
 				this.OnPropertyChanged("defra_locked");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_maxnumber")]
+		public System.Nullable<int> defra_maxnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("defra_maxnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_maxnumber");
+				this.SetAttributeValue("defra_maxnumber", value);
+				this.OnPropertyChanged("defra_maxnumber");
 			}
 		}
 		
