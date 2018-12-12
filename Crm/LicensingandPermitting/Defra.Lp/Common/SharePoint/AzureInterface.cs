@@ -52,28 +52,30 @@ namespace Defra.Lp.Common.SharePoint
 
         internal void CreateFolder(EntityReference application)
         {
-            TracingService.Trace(string.Format("In CreateFolder with Entity Type {0} and Entity Id {1}", application.LogicalName, application.Id));
+            TracingService.Trace($"In CreateFolder with Entity Type {application.LogicalName} and Entity Id {application.Id}");
+            
+            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { defra_application.Fields.defra_name, defra_application.Fields.defra_permitnumber, defra_application.Fields.defra_applicationnumber }, application);
 
-            var request = new DocumentRelayRequest();
-            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { Application.Name, Application.PermitNumber, Application.ApplicationNumber }, application);
+            TracingService.Trace($"Permit Number = {applicationEntity[defra_application.Fields.defra_permitnumber]}; Application Number = {applicationEntity[defra_application.Fields.defra_applicationnumber]}");
 
-            TracingService.Trace(string.Format("Permit Number = {0}; Application Number = {1}", applicationEntity[Application.PermitNumber].ToString(), applicationEntity[Application.ApplicationNumber].ToString()));
-
-            request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
-            request.ApplicationNo = applicationEntity.GetAttributeValue<string>(Application.ApplicationNumber).Replace('/', '_');
-            request.FileBody = string.Empty;
-            request.FileDescription = string.Empty;
-            request.FileName = string.Empty;
-            request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-            request.PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"];
-            request.PermitNo = applicationEntity.GetAttributeValue<string>(Application.PermitNumber);
-            request.Customer = string.Empty;
-            request.SiteDetails = string.Empty;
-            request.PermitDetails = string.Empty;
+            var request = new DocumentRelayRequest
+            {
+                ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"],
+                ApplicationNo = applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_applicationnumber).Replace('/', '_'),
+                FileBody = string.Empty,
+                FileDescription = string.Empty,
+                FileName = string.Empty,
+                ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"],
+                PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"],
+                PermitNo = applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_permitnumber).Replace('/', '_'),
+                Customer = string.Empty,
+                SiteDetails = string.Empty,
+                PermitDetails = string.Empty
+            };
 
             var stringContent = JsonConvert.SerializeObject(request);
 
-            TracingService.Trace(string.Format("Data Sent to Logic App URL {0}", Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"]));
+            TracingService.Trace($"Data Sent to Logic App URL {Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"]}");
 
             SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], stringContent);
         }
