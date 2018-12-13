@@ -124,14 +124,14 @@ namespace Defra.Lp.Plugins
 
         private static void CreateDocumentLocation(ITracingService tracing, IOrganizationService adminService, Entity target, Guid permitListRef, IPluginExecutionContext context)
         {
-            string permitNumber = target.GetAttributeValue<string>("defra_permitnumber").SpRemoveIllegalChars();
+            string permitNumber = target.GetAttributeValue<string>("defra_permitnumber").Replace('/', '_');
             tracing.Trace($"Creating sharePointdocumentlocation for Permit {permitNumber}");
             var permitLocation = adminService.CreatePermitDocumentLocation(permitNumber, permitListRef, null);
             if (permitLocation != null)
             {
 
                 // Now create Application document location 
-                string applicationNumber = target.GetAttributeValue<string>("defra_applicationnumber").SpRemoveIllegalChars();
+                string applicationNumber = target.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
                 tracing.Trace($"Creating sharePointdocumentlocation for Application (new application) {applicationNumber}");
                 var applicationLocation =
                     adminService.CreateApplicationDocumentLocation(applicationNumber, permitLocation.Id, target.ToEntityReference());
