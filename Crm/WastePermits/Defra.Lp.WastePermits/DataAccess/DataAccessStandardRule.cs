@@ -20,22 +20,19 @@
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName, string lineEntityName)
         {
             var returnData = string.Empty;
-            var fetchXml = string.Format(@"<fetch top='50' >
-                                                  <entity name='{1}' >
-                                                    <filter>
-                                                      <condition attribute='{2}' operator='eq' value='{0}' />
-                                                    </filter>
-                                                    <link-entity name='{3}' from='{2}' to='{2}' >
-                                                      <filter>
-                                                        <condition attribute='defra_permittype' operator='eq' value='910400000' />
-                                                      </filter>
-                                                      <link-entity name='defra_standardrule' from='defra_standardruleid' to='defra_standardruleid' alias='permit' >
-                                                        <attribute name='defra_name' />
-                                                        <attribute name='defra_rulesnamegovuk' />
-                                                      </link-entity>
-                                                    </link-entity>
-                                                  </entity>
-                                                </fetch>", entityRef.Id.ToString(), entityName, fieldName, lineEntityName);
+            var fetchXml = $@"<fetch top='50' >
+                                  <entity name='{entityName}' >
+                                    <filter>
+                                      <condition attribute='{fieldName}' operator='eq' value='{entityRef.Id.ToString()}' />
+                                    </filter>
+                                    <link-entity name='{lineEntityName}' from='{fieldName}' to='{fieldName}' >
+                                      <link-entity name='defra_standardrule' from='defra_standardruleid' to='defra_standardruleid' alias='permit' >
+                                        <attribute name='defra_name' />
+                                        <attribute name='defra_rulesnamegovuk' />
+                                      </link-entity>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
             RetrieveMultipleRequest fetchRequest = new RetrieveMultipleRequest
             {
                 Query = new FetchExpression(fetchXml)
@@ -56,7 +53,7 @@
                     {
                         name = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_rulesnamegovuk").Value;
                     }
-                    var permit = string.Format("{0} - {1}", code, name);
+                    var permit = $"{code} - {name}";
                     returnData = (i == 0) ? returnData + permit : returnData + "; " + permit;
                 }
             }
