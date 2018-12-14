@@ -5,7 +5,7 @@
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>0</isdefault>
-  <savedqueryid>{76a0df6c-46b7-e811-a978-000d3ab31f97}</savedqueryid>
+  <savedqueryid>{40c6ce9d-6dfd-e811-a983-000d3ab3984f}</savedqueryid>
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
       <row name="result" id="defra_applicationid">
@@ -38,18 +38,26 @@
         <attribute name="ownerid" />
         <attribute name="defra_determinedbyid" />
         <attribute name="defra_submittedon" />
+        <attribute name="defra_raguscore" />
+        <attribute name="defra_finalraguscore" />
         <order attribute="defra_submittedon" descending="true" />
         <filter type="and">
           <condition attribute="defra_raguscore" operator="not-null" />
+          <condition attribute="statuscode" operator="not-in">
+            <value>1</value>
+            <value>910400013</value>
+            <value>2</value>
+            <value>910400014</value>
+            <value>910400020</value>
+          </condition>
+          <condition attribute="defra_finalraguscore" operator="null" />
         </filter>
-        <attribute name="defra_raguscore" />
-        <attribute name="defra_finalraguscore" />
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>
   </fetchxml>
-  <IntroducedVersion>1.2.1.73</IntroducedVersion>
+  <IntroducedVersion>1.9.0.4</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="RAGU rated applications" languagecode="1033" />
+    <LocalizedName description="Applications awaiting final RAGU score" languagecode="1033" />
   </LocalizedNames>
 </savedquery>
