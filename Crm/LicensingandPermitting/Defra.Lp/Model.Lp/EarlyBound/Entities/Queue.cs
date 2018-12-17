@@ -31,6 +31,54 @@ namespace Lp.Model.EarlyBound
 	public partial class Queue : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string AllowEmailCredentials = "allowemailcredentials";
+			public const string BusinessUnitId = "businessunitid";
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string DefaultMailbox = "defaultmailbox";
+			public const string Description = "description";
+			public const string EMailAddress = "emailaddress";
+			public const string EmailPassword = "emailpassword";
+			public const string EmailRouterAccessApproval = "emailrouteraccessapproval";
+			public const string EmailUsername = "emailusername";
+			public const string EntityImage = "entityimage";
+			public const string EntityImage_Timestamp = "entityimage_timestamp";
+			public const string EntityImage_URL = "entityimage_url";
+			public const string EntityImageId = "entityimageid";
+			public const string ExchangeRate = "exchangerate";
+			public const string IgnoreUnsolicitedEmail = "ignoreunsolicitedemail";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string IncomingEmailDeliveryMethod = "incomingemaildeliverymethod";
+			public const string IncomingEmailFilteringMethod = "incomingemailfilteringmethod";
+			public const string IsEmailAddressApprovedByO365Admin = "isemailaddressapprovedbyo365admin";
+			public const string IsFaxQueue = "isfaxqueue";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string Name = "name";
+			public const string NumberOfItems = "numberofitems";
+			public const string NumberOfMembers = "numberofmembers";
+			public const string OrganizationId = "organizationid";
+			public const string OutgoingEmailDeliveryMethod = "outgoingemaildeliverymethod";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string PrimaryUserId = "primaryuserid";
+			public const string QueueId = "queueid";
+			public const string Id = "queueid";
+			public const string QueueTypeCode = "queuetypecode";
+			public const string QueueViewType = "queueviewtype";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string VersionNumber = "versionnumber";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

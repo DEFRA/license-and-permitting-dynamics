@@ -22,7 +22,7 @@ namespace Lp.Model.Crm
         public const string Name = "defra_name";
 
         /// <summary>
-        /// Permit Nuber field
+        /// Permit Number field
         /// </summary>
         public const string PermitNumber = "defra_permitnumber";
     }

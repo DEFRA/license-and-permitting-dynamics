@@ -42,6 +42,18 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Annotation"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.Annotation> AnnotationSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.Annotation>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Contact"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.Contact> ContactSet
@@ -102,6 +114,18 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationanswer"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationanswer> defra_applicationanswerSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationanswer>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationcontact"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationcontact> defra_applicationcontactSet
@@ -134,6 +158,66 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationprice>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationquestion"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationquestion> defra_applicationquestionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationquestion>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationquestiongroup"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationquestiongroup> defra_applicationquestiongroupSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationquestiongroup>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationquestionoption"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationquestionoption> defra_applicationquestionoptionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationquestionoption>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationtask"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationtask> defra_applicationtaskSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationtask>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationtaskdefinition> defra_applicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationtaskdefinition>();
 			}
 		}
 		
@@ -230,6 +314,30 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_item>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_item_application_question"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_item_application_question> defra_item_application_questionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_item_application_question>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_itemapplicationtaskdefinitionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_itemapplicationtaskdefinition>();
 			}
 		}
 		
@@ -446,6 +554,18 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_secureconfiguration>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_tasktype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_tasktype> defra_tasktypeSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_tasktype>();
 			}
 		}
 		

@@ -70,6 +70,9 @@ namespace Lp.Model.EarlyBound
 		Application = 10013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationAnswer = 10081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationContact = 10014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -82,10 +85,28 @@ namespace Lp.Model.EarlyBound
 		ApplicationPrice = 10016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestion = 10082,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionGroup = 10083,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionOption = 10084,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationRibbons = 1120,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationSubtype = 10053,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTask = 10077,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskDefinition = 10078,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskType = 10080,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AppModuleComponent = 9007,
@@ -545,6 +566,12 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Item = 10059,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10087,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationTaskDefinition = 10079,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemDetail = 10061,
@@ -1141,10 +1168,10 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10065,
+		SolutionComponentDataSource = 10086,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10064,
+		SolutionComponentSummary = 10085,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,

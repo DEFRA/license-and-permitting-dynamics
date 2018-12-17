@@ -31,6 +31,38 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_exception : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_applicationlineid = "defra_applicationlineid";
+			public const string defra_descriptionquestion = "defra_descriptionquestion";
+			public const string defra_exceptionId = "defra_exceptionid";
+			public const string Id = "defra_exceptionid";
+			public const string defra_isdefinition = "defra_isdefinition";
+			public const string defra_name = "defra_name";
+			public const string defra_parentexceptionId = "defra_parentexceptionid";
+			public const string defra_requiredvalue = "defra_requiredvalue";
+			public const string defra_value = "defra_value";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_applicationline_defra_exception_applicationlineid = "defra_applicationline_defra_exception_applicationlineid";
+			public const string Referencingdefra_exception_defra_exception = "defra_exception_defra_exception";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>

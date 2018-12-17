@@ -31,6 +31,48 @@ namespace Lp.Model.EarlyBound
 	public partial class QueueItem : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string EnteredOn = "enteredon";
+			public const string ExchangeRate = "exchangerate";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string ObjectId = "objectid";
+			public const string ObjectTypeCode = "objecttypecode";
+			public const string OrganizationId = "organizationid";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningUser = "owninguser";
+			public const string Priority = "priority";
+			public const string QueueId = "queueid";
+			public const string QueueItemId = "queueitemid";
+			public const string Id = "queueitemid";
+			public const string Sender = "sender";
+			public const string State = "state";
+			public const string StateCode = "statecode";
+			public const string Status = "status";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string Title = "title";
+			public const string ToRecipients = "torecipients";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string WorkerId = "workerid";
+			public const string WorkerIdModifiedOn = "workeridmodifiedon";
+			public const string defra_application_QueueItems = "defra_application_QueueItems";
+			public const string defra_areacomment_QueueItems = "defra_areacomment_QueueItems";
+			public const string defra_notification_QueueItems = "defra_notification_QueueItems";
+			public const string Incident_QueueItem = "Incident_QueueItem";
+			public const string queue_entries = "queue_entries";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
