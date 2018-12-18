@@ -3,6 +3,8 @@
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Messages;
     using Microsoft.Xrm.Sdk.Query;
+    using Model.EarlyBound;
+    using Core.Helpers.Extensions;
 
     /// <summary>
     /// Data access layer used to query CRM for standard rule related data
@@ -11,14 +13,15 @@
     {
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef)
         {
-            var entityName = "defra_application";
-            var fieldName = "defra_applicationid";
-            var lineEntityName = "defra_applicationline";
+            var entityName = defra_application.EntityLogicalName;
+            var fieldName = defra_application.Fields.defra_applicationId;
+            var lineEntityName = defra_applicationline.EntityLogicalName;
             return service.GetStandardRules(entityRef, entityName, fieldName, lineEntityName);
         }
 
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName, string lineEntityName)
         {
+            const string alias = "permit";
             var returnData = string.Empty;
             var fetchXml = $@"<fetch top='50' >
                                   <entity name='{entityName}' >
@@ -26,9 +29,9 @@
                                       <condition attribute='{fieldName}' operator='eq' value='{entityRef.Id.ToString()}' />
                                     </filter>
                                     <link-entity name='{lineEntityName}' from='{fieldName}' to='{fieldName}' >
-                                      <link-entity name='defra_standardrule' from='defra_standardruleid' to='defra_standardruleid' alias='permit' >
-                                        <attribute name='defra_name' />
-                                        <attribute name='defra_rulesnamegovuk' />
+                                      <link-entity name='{defra_standardrule.EntityLogicalName}' from='{defra_standardrule.Fields.defra_standardruleId}' to='{defra_applicationline.Fields.defra_standardruleId}' alias='{alias}' >
+                                        <attribute name='{defra_standardrule.Fields.defra_name}' />
+                                        <attribute name='{defra_standardrule.Fields.defra_rulesnamegovuk}' />
                                       </link-entity>
                                     </link-entity>
                                   </entity>
@@ -43,16 +46,8 @@
             {
                 for (int i = 0; i < results.Entities.Count; i++)
                 {
-                    var code = string.Empty;
-                    var name = string.Empty;
-                    if (results.Entities[i].Contains("permit.defra_name"))
-                    {
-                        code = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_name").Value;
-                    }
-                    if (results.Entities[i].Contains("permit.defra_rulesnamegovuk"))
-                    {
-                        name = (string)results.Entities[i].GetAttributeValue<AliasedValue>("permit.defra_rulesnamegovuk").Value;
-                    }
+                    var code = results[i].GetAliasedAttributeText($"{alias}.{defra_standardrule.Fields.defra_name}");
+                    var name = results[i].GetAliasedAttributeText($"{alias}.{defra_standardrule.Fields.defra_rulesnamegovuk}");
                     var permit = $"{code} - {name}";
                     returnData = (i == 0) ? returnData + permit : returnData + "; " + permit;
                 }
