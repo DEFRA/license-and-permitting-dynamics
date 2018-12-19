@@ -84,14 +84,14 @@
                 }
                 else
                 {
-                    throw new InvalidPluginExecutionException($"Autonumber for {autoNumberName} has reached it's maximum length of {numberLength}");
+                    throw new InvalidPluginExecutionException($"Autonumber for {autoNumberName} has reached its maximum length of {numberLength}");
                 }
             }
 
             // Max number 
             if (maxNumber > 0 && currentNumber > maxNumber)
             {
-                throw new InvalidPluginExecutionException($"Autonumber for {autoNumberName} has reached it's maximum numeric value of {maxNumber}");
+                throw new InvalidPluginExecutionException($"Autonumber for {autoNumberName} has reached its maximum numeric value of {maxNumber}");
             }
 
             string paddedNumber = currentNumber.ToString("D" + numberLength);
