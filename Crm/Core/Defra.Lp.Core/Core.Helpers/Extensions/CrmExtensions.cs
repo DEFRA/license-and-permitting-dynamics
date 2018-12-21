@@ -64,5 +64,16 @@
         {
             return entity.Contains(attribute) ? entity[attribute].ToString() : null;
         }
+
+        /// <summary>
+        /// Returns an aliased Entity Reference attribute's text if it exists
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Attribute text</returns>
+        public static string GetAliasedAttributeText(this Entity entity, string attribute)
+        {
+            return entity.Contains(attribute) ? (string)entity.GetAttributeValue<AliasedValue>(attribute).Value : string.Empty;
+        }
     }
 }
