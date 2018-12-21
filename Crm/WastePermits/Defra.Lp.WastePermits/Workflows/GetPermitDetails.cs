@@ -14,12 +14,10 @@ using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
 using WastePermits.DataAccess;
+using WastePermits.Model.EarlyBound;
 
 namespace Defra.Lp.WastePermits.Workflows
-{
-
-
-    /// </summary>    
+{  
     public class GetPermitDetails: WorkFlowActivityBase
     {
         #region Properties 
@@ -69,18 +67,18 @@ namespace Defra.Lp.WastePermits.Workflows
             var permit = Permit.Get(executionContext);
             if (application == null && permit == null) return;
 
-            string returnData = string.Empty;
+            string returnData;
             if (application != null)
             {
                 TracingService.Trace("Getting Standard Rules for application: {0}", application.Id.ToString());
                 returnData = Service.GetStandardRules(application);
             }
-            else if (permit != null)
+            else
             {
                 TracingService.Trace("Getting Standard Rules for permit: {0}", permit.Id.ToString());
-                returnData = Service.GetStandardRules(permit, "defra_permit", "defra_permitid", "defra_permit_lines");
+                returnData = Service.GetStandardRules(permit, defra_permit.EntityLogicalName, defra_permit.Fields.defra_permitId, defra_permit_lines.EntityLogicalName);
             }
-                         
+
             ReturnData.Set(executionContext, returnData);
             TracingService.Trace("Returning data: {0}", returnData);
         }
