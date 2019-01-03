@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Activities;
+using Core.Helpers.Extensions;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Workflow;
@@ -20,7 +21,7 @@ namespace Defra.Lp.Workflows
         [RequiredArgument]
         [Input("Sharing Record URL")]
         [ReferenceTarget("")]
-        public InArgument<String> SharingRecordURL { get; set; }
+        public InArgument<String> SharingRecordUrl { get; set; }
 
         [RequiredArgument]
         [Input("Team")]
@@ -66,7 +67,7 @@ namespace Defra.Lp.Workflows
 
 	            #region Get Parameters
 
-	            string sharingRecordUrl = SharingRecordURL.Get(executionContext);
+	            string sharingRecordUrl = SharingRecordUrl.Get(executionContext);
 	            if (string.IsNullOrEmpty(sharingRecordUrl))
 	            {
 	                return;
@@ -88,12 +89,8 @@ namespace Defra.Lp.Workflows
 
 	            #region Revoke Access
 
-	            var revokeRequest = new RevokeAccessRequest {Target = refObject};
-	            foreach (EntityReference principalObject in principals)
-	            {
-	                revokeRequest.Revokee = principalObject;
-	                RevokeAccessResponse revokeResponse = (RevokeAccessResponse)service.Execute(revokeRequest);
-	            }
+                service.RevokeAccess(refObject, principals);
+
 	            tracingService.Trace("Revoked Permissions--- OK");
 
 	            #endregion

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Activities;
+using Core.Helpers.Extensions;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Workflow;
@@ -112,8 +113,15 @@ namespace Defra.Lp.Workflows
 	            var service = serviceFactory.CreateOrganizationService(null);
                 #endregion
 
-	            #region Get Parameters
+                #region Get Parameters
 
+	            bool shareAppend = this.ShareAppend.Get(executionContext);
+	            bool shareAppendTo = this.ShareAppendTo.Get(executionContext);
+	            bool shareAssign = this.ShareAssign.Get(executionContext);
+	            bool shareDelete = this.ShareDelete.Get(executionContext);
+	            bool shareRead = this.ShareRead.Get(executionContext);
+	            bool shareShare = this.ShareShare.Get(executionContext);
+	            bool shareWrite = this.ShareWrite.Get(executionContext);
                 string sharingRecordUrl = SharingRecordURL.Get(executionContext);
                 if (string.IsNullOrEmpty(sharingRecordUrl))
                 {
@@ -121,37 +129,25 @@ namespace Defra.Lp.Workflows
                 }
 	            var refObject = DataAccessMetaData.GetEntityReferenceFromRecordUrl(service, sharingRecordUrl);
 
-                //
-                // Why do we need an List of principals?
-                //
-	            List<EntityReference> principals = new List<EntityReference>();
+                List<EntityReference> principals = new List<EntityReference>();
                 EntityReference teamReference = Team.Get(executionContext);
                 principals.Clear();
-
                 if (teamReference != null)
                 {
                     principals.Add(teamReference);
                 }
-	            #endregion
+                #endregion
 
                 #region Grant Access Request
 
-                tracingService.Trace("Grant Request--- Start");
+	            tracingService.Trace("Grant Request Start");
 
-	            var grantRequest = new GrantAccessRequest
-	            {
-	                Target = refObject,
-	                PrincipalAccess = new PrincipalAccess {AccessMask = (AccessRights)GetMask(executionContext)}
-	            };
-	            foreach (EntityReference principal in principals)
-                {
-                    grantRequest.PrincipalAccess.Principal = principal;
-                    GrantAccessResponse grantResponse = (GrantAccessResponse)service.Execute(grantRequest);
-                }
+                service.GrantAccess(refObject, principals, shareAppend, shareAppendTo, shareAssign, shareDelete,
+                    shareRead, shareShare, shareWrite);
 
-                tracingService.Trace("Grant Request--- end");
+	            tracingService.Trace("Grant Request End");
 
-	            #endregion
+                #endregion
 
             }
             catch (FaultException<OrganizationServiceFault> e)
@@ -160,48 +156,6 @@ namespace Defra.Lp.Workflows
                 throw e;
             }	  
 
-        }
-
-        private uint GetMask(CodeActivityContext executionContext)
-        {
-            bool shareAppend = this.ShareAppend.Get(executionContext);
-            bool shareAppendTo = this.ShareAppendTo.Get(executionContext);
-            bool shareAssign = this.ShareAssign.Get(executionContext);
-            bool shareDelete = this.ShareDelete.Get(executionContext);
-            bool shareRead = this.ShareRead.Get(executionContext);
-            bool shareShare = this.ShareShare.Get(executionContext);
-            bool shareWrite = this.ShareWrite.Get(executionContext);
-
-            uint mask = 0;
-            if (shareAppend)
-            {
-                mask |= (uint)AccessRights.AppendAccess;
-            }
-            if (shareAppendTo)
-            {
-                mask |= (uint)AccessRights.AppendToAccess;
-            }
-            if (shareAssign)
-            {
-                mask |= (uint)AccessRights.AssignAccess;
-            }
-            if (shareDelete)
-            {
-                mask |= (uint)AccessRights.DeleteAccess;
-            }
-            if (shareRead)
-            {
-                mask |= (uint)AccessRights.ReadAccess;
-            }
-            if (shareShare)
-            {
-                mask |= (uint)AccessRights.ShareAccess;
-            }
-            if (shareWrite)
-            {
-                mask |= (uint)AccessRights.WriteAccess;
-            }
-            return mask;
         }
     }
 }
