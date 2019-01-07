@@ -2226,6 +2226,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_incident_defra_applicationdocument_caseid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_incident_defra_applicationdocument_caseid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationdocument> defra_incident_defra_applicationdocument_caseid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_incident_defra_applicationdocument_caseid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null, value);
+				this.OnPropertyChanged("defra_incident_defra_applicationdocument_caseid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N Incident_Annotation
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Annotation")]
@@ -2282,6 +2302,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("incident_defra_notifications");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_notification>("incident_defra_notifications", null, value);
 				this.OnPropertyChanged("incident_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Incident_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Incident_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Incident_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Incident_Emails", null, value);
+				this.OnPropertyChanged("Incident_Emails");
 			}
 		}
 		
