@@ -92,7 +92,9 @@
             tracingService.Trace($"Entity LogicalName={entity.LogicalName}, id={entity.Id}");
             foreach (var attribute in entity.Attributes)
             {
-                tracingService.Trace($"{attribute.Key}={attribute.Value}");
+                string value = attribute.Value?.ToString() ?? string.Empty;
+                value = value.SafeSubstring(0, 50);
+                tracingService.Trace($"{attribute.Key}={value}");
             }
         }
     }

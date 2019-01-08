@@ -132,8 +132,8 @@ namespace Defra.Lp.Common.SharePoint
             var regardingObjectId = GetRegardingObjectId(attachmentData);
             if (regardingObjectId != null && (regardingObjectId.LogicalName == Application.EntityLogicalName || regardingObjectId.LogicalName == Case.EntityLogicalName))
             {
-                var direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>("Email.Fields.DirectionCode")).Value;
-                var statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>("Email.Fields.StatusCode")).Value;
+                var direction = (bool)(attachmentData.GetAttributeValue<AliasedValue>($"email.{Email.Fields.DirectionCode}")).Value;
+                var statusCode = (OptionSetValue)(attachmentData.GetAttributeValue<AliasedValue>($"email.{Email.Fields.StatusCode}")).Value;
                 if (direction && statusCode.Value != 3)
                 {
                     //Outgoing email, do not send the attachment on create
@@ -381,21 +381,21 @@ namespace Defra.Lp.Common.SharePoint
                     request.EmailTo = queryRecord.GetAttributeValue<string>(Email.Fields.ToRecipients);
                 }
 
-                if (queryRecord.Contains("Email.Fields.Sender"))
+                if (queryRecord.Contains($"email.{Email.Fields.Sender}"))
                 {
-                    request.EmailFrom = ((string)((AliasedValue)queryRecord.Attributes["Email.Fields.Sender"]).Value);
+                    request.EmailFrom = ((string)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.Sender}"]).Value);
                 }
 
-                if (queryRecord.Contains("Email.Fields.ToRecipients"))
+                if (queryRecord.Contains($"email.{Email.Fields.ToRecipients}"))
                 {
-                    request.EmailTo = ((string)((AliasedValue)queryRecord.Attributes["Email.Fields.ToRecipients"]).Value);
+                    request.EmailTo = ((string)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.ToRecipients}"]).Value);
                 } 
                 if (queryRecord.Contains(Email.Fields.Subject))
                 {
                     // For an email, this is just the filename again
                     request.EmailLink = GetFileName(queryRecord);
                 }
-                else if (queryRecord.Contains("Email.Fields.Subject"))
+                else if (queryRecord.Contains($"email.{Email.Fields.Subject}"))
                 {
                     // Annotation needs the filename created for the email from subject and created on date
                     request.EmailLink = CreateEmailFileNameForAttachment(queryRecord);
@@ -448,11 +448,19 @@ namespace Defra.Lp.Common.SharePoint
             if (queryRecord.Contains(Email.Fields.RegardingObjectId))
             {
                 regardingObjectRef = queryRecord.GetAttributeValue<EntityReference>(Email.Fields.RegardingObjectId);
+                TracingService.Trace($"GetRegardingObjectId() regardingObjectRef.LogicalName={regardingObjectRef.LogicalName}");
+
             }
             // Attachment
             if (queryRecord.Contains($"Email.{Email.Fields.RegardingObjectId}"))
             {
                 regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>($"Email.{Email.Fields.RegardingObjectId}")).Value;
+                TracingService.Trace($"GetRegardingObjectId() regardingObjectRef.LogicalName={regardingObjectRef.LogicalName}");
+            }
+
+            if (regardingObjectRef == null)
+            {
+                TracingService.Trace("GetRegardingObjectId() found no regarding object");
             }
             return regardingObjectRef;
         }
@@ -613,8 +621,8 @@ namespace Defra.Lp.Common.SharePoint
         private string CreateEmailFileNameForAttachment(Entity queryRecord)
         {
             // For an email, we're going to use the subject as the filename.
-            var fileName = (string)((AliasedValue)queryRecord.Attributes["Email.Fields.Subject"]).Value;
-            var createdDate = (DateTime)((AliasedValue)queryRecord.Attributes["Email.Fields.CreatedOn"]).Value;
+            var fileName = (string)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.Subject}"]).Value;
+            var createdDate = (DateTime)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.CreatedOn}"]).Value;
             // Filename needs to have a timestamp so that CRM doesn't overwrite if the
             // user uploads something with the same name from front end. Also need to remove
             // any illegal charcter that SharePoint might complain about
@@ -638,10 +646,10 @@ namespace Defra.Lp.Common.SharePoint
                 // annotation and email
                 createdDate = queryRecord.GetAttributeValue<DateTime>(Email.Fields.CreatedOn);
             }
-            if (queryRecord.Contains("Email.Fields.CreatedOn"))
+            if (queryRecord.Contains($"email.{Email.Fields.CreatedOn}"))
             {
                 // attachments
-                createdDate = (DateTime)((AliasedValue)queryRecord.Attributes["Email.Fields.CreatedOn"]).Value;
+                createdDate = (DateTime)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.CreatedOn}"]).Value;
             }
             if (queryRecord.Contains("filename"))
             {
