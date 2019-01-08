@@ -81,13 +81,13 @@ namespace Defra.Lp.Common.SharePoint
             var request = new DocumentRelayRequest
             {
                 ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"],
-                ApplicationNo = applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_applicationnumber).Replace('/', '_'),
+                ApplicationNo = SharePointFilters.FilterPath(applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_applicationnumber)),
                 FileBody = string.Empty,
                 FileDescription = string.Empty,
                 FileName = string.Empty,
                 ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"],
                 PermitContentType = Config[$"{SharePointSecureConfigurationKeys.PermitFolderContentType}"],
-                PermitNo = applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_permitnumber).Replace('/', '_'),
+                PermitNo = SharePointFilters.FilterPath(applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_permitnumber)),
                 Customer = string.Empty,
                 SiteDetails = string.Empty,
                 PermitDetails = string.Empty
@@ -149,44 +149,12 @@ namespace Defra.Lp.Common.SharePoint
                     if (resultBody != null)
                     {
                         TracingService.Trace("Returned from LogicApp OK");
-                        if (attachmentData != null)
-                        {
-                            // Create document source record
-                            Guid? applicationId = attachmentData.GetAttributeId(defra_application.Fields.defra_applicationId);
-                            Guid? caseApplicationId = attachmentData.GetAliasedAttributeId($"case.application.{defra_application.Fields.defra_applicationId}");
-                            Guid? caseId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.IncidentId}");
-                            Guid? emailId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.ActivityId}");
 
-                            defra_ApplicationDocumentSource documentSource;
+                        // Create application document record
+                        CreateApplicationDocument(attachmentData, request.FileDescription, request.FileName);
 
-                            if (emailId.HasValue)
-                            {
-                                documentSource = defra_ApplicationDocumentSource.Email;
-                            }
-                            else if (caseId.HasValue)
-                            {
-                                documentSource = defra_ApplicationDocumentSource.RFIorS5;
-                            }
-                            else
-                            {
-                                documentSource = defra_ApplicationDocumentSource.Application;
-                            }
-
-
-                            _dalApplicationDocument.CreateApplicationDocument(
-                                request.FileDescription,
-                                null,
-                                request.FileName,
-                                documentSource,
-                                applicationId ?? caseApplicationId,
-                                caseId,
-                                emailId);
-
-                            // Delete Annotation
-                            //attachmentData[ActivityMimeAttachment.Body] = string.Empty;
-                            //Service.Update(attachmentData);
-                            Service.Delete(attachmentData.LogicalName, attachmentData.Id);
-                        }
+                        // Delete Annotation
+                        Service.Delete(attachmentData.LogicalName, attachmentData.Id);
                     }
                 }
                 else
@@ -198,6 +166,41 @@ namespace Defra.Lp.Common.SharePoint
             {
                 TracingService.Trace("Only attachments for emails regarding Applications, RFIs or Schedule 5s are currently sent to SharePoint");
             }
+        }
+
+        private void CreateApplicationDocument(Entity attachmentData, string fileDescription, string fileName)
+        {
+            // Create document source record
+            Guid? createdById = attachmentData.GetAttributeId(defra_application.Fields.CreatedBy);
+            Guid? applicationId = attachmentData.GetAliasedAttributeId($"application.{defra_application.Fields.defra_applicationId}");
+            Guid? caseApplicationId = attachmentData.GetAliasedAttributeId($"case.application.{defra_application.Fields.defra_applicationId}");
+            Guid? caseId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.IncidentId}");
+            Guid? emailId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.ActivityId}");
+
+            defra_ApplicationDocumentSource documentSource;
+
+            if (emailId.HasValue)
+            {
+                documentSource = defra_ApplicationDocumentSource.Email;
+            }
+            else if (caseId.HasValue)
+            {
+                documentSource = defra_ApplicationDocumentSource.RFIorS5;
+            }
+            else
+            {
+                documentSource = defra_ApplicationDocumentSource.Application;
+            }
+
+            DalApplicationDocument.CreateApplicationDocument(
+                fileDescription,
+                null,
+                fileName,
+                documentSource,
+                applicationId ?? caseApplicationId,
+                caseId,
+                emailId,
+                createdById);
         }
 
         private void UploadEmail(Guid recordId)
@@ -262,45 +265,18 @@ namespace Defra.Lp.Common.SharePoint
                 if (request.HasBody())
                 {
                     var resultBody = SendRequest(Config[$"{SharePointSecureConfigurationKeys.DocumentRelayLogicAppUrl}"], JsonConvert.SerializeObject(request));
-                    if (resultBody != null)
+                    if (resultBody == null)
                     {
-                        TracingService.Trace("Returned from LogicApp OK");
-                            
-                        // Create document source record
-                        Guid? applicationId =annotationData.GetAttributeId(defra_application.Fields.defra_applicationId);
-                        Guid? caseApplicationId = annotationData.GetAliasedAttributeId($"case.application.{defra_application.Fields.defra_applicationId}");
-                        Guid? caseId = annotationData.GetAliasedAttributeId($"case.{Incident.Fields.IncidentId}");
-                        Guid? emailId = annotationData.GetAliasedAttributeId($"email.{Email.Fields.ActivityId}");
-
-                        defra_ApplicationDocumentSource documentSource;
-
-                        if (emailId.HasValue)
-                        {
-                            documentSource = defra_ApplicationDocumentSource.Email;
-                        }
-                        else if (caseId.HasValue)
-                        {
-                            documentSource = defra_ApplicationDocumentSource.RFIorS5;
-                        }
-                        else
-                        {
-                            documentSource = defra_ApplicationDocumentSource.Application;
-                        }
-
-                        _dalApplicationDocument.CreateApplicationDocument(
-                            request.FileDescription,
-                            null,
-                            request.FileName,
-                            documentSource,
-                            applicationId ?? caseApplicationId,
-                            caseId,
-                            emailId);
-
-                        // Delete annotation from CRM and a note to say thats what we've done!
-                        //annotationData[Annotation.Fields.NoteText] = "File has been uploaded to SharePoint.";
-                        //annotationData[Annotation.Fields.DocumentBody] = string.Empty;
-                        Service.Delete(Annotation.EntityLogicalName, annotationData.Id);
+                        TracingService.Trace("Returned from LogicApp, no resultBody");
+                        return;
                     }
+                    TracingService.Trace("Returned from LogicApp OK");
+                            
+                    // Create document record
+                    CreateApplicationDocument(annotationData, request.FileDescription, request.FileName);
+
+                    // Delete annotation from CRM
+                    Service.Delete(Annotation.EntityLogicalName, annotationData.Id);
                 }
                 else
                 {
@@ -342,9 +318,9 @@ namespace Defra.Lp.Common.SharePoint
                 {
                     TracingService.Trace($"Permit Number = {applicationEntity[Application.PermitNumber]}; Application Number = {applicationEntity[Application.ApplicationNumber]}");
 
-                    request.ApplicationNo = applicationEntity.GetAttributeValue<string>(Application.ApplicationNumber).Replace('/', '_');
+                    request.ApplicationNo = SharePointFilters.FilterPath(applicationEntity.GetAttributeValue<string>(Application.ApplicationNumber));
                     request.ListName = Config[$"{SharePointSecureConfigurationKeys.PermitListName}"];
-                    request.PermitNo = applicationEntity.GetAttributeValue<string>(Application.PermitNumber);
+                    request.PermitNo = SharePointFilters.FilterPath(applicationEntity.GetAttributeValue<string>(Application.PermitNumber));
                     request.Customer = customer;
                     request.SiteDetails = siteDetails;
                     request.PermitDetails = permitDetails;
@@ -474,9 +450,9 @@ namespace Defra.Lp.Common.SharePoint
                 regardingObjectRef = queryRecord.GetAttributeValue<EntityReference>(Email.Fields.RegardingObjectId);
             }
             // Attachment
-            if (queryRecord.Contains("Email.Fields.RegardingObjectId"))
+            if (queryRecord.Contains($"Email.{Email.Fields.RegardingObjectId}"))
             {
-                regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>("Email.Fields.RegardingObjectId")).Value;
+                regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>($"Email.{Email.Fields.RegardingObjectId}")).Value;
             }
             return regardingObjectRef;
         }
@@ -574,6 +550,7 @@ namespace Defra.Lp.Common.SharePoint
             {
                 permitNo = (string)((AliasedValue)queryRecord.Attributes["case.application.defra_permitnumber"]).Value;
             }
+            permitNo = SharePointFilters.FilterPath(permitNo);
             TracingService.Trace("Permit No: {0}", permitNo);
             return permitNo;
         }
@@ -589,13 +566,13 @@ namespace Defra.Lp.Common.SharePoint
             if (queryRecord.Contains("application.defra_applicationnumber"))
             {
                 applicationNo = (string)((AliasedValue)queryRecord.Attributes["application.defra_applicationnumber"]).Value;
-                applicationNo = applicationNo.Replace('/', '_');
             }
             if (queryRecord.Contains("case.application.defra_applicationnumber"))
             {
                 applicationNo = (string)((AliasedValue)queryRecord.Attributes["case.application.defra_applicationnumber"]).Value;
-                applicationNo = applicationNo.Replace('/', '_');
             }
+
+            applicationNo = SharePointFilters.FilterPath(applicationNo);
             TracingService.Trace("Application No: {0}", applicationNo);
             return applicationNo;
         }
@@ -728,7 +705,16 @@ namespace Defra.Lp.Common.SharePoint
             queryAnnotation.TopCount = 1;
 
             // Add columns to annotation entity
-            queryAnnotation.ColumnSet.AddColumns(Annotation.Fields.Subject, Annotation.Fields.DocumentBody, Annotation.Fields.FileName, Annotation.Fields.Id, Annotation.Fields.NoteText, Annotation.Fields.FileSize, Annotation.Fields.IsDocument, Annotation.Fields.CreatedOn);
+            queryAnnotation.ColumnSet.AddColumns(
+                Annotation.Fields.Subject, 
+                Annotation.Fields.DocumentBody, 
+                Annotation.Fields.FileName, 
+                Annotation.Fields.Id, 
+                Annotation.Fields.NoteText, 
+                Annotation.Fields.FileSize,
+                Annotation.Fields.IsDocument, 
+                Annotation.Fields.CreatedOn,
+                Annotation.Fields.CreatedBy);
 
             // Define filter on Primary key
             queryAnnotation.Criteria.AddCondition(Annotation.Fields.Id, ConditionOperator.Equal, recordId);
@@ -741,22 +727,23 @@ namespace Defra.Lp.Common.SharePoint
             queryExpressionAnnotationApp.Columns.AddColumns(Application.ApplicationId, Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.StatusCode);
 
             // Add link-entity to Case. Outer join as it might be regarding case or application
-            var queryExpressionAnnotationIncident = queryAnnotation.AddLink(Case.EntityLogicalName, Annotation.Fields.ObjectId, Case.IncidentId, JoinOperator.LeftOuter);
+            var queryExpressionAnnotationIncident = queryAnnotation.AddLink(Incident.EntityLogicalName, Annotation.Fields.ObjectId, Incident.Fields.IncidentId, JoinOperator.LeftOuter);
             queryExpressionAnnotationIncident.EntityAlias = "case";
 
             // Add columns to Case entity
-            queryExpressionAnnotationIncident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType, Case.TicketNumber);
+            queryExpressionAnnotationIncident.Columns.AddColumns(Incident.Fields.Title, Incident.Fields.IncidentId, Incident.Fields.CaseTypeCode, Incident.Fields.TicketNumber, Incident.Fields.IncidentId);
 
             // Add link-entity from case to application
-            var queryExpressionAnnotationIncidentApplication = queryExpressionAnnotationIncident.AddLink(Application.EntityLogicalName, Case.Application, Application.ApplicationId, JoinOperator.LeftOuter);
+            var queryExpressionAnnotationIncidentApplication = queryExpressionAnnotationIncident.AddLink(defra_application.EntityLogicalName, Case.Application, defra_application.Fields.defra_applicationId, JoinOperator.LeftOuter);
             queryExpressionAnnotationIncidentApplication.EntityAlias = "case.application";
 
             // Add columns to QEannotation_incident_defra_application.Columns
-            queryExpressionAnnotationIncidentApplication.Columns.AddColumns(Application.ApplicationNumber, Application.Name, Application.PermitNumber);
+            queryExpressionAnnotationIncidentApplication.Columns.AddColumns(defra_application.Fields.defra_applicationnumber, defra_application.Fields.defra_name, defra_application.Fields.defra_permitnumber, defra_application.Fields.defra_applicationId);
 
             var results = Service.RetrieveMultiple(queryAnnotation);
             if (results != null && results.Entities.Count >= 1)
             {
+                CrmExtensions.TraceEntity(TracingService, results.Entities[0]);
                 return results.Entities[0];
             }
 
@@ -819,6 +806,7 @@ namespace Defra.Lp.Common.SharePoint
             var results = Service.RetrieveMultiple(queryActivityMimeAttachment);
             if (results != null && results.Entities.Count >= 1)
             {
+                CrmExtensions.TraceEntity(TracingService, results.Entities[0]);
                 return results.Entities[0];
             }
 
@@ -862,6 +850,7 @@ namespace Defra.Lp.Common.SharePoint
             var results = Service.RetrieveMultiple(queryEmail);
             if (results != null && results.Entities.Count >= 1)
             {
+                CrmExtensions.TraceEntity(TracingService, results.Entities[0]);
                 return results.Entities[0];
             }
 
@@ -887,12 +876,6 @@ namespace Defra.Lp.Common.SharePoint
                 return response.Content.ReadAsStringAsync().Result;
             }
         }
-
-        //private string SpRemoveIllegalChars(string fileName)
-        //{
-        //    // Need to remove any leading or trailing spaces as not allowed
-        //    return fileName.SpRemoveIllegalChars();
-        //}
 
         /// <summary>
         /// Issue SendFileToSharePoint Message which will trigger the SendSingleAttachmentToSharePoint Plugin.

@@ -75,5 +75,25 @@
         {
             return entity.Contains(attribute) ? (string)entity.GetAttributeValue<AliasedValue>(attribute).Value : string.Empty;
         }
+
+        /// <summary>
+        /// Outout entity contents
+        /// </summary>
+        /// <param name="tracingService"></param>
+        /// <param name="entity"></param>
+        public static void TraceEntity(ITracingService tracingService, Entity entity)
+        {
+            if (entity == null)
+            {
+                tracingService.Trace($"Entity is null");
+                return;
+            }
+
+            tracingService.Trace($"Entity LogicalName={entity.LogicalName}, id={entity.Id}");
+            foreach (var attribute in entity.Attributes)
+            {
+                tracingService.Trace($"{attribute.Key}={attribute.Value}");
+            }
+        }
     }
 }
