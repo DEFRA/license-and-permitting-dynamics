@@ -1,5 +1,5 @@
 ﻿// Application Price entity model at the L&P Organisation Level
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// CRM Application Price entity model
@@ -25,5 +25,11 @@ namespace Model.Lp.Crm
         /// Application Type OptionSet
         /// </summary>
         public const string ApplicationType = "defra_applicationtype";
+
+
+        /// <summary>
+        /// Application SubType Lookup
+        /// </summary>
+        public const string ApplicationSubType = "defra_application_subtype";
     }
 }

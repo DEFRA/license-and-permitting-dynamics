@@ -1,12 +1,12 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata;
-using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Linq;
-
-namespace Lp.DataAccess
+﻿namespace Lp.DataAccess
 {
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Messages;
+    using Microsoft.Xrm.Sdk.Metadata;
+    using Microsoft.Xrm.Sdk.Query;
+    using System;
+    using System.Linq;
+
     public static class Query
     {
         public static string GetFieldValueAsString(Entity entity, string attributeName)

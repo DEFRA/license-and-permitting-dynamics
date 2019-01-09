@@ -1,9 +1,9 @@
 ﻿namespace Lp.DataAccess
 {
     using System;
-    using Model.Entities;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
+    using Model.Crm;
 
     public static class DataAccessUsers
     {

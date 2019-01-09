@@ -1,5 +1,5 @@
 ﻿
-namespace Model.Lp.Crm
+namespace Lp.Model.Crm
 {
     /// <summary>
     /// Messages that may trigger an plugin

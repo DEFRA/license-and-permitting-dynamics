@@ -7,8 +7,8 @@
     <ProjectGuid>{2E42211D-6F04-466C-85D0-B7CC6A2BC41F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>WastePermits.DataAccess</RootNamespace>
+    <AssemblyName>WastePermits.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -39,7 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -60,10 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessApplication.cs" />
     <Compile Include="DataAccessCase.cs" />
     <Compile Include="DataAccessApplicationLine.cs" />
     <Compile Include="DataAccessApplicationPrice.cs" />
+    <Compile Include="DataAccessItem.cs" />
     <Compile Include="DataAccessStandardRule.cs" />
+    <Compile Include="DataAccessFacilities.cs" />
     <Compile Include="Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -75,6 +78,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\Core.DataAccess.Base.csproj">
+      <Project>{2cffc029-78c9-4708-aad9-9f277358cf4e}</Project>
+      <Name>Core.DataAccess.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Core.Helpers.csproj">
+      <Project>{259a6611-e8e8-4e32-9fde-097376020fe5}</Project>
+      <Name>Core.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\LicensingandPermitting\Defra.Lp\Lp.DataAccess.Interfaces\Lp.DataAccess.Interfaces.csproj">
+      <Project>{2b01c6d3-a4a0-481a-b6cc-e1b3f22bab6c}</Project>
+      <Name>Lp.DataAccess.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Lp.Model.csproj">
       <Project>{5db8f9e1-5776-41ae-bec7-012f16bc77d8}</Project>
       <Name>Lp.Model</Name>
