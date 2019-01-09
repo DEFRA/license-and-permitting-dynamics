@@ -3,15 +3,34 @@ using System.Security;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UIAutomation
+namespace WastePermits.UIAutomation
 {
     [TestClass]
-    public class PendingEmailReminder
+    public class WastePermitTests
     {
-        private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
-        private readonly SecureString _password = System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
-        private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
+        public TestContext TestContext { get; set; }
+
+        private SecureString _username; // = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
+        private SecureString _password; //System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
+        private Uri _xrmUri; // = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
         private string statusText;
+
+        public WastePermitTests()
+        {
+            var username = TestContext.Properties["crmUserName"].ToString();
+            foreach (char c in username)
+            {
+                _username.AppendChar(c);
+            }
+
+            var pwd = TestContext.Properties["crmPassword"].ToString();
+            foreach (char c in pwd)
+            {
+                _password.AppendChar(c);
+            }
+            _xrmUri = new Uri(TestContext.Properties["crmDestinationUrl"].ToString());
+        }
+
 
         [TestMethod]
         public void WastePermitsApplicationGlobalSearchOpenRecord()
