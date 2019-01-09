@@ -10,13 +10,21 @@ namespace WastePermits.UIAutomation
     {
         public TestContext TestContext { get; set; }
 
-        private SecureString _username = new SecureString(); // = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
-        private SecureString _password = new SecureString(); //System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
-        private Uri _xrmUri; // = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
+        private static SecureString _username = new SecureString(); // = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
+        private static SecureString _password = new SecureString(); //System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
+        private static Uri _xrmUri; // = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
         private string statusText;
 
         public WastePermitTests()
         {
+           
+
+        }
+
+        [ClassInitialize]
+        public static void SetupTests(TestContext testContext)
+        {
+            TestContext TestContext = testContext;
             var username = TestContext.Properties["crmUserName"].ToString();
             foreach (char c in username)
             {
@@ -30,7 +38,6 @@ namespace WastePermits.UIAutomation
             }
             _xrmUri = new Uri(TestContext.Properties["crmDestinationUrl"].ToString());
         }
-
 
         [TestMethod]
         public void WastePermitsApplicationGlobalSearchOpenRecord()
