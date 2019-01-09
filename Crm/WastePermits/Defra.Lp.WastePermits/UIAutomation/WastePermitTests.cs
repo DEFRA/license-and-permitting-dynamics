@@ -10,8 +10,8 @@ namespace WastePermits.UIAutomation
     {
         public TestContext TestContext { get; set; }
 
-        private SecureString _username; // = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
-        private SecureString _password; //System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
+        private SecureString _username = new SecureString(); // = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
+        private SecureString _password = new SecureString(); //System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
         private Uri _xrmUri; // = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
         private string statusText;
 
