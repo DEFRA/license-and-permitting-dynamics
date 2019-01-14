@@ -153,7 +153,7 @@ namespace Defra.Lp.Common.SharePoint
                         // Create application document record
                         CreateApplicationDocument(attachmentData, request.FileDescription, request.FileName);
 
-                        // Delete Annotation
+                        // Delete Attachment
                         Service.Delete(attachmentData.LogicalName, attachmentData.Id);
                     }
                 }
@@ -275,8 +275,10 @@ namespace Defra.Lp.Common.SharePoint
                     // Create document record
                     CreateApplicationDocument(annotationData, request.FileDescription, request.FileName);
 
-                    // Delete annotation from CRM
-                    Service.Delete(Annotation.EntityLogicalName, annotationData.Id);
+                    // Blank Note Document
+                    annotationData[Annotation.Fields.NoteText] = "File has been uploaded to SharePoint.";
+                    annotationData[Annotation.Fields.DocumentBody] = string.Empty;
+                    Service.Update(annotationData);
                 }
                 else
                 {
