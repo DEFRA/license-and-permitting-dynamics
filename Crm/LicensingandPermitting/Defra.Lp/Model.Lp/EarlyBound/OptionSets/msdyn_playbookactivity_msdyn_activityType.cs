@@ -76,6 +76,9 @@ namespace Lp.Model.EarlyBound
 		ApplicationContact = 10014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDocument = 10092,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationFile = 4707,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -602,6 +605,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Language = 9957,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LanguageProvisioningState = 9875,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Lead = 4,
@@ -1168,10 +1174,13 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10086,
+		SolutionComponentDataSource = 10091,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10085,
+		SolutionComponentSummary = 10090,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryData = 9890,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,

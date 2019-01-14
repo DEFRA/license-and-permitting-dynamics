@@ -171,5 +171,27 @@
             }
             return mask;
         }
+
+        /// <summary>
+        /// Outout entity contents
+        /// </summary>
+        /// <param name="tracingService"></param>
+        /// <param name="entity"></param>
+        public static void TraceEntity(ITracingService tracingService, Entity entity)
+        {
+            if (entity == null)
+            {
+                tracingService.Trace($"Entity is null");
+                return;
+            }
+
+            tracingService.Trace($"Entity LogicalName={entity.LogicalName}, id={entity.Id}");
+            foreach (var attribute in entity.Attributes)
+            {
+                string value = attribute.Value?.ToString() ?? string.Empty;
+                value = value.SafeSubstring(0, 50);
+                tracingService.Trace($"{attribute.Key}={value}");
+            }
+        }
     }
 }
