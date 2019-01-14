@@ -452,9 +452,9 @@ namespace Defra.Lp.Common.SharePoint
 
             }
             // Attachment
-            if (queryRecord.Contains($"Email.{Email.Fields.RegardingObjectId}"))
+            if (queryRecord.Contains($"email.{Email.Fields.RegardingObjectId}"))
             {
-                regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>($"Email.{Email.Fields.RegardingObjectId}")).Value;
+                regardingObjectRef = (EntityReference)(queryRecord.GetAttributeValue<AliasedValue>($"email.{Email.Fields.RegardingObjectId}")).Value;
                 TracingService.Trace($"GetRegardingObjectId() regardingObjectRef.LogicalName={regardingObjectRef.LogicalName}");
             }
 
@@ -518,9 +518,9 @@ namespace Defra.Lp.Common.SharePoint
                 crmId = queryRecord.GetAttributeValue<Guid>(Email.Fields.ActivityId).ToString();
             }
             // Attachment
-            if (queryRecord.Contains("Email.Fields.ActivityId"))
+            if (queryRecord.Contains($"email.{Email.Fields.ActivityId}"))
             {
-                crmId = ((Guid)((AliasedValue)queryRecord.Attributes["Email.Fields.ActivityId"]).Value).ToString();
+                crmId = ((Guid)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.ActivityId}"]).Value).ToString();
             }
             TracingService.Trace("Crm Id: {0}", crmId);
             return crmId;
@@ -535,9 +535,9 @@ namespace Defra.Lp.Common.SharePoint
                 desc = queryRecord.GetAttributeValue<string>(Email.Fields.Subject);
             }
             // Attachments
-            if (queryRecord.Contains("Email.Fields.Subject"))
+            if (queryRecord.Contains("email.subject"))
             {
-                desc = (string)((AliasedValue)queryRecord.Attributes["Email.Fields.Subject"]).Value;
+                desc = (string)((AliasedValue)queryRecord.Attributes["email.subject"]).Value;
             }
             TracingService.Trace("Description: {0}", desc);
             return desc;
@@ -594,9 +594,9 @@ namespace Defra.Lp.Common.SharePoint
                 subject = queryRecord.GetAttributeValue<string>(Email.Fields.Subject);
             }
             // attachment
-            if (queryRecord.Contains("Email.Fields.Subject"))
+            if (queryRecord.Contains($"email.{Email.Fields.Subject}"))
             {
-                subject = (string)((AliasedValue)queryRecord.Attributes["Email.Fields.Subject"]).Value;
+                subject = (string)((AliasedValue)queryRecord.Attributes[$"email.{Email.Fields.Subject}"]).Value;
             }
             TracingService.Trace("Subject: {0}", subject);
             return subject;
@@ -765,7 +765,7 @@ namespace Defra.Lp.Common.SharePoint
             queryActivityMimeAttachment.TopCount = 1;
 
             // Add columns to ActivityMimeAttachment Entity
-            queryActivityMimeAttachment.ColumnSet.AddColumns(ActivityMimeAttachment.Filename, ActivityMimeAttachment.Body);
+            queryActivityMimeAttachment.ColumnSet.AddColumns(ActivityMimeAttachment.Filename, ActivityMimeAttachment.Body, ActivityMimeAttachment.Id);
 
             // Define filter on Primary Key
             queryActivityMimeAttachment.Criteria.AddCondition(ActivityMimeAttachment.Id, ConditionOperator.Equal, recordId);
@@ -788,7 +788,7 @@ namespace Defra.Lp.Common.SharePoint
             queryActivityMimeAttachmentEmailApplication.EntityAlias = "application";
 
             // Add columns to Application Entity
-            queryActivityMimeAttachmentEmailApplication.Columns.AddColumns(Application.Name, Application.PermitNumber, Application.ApplicationNumber);
+            queryActivityMimeAttachmentEmailApplication.Columns.AddColumns(Application.Name, Application.PermitNumber, Application.ApplicationNumber, defra_application.Fields.defra_applicationId);
 
             // Add Application link-entity and define an alias.
             // Its an outer join as we want to return results even if not regarding an case
@@ -798,7 +798,7 @@ namespace Defra.Lp.Common.SharePoint
             queryActivityMimeAttachmentIncident.EntityAlias = "case";
 
             // Add columns to Case Entity
-            queryActivityMimeAttachmentIncident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType, Case.TicketNumber);
+            queryActivityMimeAttachmentIncident.Columns.AddColumns(Case.Title, Case.IncidentId, Case.CaseType, Case.TicketNumber, Incident.Fields.IncidentId);
 
             // Add link-entity to Application Entity from Case and define an alias
             var queryActivityMimeAttachmentEmailApplicationIncident = queryActivityMimeAttachmentIncident.AddLink(
