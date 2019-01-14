@@ -46,7 +46,8 @@
             var result = Query.QueryCRMForSingleEntity(service, fetchXml);
             if (result == null || !result.Attributes.Contains("sharepointdocumentlocationid"))
             {
-                throw new InvalidPluginExecutionException(string.Format("Unable to find Document Location for {0} SharePoint List or Folder.", permitListName));
+                // No document location found, let the caller handle it
+                return Guid.Empty;
             }
             else
             {

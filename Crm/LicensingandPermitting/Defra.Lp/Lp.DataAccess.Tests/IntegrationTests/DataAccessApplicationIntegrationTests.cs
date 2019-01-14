@@ -1,20 +1,23 @@
-﻿using Lp.Model.EarlyBound;
-
+﻿//Data Access integration tests
 namespace Lp.DataAccess.Tests.IntegrationTests
 {
     using System;
     using System.Collections.Generic;
-    using Connector;
-    using Model.Crm;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
-    using Microsoft.Crm.Sdk.Messages;
 
+    using Model.EarlyBound;
+    using Connector;
+    using Model.Crm;
+    
+    /// <summary>
+    /// Main integration tests class
+    /// </summary>
     [TestClass]
     public class DataAccessApplicationIntegrationTests
     {
-
+        #region Test Setup
 
         private static IOrganizationService _organizationService;
         private static IOrganizationService OrganizationService
@@ -31,8 +34,9 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             }
         }
 
-        private KeyValuePair<string, Guid> recordsToDelete = new KeyValuePair<string, Guid>();
         private readonly DataAccessIntegrationTestSupport _dataAccessIntegrationTestSupport = new DataAccessIntegrationTestSupport();
+
+        #endregion
 
         #region Tests
 
@@ -57,7 +61,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 3. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
+            //DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
 
             // 4. Check the Application now has all the Permit locations
             Entity[] applicationLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, variationApplication.Id, null);
@@ -84,7 +88,7 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             for (int countSites = 0; countSites < additionalSites; countSites++)
             {
-                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + additionalSites, additionalDetails, countSites > 1 ? true : false);
+                _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, variationApplication.Id, "Additional Location " + countSites, additionalDetails, countSites > 1 ? true : false);
             }
 
             // 6. Call MirrorApplicationSitesToPermit
@@ -94,6 +98,45 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             // 4. Check the Permit now has all the original locations + the new ones
             Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
             Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite + additionalSites * additionalDetails);
+        }
+
+        [TestMethod]
+        public void Integration_MirrorVariationToPermit_1Location_NoLocationChanges_Success()
+        {
+            int startSites = 1;
+            int startDetailsPerSite = 1;
+
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
+
+            // 1. Create Application
+            Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
+
+            // 6. Call MirrorApplicationSitesToPermit
+            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, variationApplication.Id);
+
+
+            // 4. Check the Permit now has all the original locations + the new ones
+            Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
+            Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite);
+        }
+
+        [TestMethod]
+        public void Integration_MirrorVariationToPermit_2Locations_NoLocationChanges_Success()
+        {
+            int startSites = 2;
+            int startDetailsPerSite = 1;
+
+            Guid permitId = _dataAccessIntegrationTestSupport.CreateApplicationAndPermit(OrganizationService, startSites, startDetailsPerSite);
+
+            // 1. Create Application
+            Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
+
+            // 6. Call MirrorApplicationSitesToPermit
+            DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, variationApplication.Id);
+
+            // 4. Check the Permit now has all the original locations + the new ones
+            Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
+            Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite);
         }
 
         [TestMethod]
@@ -109,17 +152,17 @@ namespace Lp.DataAccess.Tests.IntegrationTests
             Entity variationApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
             // 2. Call MirrorApplicationSitesToPermit
-            DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
+            //DataAccessApplication.MirrorPermitLocationsAndDetailsToApplication(OrganizationService, variationApplication.Id);
 
             // 3. Remove 1 location from Application
             Entity[] applicationLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, variationApplication.Id, null);
 
             _dataAccessIntegrationTestSupport.DeactivateLocation(OrganizationService, applicationLocationAndDetails[0]);
 
-            // 6. Call MirrorApplicationSitesToPermit
+            // 4. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, variationApplication.Id);
 
-            // 7. Check the Permit now has had a location removed
+            // 5. Check the Permit now has had a location removed
             Entity[] permitLocationAndDetails = DataAccessApplication.GetLocationAndLocationDetails(OrganizationService, null, permitId);
             Assert.IsTrue(permitLocationAndDetails.Length == startSites * startDetailsPerSite - startDetailsPerSite);
         }
@@ -127,41 +170,36 @@ namespace Lp.DataAccess.Tests.IntegrationTests
         [TestMethod]
         public void Integration_GetCountForApplicationsLinkedToPermit_TestTwoActiveApplication_Success()
         {
-            // 1. Create application and permit
             // 1. Create Application
             Entity newApplication = DataAccessIntegrationTestSupport.CreateApplication(OrganizationService);
 
-            // 2. Create Application Line
-            //Guid newApplicationLineId = CreatetApplicationLine(service, newApplicationId);
-
-            // 3. Create Application Locations
+            // 2. Create Application Locations
             for (int count = 0; count < 3; count++)
             {
                 _dataAccessIntegrationTestSupport.CreateApplicationLocationAndDetails(OrganizationService, newApplication.Id, "Main Location " + count, 2, count > 1 ? true : false);
             }
 
-            // 4. Create Permit 
+            // 3. Create Permit 
             Entity application = OrganizationService.Retrieve(Application.EntityLogicalName, newApplication.Id,
                 new ColumnSet(Application.PermitNumber));
             string permitNumber = application[Application.PermitNumber].ToString();
 
             Guid permitId = _dataAccessIntegrationTestSupport.CreatePermit(OrganizationService, permitNumber);
 
-            // 5. Update Application Permit Lookup field
+            // 4. Update Application Permit Lookup field
             _dataAccessIntegrationTestSupport.UpdateApplicationPermitLookup(OrganizationService, newApplication, permitId);
 
-            // 6. Call MirrorApplicationSitesToPermit
+            // 5. Call MirrorApplicationSitesToPermit
             DataAccessApplication.MirrorApplicationLocationsAndDetailsToPermit(OrganizationService, newApplication.Id);
 
-            // Change app status to issued
-            ChangeApplicationStatus(application, defra_application_StatusCode.DulyMaking);
-            ChangeApplicationStatus(application, defra_application_StatusCode.Determination);
-            ChangeApplicationStatus(application, defra_application_StatusCode.PeerReview);
-            ChangeApplicationStatus(application, defra_application_StatusCode.Issued);
+            // 6. Change app status to issued
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.DulyMaking);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.Determination);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.PeerReview);
+            DataAccessIntegrationTestSupport.ChangeApplicationStatus(OrganizationService, application, defra_application_StatusCode.Issued);
+            
 
-
-
-            // 3. Call MirrorApplicationSitesToPermit
+            // 7. Call MirrorApplicationSitesToPermit
             int appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
                 OrganizationService,
                 permitId,
@@ -179,11 +217,11 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
 
 
-            // 2. Create Variation
+            // 8. Create Variation
             DataAccessIntegrationTestSupport.CreateApplication(OrganizationService, ApplicationTypes.Variation, permitId);
 
 
-            // 3. Call MirrorApplicationSitesToPermit
+            // 9. Call MirrorApplicationSitesToPermit
             appCount = DataAccessApplication.GetCountForApplicationsLinkedToPermit(
                 OrganizationService,
                 permitId, 
@@ -199,24 +237,6 @@ namespace Lp.DataAccess.Tests.IntegrationTests
 
             Assert.IsTrue(appCount == 1);
         }
-
-        private static void ChangeApplicationStatus(Entity application, defra_application_StatusCode status)
-        {
-            SetStateRequest request = new SetStateRequest
-            {
-                EntityMoniker = application.ToEntityReference(),
-                State = new OptionSetValue((int) defra_applicationState.Active),
-                Status = new OptionSetValue((int) status)
-            };
-            OrganizationService.Execute(request);
-        }
-
         #endregion
-
-        #region Supporting Functions
-
-
-        #endregion
-
     }
 }

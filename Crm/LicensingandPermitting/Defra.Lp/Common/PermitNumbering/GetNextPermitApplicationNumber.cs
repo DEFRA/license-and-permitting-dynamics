@@ -59,78 +59,84 @@ namespace Common.PermitNumbering
 
         public string GetNextPermitApplicationNumber()
         {
+            TracingService.Trace("GetNextPermitApplicationNumber() Start...");
+
             if (PermitNumber == string.Empty || ApplicationType == string.Empty)
                 throw new InvalidPluginExecutionException("Not all input parameters have valid value!");
 
-
             if (ApplicationType == "A") //Application for a new Permit
             {
-                string ApplicationOnlyNumber = string.Format("A{0:D3}", 1);
-                return string.Format("{0}/{1}", PermitNumber, ApplicationOnlyNumber);
+                return GenerateApplicationNumber(ApplicationType, 1);
             }
-            else
+
+
+            //Retrieve the permit record
+            QueryExpression query = new QueryExpression("defra_permit")
             {
-                //Retrieve the permit record
-                QueryExpression query = new QueryExpression("defra_permit")
+                ColumnSet = new ColumnSet("defra_locked"),
+                Criteria = new FilterExpression(LogicalOperator.And)
                 {
-                    ColumnSet = new ColumnSet("defra_locked"),
-                    Criteria = new FilterExpression(LogicalOperator.And)
-                    {
-                        Conditions =
+                    Conditions =
                     {
                         new ConditionExpression("statecode", ConditionOperator.Equal, 0),
                         new ConditionExpression("defra_permitnumber", ConditionOperator.Equal, PermitNumber)
                     }
-                    }
-                };
-                EntityCollection results = Service.RetrieveMultiple(query);
-
-                //Throw an exception if the permit record does not exist
-                if (results.Entities.Count == 0)
-                    throw new InvalidPluginExecutionException("The permit record cannot be found!");
-
-                //Pre-lock the autonumbering table. Refer to the Microsoft Scalability White Paper for more details https://www.microsoft.com/en-us/download/details.aspx?id=45905
-                Entity autoNum = new Entity(results.Entities[0].LogicalName) { Id = results.Entities[0].Id };
-                autoNum["defra_locked"] = true;
-                Service.Update(autoNum);
-
-                //Retrieve safely the autonumbering record
-                var lockedAutonumber = Service.Retrieve(autoNum.LogicalName, autoNum.Id, new ColumnSet("defra_currentnumber"));
-                int currentNumber = (lockedAutonumber.Attributes.Contains("defra_currentnumber") && lockedAutonumber["defra_currentnumber"] != null) ? (int)lockedAutonumber["defra_currentnumber"] : 1;
-                currentNumber++;
-
-                //Update the application number only string
-                string ApplicationOnlyNumber = string.Format("{0:D3}", currentNumber);
-
-                switch (ApplicationType)
-                {
-                    //case "A":
-                    //    ApplicationOnlyNumber = string.Format("A{0:D3}", currentNumber);
-                    //    break;
-                    case "V":
-                        ApplicationOnlyNumber = string.Format("V{0:D3}", currentNumber);
-                        break;
-                    case "T":
-                        ApplicationOnlyNumber = string.Format("T{0:D3}", currentNumber);
-                        break;
-                    case "S":
-                        ApplicationOnlyNumber = string.Format("S{0:D3}", currentNumber);
-                        break;
-                    default:
-                        ApplicationOnlyNumber = string.Format("_{0:D3}", currentNumber);
-                        break;
                 }
+            };
+            EntityCollection results = Service.RetrieveMultiple(query);
 
-                //Update the sequence number
-                var counterUpdater = new Entity(autoNum.LogicalName);
-                counterUpdater.Id = autoNum.Id;
-                counterUpdater["defra_currentnumber"] = currentNumber;
-                counterUpdater["defra_locked"] = false;
-                Service.Update(counterUpdater);
-
-                //Set the Application Number Output value
-                return string.Format("{0}/{1}", PermitNumber, ApplicationOnlyNumber);
+            // If the permit record does not exist, it is for a new application or a partial transfer
+            if (results.Entities.Count == 0)
+            {
+                return GenerateApplicationNumber(ApplicationType, 1);
             }
+
+            //Pre-lock the autonumbering table. Refer to the Microsoft Scalability White Paper for more details https://www.microsoft.com/en-us/download/details.aspx?id=45905
+            Entity autoNum = new Entity(results.Entities[0].LogicalName) { Id = results.Entities[0].Id };
+            autoNum["defra_locked"] = true;
+            Service.Update(autoNum);
+
+            //Retrieve safely the autonumbering record
+            var lockedAutonumber = Service.Retrieve(autoNum.LogicalName, autoNum.Id, new ColumnSet("defra_currentnumber"));
+            int currentNumber = (lockedAutonumber.Attributes.Contains("defra_currentnumber") && lockedAutonumber["defra_currentnumber"] != null) ? (int)lockedAutonumber["defra_currentnumber"] : 1;
+            currentNumber++;
+
+            //Update the application number only string
+            string ApplicationOnlyNumber = string.Format("{0:D3}", currentNumber);
+
+            switch (ApplicationType)
+            {
+                case "V":
+                case "T":
+                case "S":
+                    ApplicationOnlyNumber = GenerateApplicationNumber(ApplicationType, currentNumber);
+                    break;
+                default:
+                    ApplicationOnlyNumber = GenerateApplicationNumber("_", currentNumber);
+                    break;
+            }
+
+            //Update the sequence number
+            var counterUpdater = new Entity(autoNum.LogicalName);
+            counterUpdater.Id = autoNum.Id;
+            counterUpdater["defra_currentnumber"] = currentNumber;
+            counterUpdater["defra_locked"] = false;
+            Service.Update(counterUpdater);
+
+            //Set the Application Number Output value
+            return ApplicationOnlyNumber;
+        }
+
+        /// <summary>
+        /// Gets a new application number
+        /// </summary>
+        /// <param name="appNumber">Number to use as the postfix</param>
+        /// <param name="prefix">The prefix to use</param>
+        /// <returns>Generated application number</returns>
+        private string GenerateApplicationNumber(string prefix, int appNumber)
+        {
+            string applicationOnlyNumber = $"{prefix}{appNumber:D3}";
+            return $"{PermitNumber}/{applicationOnlyNumber}";
         }
     }
 }
