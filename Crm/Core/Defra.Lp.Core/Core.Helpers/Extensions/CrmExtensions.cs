@@ -2,9 +2,11 @@
 {
     using System;
     using Microsoft.Xrm.Sdk;
+    using Microsoft.Crm.Sdk.Messages;
+    using System.Collections.Generic;
 
     /// <summary>
-    /// CRM specific helper extentensions
+    /// CRM specific helper extensions
     /// </summary>
     public static class CrmExtensions
     {
@@ -74,6 +76,100 @@
         public static string GetAliasedAttributeText(this Entity entity, string attribute)
         {
             return entity.Contains(attribute) ? (string)entity.GetAttributeValue<AliasedValue>(attribute).Value : string.Empty;
+        }
+
+        /// <summary>
+        /// Grants shared access to a team for any entity
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="entityReference">Reference to the entity that will have access granted</param>
+        /// <param name="principals">Entity Refs for Teams or Users that will be granted permissions </param>
+        /// <param name="shareAppend">Share append</param>
+        /// <param name="shareAppendTo">Share append to</param>
+        /// <param name="shareAssign">Share assign</param>
+        /// <param name="shareDelete">Share delete</param>
+        /// <param name="shareRead">Share read</param>
+        /// <param name="shareShare">Share share</param>
+        /// <param name="shareWrite">Share write</param>
+        public static void GrantAccess(this IOrganizationService service, EntityReference entityReference, List<EntityReference> principals, bool shareAppend,
+            bool shareAppendTo, bool shareAssign, bool shareDelete, bool shareRead, bool shareShare, bool shareWrite)
+        {
+            var grantRequest = new GrantAccessRequest
+            {
+                Target = entityReference,
+                PrincipalAccess = new PrincipalAccess
+                {
+                    AccessMask = (AccessRights)GetMask(shareAppend, shareAppendTo, shareAssign, shareDelete, shareRead,
+                        shareShare, shareWrite)
+                }
+            };
+            foreach (EntityReference principal in principals)
+            {
+                grantRequest.PrincipalAccess.Principal = principal;
+                var grantResponse = (GrantAccessResponse)service.Execute(grantRequest);
+            }
+        }
+
+        /// <summary>
+        /// Revoke shared access for any entity 
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="entityReference">Reference to the entity that will have access revoked</param>
+        /// <param name="principals">Entity Refs for Teams or Users that will be granted permissions </param>
+        public static void RevokeAccess(this IOrganizationService service, EntityReference entityReference, List<EntityReference> principals)
+        {
+            var revokeRequest = new RevokeAccessRequest { Target = entityReference };
+            foreach (EntityReference principalObject in principals)
+            {
+                revokeRequest.Revokee = principalObject;
+                RevokeAccessResponse revokeResponse = (RevokeAccessResponse)service.Execute(revokeRequest);
+            }
+        }
+
+        /// <summary>
+        /// Calculates a mask for the supplied access rights
+        /// </summary>
+        /// <param name="shareAppend">Share append</param>
+        /// <param name="shareAppendTo">Share append to</param>
+        /// <param name="shareAssign">Share assign</param>
+        /// <param name="shareDelete">Share delete</param>
+        /// <param name="shareRead">Share read</param>
+        /// <param name="shareShare">Share share</param>
+        /// <param name="shareWrite">Share write</param>
+        /// <returns>Unsigned integer mask</returns>
+        private static uint GetMask(bool shareAppend, bool shareAppendTo, bool shareAssign, bool shareDelete, bool shareRead,
+            bool shareShare, bool shareWrite)
+        {
+            uint mask = 0;
+            if (shareAppend)
+            {
+                mask |= (uint)AccessRights.AppendAccess;
+            }
+            if (shareAppendTo)
+            {
+                mask |= (uint)AccessRights.AppendToAccess;
+            }
+            if (shareAssign)
+            {
+                mask |= (uint)AccessRights.AssignAccess;
+            }
+            if (shareDelete)
+            {
+                mask |= (uint)AccessRights.DeleteAccess;
+            }
+            if (shareRead)
+            {
+                mask |= (uint)AccessRights.ReadAccess;
+            }
+            if (shareShare)
+            {
+                mask |= (uint)AccessRights.ShareAccess;
+            }
+            if (shareWrite)
+            {
+                mask |= (uint)AccessRights.WriteAccess;
+            }
+            return mask;
         }
 
         /// <summary>
