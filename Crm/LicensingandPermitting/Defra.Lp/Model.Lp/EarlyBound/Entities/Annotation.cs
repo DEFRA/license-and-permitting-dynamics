@@ -54,6 +54,7 @@ namespace Lp.Model.EarlyBound
 			public const string defra_notification_Annotations = "defra_notification_Annotations";
 			public const string defra_payment_Annotations = "defra_payment_Annotations";
 			public const string defra_permit_Annotations = "defra_permit_Annotations";
+			public const string Email_Annotation = "Email_Annotation";
 			public const string Incident_Annotation = "Incident_Annotation";
 		}
 		
@@ -700,6 +701,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_permit_Annotations");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_permit>("defra_permit_Annotations", null, value);
 				this.OnPropertyChanged("defra_permit_Annotations");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Email_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Email_Annotation")]
+		public Lp.Model.EarlyBound.Email Email_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Email_Annotation");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_Annotation", null, value);
+				this.OnPropertyChanged("Email_Annotation");
 			}
 		}
 		
