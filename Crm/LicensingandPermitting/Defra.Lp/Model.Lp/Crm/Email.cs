@@ -1,6 +1,6 @@
 ﻿namespace Lp.Model.Crm
 {
-    public class Email
+    public class Email_deprecated
     {
         /// <summary>
         /// Logical name for email entity

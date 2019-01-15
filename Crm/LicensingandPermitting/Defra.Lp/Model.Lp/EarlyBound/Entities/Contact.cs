@@ -4282,6 +4282,46 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Contact_Email_EmailSender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Email_EmailSender")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Contact_Email_EmailSender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Email_EmailSender", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Email_EmailSender");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Email_EmailSender", null, value);
+				this.OnPropertyChanged("Contact_Email_EmailSender");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Contact_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Contact_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Emails", null, value);
+				this.OnPropertyChanged("Contact_Emails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N contact_master_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]

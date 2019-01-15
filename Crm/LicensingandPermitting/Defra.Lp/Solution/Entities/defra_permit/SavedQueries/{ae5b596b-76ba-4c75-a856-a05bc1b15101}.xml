@@ -10,7 +10,10 @@
     <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_permitid">
         <cell name="defra_name" width="300" />
+        <cell name="defra_customerid" width="100" />
+        <cell name="defra_eawmlnumber" width="100" />
         <cell name="createdon" width="125" />
+        <cell name="defra_shortpermitnumber" width="100" />
       </row>
     </grid>
   </layoutxml>
@@ -25,9 +28,15 @@
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
         <filter type="or" isquickfindfields="1">
+          <condition attribute="defra_shortpermitnumber" operator="like" value="{0}" />
           <condition attribute="defra_permitnumber" operator="like" value="{0}" />
+          <condition attribute="defra_customerid" operator="like" value="{0}" />
           <condition attribute="defra_name" operator="like" value="{0}" />
+          <condition attribute="defra_eawmlnumber" operator="like" value="{0}" />
         </filter>
+        <attribute name="defra_customerid" />
+        <attribute name="defra_eawmlnumber" />
+        <attribute name="defra_shortpermitnumber" />
         <attribute name="defra_permitid" />
       </entity>
     </fetch>

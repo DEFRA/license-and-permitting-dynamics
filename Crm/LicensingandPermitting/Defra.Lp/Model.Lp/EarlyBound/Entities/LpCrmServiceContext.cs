@@ -138,6 +138,18 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationdocument"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationdocument> defra_applicationdocumentSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.defra_applicationdocument>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.defra_applicationline"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Lp.Model.EarlyBound.defra_applicationline> defra_applicationlineSet
@@ -578,6 +590,18 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<Lp.Model.EarlyBound.defra_town>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Email"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.Email> EmailSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.Email>();
 			}
 		}
 		
