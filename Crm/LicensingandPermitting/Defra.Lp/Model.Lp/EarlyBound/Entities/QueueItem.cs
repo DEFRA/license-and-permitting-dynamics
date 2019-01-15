@@ -69,6 +69,7 @@ namespace Lp.Model.EarlyBound
 			public const string defra_application_QueueItems = "defra_application_QueueItems";
 			public const string defra_areacomment_QueueItems = "defra_areacomment_QueueItems";
 			public const string defra_notification_QueueItems = "defra_notification_QueueItems";
+			public const string Email_QueueItem = "Email_QueueItem";
 			public const string Incident_QueueItem = "Incident_QueueItem";
 			public const string queue_entries = "queue_entries";
 		}
@@ -757,6 +758,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_notification_QueueItems");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_notification>("defra_notification_QueueItems", null, value);
 				this.OnPropertyChanged("defra_notification_QueueItems");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 Email_QueueItem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Email_QueueItem")]
+		public Lp.Model.EarlyBound.Email Email_QueueItem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_QueueItem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Email_QueueItem");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_QueueItem", null, value);
+				this.OnPropertyChanged("Email_QueueItem");
 			}
 		}
 		

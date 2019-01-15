@@ -869,6 +869,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Queue_Email_EmailSender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Queue_Email_EmailSender")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Queue_Email_EmailSender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Queue_Email_EmailSender", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Queue_Email_EmailSender");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Queue_Email_EmailSender", null, value);
+				this.OnPropertyChanged("Queue_Email_EmailSender");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N queue_entries
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("queue_entries")]

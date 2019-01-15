@@ -47,6 +47,7 @@ namespace Lp.Model.EarlyBound
 			public const string Id = "defra_permitid";
 			public const string defra_permitnumber = "defra_permitnumber";
 			public const string defra_primarycontactid = "defra_primarycontactid";
+			public const string defra_shortpermitnumber = "defra_shortpermitnumber";
 			public const string defra_updatesharepointmetadata = "defra_updatesharepointmetadata";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
@@ -372,6 +373,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_primarycontactid");
 				this.SetAttributeValue("defra_primarycontactid", value);
 				this.OnPropertyChanged("defra_primarycontactid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortpermitnumber")]
+		public string defra_shortpermitnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortpermitnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortpermitnumber");
+				this.SetAttributeValue("defra_shortpermitnumber", value);
+				this.OnPropertyChanged("defra_shortpermitnumber");
 			}
 		}
 		
@@ -765,6 +786,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_permit_defra_notifications");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_notification>("defra_permit_defra_notifications", null, value);
 				this.OnPropertyChanged("defra_permit_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_permit_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_permit_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> defra_permit_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_permit_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_permit_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_permit_Emails", null, value);
+				this.OnPropertyChanged("defra_permit_Emails");
 			}
 		}
 		

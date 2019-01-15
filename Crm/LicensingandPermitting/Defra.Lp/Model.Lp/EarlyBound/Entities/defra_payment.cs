@@ -1182,6 +1182,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_payment_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_payment_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> defra_payment_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_payment_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_payment_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_payment_Emails", null, value);
+				this.OnPropertyChanged("defra_payment_Emails");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 defra_defra_application_defra_payment
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applicationid")]

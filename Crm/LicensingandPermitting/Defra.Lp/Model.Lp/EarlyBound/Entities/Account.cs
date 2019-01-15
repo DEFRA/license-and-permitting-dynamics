@@ -3362,6 +3362,66 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Account_Email_EmailSender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Email_EmailSender")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Account_Email_EmailSender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Email_EmailSender", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Account_Email_EmailSender");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Email_EmailSender", null, value);
+				this.OnPropertyChanged("Account_Email_EmailSender");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Account_Email_SendersAccount
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Email_SendersAccount")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Account_Email_SendersAccount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Email_SendersAccount", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Account_Email_SendersAccount");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Email_SendersAccount", null, value);
+				this.OnPropertyChanged("Account_Email_SendersAccount");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Account_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Account_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Account_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Account_Emails", null, value);
+				this.OnPropertyChanged("Account_Emails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
