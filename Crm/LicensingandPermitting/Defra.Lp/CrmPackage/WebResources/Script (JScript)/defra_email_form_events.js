@@ -1,8 +1,11 @@
 //Sets the email From field to the user primary team queue
-function SetPrimaryTeamQueue(){
-	//If it is a new email form
-	if(Xrm.Page.ui.getFormType() == 1) {
-		var fromLkp = Xrm.Page.getAttribute("from").getValue();
+function SetPrimaryTeamQueue() {
+
+    //If it is a new email or reply form
+    var formType = Xrm.Page.ui.getFormType();
+    if (formType == 1 || formType == 2) {
+
+        var fromLkp = Xrm.Page.getAttribute("from").getValue();
 		
 		if(fromLkp[0].entityType != "queue") {
 			//Clear the from field
