@@ -150,8 +150,14 @@ namespace Defra.Lp.Common.SharePoint
                     {
                         TracingService.Trace("Returned from LogicApp OK");
 
-                        // Create application document record
-                        CreateApplicationDocument(attachmentData, request.FileDescription, request.FileName);
+                        // Get the response object
+                        DocumentRelayResponse response = JsonConvert.DeserializeObject<DocumentRelayResponse>(resultBody);
+
+                        TracingService.Trace($"Returned from LogicApp OK, doc url is: {response.link}");
+
+                        // Create document record
+                        CreateApplicationDocument(attachmentData, request.FileDescription, request.FileName, response.link);
+
 
                         // Delete Attachment
                         Service.Delete(attachmentData.LogicalName, attachmentData.Id);
@@ -168,7 +174,7 @@ namespace Defra.Lp.Common.SharePoint
             }
         }
 
-        private void CreateApplicationDocument(Entity attachmentData, string fileDescription, string fileName)
+        private void CreateApplicationDocument(Entity attachmentData, string fileDescription, string fileName, string url)
         {
             // Create document source record
             Guid? createdById = attachmentData.GetAttributeId(defra_application.Fields.CreatedBy);
@@ -194,7 +200,7 @@ namespace Defra.Lp.Common.SharePoint
 
             DalApplicationDocument.CreateApplicationDocument(
                 fileDescription,
-                null,
+                url,
                 fileName,
                 documentSource,
                 applicationId ?? caseApplicationId,
@@ -270,10 +276,14 @@ namespace Defra.Lp.Common.SharePoint
                         TracingService.Trace("Returned from LogicApp, no resultBody");
                         return;
                     }
-                    TracingService.Trace("Returned from LogicApp OK");
+
+                    // Get the response object
+                    DocumentRelayResponse response = JsonConvert.DeserializeObject<DocumentRelayResponse>(resultBody);
+
+                    TracingService.Trace($"Returned from LogicApp OK, doc url is: {response.link}");
                             
                     // Create document record
-                    CreateApplicationDocument(annotationData, request.FileDescription, request.FileName);
+                    CreateApplicationDocument(annotationData, request.FileDescription, request.FileName, response.link);
 
                     // Blank Note Document
                     annotationData[Annotation.Fields.NoteText] = "File has been uploaded to SharePoint.";
