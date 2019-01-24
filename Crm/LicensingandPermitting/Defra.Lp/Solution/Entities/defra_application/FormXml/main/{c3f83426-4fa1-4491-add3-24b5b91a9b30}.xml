@@ -23,7 +23,23 @@
                       <labels>
                         <label description="Application Number" languagecode="1033" />
                       </labels>
-                      <control id="defra_applicationnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_applicationnumber" disabled="false" />
+                      <control id="defra_applicationnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_applicationnumber" disabled="true" uniqueid="{14d10788-80e2-7c96-db37-9de2957a829a}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{cec362cc-bb1c-0a00-735e-689bc67d2618}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Short Application Number" languagecode="1033" />
+                      </labels>
+                      <control id="defra_shortapplicationnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_shortapplicationnumber" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{07404131-9375-cab9-ae64-c46bc8340c70}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Short Permit Number" languagecode="1033" />
+                      </labels>
+                      <control id="defra_shortpermitnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_shortpermitnumber" disabled="false" />
                     </cell>
                   </row>
                   <row>
@@ -76,11 +92,19 @@
                     </cell>
                   </row>
                   <row>
+                    <cell id="{192318c5-168d-34d7-104a-67aba7445667}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="EAWML Number" languagecode="1033" />
+                      </labels>
+                      <control id="defra_eawmlnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_eawmlnumber" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
                     <cell id="{11d4a619-36c6-1b7a-abb6-3ba7a23e009a}" showlabel="true" locklevel="0">
                       <labels>
                         <label description="Permit Number" languagecode="1033" />
                       </labels>
-                      <control id="defra_permitnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_permitnumber" disabled="false" uniqueid="{2c9455c7-1235-918d-a7e3-550b567b87dc}" />
+                      <control id="defra_permitnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="defra_permitnumber" disabled="true" uniqueid="{2c9455c7-1235-918d-a7e3-550b567b87dc}" />
                     </cell>
                   </row>
                   <row>
@@ -209,6 +233,14 @@
                         <label description="Application Document Location" languagecode="1033" />
                       </labels>
                       <control id="defra_applicationdocumentlocation" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_applicationdocumentlocation" disabled="false" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{5a9163c8-504c-e0ec-8446-66d223e7d714}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Final RAGU score" languagecode="1033" />
+                      </labels>
+                      <control id="defra_finalraguscore" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="defra_finalraguscore" disabled="false" />
                     </cell>
                   </row>
                 </rows>
@@ -589,6 +621,55 @@
                           <IsUserChart>false</IsUserChart>
                           <EnableChartPicker>true</EnableChartPicker>
                           <RecordsPerPage>4</RecordsPerPage>
+                        </parameters>
+                      </control>
+                    </cell>
+                  </row>
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                  <row />
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
+      <tab name="tab_2" id="{ce028479-857b-3deb-6a8d-00267ee333b7}" IsUserDefined="0" locklevel="0" showlabel="true">
+        <labels>
+          <label description="Tab" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="100%">
+            <sections>
+              <section name="tab_2_section_1" showlabel="false" showbar="false" locklevel="0" id="{bb64bd89-d0c6-b4d0-300b-43584554b926}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115">
+                <labels>
+                  <label description="Section" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{155daa6c-be3b-93ed-86eb-88640b934ccd}" showlabel="false" colspan="1" auto="false" rowspan="6">
+                      <labels>
+                        <label description="Application Answers (Application)" languagecode="1033" />
+                      </labels>
+                      <control id="Answers" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                        <parameters>
+                          <ViewId>{5D0AFCB7-E1CE-46E1-9D0B-714769456AC3}</ViewId>
+                          <IsUserView>false</IsUserView>
+                          <RelationshipName>defra_defra_application_defra_applicationanswer_Application</RelationshipName>
+                          <TargetEntityType>defra_applicationanswer</TargetEntityType>
+                          <AutoExpand>Fixed</AutoExpand>
+                          <EnableQuickFind>false</EnableQuickFind>
+                          <EnableViewPicker>false</EnableViewPicker>
+                          <ViewIds>{5D0AFCB7-E1CE-46E1-9D0B-714769456AC3}</ViewIds>
+                          <EnableJumpBar>false</EnableJumpBar>
+                          <ChartGridMode>All</ChartGridMode>
+                          <VisualizationId />
+                          <IsUserChart>false</IsUserChart>
+                          <EnableChartPicker>true</EnableChartPicker>
+                          <RecordsPerPage>4</RecordsPerPage>
+                          <HeaderColorCode>#FEF7F5</HeaderColorCode>
                         </parameters>
                       </control>
                     </cell>

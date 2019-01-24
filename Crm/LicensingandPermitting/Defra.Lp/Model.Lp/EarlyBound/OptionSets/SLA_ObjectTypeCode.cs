@@ -70,7 +70,13 @@ namespace Lp.Model.EarlyBound
 		Application = 10013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationAnswer = 10081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationContact = 10014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDocument = 10092,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationFile = 4707,
@@ -80,6 +86,15 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationPrice = 10016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestion = 10082,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionGroup = 10083,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionOption = 10084,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationRibbons = 1120,
@@ -556,6 +571,9 @@ namespace Lp.Model.EarlyBound
 		Item = 10059,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10087,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemApplicationTaskDefinition = 10079,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -587,6 +605,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Language = 9957,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LanguageProvisioningState = 9875,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Lead = 4,
@@ -1153,10 +1174,13 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10076,
+		SolutionComponentDataSource = 10091,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10075,
+		SolutionComponentSummary = 10090,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryData = 9890,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,

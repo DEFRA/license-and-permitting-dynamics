@@ -18,12 +18,27 @@ function PaymentReceived() {
 function IntelligenceCheck() {
     if (Xrm.Page.ui.getFormType() != 1) {
         var raguScore = Xrm.Page.getAttribute('defra_raguscore');
+        var finalRaguScore = Xrm.Page.getAttribute('defra_finalraguscore');
+        var notificationMessage = null;
 
 
-        if (raguScore != null && (raguScore.getValue() === raguRed || raguScore.getValue() === raguAmber)) 
+        if (raguScore != null && (raguScore.getValue() === raguRed || raguScore.getValue() === raguAmber)) {
+            notificationMessage = 'Initial RAGU Score is ' + raguScore.getText();
+        }
+
+        if (finalRaguScore != null && (finalRaguScore.getValue() === raguRed || finalRaguScore.getValue() === raguAmber)) {
+            if (notificationMessage) {
+                notificationMessage = notificationMessage + ', ';
+            } else {
+                notificationMessage = '';
+            }
+            notificationMessage = notificationMessage + 'Final RAGU Score is ' + finalRaguScore.getText();
+        }
+
+        if (notificationMessage)
         {
-            Xrm.Page.ui.setFormNotification('RAGU Score is ' + raguScore.getText(), 'WARNING', intelligenceCheckNotificationID);
-        }  
+            Xrm.Page.ui.setFormNotification(notificationMessage, 'WARNING', intelligenceCheckNotificationID);
+        }
         else
         {
             Xrm.Page.ui.clearFormNotification(intelligenceCheckNotificationID);

@@ -8,7 +8,7 @@
     <ProjectTypeGuids>{2AA76AF3-4D9E-4AF0-B243-EB9BCDFB143B};{32f31d43-81cc-4c15-9de6-3fc5453562b6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lp.Workflows</RootNamespace>
+    <RootNamespace>Defra.Lp.Workflows</RootNamespace>
     <AssemblyName>Defra.Lp.Workflows</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <!--<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>-->
@@ -87,7 +87,7 @@
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\*.cs">
       <Link>Linked\DataAccess\Core\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-	    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
       <Link>Linked\DataAccess\Core\Base\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
@@ -96,23 +96,25 @@
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Model\Entities\*.cs">
       <Link>Linked\Model\Core\Entities\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Common\SharePoint\AzureInterfaceConstants.cs">
-      <Link>Common\SharePoint\AzureInterfaceConstants.cs</Link>
+    
+		
+	<Compile Include="..\Common\PermitNumbering\*.cs">
+      <Link>Linked\Common\PermitNumbering\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Common\SharePoint\DocumentRelayRequest.cs">
-      <Link>Common\SharePoint\DocumentRelayRequest.cs</Link>
+	
+	<Compile Include="..\Common\SharePoint\*.cs">
+      <Link>Linked\Common\SharePoint\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Common\SharePoint\MetaDataRequest.cs">
-      <Link>Common\SharePoint\MetaDataRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SharePoint\SharePointSecureConfigurationKeys.cs">
-      <Link>Common\SharePoint\SharePointSecureConfigurationKeys.cs</Link>
-    </Compile>
+
+
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.CardPayments.Model\*.cs">
       <Link>Linked\Model\Core\CardPayments\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Model.lp\Crm\*.cs">
       <Link>Linked\Model\Lp\Crm\%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\Internal\*.cs">
+      <Link>Linked\Model\Lp\Internal\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Model.lp\EarlyBound\*.cs">
       <Link>Linked\Model\Lp\EarlyBound\%(FileName)</Link>
@@ -125,9 +127,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Common\SharePoint\AzureInterface.cs">
-      <Link>Common\SharePoint\AzureInterface.cs</Link>
-    </Compile>
+
     <Compile Include="..\Newtonsoft.Json\Bson\BsonBinaryType.cs">
       <Link>Newtonsoft.Json\Bson\BsonBinaryType.cs</Link>
     </Compile>
@@ -754,8 +754,12 @@
     <Compile Include="Model\SlaKpiInstance.cs" />
     <Compile Include="MoveNextStage.cs" />
     <Compile Include="RecalculateApplicationBalanceFields.cs" />
+    <Compile Include="RefreshApplicationAnswers.cs" />
     <Compile Include="RemoveFromQueues.cs" />
     <Compile Include="RemoveSharePointIllegalChars.cs" />
+    <Compile Include="SetApplicationAnswer.cs" />
+    <Compile Include="ShareRecordWithTeam.cs" />
+    <Compile Include="UnshareRecordWithTeam.cs" />
     <Compile Include="UploadEmailAndAttachmentsToSharePoint.cs" />
     <Compile Include="RecalculateRollup.cs" />
     <Compile Include="RemoveSpaces.cs" />

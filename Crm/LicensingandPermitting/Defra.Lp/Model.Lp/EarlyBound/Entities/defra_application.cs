@@ -81,6 +81,7 @@ namespace Lp.Model.EarlyBound
 			public const string defra_extensionrequested = "defra_extensionrequested";
 			public const string defra_extensionrequestedon = "defra_extensionrequestedon";
 			public const string defra_facility_description = "defra_facility_description";
+			public const string defra_finalraguscore = "defra_finalraguscore";
 			public const string defra_inprogressflag = "defra_inprogressflag";
 			public const string defra_internalconsultationcompleted = "defra_internalconsultationcompleted";
 			public const string defra_internalconsultationcompletedon = "defra_internalconsultationcompletedon";
@@ -125,6 +126,8 @@ namespace Lp.Model.EarlyBound
 			public const string defra_schedule5count_State = "defra_schedule5count_state";
 			public const string defra_schedule5pending = "defra_schedule5pending";
 			public const string defra_schedule5required = "defra_schedule5required";
+			public const string defra_shortapplicationnumber = "defra_shortapplicationnumber";
+			public const string defra_shortpermitnumber = "defra_shortpermitnumber";
 			public const string defra_site_address = "defra_site_address";
 			public const string defra_site_description = "defra_site_description";
 			public const string defra_site_grid_reference = "defra_site_grid_reference";
@@ -1137,6 +1140,26 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_finalraguscore")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_finalraguscore
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_finalraguscore");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_finalraguscore");
+				this.SetAttributeValue("defra_finalraguscore", value);
+				this.OnPropertyChanged("defra_finalraguscore");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_inprogressflag")]
 		public System.Nullable<bool> defra_inprogressflag
 		{
@@ -1954,6 +1977,46 @@ namespace Lp.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortapplicationnumber")]
+		public string defra_shortapplicationnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortapplicationnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortapplicationnumber");
+				this.SetAttributeValue("defra_shortapplicationnumber", value);
+				this.OnPropertyChanged("defra_shortapplicationnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortpermitnumber")]
+		public string defra_shortpermitnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortpermitnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortpermitnumber");
+				this.SetAttributeValue("defra_shortpermitnumber", value);
+				this.OnPropertyChanged("defra_shortpermitnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_site_address")]
 		public Microsoft.Xrm.Sdk.EntityReference defra_site_address
 		{
@@ -2644,6 +2707,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_defra_applicationdocument_applicationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_applicationdocument_applicationid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationdocument> defra_application_defra_applicationdocument_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_application_defra_applicationdocument_applicationid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_defra_applicationdocument_applicationid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_application_defra_applicationdocument_applicationid", null, value);
+				this.OnPropertyChanged("defra_application_defra_applicationdocument_applicationid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_application_defra_applicationline
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_applicationline")]
@@ -2804,6 +2887,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_application_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> defra_application_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_application_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("defra_application_Emails", null, value);
+				this.OnPropertyChanged("defra_application_Emails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_application_incident_application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_incident_application")]
@@ -2840,6 +2943,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_QueueItems");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("defra_application_QueueItems", null, value);
 				this.OnPropertyChanged("defra_application_QueueItems");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_defra_application_defra_applicationanswer_Application
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_application_defra_applicationanswer_Application")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationanswer> defra_defra_application_defra_applicationanswer_Application
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_application_defra_applicationanswer_Application", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_defra_application_defra_applicationanswer_Application");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationanswer>("defra_defra_application_defra_applicationanswer_Application", null, value);
+				this.OnPropertyChanged("defra_defra_application_defra_applicationanswer_Application");
 			}
 		}
 		
@@ -3256,6 +3379,21 @@ namespace Lp.Model.EarlyBound
 			set
 			{
 				defra_convictionsfound = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_finalraguscore")]
+		public virtual defra_RAGUScore? defra_finalraguscoreEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((defra_RAGUScore?)(EntityOptionSetEnum.GetEnum(this, "defra_finalraguscore")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				defra_finalraguscore = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		
