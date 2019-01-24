@@ -1,16 +1,22 @@
 //Sets the email From field to the user primary team queue
-function SetPrimaryTeamQueue(){
-	//If it is a new email form
-	if(Xrm.Page.ui.getFormType() == 1) {
-		var fromLkp = Xrm.Page.getAttribute("from").getValue();
+function SetPrimaryTeamQueue(executionContext) {
+
+    // Check if the form is for a "New" or "Reply" (i.e. Update) email
+    var formContext = executionContext.getFormContext();
+    var formType = formContext.ui.getFormType();
+
+    if (formType == 1 || formType == 2) {
+        
+        var fromLkp = formContext.getAttribute("from").getValue();
 		
 		if(fromLkp[0].entityType != "queue") {
 			//Clear the from field
-			Xrm.Page.getAttribute("from").setValue(null);
+		    formContext.getAttribute("from").setValue(null);
 			
-			var systemUserId = Xrm.Page.context.getUserId().replace('{', '').replace('}', '');
-			
-			var uri = Xrm.Page.context.getClientUrl() + "/api/data/v8.2/systemusers(" + systemUserId + ")?$select=defra_DefaultTeamQueue&$expand=defra_DefaultTeamQueue($select=name)";
+		    var systemUserId = formContext.context.getUserId().replace('{', '').replace('}', '');
+
+		    var globalContext = Xrm.Utility.getGlobalContext();
+		    var uri = globalContext.getClientUrl() + "/api/data/v8.2/systemusers(" + systemUserId + ")?$select=defra_DefaultTeamQueue&$expand=defra_DefaultTeamQueue($select=name)";
 			
 			var queueId = null;
 			var queueName = null;
@@ -39,33 +45,36 @@ function SetPrimaryTeamQueue(){
 				lookupReference[0].id = queueId;
 				lookupReference[0].entityType = "queue";
 				lookupReference[0].name = queueName;
-				Xrm.Page.getAttribute("from").setValue(lookupReference);
+			    formContext.getAttribute("from").setValue(lookupReference);
 			}
 		}
 	}
 	
-	Xrm.Page.getControl("from").setDisabled(true);
+    formContext.getControl("from").setDisabled(true);
 }
 
 //Sets the email From field to the user primary team queue
-function SetToField() {
+function SetToField(executionContext) {
+
+    var formContext = executionContext.getFormContext();
 
     // 1. Validation
 
     //If it is a new email form
-    if (Xrm.Page.ui.getFormType() !== 1) {
+    var formType = formContext.ui.getFormType();
+    if (formType !== 1) {
         // Not a new email form
         return;
     }
 
     // TO field already set?
-    var toLookup = Xrm.Page.getAttribute("to").getValue();
+    var toLookup = formContext.getAttribute("to").getValue();
     if (toLookup && toLookup.length > 0) {
         return;
     }
 
     // Regarding field not set?
-    var regardingLookup = Xrm.Page.getAttribute("regardingobjectid").getValue();
+    var regardingLookup = formContext.getAttribute("regardingobjectid").getValue();
     if (!regardingLookup || regardingLookup.length < 1) {
         return;
     }
@@ -76,7 +85,8 @@ function SetToField() {
     }
 
     // 2. Get Application Primary Contact
-    var uri = Xrm.Page.context.getClientUrl() +
+    var globalContext = Xrm.Utility.getGlobalContext();
+    var uri = globalContext.getClientUrl() +
         "/api/data/v8.2/defra_applications?$select=_defra_primarycontactid_value&$filter=defra_applicationid eq " +
         regardingLookup[0].id.replace('{', '').replace('}', '');
 
@@ -107,7 +117,7 @@ function SetToField() {
                     lookupReference[0].id = _defra_primarycontactid_value;
                     lookupReference[0].entityType = _defra_primarycontactid_value_lookuplogicalname;
                     lookupReference[0].name = _defra_primarycontactid_value_formatted;
-                    Xrm.Page.getAttribute("to").setValue(lookupReference);
+                    formContext.getAttribute("to").setValue(lookupReference);
                 }
             }
         },
