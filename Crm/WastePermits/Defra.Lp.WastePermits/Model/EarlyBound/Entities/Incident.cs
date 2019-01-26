@@ -2240,6 +2240,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_incident_defra_applicationdocument_caseid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_incident_defra_applicationdocument_caseid")]
+		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_applicationdocument> defra_incident_defra_applicationdocument_caseid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_incident_defra_applicationdocument_caseid");
+				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null, value);
+				this.OnPropertyChanged("defra_incident_defra_applicationdocument_caseid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N incident_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_defra_areacomments")]

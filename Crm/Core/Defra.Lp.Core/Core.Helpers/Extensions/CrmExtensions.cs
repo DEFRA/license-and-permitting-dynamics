@@ -22,6 +22,31 @@
         }
 
         /// <summary>
+        /// Returns an Entity Reference attribute's Guid if it exists, otherwise Guid.Empty
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Guid</returns>
+        public static Guid GetAttributeIdOrDefault(this Entity entity, string attribute)
+        {
+            if (!entity.Contains(attribute))
+            {
+                return Guid.Empty;
+            }
+
+            if (entity[attribute] is EntityReference)
+            {
+                return ((EntityReference)entity[attribute]).Id;
+            }
+
+            if (entity[attribute] is Guid)
+            {
+                return (Guid)entity[attribute];
+            }
+            return Guid.Empty;
+        }
+
+        /// <summary>
         /// Returns an attribute as aGuid if it exists
         /// </summary>
         /// <param name="entity">The Entity that contains the attribute</param>
@@ -106,7 +131,7 @@
             foreach (EntityReference principal in principals)
             {
                 grantRequest.PrincipalAccess.Principal = principal;
-                var grantResponse = (GrantAccessResponse)service.Execute(grantRequest);
+                service.Execute(grantRequest);
             }
         }
 
@@ -122,7 +147,7 @@
             foreach (EntityReference principalObject in principals)
             {
                 revokeRequest.Revokee = principalObject;
-                RevokeAccessResponse revokeResponse = (RevokeAccessResponse)service.Execute(revokeRequest);
+                service.Execute(revokeRequest);
             }
         }
 

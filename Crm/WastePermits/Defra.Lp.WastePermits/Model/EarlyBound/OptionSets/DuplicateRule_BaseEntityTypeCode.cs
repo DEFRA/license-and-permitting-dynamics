@@ -85,6 +85,9 @@ namespace WastePermits.Model.EarlyBound
 		ApplicationContact = 10014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDocument = 10107,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationFile = 4707,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -358,6 +361,9 @@ namespace WastePermits.Model.EarlyBound
 		CustomerRelationship = 4502,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DatabaseVersion = 10114,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DataImport = 4410,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -440,6 +446,9 @@ namespace WastePermits.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EntitlementContact = 7272,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EntitlementEntityAllocationTypeMapping = 9704,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EntitlementProduct = 6363,
@@ -586,6 +595,9 @@ namespace WastePermits.Model.EarlyBound
 		Item = 10075,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10101,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemApplicationTaskDefinition = 10096,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -617,6 +629,9 @@ namespace WastePermits.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Language = 9957,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LanguageProvisioningState = 9875,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Lead = 4,
@@ -1189,10 +1204,19 @@ namespace WastePermits.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10092,
+		SolutionComponentDataSource = 10111,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10091,
+		SolutionComponentSummary = 10110,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistory = 10112,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryData = 9890,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryDataSource = 10113,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StandardRule = 10044,
@@ -1355,6 +1379,15 @@ namespace WastePermits.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		UntrackedEmail = 4220,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeRun = 10115,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeStep = 10116,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeVersion = 10117,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		User = 8,

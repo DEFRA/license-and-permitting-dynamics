@@ -12,16 +12,16 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum Team_TeamType
+	public enum defra_ApplicationDocumentSource
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADGroup = 2,
+		Application = 910400001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Access = 1,
+		Email = 910400000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Owner = 0,
+		RFIorS5 = 910400002,
 	}
 }

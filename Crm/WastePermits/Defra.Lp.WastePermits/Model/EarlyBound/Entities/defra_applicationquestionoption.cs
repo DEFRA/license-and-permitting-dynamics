@@ -39,7 +39,9 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_applicationquestion = "defra_applicationquestion";
 			public const string defra_applicationquestionoptionId = "defra_applicationquestionoptionid";
 			public const string Id = "defra_applicationquestionoptionid";
+			public const string defra_officialdescription = "defra_officialdescription";
 			public const string defra_option = "defra_option";
+			public const string defra_shortname = "defra_shortname";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedOn = "modifiedon";
@@ -207,6 +209,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_officialdescription")]
+		public string defra_officialdescription
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_officialdescription");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_officialdescription");
+				this.SetAttributeValue("defra_officialdescription", value);
+				this.OnPropertyChanged("defra_officialdescription");
+			}
+		}
+		
+		/// <summary>
 		/// The name of the custom entity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_option")]
@@ -223,6 +245,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_option");
 				this.SetAttributeValue("defra_option", value);
 				this.OnPropertyChanged("defra_option");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortname")]
+		public string defra_shortname
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortname");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortname");
+				this.SetAttributeValue("defra_shortname", value);
+				this.OnPropertyChanged("defra_shortname");
 			}
 		}
 		

@@ -38,6 +38,7 @@ namespace WastePermits.Model.EarlyBound
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string defra_applicationtaskdefinitionId = "defra_applicationtaskdefinitionid";
 			public const string Id = "defra_applicationtaskdefinitionid";
+			public const string defra_guidance = "defra_guidance";
 			public const string defra_name = "defra_name";
 			public const string defra_shortname = "defra_shortname";
 			public const string defra_tasktypeid = "defra_tasktypeid";
@@ -183,6 +184,26 @@ namespace WastePermits.Model.EarlyBound
 			set
 			{
 				this.defra_applicationtaskdefinitionId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_guidance")]
+		public string defra_guidance
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_guidance");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_guidance");
+				this.SetAttributeValue("defra_guidance", value);
+				this.OnPropertyChanged("defra_guidance");
 			}
 		}
 		

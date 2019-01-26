@@ -55,6 +55,9 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_locationrequired_completed = "defra_locationrequired_completed";
 			public const string defra_mansystemrequired = "defra_mansystemrequired";
 			public const string defra_mansystemrequired_completed = "defra_mansystemrequired_completed";
+			public const string defra_mcp_businesstype = "defra_mcp_businesstype";
+			public const string defra_mcp_sr_downloadtemplate = "defra_mcp_sr_downloadtemplate";
+			public const string defra_mcp_sr_uploadtemplate = "defra_mcp_sr_uploadtemplate";
 			public const string defra_miningdatarequired = "defra_miningdatarequired";
 			public const string defra_miningdatarequired_completed = "defra_miningdatarequired_completed";
 			public const string defra_miningwastemanplanreq = "defra_miningwastemanplanreq";
@@ -565,6 +568,66 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_mansystemrequired_completed");
 				this.SetAttributeValue("defra_mansystemrequired_completed", value);
 				this.OnPropertyChanged("defra_mansystemrequired_completed");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_mcp_businesstype")]
+		public System.Nullable<bool> defra_mcp_businesstype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("defra_mcp_businesstype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_mcp_businesstype");
+				this.SetAttributeValue("defra_mcp_businesstype", value);
+				this.OnPropertyChanged("defra_mcp_businesstype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_mcp_sr_downloadtemplate")]
+		public System.Nullable<bool> defra_mcp_sr_downloadtemplate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("defra_mcp_sr_downloadtemplate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_mcp_sr_downloadtemplate");
+				this.SetAttributeValue("defra_mcp_sr_downloadtemplate", value);
+				this.OnPropertyChanged("defra_mcp_sr_downloadtemplate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_mcp_sr_uploadtemplate")]
+		public System.Nullable<bool> defra_mcp_sr_uploadtemplate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("defra_mcp_sr_uploadtemplate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_mcp_sr_uploadtemplate");
+				this.SetAttributeValue("defra_mcp_sr_uploadtemplate", value);
+				this.OnPropertyChanged("defra_mcp_sr_uploadtemplate");
 			}
 		}
 		

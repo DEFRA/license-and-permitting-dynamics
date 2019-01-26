@@ -39,7 +39,7 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_area_team = "defra_area_team";
 			public const string defra_currentnumber = "defra_currentnumber";
 			public const string defra_customerid = "defra_customerid";
-			public const string defra_eawml_number = "defra_eawml_number";
+			public const string defra_eawmlnumber = "defra_eawmlnumber";
 			public const string defra_locked = "defra_locked";
 			public const string defra_name = "defra_name";
 			public const string defra_permitdocumentlocation = "defra_permitdocumentlocation";
@@ -47,6 +47,7 @@ namespace WastePermits.Model.EarlyBound
 			public const string Id = "defra_permitid";
 			public const string defra_permitnumber = "defra_permitnumber";
 			public const string defra_primarycontactid = "defra_primarycontactid";
+			public const string defra_shortpermitnumber = "defra_shortpermitnumber";
 			public const string defra_updatesharepointmetadata = "defra_updatesharepointmetadata";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
@@ -213,22 +214,22 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 
+		/// Will be used by downstream systems
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_eawml_number")]
-		public string defra_eawml_number
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_eawmlnumber")]
+		public string defra_eawmlnumber
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("defra_eawml_number");
+				return this.GetAttributeValue<string>("defra_eawmlnumber");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_eawml_number");
-				this.SetAttributeValue("defra_eawml_number", value);
-				this.OnPropertyChanged("defra_eawml_number");
+				this.OnPropertyChanging("defra_eawmlnumber");
+				this.SetAttributeValue("defra_eawmlnumber", value);
+				this.OnPropertyChanged("defra_eawmlnumber");
 			}
 		}
 		
@@ -372,6 +373,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_primarycontactid");
 				this.SetAttributeValue("defra_primarycontactid", value);
 				this.OnPropertyChanged("defra_primarycontactid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortpermitnumber")]
+		public string defra_shortpermitnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortpermitnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortpermitnumber");
+				this.SetAttributeValue("defra_shortpermitnumber", value);
+				this.OnPropertyChanged("defra_shortpermitnumber");
 			}
 		}
 		

@@ -12,16 +12,16 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum Team_TeamType
+	public enum SolutionHistoryData_Operation
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADGroup = 2,
+		Export = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Access = 1,
+		Import = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Owner = 0,
+		Uninstall = 1,
 	}
 }

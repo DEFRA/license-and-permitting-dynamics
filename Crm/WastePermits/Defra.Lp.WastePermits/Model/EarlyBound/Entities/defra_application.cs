@@ -83,11 +83,13 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_drainagetype = "defra_drainagetype";
 			public const string defra_dulymadechecklistid = "defra_dulymadechecklistid";
 			public const string defra_dulymadecompletedate = "defra_dulymadecompletedate";
+			public const string defra_eawmlnumber = "defra_eawmlnumber";
 			public const string defra_extensionrequested = "defra_extensionrequested";
 			public const string defra_extensionrequestedon = "defra_extensionrequestedon";
 			public const string defra_external_system = "defra_external_system";
 			public const string defra_external_system_reference = "defra_external_system_reference";
 			public const string defra_facility_description = "defra_facility_description";
+			public const string defra_finalraguscore = "defra_finalraguscore";
 			public const string defra_fireplan = "defra_fireplan";
 			public const string defra_industryschemeid = "defra_industryschemeid";
 			public const string defra_inprogressflag = "defra_inprogressflag";
@@ -148,6 +150,8 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_screeningcompletedby = "defra_screeningcompletedby";
 			public const string defra_screeningcompletedon = "defra_screeningcompletedon";
 			public const string defra_screeningstatus = "defra_screeningstatus";
+			public const string defra_shortapplicationnumber = "defra_shortapplicationnumber";
+			public const string defra_shortpermitnumber = "defra_shortpermitnumber";
 			public const string defra_site_address = "defra_site_address";
 			public const string defra_site_description = "defra_site_description";
 			public const string defra_site_grid_reference = "defra_site_grid_reference";
@@ -1203,6 +1207,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Will be used by downstream systems
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_eawmlnumber")]
+		public string defra_eawmlnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_eawmlnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_eawmlnumber");
+				this.SetAttributeValue("defra_eawmlnumber", value);
+				this.OnPropertyChanged("defra_eawmlnumber");
+			}
+		}
+		
+		/// <summary>
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_extensionrequested")]
@@ -1299,6 +1323,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_facility_description");
 				this.SetAttributeValue("defra_facility_description", value);
 				this.OnPropertyChanged("defra_facility_description");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_finalraguscore")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_finalraguscore
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_finalraguscore");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_finalraguscore");
+				this.SetAttributeValue("defra_finalraguscore", value);
+				this.OnPropertyChanged("defra_finalraguscore");
 			}
 		}
 		
@@ -2421,6 +2465,46 @@ namespace WastePermits.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortapplicationnumber")]
+		public string defra_shortapplicationnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortapplicationnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortapplicationnumber");
+				this.SetAttributeValue("defra_shortapplicationnumber", value);
+				this.OnPropertyChanged("defra_shortapplicationnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortpermitnumber")]
+		public string defra_shortpermitnumber
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortpermitnumber");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortpermitnumber");
+				this.SetAttributeValue("defra_shortpermitnumber", value);
+				this.OnPropertyChanged("defra_shortpermitnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_site_address")]
 		public Microsoft.Xrm.Sdk.EntityReference defra_site_address
 		{
@@ -3160,6 +3244,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_applicationcontact_application");
 				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationcontact>("defra_application_defra_applicationcontact_application", null, value);
 				this.OnPropertyChanged("defra_application_defra_applicationcontact_application");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_application_defra_applicationdocument_applicationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_application_defra_applicationdocument_applicationid")]
+		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_applicationdocument> defra_application_defra_applicationdocument_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationdocument>("defra_application_defra_applicationdocument_applicationid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_application_defra_applicationdocument_applicationid");
+				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_applicationdocument>("defra_application_defra_applicationdocument_applicationid", null, value);
+				this.OnPropertyChanged("defra_application_defra_applicationdocument_applicationid");
 			}
 		}
 		
@@ -3904,6 +4008,21 @@ namespace WastePermits.Model.EarlyBound
 			set
 			{
 				defra_external_system = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_finalraguscore")]
+		public virtual defra_RAGUScore? defra_finalraguscoreEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((defra_RAGUScore?)(EntityOptionSetEnum.GetEnum(this, "defra_finalraguscore")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				defra_finalraguscore = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		

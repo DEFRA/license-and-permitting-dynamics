@@ -12,16 +12,16 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum Team_TeamType
+	public enum msdyn_UpgradeStatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADGroup = 2,
+		Failure = 100000002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Access = 1,
+		Started = 100000000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Owner = 0,
+		Success = 100000001,
 	}
 }

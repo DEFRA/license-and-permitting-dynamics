@@ -12,16 +12,22 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum Team_TeamType
+	public enum msdyn_solutionhistory_msdyn_suboperation
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADGroup = 2,
+		Delete = 4,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Access = 1,
+		New = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Owner = 0,
+		None = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Ugrade = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Update = 3,
 	}
 }

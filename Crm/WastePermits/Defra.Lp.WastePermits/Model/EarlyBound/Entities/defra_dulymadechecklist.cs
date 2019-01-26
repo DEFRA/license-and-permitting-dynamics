@@ -49,6 +49,7 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_confirmedassrp = "defra_confirmedassrp";
 			public const string defra_dulymadechecklistId = "defra_dulymadechecklistid";
 			public const string Id = "defra_dulymadechecklistid";
+			public const string defra_dulymadedate = "defra_dulymadedate";
 			public const string defra_fireplanadequate = "defra_fireplanadequate";
 			public const string defra_general_notes = "defra_general_notes";
 			public const string defra_miningwastemanagementplanacceptable = "defra_miningwastemanagementplanacceptable";
@@ -422,6 +423,26 @@ namespace WastePermits.Model.EarlyBound
 			set
 			{
 				this.defra_dulymadechecklistId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_dulymadedate")]
+		public System.Nullable<System.DateTime> defra_dulymadedate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_dulymadedate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_dulymadedate");
+				this.SetAttributeValue("defra_dulymadedate", value);
+				this.OnPropertyChanged("defra_dulymadedate");
 			}
 		}
 		

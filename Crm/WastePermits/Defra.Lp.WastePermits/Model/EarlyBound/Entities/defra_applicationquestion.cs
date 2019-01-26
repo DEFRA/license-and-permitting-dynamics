@@ -38,15 +38,13 @@ namespace WastePermits.Model.EarlyBound
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string defra_applicationquestionId = "defra_applicationquestionid";
 			public const string Id = "defra_applicationquestionid";
-			public const string defra_applies_if_parent_answer_condition = "defra_applies_if_parent_answer_condition";
-			public const string defra_applies_if_parent_answer_value = "defra_applies_if_parent_answer_value";
+			public const string defra_applies_if_application_type = "defra_applies_if_application_type";
 			public const string defra_applies_if_parent_question = "defra_applies_if_parent_question";
-			public const string defra_applies_to_activity = "defra_applies_to_activity";
-			public const string defra_applies_to_standard_rule = "defra_applies_to_standard_rule";
 			public const string defra_group = "defra_group";
 			public const string defra_is_mandatory = "defra_is_mandatory";
 			public const string defra_question = "defra_question";
 			public const string defra_question_display_text = "defra_question_display_text";
+			public const string defra_shortname = "defra_shortname";
 			public const string defra_type = "defra_type";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string ModifiedBy = "modifiedby";
@@ -62,11 +60,9 @@ namespace WastePermits.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
-			public const string defra_defra_activity_defra_applicationquestion_applies_to_activity = "defra_defra_activity_defra_applicationquestion_applies_to_activity";
 			public const string Referencingdefra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question = "defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_quest" +
 		"ion";
 			public const string defra_defra_applicationquestiongroup_defra_applicationquestion_group = "defra_defra_applicationquestiongroup_defra_applicationquestion_group";
-			public const string defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule = "defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule";
 		}
 		
 		/// <summary>
@@ -200,40 +196,20 @@ namespace WastePermits.Model.EarlyBound
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_answer_condition")]
-		public Microsoft.Xrm.Sdk.OptionSetValue defra_applies_if_parent_answer_condition
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_application_type")]
+		public Microsoft.Xrm.Sdk.OptionSetValue defra_applies_if_application_type
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_applies_if_parent_answer_condition");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("defra_applies_if_application_type");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("defra_applies_if_parent_answer_condition");
-				this.SetAttributeValue("defra_applies_if_parent_answer_condition", value);
-				this.OnPropertyChanged("defra_applies_if_parent_answer_condition");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_answer_value")]
-		public string defra_applies_if_parent_answer_value
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("defra_applies_if_parent_answer_value");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_applies_if_parent_answer_value");
-				this.SetAttributeValue("defra_applies_if_parent_answer_value", value);
-				this.OnPropertyChanged("defra_applies_if_parent_answer_value");
+				this.OnPropertyChanging("defra_applies_if_application_type");
+				this.SetAttributeValue("defra_applies_if_application_type", value);
+				this.OnPropertyChanged("defra_applies_if_application_type");
 			}
 		}
 		
@@ -254,46 +230,6 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_applies_if_parent_question");
 				this.SetAttributeValue("defra_applies_if_parent_question", value);
 				this.OnPropertyChanged("defra_applies_if_parent_question");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_to_activity")]
-		public Microsoft.Xrm.Sdk.EntityReference defra_applies_to_activity
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applies_to_activity");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_applies_to_activity");
-				this.SetAttributeValue("defra_applies_to_activity", value);
-				this.OnPropertyChanged("defra_applies_to_activity");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_to_standard_rule")]
-		public Microsoft.Xrm.Sdk.EntityReference defra_applies_to_standard_rule
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_applies_to_standard_rule");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_applies_to_standard_rule");
-				this.SetAttributeValue("defra_applies_to_standard_rule", value);
-				this.OnPropertyChanged("defra_applies_to_standard_rule");
 			}
 		}
 		
@@ -374,6 +310,26 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_question_display_text");
 				this.SetAttributeValue("defra_question_display_text", value);
 				this.OnPropertyChanged("defra_question_display_text");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_shortname")]
+		public string defra_shortname
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("defra_shortname");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_shortname");
+				this.SetAttributeValue("defra_shortname", value);
+				this.OnPropertyChanged("defra_shortname");
 			}
 		}
 		
@@ -651,6 +607,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_applicationquestion_defra_item_application_question_applicationquestionid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_applicationquestion_defra_item_application_question_applicationquestionid")]
+		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_item_application_question> defra_applicationquestion_defra_item_application_question_applicationquestionid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_applicationquestion_defra_item_application_question_applicationquestionid");
+				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_item_application_question>("defra_applicationquestion_defra_item_application_question_applicationquestionid", null, value);
+				this.OnPropertyChanged("defra_applicationquestion_defra_item_application_question_applicationquestionid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_defra_applicationquestion_defra_applicationanswer_question
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_applicationquestion_defra_applicationanswer_question")]
@@ -721,27 +697,6 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 defra_defra_activity_defra_applicationquestion_applies_to_activity
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_to_activity")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_activity_defra_applicationquestion_applies_to_activity")]
-		public WastePermits.Model.EarlyBound.defra_activity defra_defra_activity_defra_applicationquestion_applies_to_activity
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_activity>("defra_defra_activity_defra_applicationquestion_applies_to_activity", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_defra_activity_defra_applicationquestion_applies_to_activity");
-				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_activity>("defra_defra_activity_defra_applicationquestion_applies_to_activity", null, value);
-				this.OnPropertyChanged("defra_defra_activity_defra_applicationquestion_applies_to_activity");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 defra_defra_applicationquestion_defra_applicationquestion_applies_if_parent_question
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_question")]
@@ -789,27 +744,6 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// N:1 defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_to_standard_rule")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule")]
-		public WastePermits.Model.EarlyBound.defra_standardrule defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.defra_standardrule>("defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule");
-				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_standardrule>("defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule", null, value);
-				this.OnPropertyChanged("defra_defra_standardrule_defra_applicationquestion_applies_to_standard_rule");
-			}
-		}
-		
-		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -851,18 +785,18 @@ namespace WastePermits.Model.EarlyBound
             }
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_parent_answer_condition")]
-		public virtual defra_applicationquestion_defra_applies_if_parent_answer_condition? defra_applies_if_parent_answer_conditionEnum
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_applies_if_application_type")]
+		public virtual defra_ApplicationType? defra_applies_if_application_typeEnum
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return ((defra_applicationquestion_defra_applies_if_parent_answer_condition?)(EntityOptionSetEnum.GetEnum(this, "defra_applies_if_parent_answer_condition")));
+				return ((defra_ApplicationType?)(EntityOptionSetEnum.GetEnum(this, "defra_applies_if_application_type")));
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				defra_applies_if_parent_answer_condition = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+				defra_applies_if_application_type = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		

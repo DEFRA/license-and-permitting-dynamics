@@ -12,16 +12,19 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum Team_TeamType
+	public enum convert_campaign_response_options
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADGroup = 2,
+		Closeresponse = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Access = 1,
+		Converttoanexistinglead = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Owner = 0,
+		Createalead = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Createaquoteorderoropportunityforanaccountorcontact = 2,
 	}
 }
