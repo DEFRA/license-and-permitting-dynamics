@@ -12,10 +12,16 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum defra_ApplicationTaskCompletion
+	public enum Contact_msdyn_orgchangestatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Done = 910400000,
+		Ignore = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		No = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Yes = 1,
 	}
 }

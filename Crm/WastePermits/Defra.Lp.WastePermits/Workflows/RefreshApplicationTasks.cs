@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Activities;
+using System.Linq;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using WastePermits.DataAccess;
 using WastePermits.Model.EarlyBound;
+using WastePermits.Model.Internal;
 
 namespace Defra.Lp.WastePermits.Workflows
 {
@@ -14,12 +16,18 @@ namespace Defra.Lp.WastePermits.Workflows
     /// </summary>
     public class RefreshApplicationTasks: WorkFlowActivityBase
     {
-
+        #region Code activity parameters
+        /// <summary>
+        /// Application that will have it's application tasks processed
+        /// </summary>
         [RequiredArgument]
         [Input("Application")]
         [ReferenceTarget(defra_application.EntityLogicalName)]
         public InArgument<EntityReference> Application { get; set; }
 
+        /// <summary>
+        /// Task type or checklist to be processed for the given application
+        /// </summary>
         [RequiredArgument]
         [Input("Task Type 1")]
         [ReferenceTarget(defra_tasktype.EntityLogicalName)]
@@ -61,6 +69,13 @@ namespace Defra.Lp.WastePermits.Workflows
         [ReferenceTarget(defra_tasktype.EntityLogicalName)]
         public InArgument<EntityReference> TaskType10 { get; set; }
 
+        #endregion
+
+        /// <summary>
+        /// Main code activity methoid
+        /// </summary>
+        /// <param name="executionContext">Standard CRM execution context</param>
+        /// <param name="crmWorkflowContext">Standard CRM workflow context</param>
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext executionContext, LocalWorkflowContext crmWorkflowContext)
         {
             // Set-up
@@ -69,7 +84,7 @@ namespace Defra.Lp.WastePermits.Workflows
             tracingService.Trace("Started");
 
             // Validation
-            var application = Application.Get(executionContext);
+            EntityReference application = Application.Get(executionContext);
             if (application == null || application.Id == Guid.Empty)
             {
                 throw new ArgumentException("Application parameter is invalid", nameof(application));
@@ -87,11 +102,34 @@ namespace Defra.Lp.WastePermits.Workflows
             AddIdToList(TaskType8.Get(executionContext), taskTypeIds);
             AddIdToList(TaskType9.Get(executionContext), taskTypeIds);
             AddIdToList(TaskType10.Get(executionContext), taskTypeIds);
+            Guid[] taskTypeIdArray = taskTypeIds.ToArray();
 
             // Call data access layer to add/remove defra_applicationtask records as needed
-            tracingService.Trace("Calling DataAccessApplicationTask.AddOrRemoveApplicationTasksAsRequired()");
             DataAccessApplicationTask dal = new DataAccessApplicationTask(organisationService, tracingService);
-            dal.AddOrRemoveApplicationTasksAsRequired(application.Id, taskTypeIds.ToArray());
+
+            // Get applicable task definitionIds
+            tracingService.Trace("Calling DataAccessApplicationTask.GetTaskDefinitionIdsThatApplyToApplication()");
+            List<Guid> applicableTaskDefinitionIds = dal.GetTaskDefinitionIdsThatApplyToApplication(application.Id, taskTypeIdArray) ?? new List<Guid>();
+
+            // Get application tasks already linked to the application
+            tracingService.Trace("Calling DataAccessApplicationTask.GetApplicationTaskIdsLinkedToApplication()");
+            List<ApplicationTaskAndDefinitionId> applicationTasksAndDefinitionIds = dal.GetApplicationTaskIdsLinkedToApplication(application.Id, taskTypeIdArray) ?? new List<ApplicationTaskAndDefinitionId>();
+
+            // Deactivate application tasks that no longer apply
+            tracingService.Trace("Calling DataAccessApplicationTask.DeactivateApplicationTask()");
+            applicationTasksAndDefinitionIds
+                .Where(t => !applicableTaskDefinitionIds.Contains(t.ApplicationTaskDefinitionId))
+                .Select(t => t.ApplicationTaskId)
+                .ToList()
+                .ForEach(dal.DeactivateApplicationTask);
+
+            // Create application tasks that don't already exist
+            tracingService.Trace("Calling DataAccessApplicationTask.CreateApplicationTask()");
+            applicableTaskDefinitionIds
+                .Where(td => applicationTasksAndDefinitionIds.All(t => t.ApplicationTaskDefinitionId != td))
+                .ToList()
+                .ForEach(td => dal.CreateApplicationTask(application.Id, td));
+
             tracingService.Trace("Done");
         }
 

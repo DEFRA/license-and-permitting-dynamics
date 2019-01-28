@@ -45,8 +45,8 @@
             // Link to defra_itemapplicationtaskdefinition
             var linkQuery = query.AddLink(
                 defra_itemapplicationtaskdefinition.EntityLogicalName,
-                defra_applicationtaskdefinition.Fields.defra_applicationtaskdefinitionId,
-                defra_itemapplicationtaskdefinition.Fields.defra_applicationtaskdefinitionid);
+                defra_applicationtaskdefinition.Fields.defra_tasktypeid,
+                defra_itemapplicationtaskdefinition.Fields.defra_applicationtasktypeid);
             linkQuery.LinkCriteria.AddCondition(defra_itemapplicationtaskdefinition.Fields.StateCode, ConditionOperator.Equal, (int)defra_itemapplicationtaskdefinitionState.Active);
             linkQuery.LinkCriteria.AddCondition(defra_itemapplicationtaskdefinition.Fields.defra_scope, ConditionOperator.Equal, (int)defra_application_task_scope.Application);
 
@@ -161,39 +161,10 @@
         }
 
         /// <summary>
-        /// Returns a list of task definitions that apply to an application
-        /// </summary>
-        /// <param name="applicationId">Application Guid</param>
-        /// <param name="filterByTaskTypeIds">Task Types to filter by</param>
-        /// <returns>List of defra_applicationtaskdefinition ids </returns>
-        public void AddOrRemoveApplicationTasksAsRequired(Guid applicationId, params Guid[] filterByTaskTypeIds)
-        {
-
-            // Get applicable task definitionIds
-            List<Guid> applicableTaskDefinitionIds = GetTaskDefinitionIdsThatApplyToApplication(applicationId, filterByTaskTypeIds) ?? new List<Guid>();
-
-            // Get application tasks already linked to the application
-            List<ApplicationTaskAndDefinitionId> applicationTasksAndDefinitionIds = GetApplicationTaskIdsLinkedToApplication(applicationId, filterByTaskTypeIds) ?? new List<ApplicationTaskAndDefinitionId>();
-
-            // Deactivate application tasks that no longer apply
-            applicationTasksAndDefinitionIds
-                .Where(t => !applicableTaskDefinitionIds.Contains(t.ApplicationTaskDefinitionId))
-                .Select(t => t.ApplicationTaskId)
-                .ToList()
-                .ForEach(DeactivateApplicationTask);
-
-            // Create application tasks that don't already exist
-            applicableTaskDefinitionIds
-                .Where(td => applicationTasksAndDefinitionIds.All(t => t.ApplicationTaskDefinitionId != td))
-                .ToList()
-                .ForEach(td => CreateApplicationTask(applicationId, td));
-        }
-
-        /// <summary>
         /// Deactivates a defra_applicationtask record
         /// </summary>
         /// <param name="applicationTaskIdGuid">defra_applicationtask id</param>
-        private void DeactivateApplicationTask(Guid applicationTaskIdGuid)
+        public void DeactivateApplicationTask(Guid applicationTaskIdGuid)
         {
 
             var state = new SetStateRequest
@@ -211,7 +182,7 @@
         /// <param name="applicationId">defra_application id to link the record to</param>
         /// <param name="applicationTaskDefinitionId">defra_applicationtaskdefinition id to link the record to</param>
         /// <returns>Newly created record id</returns>
-        private Guid CreateApplicationTask(Guid applicationId, Guid applicationTaskDefinitionId)
+        public Guid CreateApplicationTask(Guid applicationId, Guid applicationTaskDefinitionId)
         {
             Entity applicationTask = new Entity(defra_applicationtask.EntityLogicalName);
             applicationTask.Attributes.Add(defra_applicationtask.Fields.defra_applicationid, new EntityReference(defra_application.EntityLogicalName, applicationId));

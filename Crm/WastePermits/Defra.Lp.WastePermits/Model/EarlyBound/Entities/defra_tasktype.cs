@@ -497,6 +497,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid")]
+		public System.Collections.Generic.IEnumerable<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition> defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid");
+				this.SetRelatedEntities<WastePermits.Model.EarlyBound.defra_itemapplicationtaskdefinition>("defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid", null, value);
+				this.OnPropertyChanged("defra_tasktype_defra_itemapplicationtaskdefinition_applicationtasktypeid");
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>

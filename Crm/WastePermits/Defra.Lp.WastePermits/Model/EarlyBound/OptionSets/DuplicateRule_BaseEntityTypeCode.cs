@@ -118,6 +118,9 @@ namespace WastePermits.Model.EarlyBound
 		ApplicationTaskDefinition = 10094,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskDefinitionLink = 10096,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationTaskType = 10095,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -596,9 +599,6 @@ namespace WastePermits.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemApplicationQuestion = 10101,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ItemApplicationTaskDefinition = 10096,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemDetail = 10076,
@@ -1204,10 +1204,10 @@ namespace WastePermits.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10111,
+		SolutionComponentDataSource = 10120,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10110,
+		SolutionComponentSummary = 10119,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SolutionHistory = 10112,

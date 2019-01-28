@@ -12,10 +12,13 @@ namespace WastePermits.Model.EarlyBound
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
-	public enum defra_ApplicationTaskCompletion
+	public enum AppModule_NavigationType
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Done = 910400000,
+		Multisession = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Singlesession = 0,
 	}
 }

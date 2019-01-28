@@ -190,6 +190,7 @@ namespace WastePermits.Model.EarlyBound
 			public const string ModifiedOn = "modifiedon";
 			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
+			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
 			public const string NickName = "nickname";
 			public const string NumberOfChildren = "numberofchildren";
 			public const string OnHoldTime = "onholdtime";
@@ -3250,6 +3251,26 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// For Internal Use only
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
+		public Microsoft.Xrm.Sdk.OptionSetValue msdyn_orgchangestatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_orgchangestatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_orgchangestatus");
+				this.SetAttributeValue("msdyn_orgchangestatus", value);
+				this.OnPropertyChanged("msdyn_orgchangestatus");
+			}
+		}
+		
+		/// <summary>
 		/// Type the contact's nickname.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("nickname")]
@@ -4871,6 +4892,21 @@ namespace WastePermits.Model.EarlyBound
 			set
 			{
 				LeadSourceCode = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
+		public virtual Contact_msdyn_orgchangestatus? msdyn_orgchangestatusEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((Contact_msdyn_orgchangestatus?)(EntityOptionSetEnum.GetEnum(this, "msdyn_orgchangestatus")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				msdyn_orgchangestatus = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		
