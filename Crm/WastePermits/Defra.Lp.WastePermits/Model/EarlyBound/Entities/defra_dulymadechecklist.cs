@@ -76,6 +76,14 @@ namespace WastePermits.Model.EarlyBound
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 			public const string defra_application_defra_dulymadechecklist = "defra_application_defra_dulymadechecklist";
+			public const string defra_dulymadechecklist_areaofficer = "defra_dulymadechecklist_areaofficer";
+			public const string defra_systemuser_defra_dulymadechecklist = "defra_systemuser_defra_dulymadechecklist";
+			public const string lk_defra_dulymadechecklist_createdby = "lk_defra_dulymadechecklist_createdby";
+			public const string lk_defra_dulymadechecklist_createdonbehalfby = "lk_defra_dulymadechecklist_createdonbehalfby";
+			public const string lk_defra_dulymadechecklist_modifiedby = "lk_defra_dulymadechecklist_modifiedby";
+			public const string lk_defra_dulymadechecklist_modifiedonbehalfby = "lk_defra_dulymadechecklist_modifiedonbehalfby";
+			public const string team_defra_dulymadechecklist = "team_defra_dulymadechecklist";
+			public const string user_defra_dulymadechecklist = "user_defra_dulymadechecklist";
 		}
 		
 		/// <summary>
@@ -957,6 +965,146 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_dulymadechecklist");
 				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_application>("defra_application_defra_dulymadechecklist", null, value);
 				this.OnPropertyChanged("defra_application_defra_dulymadechecklist");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_dulymadechecklist_areaofficer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_areaofficer")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_dulymadechecklist_areaofficer")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_dulymadechecklist_areaofficer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_dulymadechecklist_areaofficer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_dulymadechecklist_areaofficer");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_dulymadechecklist_areaofficer", null, value);
+				this.OnPropertyChanged("defra_dulymadechecklist_areaofficer");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_completedbyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_dulymadechecklist")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_systemuser_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_dulymadechecklist", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_dulymadechecklist");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_dulymadechecklist", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_dulymadechecklist");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_dulymadechecklist_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_dulymadechecklist_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_dulymadechecklist_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_dulymadechecklist_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_dulymadechecklist")]
+		public WastePermits.Model.EarlyBound.Team team_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_defra_dulymadechecklist", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_dulymadechecklist")]
+		public WastePermits.Model.EarlyBound.SystemUser user_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("user_defra_dulymadechecklist", null);
 			}
 		}
 		

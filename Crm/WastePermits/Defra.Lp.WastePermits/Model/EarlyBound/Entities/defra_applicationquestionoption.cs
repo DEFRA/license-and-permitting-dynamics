@@ -58,6 +58,12 @@ namespace WastePermits.Model.EarlyBound
 			public const string VersionNumber = "versionnumber";
 			public const string defra_defra_applicationquestion_defra_applicationquestionoption_applicationquestion = "defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
 		"on";
+			public const string lk_defra_applicationquestionoption_createdby = "lk_defra_applicationquestionoption_createdby";
+			public const string lk_defra_applicationquestionoption_createdonbehalfby = "lk_defra_applicationquestionoption_createdonbehalfby";
+			public const string lk_defra_applicationquestionoption_modifiedby = "lk_defra_applicationquestionoption_modifiedby";
+			public const string lk_defra_applicationquestionoption_modifiedonbehalfby = "lk_defra_applicationquestionoption_modifiedonbehalfby";
+			public const string team_defra_applicationquestionoption = "team_defra_applicationquestionoption";
+			public const string user_defra_applicationquestionoption = "user_defra_applicationquestionoption";
 		}
 		
 		/// <summary>
@@ -564,6 +570,104 @@ namespace WastePermits.Model.EarlyBound
 						"on", null, value);
 				this.OnPropertyChanged("defra_defra_applicationquestion_defra_applicationquestionoption_applicationquesti" +
 						"on");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationquestionoption_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationquestionoption_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationquestionoption_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationquestionoption_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationquestionoption_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationquestionoption_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationquestionoption_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationquestionoption_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationquestionoption_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationquestionoption_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationquestionoption_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationquestionoption_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationquestionoption_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationquestionoption_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationquestionoption_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationquestionoption_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationquestionoption_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_applicationquestionoption
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_applicationquestionoption")]
+		public WastePermits.Model.EarlyBound.Team team_defra_applicationquestionoption
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_defra_applicationquestionoption", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_applicationquestionoption
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_applicationquestionoption")]
+		public WastePermits.Model.EarlyBound.SystemUser user_defra_applicationquestionoption
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("user_defra_applicationquestionoption", null);
 			}
 		}
 		

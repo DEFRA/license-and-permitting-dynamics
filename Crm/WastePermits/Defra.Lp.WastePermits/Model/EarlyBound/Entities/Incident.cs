@@ -148,11 +148,18 @@ namespace WastePermits.Model.EarlyBound
 			public const string contact_as_primary_contact = "contact_as_primary_contact";
 			public const string contact_as_responsible_contact = "contact_as_responsible_contact";
 			public const string defra_application_incident_application = "defra_application_incident_application";
+			public const string defra_systemuser_incident_peerreviewer = "defra_systemuser_incident_peerreviewer";
 			public const string incident_customer_accounts = "incident_customer_accounts";
 			public const string incident_customer_contacts = "incident_customer_contacts";
 			public const string Referencingincident_existingcase = "incident_existingcase";
 			public const string Referencingincident_master_incident = "incident_master_incident";
 			public const string Referencingincident_parent_incident = "incident_parent_incident";
+			public const string lk_incidentbase_createdby = "lk_incidentbase_createdby";
+			public const string lk_incidentbase_createdonbehalfby = "lk_incidentbase_createdonbehalfby";
+			public const string lk_incidentbase_modifiedby = "lk_incidentbase_modifiedby";
+			public const string lk_incidentbase_modifiedonbehalfby = "lk_incidentbase_modifiedonbehalfby";
+			public const string system_user_incidents = "system_user_incidents";
+			public const string team_incidents = "team_incidents";
 		}
 		
 		/// <summary>
@@ -2443,6 +2450,27 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 defra_systemuser_incident_peerreviewer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_peerreviewer")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_incident_peerreviewer")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_systemuser_incident_peerreviewer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_incident_peerreviewer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_incident_peerreviewer");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_incident_peerreviewer", null, value);
+				this.OnPropertyChanged("defra_systemuser_incident_peerreviewer");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 incident_customer_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customerid")]
@@ -2544,6 +2572,104 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("Referencingincident_parent_incident");
 				this.SetRelatedEntity<WastePermits.Model.EarlyBound.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingincident_parent_incident");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_incidentbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_incidentbase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_incidentbase_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_incidentbase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_incidentbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_incidentbase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_incidentbase_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_incidentbase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 system_user_incidents
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_incidents")]
+		public WastePermits.Model.EarlyBound.SystemUser system_user_incidents
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("system_user_incidents", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_incidents
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_incidents")]
+		public WastePermits.Model.EarlyBound.Team team_incidents
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_incidents", null);
 			}
 		}
 		

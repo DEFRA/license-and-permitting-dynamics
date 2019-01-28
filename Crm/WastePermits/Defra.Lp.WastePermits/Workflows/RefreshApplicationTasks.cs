@@ -104,16 +104,20 @@ namespace Defra.Lp.WastePermits.Workflows
             AddIdToList(TaskType10.Get(executionContext), taskTypeIds);
             Guid[] taskTypeIdArray = taskTypeIds.ToArray();
 
-            // Call data access layer to add/remove defra_applicationtask records as needed
-            DataAccessApplicationTask dal = new DataAccessApplicationTask(organisationService, tracingService);
+            // Prepare the DALs
+            DataAccessApplicationTask dalAppTask = new DataAccessApplicationTask(organisationService, tracingService);
+            DataAccessApplication dalApp = new DataAccessApplication(organisationService, tracingService);
+
+            // Get Application Type, SubType and owners
+            ApplicationTypesAndOwners applicationDetails = dalApp.GetApplicationType(application.Id);
 
             // Get applicable task definitionIds
             tracingService.Trace("Calling DataAccessApplicationTask.GetTaskDefinitionIdsThatApplyToApplication()");
-            List<Guid> applicableTaskDefinitionIds = dal.GetTaskDefinitionIdsThatApplyToApplication(application.Id, taskTypeIdArray) ?? new List<Guid>();
+            List<Guid> applicableTaskDefinitionIds = dalAppTask.GetTaskDefinitionIdsThatApplyToApplication(application.Id, applicationDetails.ApplicationType, applicationDetails.ApplicationSubType, taskTypeIdArray) ?? new List<Guid>();
 
             // Get application tasks already linked to the application
             tracingService.Trace("Calling DataAccessApplicationTask.GetApplicationTaskIdsLinkedToApplication()");
-            List<ApplicationTaskAndDefinitionId> applicationTasksAndDefinitionIds = dal.GetApplicationTaskIdsLinkedToApplication(application.Id, taskTypeIdArray) ?? new List<ApplicationTaskAndDefinitionId>();
+            List<ApplicationTaskAndDefinitionId> applicationTasksAndDefinitionIds = dalAppTask.GetApplicationTaskIdsLinkedToApplication(application.Id, taskTypeIdArray) ?? new List<ApplicationTaskAndDefinitionId>();
 
             // Deactivate application tasks that no longer apply
             tracingService.Trace("Calling DataAccessApplicationTask.DeactivateApplicationTask()");
@@ -121,14 +125,14 @@ namespace Defra.Lp.WastePermits.Workflows
                 .Where(t => !applicableTaskDefinitionIds.Contains(t.ApplicationTaskDefinitionId))
                 .Select(t => t.ApplicationTaskId)
                 .ToList()
-                .ForEach(dal.DeactivateApplicationTask);
+                .ForEach(dalAppTask.DeactivateApplicationTask);
 
-            // Create application tasks that don't already exist
+            // Create application tasks that apply
             tracingService.Trace("Calling DataAccessApplicationTask.CreateApplicationTask()");
             applicableTaskDefinitionIds
-                .Where(td => applicationTasksAndDefinitionIds.All(t => t.ApplicationTaskDefinitionId != td))
+                .Where(neTask => applicationTasksAndDefinitionIds.All(t => t.ApplicationTaskDefinitionId != neTask))
                 .ToList()
-                .ForEach(td => dal.CreateApplicationTask(application.Id, td));
+                .ForEach(newtask => dalAppTask.CreateApplicationTask(application.Id, applicationDetails.OwningUser, applicationDetails.OwningTeam, newtask));
 
             tracingService.Trace("Done");
         }

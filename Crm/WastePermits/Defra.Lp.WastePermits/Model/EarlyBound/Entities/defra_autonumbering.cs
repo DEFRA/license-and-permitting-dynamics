@@ -57,6 +57,10 @@ namespace WastePermits.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_autonumbering_createdby = "lk_defra_autonumbering_createdby";
+			public const string lk_defra_autonumbering_createdonbehalfby = "lk_defra_autonumbering_createdonbehalfby";
+			public const string lk_defra_autonumbering_modifiedby = "lk_defra_autonumbering_modifiedby";
+			public const string lk_defra_autonumbering_modifiedonbehalfby = "lk_defra_autonumbering_modifiedonbehalfby";
 		}
 		
 		/// <summary>
@@ -551,6 +555,76 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_autonumbering_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_autonumbering_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_autonumbering_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_autonumbering_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_autonumbering_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_autonumbering_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_autonumbering_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_autonumbering_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_autonumbering_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_autonumbering_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_autonumbering_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_autonumbering_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_autonumbering_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_autonumbering_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_autonumbering_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_autonumbering_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_autonumbering_modifiedonbehalfby");
 			}
 		}
 		

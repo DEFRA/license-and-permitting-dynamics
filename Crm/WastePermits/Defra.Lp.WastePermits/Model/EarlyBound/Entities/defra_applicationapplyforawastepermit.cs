@@ -58,6 +58,10 @@ namespace WastePermits.Model.EarlyBound
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 			public const string bpf_defra_application_defra_applicationapplyforawastepermit = "bpf_defra_application_defra_applicationapplyforawastepermit";
+			public const string lk_defra_applicationapplyforawastepermit_createdby = "lk_defra_applicationapplyforawastepermit_createdby";
+			public const string lk_defra_applicationapplyforawastepermit_createdonbehalfby = "lk_defra_applicationapplyforawastepermit_createdonbehalfby";
+			public const string lk_defra_applicationapplyforawastepermit_modifiedby = "lk_defra_applicationapplyforawastepermit_modifiedby";
+			public const string lk_defra_applicationapplyforawastepermit_modifiedonbehalfby = "lk_defra_applicationapplyforawastepermit_modifiedonbehalfby";
 		}
 		
 		/// <summary>
@@ -566,6 +570,76 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("bpf_defra_application_defra_applicationapplyforawastepermit");
 				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_application>("bpf_defra_application_defra_applicationapplyforawastepermit", null, value);
 				this.OnPropertyChanged("bpf_defra_application_defra_applicationapplyforawastepermit");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationapplyforawastepermit_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationapplyforawastepermit_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationapplyforawastepermit_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationapplyforawastepermit_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationapplyforawastepermit_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationapplyforawastepermit_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationapplyforawastepermit_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationapplyforawastepermit_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationapplyforawastepermit_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationapplyforawastepermit_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationapplyforawastepermit_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationapplyforawastepermit_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationapplyforawastepermit_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_applicationapplyforawastepermit_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationapplyforawastepermit_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_applicationapplyforawastepermit_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationapplyforawastepermit_modifiedonbehalfby");
 			}
 		}
 		

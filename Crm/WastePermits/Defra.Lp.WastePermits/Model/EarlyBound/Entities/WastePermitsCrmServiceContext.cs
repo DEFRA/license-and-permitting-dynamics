@@ -784,6 +784,30 @@ namespace WastePermits.Model.EarlyBound
 				return this.CreateQuery<WastePermits.Model.EarlyBound.Incident>();
 			}
 		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.SystemUser> SystemUserSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.SystemUser>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.Team"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.Team> TeamSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.Team>();
+			}
+		}
 	}
 	
 	internal sealed class EntityOptionSetEnum
