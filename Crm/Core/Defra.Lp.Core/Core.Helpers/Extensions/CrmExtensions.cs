@@ -18,18 +18,46 @@
         /// <returns>Guid</returns>
         public static Guid? GetAttributeId(this Entity entity, string attribute)
         {
-            return entity.Contains(attribute) ? ((EntityReference)entity[attribute]).Id : (Guid?)null;
+            if (!entity.Contains(attribute))
+            {
+                return null;
+            }
+
+            if (entity[attribute] is EntityReference)
+            {
+                return ((EntityReference)entity[attribute]).Id;
+            }
+
+            if (entity[attribute] is Guid)
+            {
+                return (Guid)entity[attribute];
+            }
+            return null;
         }
 
         /// <summary>
-        /// Returns an attribute as aGuid if it exists
+        /// Returns an Entity Reference attribute's Guid if it exists, otherwise Guid.Empty
         /// </summary>
         /// <param name="entity">The Entity that contains the attribute</param>
         /// <param name="attribute">Attribute name to retrieve</param>
         /// <returns>Guid</returns>
-        public static Guid? GetAttributeGuid(this Entity entity, string attribute)
+        public static Guid GetAttributeIdOrDefault(this Entity entity, string attribute)
         {
-            return entity.Contains(attribute) ? ((Guid)entity[attribute]) : (Guid?)null;
+            if (!entity.Contains(attribute))
+            {
+                return Guid.Empty;
+            }
+
+            if (entity[attribute] is EntityReference)
+            {
+                return ((EntityReference)entity[attribute]).Id;
+            }
+
+            if (entity[attribute] is Guid)
+            {
+                return (Guid)entity[attribute];
+            }
+            return Guid.Empty;
         }
 
         /// <summary>
@@ -76,6 +104,28 @@
             return entity.Contains(attribute) ? ((OptionSetValue)entity
                 .GetAttributeValue<AliasedValue>(attribute)
                 .Value).Value : (int?)null;
+        }
+
+        /// <summary>
+        /// Returns an OptionSet attribute'Value Guid if it exists
+        /// </summary>
+        /// <param name="entity">The Entity that contains the attribute</param>
+        /// <param name="attribute">Attribute name to retrieve</param>
+        /// <returns>Optionset Int Value or null if not found</returns>
+        public static int? GetOptionSetValue(this Entity entity, string attribute)
+        {
+
+            if (!entity.Contains(attribute))
+            {
+                return null;
+            }
+
+            if (entity[attribute] is OptionSetValue)
+            {
+                return ((OptionSetValue) entity[attribute]).Value;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -128,7 +178,7 @@
             foreach (EntityReference principal in principals)
             {
                 grantRequest.PrincipalAccess.Principal = principal;
-                var grantResponse = (GrantAccessResponse)service.Execute(grantRequest);
+                service.Execute(grantRequest);
             }
         }
 
@@ -144,7 +194,7 @@
             foreach (EntityReference principalObject in principals)
             {
                 revokeRequest.Revokee = principalObject;
-                RevokeAccessResponse revokeResponse = (RevokeAccessResponse)service.Execute(revokeRequest);
+                service.Execute(revokeRequest);
             }
         }
 
