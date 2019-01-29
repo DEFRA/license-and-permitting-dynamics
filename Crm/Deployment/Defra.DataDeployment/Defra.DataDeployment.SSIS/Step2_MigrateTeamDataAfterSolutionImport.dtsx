@@ -7,12 +7,12 @@
   DTS:CreatorName="KAL-VM-VISIO\Kal"
   DTS:DTSID="{6EAF208F-8B1A-4D28-B74F-1AB2B53244DF}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="14.0.0800.98"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
   DTS:LocaleID="2057"
   DTS:ObjectName="Step2_MigrateTeamDataAfterSolutionImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="355"
-  DTS:VersionGUID="{0C7E9CB6-20F5-4412-BAA9-2AA65195C8AF}">
+  DTS:VersionBuild="359"
+  DTS:VersionGUID="{C865DE2D-E2CB-4CC3-B371-42E2CE662747}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,7 +23,7 @@
       DTS:ObjectName="(local).LPConfigDataMigration">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost\SQL2017;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,21 +33,11 @@
       DTS:ObjectName="Dynamics CRM Source">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=wastetest5@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-CORELP;CrmServerUrl=https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-CORELP;CrmServerUrl=https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAADBdsfwnGLEuDUaSpcl+S9QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACw0CBmVlXfbvBnxgZ0Y69iB5aUu4A0q8zegMDsSm0dNAAAAAAOgAAAAAIAACAAAABhxBKsUXCJfo0Qsbazp3mI5Jw0t5dZhoXSc7s5T24RPiAAAADqMBjHpk9kCsIoQAGuLxbaOg8WShnnoaKgJTwdffYNZ0AAAAAA/0PH1BicNTXQubonqjcjFOHbcb3GKpMoDzOGyEJEjqKDkzhZdvGVooHcKkxH4f+w6DUlQ1TITGR9r1oKMlbF</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAX93njWgqyUGf4xP9yobpmgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAW2vmJAwxgjPIhwKtXzhuy3je0Uy8xWJWYRFY8ujsLgQAAAAAOgAAAAAIAACAAAABf6dgm2AmplcdZnfRcAGOpEsfIZ0lijj0EgrnHvZfDITAAAAAP97YX4uEIW+RQlAlgrwN2z7jwmCwAggq+OfZ/FOSYh3DJXp4p93v2W5v7KivKY3dAAAAAc7kHM2tSiizu7XEX4goHEwkTctZ6HiXLPf8OrH9GTor7Xe398XG1QmcDvmt2/FicA7lPi0LY1KvX/8adeblStQ</Password>
         </CrmConnectionManager>
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Dynamics CRM Source 1]"
-      DTS:CreationName="DynamicsCRM"
-      DTS:DTSID="{1AAFD0C7-2709-4A6E-AA3E-C1D4A6F9801E}"
-      DTS:ObjectName="Dynamics CRM Source 1">
-      <DTS:ObjectData>
-        <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-CORELP;CrmServerUrl=https://ag-ea-lp-dev-corelp.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -57,24 +47,10 @@
       DTS:ObjectName="Dynamics CRM Target">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=wastetest5@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-QA-MASTER;CrmServerUrl=https://ag-ea-lp-qa-master.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=SA-EA-LP-UAT-ServiceTier@Defra.onmicrosoft.com;Domain=;OrganizationName=EA-LP-UAT;CrmServerUrl=https://ea-lp-uat.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAADBdsfwnGLEuDUaSpcl+S9QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB/ehGmvCIISzRHxgmW8Vy73oyG8FV5lJ4FvPCqlcSHQAAAAAAOgAAAAAIAACAAAAAXwzDIyKzykwsrqh4asAAzBveBtRK84C8j7aikqqlwYSAAAAAprN78R048TEuiKXe6QZj2lcrw+6Ui6IiUUJoXDLV+mEAAAABOH0UCApcPNYMUL2iXvatyJgox3kma2kiC+ErR+jHM8w7WjhbQYQESJKTPzC2nd2+MMsXAX0wtbLJUQ2DYtKnp</Password>
-        </CrmConnectionManager>
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Dynamics CRM Target 1]"
-      DTS:CreationName="DynamicsCRM"
-      DTS:DTSID="{104F33E6-251D-4D9C-8509-F57EFDA7A412}"
-      DTS:ObjectName="Dynamics CRM Target 1">
-      <DTS:ObjectData>
-        <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=wastetest5@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
-          <Password
-            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAADBdsfwnGLEuDUaSpcl+S9QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACyp4DqotE1lszCtqkxQWBXNPbW/2pK9ZnkrJn9hkd8SgAAAAAOgAAAAAIAACAAAADGv2OhfG5zTq4AcXm5Ki/QYJ1Y5g6tefb/n7pThj46ZiAAAAAPsOqUoJDFyH9BoVa7kaL9eZz5Ds3/IUV3Og2xOb3rnkAAAACB75VAq3RnLd+0NCL+Pv1SPNuwRuj0igmmM0fld4wqf790fsM0d2S+V7EhQFPBxenOJpaSYZgBpCkCNXiMmbUp</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAX93njWgqyUGf4xP9yobpmgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAjGoSq7d0JTyncA/p/KmeWsywoGIuTh6G8sXfe4HQIjAAAAAAOgAAAAAIAACAAAAAsGMUwOEP6OaGAxYLBtDpp15b0DSw/pA2RT2SCQ8aJIiAAAAA9oirIBr6J8oQlb4XPJX+u7kSSuo30APxeYSqQbQwlgEAAAAAoP5PBvXcuax4wlnVl0I9pSpDUeCve/upUvHzeXdtJdMM6lniUPBgFh55tHiFnFuTsgR+aoMFZNpOF+vzKwsnC</Password>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -14574,15 +14550,15 @@ on teams.teamid = rm.teamid</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="368,42"
+          Size="368,42.2857142857143"
           Id="Package\Area Teams\Delete Team Queues in Target that don't match the Source 1"
           TopLeft="5.5,96" />
         <NodeLayout
-          Size="207,42"
+          Size="206.857142857143,42.2857142857143"
           Id="Package\Area Teams\Migrate Area Team Queues"
           TopLeft="56.6428543012971,4" />
         <NodeLayout
-          Size="325,42"
+          Size="325.142857142858,42.2857142857143"
           Id="Package\Area Teams\Update Team Default Queues to Match the Source 1"
           TopLeft="7.5,168" />
         <EdgeLayout
@@ -14656,68 +14632,72 @@ on teams.teamid = rm.teamid</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="378,265"
-          Size="378,308"
+          PanelSize="378.285714285715,265.142857142858"
+          Size="378.285714285715,308"
           Id="Package\Area Teams"
           TopLeft="163.563487084875,931.422358289848" />
         <NodeLayout
-          Size="245,42"
+          Size="245.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Create role membership if not exist"
           TopLeft="54.5555527212041,651.298390655669" />
         <NodeLayout
-          Size="230,42"
+          Size="229.714285714286,42.2857142857143"
           Id="Package\Sequence Container\Delete role membership on dest"
           TopLeft="59.6772505160379,484.582828865464" />
         <NodeLayout
-          Size="358,42"
+          Size="357.714285714286,42.2857142857143"
           Id="Package\Sequence Container\Delete Team Queues in Target that don't match the Source"
           TopLeft="384.5,788.298390655669" />
         <NodeLayout
-          Size="196,42"
+          Size="196,42.2857142857143"
           Id="Package\Sequence Container\Load BUs to the local DB"
-          TopLeft="567.000000272478,96.3907561186695" />
+          TopLeft="456.523806869668,96.3907561186695" />
         <NodeLayout
-          Size="280,42"
+          Size="280,42.2857142857143"
           Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB"
           TopLeft="30.8571456987029,370.988236598243" />
         <NodeLayout
-          Size="297,42"
+          Size="297.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues"
           TopLeft="421.857145698703,616.298390655669" />
         <NodeLayout
-          Size="171,42"
+          Size="170.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Load Source Teams"
           TopLeft="94.571432600216,245.929413755212" />
         <NodeLayout
-          Size="203,42"
+          Size="202.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Migrate Holiday Schedules"
-          TopLeft="504.76192872991,345.714291874667" />
+          TopLeft="467.936530928973,292.745346402595" />
         <NodeLayout
-          Size="220,42"
+          Size="220,42.2857142857143"
           Id="Package\Sequence Container\Migrate Team Default Queues"
           TopLeft="454.857145698703,695.298390655669" />
         <NodeLayout
-          Size="323,42"
+          Size="322.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Migrate Team Write-Off Values and Area Team Flag"
-          TopLeft="760.833335642192,320.199074228844" />
+          TopLeft="720.833334582554,285.963048496895" />
         <NodeLayout
-          Size="192,42"
+          Size="212,42.2857142857143"
+          Id="Package\Sequence Container\Migrate Working Schedule"
+          TopLeft="466.492063054752,365.403725034058" />
+        <NodeLayout
+          Size="192,42.2857142857143"
           Id="Package\Sequence Container\Read Target Root BU Id and Name"
-          TopLeft="565.36734718345,198.390756118669" />
+          TopLeft="458.700677691081,184.179575626162" />
         <NodeLayout
-          Size="191,42"
+          Size="190.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Truncate BU Local table"
-          TopLeft="565.36734718345,5.5" />
+          TopLeft="453.621312477159,15.8354039945507" />
         <NodeLayout
-          Size="283,42"
+          Size="282.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Truncate Dest Rolemembership Local Table"
           TopLeft="65.2328019877809,577.888446335222" />
         <NodeLayout
-          Size="162,42"
+          Size="162.285714285715,42.2857142857143"
           Id="Package\Sequence Container\Truncate local DB"
           TopLeft="94.6228256979609,145.598345177965" />
         <NodeLayout
-          Size="316,42"
+          Size="316,42.2857142857143"
           Id="Package\Sequence Container\Update Team Default Queues to Match the Source"
           TopLeft="377.5,891.298390655669" />
         <EdgeLayout
@@ -14756,18 +14736,18 @@ on teams.teamid = rm.teamid</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint1]"
-          TopLeft="662.983673727964,47.1000000000002">
+          TopLeft="551.786845387699,58.121118280265">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,49.2907561186688"
+              EndConnector="0,38.2696378384045"
               Start="0,0"
-              End="0,41.7907561186688">
+              End="0,30.7696378384045">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,41.7907561186688" />
+                    End="0,30.7696378384045" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -14800,18 +14780,18 @@ on teams.teamid = rm.teamid</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 11]"
-          TopLeft="663.183673727964,138.390756118669">
+          TopLeft="554.612242280375,138.676470404384">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,45.503105221778"
               Start="0,0"
-              End="0,52.5">
+              End="0,38.003105221778">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,38.003105221778" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -14856,30 +14836,52 @@ on teams.teamid = rm.teamid</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 111]"
-          TopLeft="661.36734718345,240.676470404383">
+          TopLeft="585.367344357748,226.465289911876">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="260.894559887313,79.5226038244609"
+              EndConnector="296.894561653377,59.4977585850186"
               Start="0,0"
-              End="260.894559887313,72.0226038244609">
+              End="296.894561653377,51.9977585850186">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.7613019122305" />
+                    End="0,20.094133641867" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,35.7613019122305"
-                    Point2="0,39.7613019122305"
-                    Point3="4,39.7613019122305" />
+                    Point1="0,20.094133641867"
+                    Point2="0,24.094133641867"
+                    Point3="4,24.094133641867" />
                   <mssgle:LineSegment
-                    End="256.894559887313,39.7613019122305" />
+                    End="292.894561653377,24.094133641867" />
                   <mssgle:CubicBezierSegment
-                    Point1="256.894559887313,39.7613019122305"
-                    Point2="260.894559887313,39.7613019122305"
-                    Point3="260.894559887313,43.7613019122305" />
+                    Point1="292.894561653377,24.094133641867"
+                    Point2="296.894561653377,24.094133641867"
+                    Point3="296.894561653377,28.094133641867" />
                   <mssgle:LineSegment
-                    End="260.894559887313,72.0226038244609" />
+                    End="296.894561653377,51.9977585850186" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 12]"
+          TopLeft="570.928582706149,335.031060688309">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30.3726643457492"
+              Start="0,0"
+              End="0,22.8726643457492">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.8726643457492" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -15002,30 +15004,30 @@ on teams.teamid = rm.teamid</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 6]"
-          TopLeft="565.36734718345,219.390756118669">
+          TopLeft="458.700677691081,205.322432769019">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-308.744521485489,-52.7924109407045"
+              EndConnector="-201.792137707406,-38.5812304481967"
               Start="0,0"
-              End="-301.244521485489,-52.7924109407045">
+              End="-194.292137707406,-38.5812304481967">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-150.372260742745,0" />
+                    End="-96.8960688537031,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="-150.372260742745,0"
-                    Point2="-154.372260742745,0"
-                    Point3="-154.372260742745,-4" />
+                    Point1="-96.8960688537031,0"
+                    Point2="-100.896068853703,0"
+                    Point3="-100.896068853703,-4" />
                   <mssgle:LineSegment
-                    End="-154.372260742745,-48.7924109407045" />
+                    End="-100.896068853703,-34.5812304481967" />
                   <mssgle:CubicBezierSegment
-                    Point1="-154.372260742745,-48.7924109407045"
-                    Point2="-154.372260742745,-52.7924109407045"
-                    Point3="-158.372260742745,-52.7924109407045" />
+                    Point1="-100.896068853703,-34.5812304481967"
+                    Point2="-100.896068853703,-38.5812304481967"
+                    Point3="-104.896068853703,-38.5812304481967" />
                   <mssgle:LineSegment
-                    End="-301.244521485489,-52.7924109407045" />
+                    End="-194.292137707406,-38.5812304481967" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -15092,68 +15094,30 @@ on teams.teamid = rm.teamid</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 9]"
-          TopLeft="630.700680516783,240.676470404383">
+          TopLeft="524.034011024415,226.465289911876">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-24.5101803583016,105.037821470283"
+              EndConnector="45.3310913331302,66.2800564907185"
               Start="0,0"
-              End="-24.5101803583016,97.5378214702833">
+              End="45.3310913331302,58.7800564907185">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,38.5359772896189" />
+                    End="0,22.8406840334315" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,38.5359772896189"
-                    Point2="0,42.5359772896189"
-                    Point3="-4,42.5359772896189" />
+                    Point1="0,22.8406840334315"
+                    Point2="0,26.8406840334315"
+                    Point3="4,26.8406840334315" />
                   <mssgle:LineSegment
-                    End="-20.5101803583016,42.5359772896189" />
+                    End="41.3310913331302,26.8406840334315" />
                   <mssgle:CubicBezierSegment
-                    Point1="-20.5101803583016,42.5359772896189"
-                    Point2="-24.5101803583016,42.5359772896189"
-                    Point3="-24.5101803583016,46.5359772896189" />
+                    Point1="41.3310913331302,26.8406840334315"
+                    Point2="45.3310913331302,26.8406840334315"
+                    Point3="45.3310913331302,30.8406840334315" />
                   <mssgle:LineSegment
-                    End="-24.5101803583016,97.5378214702833" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="212,42"
-          Id="Package\Sequence Container\Migrate Working Schedule"
-          TopLeft="483,430" />
-        <EdgeLayout
-          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 12]"
-          TopLeft="606.26192872991,387.714291874667">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-17.26192872991,42.285708125333"
-              Start="0,0"
-              End="-17.26192872991,34.785708125333">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,17.1428540626665" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,17.1428540626665"
-                    Point2="0,21.1428540626665"
-                    Point3="-4,21.1428540626665" />
-                  <mssgle:LineSegment
-                    End="-13.26192872991,21.1428540626665" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-13.26192872991,21.1428540626665"
-                    Point2="-17.26192872991,21.1428540626665"
-                    Point3="-17.26192872991,25.1428540626665" />
-                  <mssgle:LineSegment
-                    End="-17.26192872991,34.785708125333" />
+                    End="45.3310913331302,58.7800564907185" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -15165,8 +15129,8 @@ on teams.teamid = rm.teamid</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="1089,995"
-          Size="1089,1038"
+          PanelSize="1089.14285714286,994.857142857143"
+          Size="1089.14285714286,1037.71428571429"
           Id="Package\Sequence Container"
           TopLeft="496.658720878848,148.963045801728" />
       </GraphLayout>
@@ -16132,17 +16096,17 @@ on teams.teamid = rm.teamid</property>
     design-time-name="Package\Sequence Container\Migrate Holiday Schedules">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="205,42"
+          Size="205.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Migrate Holiday Schedules\Dynamics CRM Destination"
           TopLeft="173.253966239815,273.147462532213" />
         <NodeLayout
-          Size="154,42"
+          Size="154.285714285715,42.2857142857143"
           Id="Package\Sequence Container\Migrate Holiday Schedules\Derived Column"
           TopLeft="206.857142857143,154.857142857143" />
         <NodeLayout
-          Size="184,42"
+          Size="184,42.2857142857143"
           Id="Package\Sequence Container\Migrate Holiday Schedules\Dynamics CRM Source"
           TopLeft="221.587303321528,49.2185607393344" />
         <EdgeLayout
@@ -16176,7 +16140,9 @@ on teams.teamid = rm.teamid</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-22.8650802321925,36.8192910589043,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -16329,72 +16295,20 @@ on teams.teamid = rm.teamid</property>
     </LayoutInfo>
   </TaskHost>
   <TaskHost
-    design-time-name="Package\Sequence Container\Update Team Default Queues to Match the Source">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="274.857142857143,42.2857142857143"
-          Id="Package\Sequence Container\Update Team Default Queues to Match the Source\Get Teams and their Queues from Source"
-          TopLeft="74,99" />
-        <NodeLayout
-          Size="266.857142857143,42.2857142857143"
-          Id="Package\Sequence Container\Update Team Default Queues to Match the Source\Set the Default Team Queues on Target"
-          TopLeft="104,329" />
-        <EdgeLayout
-          Id="Package\Sequence Container\Update Team Default Queues to Match the Source.Paths[CRM Primary Output]"
-          TopLeft="211.5,141">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="26,188"
-              Start="0,0"
-              End="26,180.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,90" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,90"
-                    Point2="0,94"
-                    Point3="4,94" />
-                  <mssgle:LineSegment
-                    End="22,94" />
-                  <mssgle:CubicBezierSegment
-                    Point1="22,94"
-                    Point2="26,94"
-                    Point3="26,98" />
-                  <mssgle:LineSegment
-                    End="26,180.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <TaskHost
     design-time-name="Package\Sequence Container\Migrate Working Schedule">
     <LayoutInfo>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="205,42"
+          Size="205.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Migrate Working Schedule\Dynamics CRM Destination"
           TopLeft="530.253966239815,226.147462532213" />
         <NodeLayout
-          Size="154,42"
+          Size="154.285714285715,42.2857142857143"
           Id="Package\Sequence Container\Migrate Working Schedule\Derived Column"
           TopLeft="384.857142857143,136.857142857143" />
         <NodeLayout
-          Size="184,42"
+          Size="184,42.2857142857143"
           Id="Package\Sequence Container\Migrate Working Schedule\Dynamics CRM Source"
           TopLeft="221.587303321528,49.2185607393344" />
         <EdgeLayout
@@ -16463,6 +16377,58 @@ on teams.teamid = rm.teamid</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Update Team Default Queues to Match the Source">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="274.857142857143,42.2857142857143"
+          Id="Package\Sequence Container\Update Team Default Queues to Match the Source\Get Teams and their Queues from Source"
+          TopLeft="74,99" />
+        <NodeLayout
+          Size="266.857142857143,42.2857142857143"
+          Id="Package\Sequence Container\Update Team Default Queues to Match the Source\Set the Default Team Queues on Target"
+          TopLeft="104,329" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Update Team Default Queues to Match the Source.Paths[CRM Primary Output]"
+          TopLeft="211.5,141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26,188"
+              Start="0,0"
+              End="26,180.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,90" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,90"
+                    Point2="0,94"
+                    Point3="4,94" />
+                  <mssgle:LineSegment
+                    End="22,94" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22,94"
+                    Point2="26,94"
+                    Point3="26,98" />
+                  <mssgle:LineSegment
+                    End="26,180.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
