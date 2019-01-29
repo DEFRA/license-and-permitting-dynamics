@@ -69,6 +69,12 @@ namespace Lp.Model.EarlyBound
 			public const string VersionNumber = "versionnumber";
 			public const string defra_country_defra_address = "defra_country_defra_address";
 			public const string defra_town_defra_address = "defra_town_defra_address";
+			public const string lk_defra_address_createdby = "lk_defra_address_createdby";
+			public const string lk_defra_address_createdonbehalfby = "lk_defra_address_createdonbehalfby";
+			public const string lk_defra_address_modifiedby = "lk_defra_address_modifiedby";
+			public const string lk_defra_address_modifiedonbehalfby = "lk_defra_address_modifiedonbehalfby";
+			public const string team_defra_address = "team_defra_address";
+			public const string user_defra_address = "user_defra_address";
 		}
 		
 		/// <summary>
@@ -851,6 +857,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_town_defra_address");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_town>("defra_town_defra_address", null, value);
 				this.OnPropertyChanged("defra_town_defra_address");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_address_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_address_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_address_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_address_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_address_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_address_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_address_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_address_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_address_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_address_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_address_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_address_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_address_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_address_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_address_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_address_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_address_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_address
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_address")]
+		public Lp.Model.EarlyBound.Team team_defra_address
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_address", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_address
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_address")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_address
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_address", null);
 			}
 		}
 		

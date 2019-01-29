@@ -48,6 +48,7 @@ namespace Lp.Model.EarlyBound
 			public const string Subject = "subject";
 			public const string VersionNumber = "versionnumber";
 			public const string Account_Annotation = "Account_Annotation";
+			public const string annotation_owning_user = "annotation_owning_user";
 			public const string Contact_Annotation = "Contact_Annotation";
 			public const string defra_application_Annotations = "defra_application_Annotations";
 			public const string defra_areacomment_Annotations = "defra_areacomment_Annotations";
@@ -56,6 +57,11 @@ namespace Lp.Model.EarlyBound
 			public const string defra_permit_Annotations = "defra_permit_Annotations";
 			public const string Email_Annotation = "Email_Annotation";
 			public const string Incident_Annotation = "Incident_Annotation";
+			public const string lk_annotationbase_createdby = "lk_annotationbase_createdby";
+			public const string lk_annotationbase_createdonbehalfby = "lk_annotationbase_createdonbehalfby";
+			public const string lk_annotationbase_modifiedby = "lk_annotationbase_modifiedby";
+			public const string lk_annotationbase_modifiedonbehalfby = "lk_annotationbase_modifiedonbehalfby";
+			public const string team_annotations = "team_annotations";
 		}
 		
 		/// <summary>
@@ -579,6 +585,20 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 annotation_owning_user
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("annotation_owning_user")]
+		public Lp.Model.EarlyBound.SystemUser annotation_owning_user
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("annotation_owning_user", null);
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Contact_Annotation
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
@@ -743,6 +763,90 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Incident_Annotation");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Incident>("Incident_Annotation", null, value);
 				this.OnPropertyChanged("Incident_Annotation");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_annotationbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_annotationbase_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_annotationbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_annotationbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_annotationbase_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_annotationbase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_annotationbase_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_annotationbase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_annotationbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_annotationbase_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_annotationbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_annotationbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_annotationbase_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_annotationbase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_annotationbase_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_annotationbase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_annotationbase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_annotations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_annotations")]
+		public Lp.Model.EarlyBound.Team team_annotations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_annotations", null);
 			}
 		}
 		

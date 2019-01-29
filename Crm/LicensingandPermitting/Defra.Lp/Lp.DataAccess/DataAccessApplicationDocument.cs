@@ -47,7 +47,8 @@
             Guid? owningUserId,
             Guid? owningTeamId)
         {
-            TracingService.Trace($"CreateApplicationDocument() documentName={documentName}, documentLink={documentLink}, fileName={fileName}, source={source}, applicationId={applicationId}, caseId={caseId}, emailId={emailId}");
+            TracingService.Trace($"CreateApplicationDocument() documentName={documentName}, documentLink={documentLink}, fileName={fileName}, source={source}, applicationId={applicationId}, caseId={caseId}, emailId={emailId}, owningUserId={owningUserId}, owningTeamId={owningTeamId}");
+
             // Prep the entity
             Entity appDocumentEntity = new Entity(defra_applicationdocument.EntityLogicalName);
 
@@ -70,6 +71,15 @@
             {
                 appDocumentEntity.Attributes.Add(defra_applicationdocument.Fields.CreatedBy, new EntityReference(Incident.EntityLogicalName, createdById.Value));
                 appDocumentEntity.Attributes.Add(defra_applicationdocument.Fields.CreatedOnBehalfBy, new EntityReference(Incident.EntityLogicalName, createdById.Value));
+            }
+
+            if (owningUserId.HasValue)
+            {
+                appDocumentEntity.Attributes.Add(defra_applicationdocument.Fields.OwnerId, new EntityReference(SystemUser.EntityLogicalName, owningUserId.Value));
+            }
+            else if (owningTeamId.HasValue)
+            {
+                appDocumentEntity.Attributes.Add(defra_applicationdocument.Fields.OwnerId, new EntityReference(Team.EntityLogicalName, owningTeamId.Value));
             }
 
             appDocumentEntity.Attributes.Add(defra_applicationdocument.Fields.defra_name, documentName);

@@ -776,7 +776,8 @@ namespace Defra.Lp.Common.SharePoint
                 Email.Fields.Sender, 
                 Email.Fields.ToRecipients, 
                 Email.Fields.CreatedOn, 
-                Email.Fields.OwnerId);
+                Email.Fields.OwningUser,
+                Email.Fields.OwningTeam);
 
             // Add Application link-entity and define an alias.
             // Its an outer join as we want to return results even if not regarding an application
