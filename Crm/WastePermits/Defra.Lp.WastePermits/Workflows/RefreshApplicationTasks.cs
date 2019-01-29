@@ -78,7 +78,8 @@ namespace Defra.Lp.WastePermits.Workflows
         /// <param name="crmWorkflowContext">Standard CRM workflow context</param>
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext executionContext, LocalWorkflowContext crmWorkflowContext)
         {
-            // Set-up
+            // 1. SETUP
+
             ITracingService tracingService = executionContext.GetExtension<ITracingService>();
             IOrganizationService organisationService = crmWorkflowContext.OrganizationService;
             tracingService.Trace("Started");
@@ -108,31 +109,26 @@ namespace Defra.Lp.WastePermits.Workflows
             DataAccessApplicationTask dalAppTask = new DataAccessApplicationTask(organisationService, tracingService);
             DataAccessApplication dalApp = new DataAccessApplication(organisationService, tracingService);
 
+            // 2. PROCESSING
+
             // Get Application Type, SubType and owners
-            ApplicationTypesAndOwners applicationDetails = dalApp.GetApplicationType(application.Id);
+            ApplicationTypesAndOwners applicationDetails = dalApp.GetApplicationTypeAndOwner(application.Id);
 
-            // Get applicable task definitionIds
-            tracingService.Trace("Calling DataAccessApplicationTask.GetTaskDefinitionIdsThatApplyToApplication()");
-            List<Guid> applicableTaskDefinitionIds = dalAppTask.GetTaskDefinitionIdsThatApplyToApplication(application.Id, applicationDetails.ApplicationType, applicationDetails.ApplicationSubType, taskTypeIdArray) ?? new List<Guid>();
+            // Which tasks should be linked to the application?
+            List<Guid> applicableTasks = dalAppTask.GetTaskDefinitionIdsThatApplyToApplication(application.Id, applicationDetails.ApplicationType, applicationDetails.ApplicationSubType, taskTypeIdArray) ?? new List<Guid>();
 
-            // Get application tasks already linked to the application
-            tracingService.Trace("Calling DataAccessApplicationTask.GetApplicationTaskIdsLinkedToApplication()");
-            List<ApplicationTaskAndDefinitionId> applicationTasksAndDefinitionIds = dalAppTask.GetApplicationTaskIdsLinkedToApplication(application.Id, taskTypeIdArray) ?? new List<ApplicationTaskAndDefinitionId>();
+            // Which tasks are already linked?
+            List<ApplicationTaskAndDefinitionId> existingTasks = dalAppTask.GetApplicationTaskIdsLinkedToApplication(application.Id, taskTypeIdArray) ?? new List<ApplicationTaskAndDefinitionId>();
 
             // Deactivate application tasks that no longer apply
-            tracingService.Trace("Calling DataAccessApplicationTask.DeactivateApplicationTask()");
-            applicationTasksAndDefinitionIds
-                .Where(t => !applicableTaskDefinitionIds.Contains(t.ApplicationTaskDefinitionId))
+            List<Guid> tasksToRemove = existingTasks.Where(existingTask => !applicableTasks.Contains(existingTask.ApplicationTaskDefinitionId))
                 .Select(t => t.ApplicationTaskId)
-                .ToList()
-                .ForEach(dalAppTask.DeactivateApplicationTask);
+                .ToList();
+            tasksToRemove.ForEach(dalAppTask.DeactivateApplicationTask);
 
             // Create application tasks that apply
-            tracingService.Trace("Calling DataAccessApplicationTask.CreateApplicationTask()");
-            applicableTaskDefinitionIds
-                .Where(neTask => applicationTasksAndDefinitionIds.All(t => t.ApplicationTaskDefinitionId != neTask))
-                .ToList()
-                .ForEach(newtask => dalAppTask.CreateApplicationTask(application.Id, applicationDetails.OwningUser, applicationDetails.OwningTeam, newtask));
+            List<Guid> tasksToAdd = applicableTasks.Where(applicableTask => existingTasks.All(t => t.ApplicationTaskDefinitionId != applicableTask)).ToList();
+            tasksToAdd.ForEach(newtask => dalAppTask.CreateApplicationTask(application.Id, applicationDetails.OwningUser, applicationDetails.OwningTeam, newtask));
 
             tracingService.Trace("Done");
         }

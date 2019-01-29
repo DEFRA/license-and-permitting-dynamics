@@ -110,16 +110,18 @@
             EntityCollection entityCollectionResult = OrganisationService.RetrieveMultiple(query);
 
             // Return a list of defra_applicationtaskdefinition ids 
+            List<Guid> retVal = null;
             if (entityCollectionResult?.Entities != null)
             {
-                TracingService.Trace($"GetTaskDefinitionIdsThatApplyToApplication() Returning data");
-                return entityCollectionResult.Entities
+                TracingService.Trace("GetTaskDefinitionIdsThatApplyToApplication() Returning data");
+                retVal = entityCollectionResult.Entities
                     .Select(e => e.GetAttributeIdOrDefault(defra_applicationtaskdefinition.Fields
                         .defra_applicationtaskdefinitionId)).ToList();
             }
 
-            TracingService.Trace($"GetTaskDefinitionIdsThatApplyToApplication() Returning no data");
-            return null;
+            retVal?.ForEach(t => TracingService.Trace($"GetTaskDefinitionIdsThatApplyToApplication - {t}"));
+            TracingService.Trace($"GetTaskDefinitionIdsThatApplyToApplication() Done");
+            return retVal;
         }
 
         /// <summary>
@@ -134,7 +136,7 @@
 
             // Select defra_applicationtask records 
             var query = new QueryExpression(defra_applicationtask.EntityLogicalName);
-            query.ColumnSet.AddColumns(defra_applicationtask.Fields.defra_applicationtaskId);
+            query.ColumnSet.AddColumns(defra_applicationtask.Fields.defra_applicationtaskId, defra_applicationtask.Fields.defra_applicationtaskdefinitionid);
             query.Criteria.AddCondition(defra_applicationtask.Fields.StateCode, ConditionOperator.Equal, (int)defra_applicationtaskState.Active);
             query.Criteria.AddCondition(defra_applicationtask.Fields.defra_applicationid, ConditionOperator.Equal, applicationId);
 
@@ -165,22 +167,22 @@
 
             // Query CRM
             EntityCollection entityCollectionResult = OrganisationService.RetrieveMultiple(query);
-
+            List<ApplicationTaskAndDefinitionId> retVal = null;
             // Return a list of defra_applicationtaskdefinition ids 
             if (entityCollectionResult?.Entities != null)
             {
                 TracingService.Trace($"GetApplicationTaskIdsLinkedToApplication() Returning data");
-                return entityCollectionResult.Entities
+                retVal = entityCollectionResult.Entities
                     .Select(e => new ApplicationTaskAndDefinitionId
                     {
                         ApplicationTaskId = e.GetAttributeIdOrDefault(defra_applicationtask.Fields.defra_applicationtaskId),
                         ApplicationTaskDefinitionId = e.GetAttributeIdOrDefault(defra_applicationtask.Fields.defra_applicationtaskdefinitionid)
-                    })
-                        .ToList();
+                    }).ToList();
             }
 
-            TracingService.Trace($"GetApplicationTaskIdsLinkedToApplication() Returning no data");
-            return null;
+            retVal?.ForEach(t => TracingService.Trace($"GetApplicationTaskIdsLinkedToApplication - ApplicationTaskId={t.ApplicationTaskId}, ApplicationTaskDefinitionId={t.ApplicationTaskDefinitionId}"));
+            TracingService.Trace("GetApplicationTaskIdsLinkedToApplication() Done");
+            return retVal;
         }
 
         /// <summary>
@@ -189,6 +191,7 @@
         /// <param name="applicationTaskIdGuid">defra_applicationtask id</param>
         public void DeactivateApplicationTask(Guid applicationTaskIdGuid)
         {
+            TracingService.Trace($"GetApplicationTaskIdsLinkedToApplication({applicationTaskIdGuid})");
 
             var state = new SetStateRequest
                 {
@@ -209,6 +212,8 @@
         /// <returns>Newly created record id</returns>
         public Guid CreateApplicationTask(Guid applicationId, Guid? ownerUserId, Guid? ownerTeamId, Guid applicationTaskDefinitionId)
         {
+            TracingService.Trace($"CreateApplicationTask(applicationId={applicationId}, ownerUserId={ownerUserId}, ownerTeamId={ownerTeamId},applicationTaskDefinitionId={applicationTaskDefinitionId})");
+
             Entity applicationTask = new Entity(defra_applicationtask.EntityLogicalName);
             applicationTask.Attributes.Add(defra_applicationtask.Fields.defra_applicationid, new EntityReference(defra_application.EntityLogicalName, applicationId));
             applicationTask.Attributes.Add(defra_applicationtask.Fields.defra_applicationtaskdefinitionid, new EntityReference(defra_applicationtaskdefinition.EntityLogicalName, applicationTaskDefinitionId));
@@ -223,6 +228,5 @@
             }
             return OrganisationService.Create(applicationTask);
         }
-
     }
 }

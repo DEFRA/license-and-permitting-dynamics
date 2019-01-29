@@ -53,7 +53,7 @@ namespace WastePermits.DataAccess
         /// <summary>
         /// Retrieves the Application Type, Sub Type and Owner fields for an application
         /// </summary>
-        public ApplicationTypesAndOwners GetApplicationType(Guid applicationId)
+        public ApplicationTypesAndOwners GetApplicationTypeAndOwner(Guid applicationId)
         {
             TracingService.Trace("GetApplicationType() Application with Id {0} is being retrieved", applicationId);
             Entity applicatEntity = OrganisationService.Retrieve(
