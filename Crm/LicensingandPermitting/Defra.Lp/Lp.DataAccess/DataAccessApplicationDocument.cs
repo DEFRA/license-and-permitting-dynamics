@@ -32,6 +32,8 @@
         /// <param name="caseId"></param>
         /// <param name="emailId"></param>
         /// <param name="createdById"></param>
+        /// <param name="owningUserId"></param>
+        /// <param name="owningTeamId"></param>
         /// <returns></returns>
         public Guid CreateApplicationDocument(
             string documentName, 
@@ -41,7 +43,9 @@
             Guid? applicationId, 
             Guid? caseId, 
             Guid? emailId,
-            Guid? createdById)
+            Guid? createdById,
+            Guid? owningUserId,
+            Guid? owningTeamId)
         {
             TracingService.Trace($"CreateApplicationDocument() documentName={documentName}, documentLink={documentLink}, fileName={fileName}, source={source}, applicationId={applicationId}, caseId={caseId}, emailId={emailId}");
             // Prep the entity
