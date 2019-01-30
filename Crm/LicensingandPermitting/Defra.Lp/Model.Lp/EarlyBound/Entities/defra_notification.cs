@@ -109,6 +109,12 @@ namespace Lp.Model.EarlyBound
 			public const string account_defra_notifications = "account_defra_notifications";
 			public const string contact_defra_notifications = "contact_defra_notifications";
 			public const string defra_application_defra_notifications = "defra_application_defra_notifications";
+			public const string defra_notification_systemuser_createdby = "defra_notification_systemuser_createdby";
+			public const string defra_notification_systemuser_createdonbehalfby = "defra_notification_systemuser_createdonbehalfby";
+			public const string defra_notification_systemuser_modifiedby = "defra_notification_systemuser_modifiedby";
+			public const string defra_notification_systemuser_modifiedonbehalfby = "defra_notification_systemuser_modifiedonbehalfby";
+			public const string defra_notification_systemuser_owninguser = "defra_notification_systemuser_owninguser";
+			public const string defra_notification_team_owningteam = "defra_notification_team_owningteam";
 			public const string defra_payment_defra_notifications = "defra_payment_defra_notifications";
 			public const string defra_permit_defra_notifications = "defra_permit_defra_notifications";
 			public const string incident_defra_notifications = "incident_defra_notifications";
@@ -1638,6 +1644,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_notifications");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_notifications", null, value);
 				this.OnPropertyChanged("defra_application_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_systemuser_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_createdby")]
+		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_systemuser_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_notification_systemuser_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_createdonbehalfby", null, value);
+				this.OnPropertyChanged("defra_notification_systemuser_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_systemuser_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_systemuser_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_notification_systemuser_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("defra_notification_systemuser_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_systemuser_owninguser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_systemuser_owninguser")]
+		public Lp.Model.EarlyBound.SystemUser defra_notification_systemuser_owninguser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_notification_systemuser_owninguser", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_notification_team_owningteam
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_team_owningteam")]
+		public Lp.Model.EarlyBound.Team defra_notification_team_owningteam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("defra_notification_team_owningteam", null);
 			}
 		}
 		

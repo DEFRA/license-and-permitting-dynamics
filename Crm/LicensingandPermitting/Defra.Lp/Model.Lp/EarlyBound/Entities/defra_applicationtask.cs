@@ -64,6 +64,12 @@ namespace Lp.Model.EarlyBound
 			public const string defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefinitionid = "defra_defra_applicationtaskdefinition_defra_applicationtask_applicationtaskdefini" +
 		"tionid";
 			public const string defra_tasktype_defra_applicationtask_application_task_typeid = "defra_tasktype_defra_applicationtask_application_task_typeid";
+			public const string lk_defra_applicationtask_createdby = "lk_defra_applicationtask_createdby";
+			public const string lk_defra_applicationtask_createdonbehalfby = "lk_defra_applicationtask_createdonbehalfby";
+			public const string lk_defra_applicationtask_modifiedby = "lk_defra_applicationtask_modifiedby";
+			public const string lk_defra_applicationtask_modifiedonbehalfby = "lk_defra_applicationtask_modifiedonbehalfby";
+			public const string team_defra_applicationtask = "team_defra_applicationtask";
+			public const string user_defra_applicationtask = "user_defra_applicationtask";
 		}
 		
 		/// <summary>
@@ -673,6 +679,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_tasktype_defra_applicationtask_application_task_typeid");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_tasktype>("defra_tasktype_defra_applicationtask_application_task_typeid", null, value);
 				this.OnPropertyChanged("defra_tasktype_defra_applicationtask_application_task_typeid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationtask_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationtask_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_applicationtask_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationtask_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationtask_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_applicationtask_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationtask_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationtask_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationtask_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationtask_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_applicationtask_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_applicationtask_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_applicationtask_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_applicationtask_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_applicationtask_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_applicationtask_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_applicationtask_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_applicationtask
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_applicationtask")]
+		public Lp.Model.EarlyBound.Team team_defra_applicationtask
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_applicationtask", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_applicationtask
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_applicationtask")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_applicationtask
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_applicationtask", null);
 			}
 		}
 		

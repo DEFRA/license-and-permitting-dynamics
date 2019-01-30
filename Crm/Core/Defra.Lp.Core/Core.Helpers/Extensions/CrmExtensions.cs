@@ -68,7 +68,29 @@
         /// <returns>Guid</returns>
         public static Guid? GetAliasedAttributeId(this Entity entity, string attribute)
         {
-            return entity.Contains(attribute) ? (Guid)entity.GetAttributeValue<AliasedValue>(attribute).Value : (Guid?)null;
+            if (!entity.Contains(attribute))
+            {
+                return null;
+            }
+
+            var aliasedAttribute = entity.GetAttributeValue<AliasedValue>(attribute);
+
+            if (aliasedAttribute?.Value == null)
+            {
+                return null;
+            }
+
+            if (aliasedAttribute.Value is Guid)
+            {
+                return (Guid) aliasedAttribute.Value;
+            }
+
+            if (aliasedAttribute.Value is EntityReference)
+            {
+                return ((EntityReference)aliasedAttribute.Value).Id;
+            }
+
+            return null;
         }
 
         /// <summary>
