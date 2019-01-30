@@ -431,7 +431,7 @@
             return resultEntities.Entities.Select(entity =>
                 new ApplicationQuestionsAndLines
                 {
-                    ApplicationLineId = entity.GetAttributeGuid(defra_applicationline.Fields.defra_applicationlineId),
+                    ApplicationLineId = entity.GetAttributeId(defra_applicationline.Fields.defra_applicationlineId),
                     ApplicationQuestionId = entity.GetAliasedAttributeId(questionIdAttributeName),
                     Scope = entity.GetAliasedOptionSetValue(scopeAttributeName),
                 }).ToList();
