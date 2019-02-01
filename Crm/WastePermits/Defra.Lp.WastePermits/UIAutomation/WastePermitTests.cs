@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Security;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,20 +26,56 @@ namespace WastePermits.UIAutomation
         public static void SetupTests(TestContext testContext)
         {
             TestContext TestContext = testContext;
-            var username = TestContext.Properties["crmUserName"].ToString();
+            string usernameKey = "crmUserName";
+            string pwdKey = "crmPassword";
+            string urlKey = "crmDestinationUrl";
+
+            // Get the username
+            string username = null;
+            if (TestContext.Properties.Contains(usernameKey))
+            {
+                username = TestContext.Properties[usernameKey].ToString();
+            }
+            else
+            {
+                username = ConfigurationManager.AppSettings[usernameKey];
+            }         
             foreach (char c in username)
             {
                 _username.AppendChar(c);
             }
 
-            var pwd = TestContext.Properties["crmPassword"].ToString();
+            // Get the password
+            string pwd = null;
+            if (TestContext.Properties.Contains(pwdKey))
+            {
+                pwd = TestContext.Properties[pwdKey].ToString();
+            }
+            else
+            {
+                pwd = ConfigurationManager.AppSettings[pwdKey];
+            }
             foreach (char c in pwd)
             {
                 _password.AppendChar(c);
             }
-            _xrmUri = new Uri(TestContext.Properties["crmDestinationUrl"].ToString());
+
+
+            // Get the url
+            string url = null;
+            if (TestContext.Properties.Contains(urlKey))
+            {
+                url = TestContext.Properties[urlKey].ToString();
+            }
+            else
+            {
+                url = ConfigurationManager.AppSettings[urlKey];
+            }
+
+            _xrmUri = new Uri(url);
         }
 
+        /*(
         [TestMethod]
         public void WastePermitsApplicationGlobalSearchOpenRecord()
         {
@@ -64,10 +101,9 @@ namespace WastePermits.UIAutomation
                 xrmBrowser.ThinkTime(4000);
                 xrmBrowser.GlobalSearch.OpenRecord("Applications", 0);
                 xrmBrowser.ThinkTime(10000);
-
-
             }
         }
+        */
 
         [TestMethod]
         public void OpenApplication()
@@ -86,7 +122,7 @@ namespace WastePermits.UIAutomation
 
                 xrmBrowser.Navigation.OpenSubArea("LP", "Applications");
                 xrmBrowser.Grid.SwitchView("Active Applications");
-                xrmBrowser.Grid.Search("WE7507QB");
+                xrmBrowser.Grid.Search("*WE");
                 xrmBrowser.Grid.OpenRecord(0);
                 xrmBrowser.ThinkTime(10000);
                 // do
@@ -130,7 +166,7 @@ namespace WastePermits.UIAutomation
             using (var xrmBrowser = new Microsoft.Dynamics365.UIAutomation.Api.Browser(TestSettings.Options))
             {
                 xrmBrowser.LoginPage.Login(_xrmUri, _username, _password);
-
+                
                 try
                 {
                     xrmBrowser.GuidedHelp.CloseGuidedHelp();
@@ -146,16 +182,17 @@ namespace WastePermits.UIAutomation
                 {
 
                 }
-
-                xrmBrowser.ThinkTime(500);
+                
+                xrmBrowser.ThinkTime(2000);
                 xrmBrowser.Navigation.OpenSubArea("LP", "Applications");
-
+                
                 xrmBrowser.ThinkTime(2000);
                 xrmBrowser.Grid.SwitchView("Active Applications");
-
+                 
                 xrmBrowser.ThinkTime(1000);
                 xrmBrowser.Grid.OpenRecord(0);
                 xrmBrowser.ThinkTime(1000);
+              
 
             }
         }
