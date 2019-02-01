@@ -16,10 +16,10 @@ namespace WastePermits.UIAutomation
 
         #region CRM test user credentials
 
-        private static SecureString pscWasteUsernName1 = new SecureString(); 
+        private static SecureString pscWasteUserName1 = new SecureString(); 
         private static SecureString pscWastePassword1 = new SecureString();
 
-        private static SecureString pscWasteUsernName2 = new SecureString();
+        private static SecureString pscWasteUserName2 = new SecureString();
         private static SecureString pscWastePassword2 = new SecureString();
 
         private static SecureString wasteTeamLeadUsername = new SecureString();
@@ -42,9 +42,9 @@ namespace WastePermits.UIAutomation
             TestContext TestContext = testContext;
 
             // Get the usernames and password
-            GetSecureStringFromSetting(TestContext, nameof(pscWasteUsernName1), pscWasteUsernName1);
+            GetSecureStringFromSetting(TestContext, nameof(pscWasteUserName1), pscWasteUserName1);
             GetSecureStringFromSetting(TestContext, nameof(pscWastePassword1), pscWastePassword1);
-            GetSecureStringFromSetting(TestContext, nameof(pscWasteUsernName2), pscWasteUsernName2);
+            GetSecureStringFromSetting(TestContext, nameof(pscWasteUserName2), pscWasteUserName2);
             GetSecureStringFromSetting(TestContext, nameof(pscWastePassword2), pscWastePassword2);
             GetSecureStringFromSetting(TestContext, nameof(wasteTeamLeadUsername), wasteTeamLeadUsername);
             GetSecureStringFromSetting(TestContext, nameof(wasteTeamLeadPassword), wasteTeamLeadPassword);
@@ -90,7 +90,7 @@ namespace WastePermits.UIAutomation
         {
             using (var xrmBrowser = new Microsoft.Dynamics365.UIAutomation.Api.Browser(TestSettings.Options))
             {
-                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUsernName1, pscWastePassword1);
+                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUserName1, pscWastePassword1);
                 xrmBrowser.GuidedHelp.CloseGuidedHelp();
 
                 xrmBrowser.ThinkTime(500);
@@ -119,7 +119,7 @@ namespace WastePermits.UIAutomation
         {
             using (var xrmBrowser = new Microsoft.Dynamics365.UIAutomation.Api.Browser(TestSettings.Options))
             {
-                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUsernName1, pscWastePassword1);
+                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUserName1, pscWastePassword1);
                 xrmBrowser.ThinkTime(500);
                 try { xrmBrowser.GuidedHelp.CloseGuidedHelp(); }
                 catch { }
@@ -149,7 +149,7 @@ namespace WastePermits.UIAutomation
         {
             using (var xrmBrowser = new Microsoft.Dynamics365.UIAutomation.Api.Browser(TestSettings.Options))
             {
-                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUsernName2, pscWastePassword2);
+                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUserName2, pscWastePassword2);
                 xrmBrowser.ThinkTime(500);
                 try { xrmBrowser.GuidedHelp.CloseGuidedHelp(); }
                 catch { }
@@ -174,7 +174,7 @@ namespace WastePermits.UIAutomation
         {
             using (var xrmBrowser = new Microsoft.Dynamics365.UIAutomation.Api.Browser(TestSettings.Options))
             {
-                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUsernName1, pscWastePassword1);
+                xrmBrowser.LoginPage.Login(_xrmUri, pscWasteUserName1, pscWastePassword1);
                 
                 try
                 {
