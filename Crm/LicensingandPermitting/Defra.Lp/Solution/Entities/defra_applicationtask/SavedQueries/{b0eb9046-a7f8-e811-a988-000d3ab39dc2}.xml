@@ -9,8 +9,9 @@
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
       <row name="result" id="defra_applicationtaskid">
-        <cell name="defra_applicationtaskdefinitionid" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_completed" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_2d6abd9931efe811a988000d3ab31f97.defra_tasktypeid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_2d6abd9931efe811a988000d3ab31f97.defra_name" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_completed" width="100" />
         <cell name="defra_notes" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_applicationline" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
       </row>
@@ -24,16 +25,19 @@
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
         </filter>
-        <attribute name="defra_completed" />
-        <attribute name="defra_applicationtaskdefinitionid" />
         <attribute name="defra_applicationline" />
         <attribute name="defra_notes" />
+        <link-entity alias="a_2d6abd9931efe811a988000d3ab31f97" name="defra_applicationtaskdefinition" from="defra_applicationtaskdefinitionid" to="defra_applicationtaskdefinitionid" link-type="outer" visible="false">
+          <attribute name="defra_tasktypeid" />
+          <attribute name="defra_name" />
+        </link-entity>
+        <attribute name="defra_completed" />
         <attribute name="defra_applicationtaskid" />
       </entity>
     </fetch>
   </fetchxml>
   <IntroducedVersion>1.0.0.1</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="Application Checklist" languagecode="1033" />
+    <LocalizedName description="Application Checklist by Type" languagecode="1033" />
   </LocalizedNames>
 </savedquery>
