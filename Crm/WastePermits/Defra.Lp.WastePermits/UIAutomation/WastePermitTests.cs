@@ -52,7 +52,7 @@ namespace WastePermits.UIAutomation
             GetSecureStringFromSetting(TestContext, nameof(wasteIntelPassword), wasteIntelPassword);
             
             // Get the url
-            string urlKey = "crmDestinationUrl";
+            string urlKey = "https://ag-ea-lp-qa-master.crm4.dynamics.com";
             string url = null;
             if (TestContext.Properties.Contains(urlKey))
             {
