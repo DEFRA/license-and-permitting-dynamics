@@ -640,6 +640,30 @@ namespace Lp.Model.EarlyBound
 				return this.CreateQuery<Lp.Model.EarlyBound.QueueItem>();
 			}
 		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.SystemUser> SystemUserSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.SystemUser>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="Lp.Model.EarlyBound.Team"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<Lp.Model.EarlyBound.Team> TeamSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<Lp.Model.EarlyBound.Team>();
+			}
+		}
 	}
 	
 	internal sealed class EntityOptionSetEnum
