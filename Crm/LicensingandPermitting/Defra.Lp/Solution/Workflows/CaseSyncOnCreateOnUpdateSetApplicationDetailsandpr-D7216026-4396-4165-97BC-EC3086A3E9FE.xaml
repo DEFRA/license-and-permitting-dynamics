@@ -291,10 +291,12 @@
               </sco:Collection>
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
-          <Sequence DisplayName="UpdateStep6: Update case with retrieved data so they can be used for RFI and Schedule 5 template and emails">
+          <Sequence DisplayName="UpdateStep6: Update case with retrieved data so they can be used for RFI and Schedule 5 template and emails, also set the Business Track">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Object" Name="UpdateStep6_1" />
               <Variable x:TypeArguments="x:Object" Name="UpdateStep6_2" />
+              <Variable x:TypeArguments="x:Object" Name="UpdateStep6_3" />
+              <Variable x:TypeArguments="x:Object" Name="UpdateStep6_4" />
             </Sequence.Variables>
             <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;incident&quot;)]" />
             <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
@@ -329,6 +331,30 @@
               <mxswa:SetEntityProperty.TargetType>
                 <InArgument x:TypeArguments="s:Type">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                </InArgument>
+              </mxswa:SetEntityProperty.TargetType>
+            </mxswa:SetEntityProperty>
+            <mxswa:GetEntityProperty Attribute="defra_businesstrackid" Entity="[InputEntities(&quot;related_defra_application#defra_application&quot;)]" EntityName="defra_application" Value="[UpdateStep6_4]">
+              <mxswa:GetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                </InArgument>
+              </mxswa:GetEntityProperty.TargetType>
+            </mxswa:GetEntityProperty>
+            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+              <mxswa:ActivityReference.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep6_4 }]</InArgument>
+                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
+                </InArgument>
+                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep6_3]</OutArgument>
+              </mxswa:ActivityReference.Arguments>
+            </mxswa:ActivityReference>
+            <mxswa:SetEntityProperty Attribute="defra_businesstrackid" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="incident" Value="[UpdateStep6_3]">
+              <mxswa:SetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:EntityReference" />
                 </InArgument>
               </mxswa:SetEntityProperty.TargetType>
             </mxswa:SetEntityProperty>
