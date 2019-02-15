@@ -161,6 +161,15 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+USE [DEFRASSIS]
+GO
+
+/****** Object:  Table [dbo].[destbusinessunit]    Script Date: 15/02/2019 15:10:56 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
 
 CREATE TABLE [dbo].[destbusinessunit](
 	[businessunitid] [uniqueidentifier] NOT NULL,
@@ -173,7 +182,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[destqueues]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[destqueues]    Script Date: 15/02/2019 15:10:56 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -196,9 +205,11 @@ CREATE TABLE [dbo].[destqueues](
 	[mailboxstatus] [int] NULL,
 	[ownername] [nvarchar](300) NULL,
 	[teamid] [uniqueidentifier] NULL,
-	[teamname] [nvarchar](300) NULL)
+	[teamname] [nvarchar](300) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
 
-/****** Object:  Table [dbo].[destrole]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[destrole]    Script Date: 15/02/2019 15:10:56 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -216,7 +227,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[destrolemembership]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[destrolemembership]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -237,7 +248,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[queueemails]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[queueemails]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -251,7 +262,7 @@ CREATE TABLE [dbo].[queueemails](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[srcbusinessunit]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[srcbusinessunit]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -269,7 +280,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[srclpteams]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[srclpteams]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -287,7 +298,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[srcqueues]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[srcqueues]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -310,10 +321,11 @@ CREATE TABLE [dbo].[srcqueues](
 	[mailboxstatus] [int] NULL,
 	[ownername] [nvarchar](300) NULL,
 	[teamid] [uniqueidentifier] NULL,
-	[teamname] [nvarchar](300) NULL)
+	[teamname] [nvarchar](300) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[srcrolemembership]    Script Date: 12/02/2019 17:01:02 ******/
+/****** Object:  Table [dbo].[srcrolemembership]    Script Date: 15/02/2019 15:10:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -333,11 +345,6 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-
-
-
-
 
 
 
