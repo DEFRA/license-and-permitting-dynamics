@@ -7,12 +7,12 @@
   DTS:CreatorName="KAL-VM-VISIO\Kal"
   DTS:DTSID="{354D5399-1CA9-41BE-89A4-5F730511B9CA}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LastModifiedProductVersion="14.0.0800.98"
   DTS:LocaleID="2057"
   DTS:ObjectName="Step1_MigrateBaseDataBeforeSolutionsImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="298"
-  DTS:VersionGUID="{563584E4-664E-4A4A-A232-CBF88B330100}">
+  DTS:VersionBuild="299"
+  DTS:VersionGUID="{A0FB436C-BCEC-4FB7-9C07-99636BBA4499}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,7 +23,7 @@
       DTS:ObjectName="(local).LPConfigDataMigration">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost\SQL2017;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -593,13 +593,6 @@
                           cachedName="parentbusinessunitid"
                           externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
                           lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[Primary Output].Columns[parentbusinessunitid]" />
-                        <inputColumn
-                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[parentbusinessunitidname]"
-                          cachedDataType="wstr"
-                          cachedLength="160"
-                          cachedName="parentbusinessunitidname"
-                          externalMetadataColumnId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitname]"
-                          lineageId="Package\BU\Load BUs to the local DB\Load root BUs from destination.Outputs[Primary Output].Columns[parentbusinessunitidname]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -610,17 +603,12 @@
                         <externalMetadataColumn
                           refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[name]"
                           dataType="wstr"
-                          length="200"
+                          length="300"
                           name="name" />
                         <externalMetadataColumn
                           refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitid]"
                           dataType="guid"
                           name="parentbusinessunitid" />
-                        <externalMetadataColumn
-                          refId="Package\BU\Load BUs to the local DB\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[parentbusinessunitname]"
-                          dataType="wstr"
-                          length="200"
-                          name="parentbusinessunitname" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -1464,7 +1452,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Read Target Root BU Id and Name"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -6356,7 +6344,7 @@ from srcbusinessunit as bu</property>
           DTS:LocaleID="-1"
           DTS:ObjectName="Truncate local DB"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -6416,11 +6404,11 @@ from srcbusinessunit as bu</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="196,42.2857142857143"
+          Size="196,42"
           Id="Package\BU\Load BUs to the local DB"
           TopLeft="45.0000002724784,144.942857226204" />
         <NodeLayout
-          Size="190.857142857143,42.2857142857143"
+          Size="191,42"
           Id="Package\BU\Truncate BU Local table"
           TopLeft="43.3673471834499,54.0521011075346" />
         <EdgeLayout
@@ -6448,16 +6436,16 @@ from srcbusinessunit as bu</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="261.714285714286,434.857142857143"
-          Size="261.714285714286,477.714285714286"
+          PanelSize="262,435"
+          Size="262,478"
           Id="Package\BU"
           TopLeft="1824.34240187002,818.478628174637" />
         <NodeLayout
-          Size="194.857142857143,42.2857142857143"
+          Size="195,42"
           Id="Package\General Core Data\Migrate Schedule Entries"
           TopLeft="53.571432600216,171.929413755212" />
         <NodeLayout
-          Size="192,42.2857142857143"
+          Size="192,42"
           Id="Package\General Core Data\Read Target Root BU Id and Name"
           TopLeft="30,29" />
         <EdgeLayout
@@ -6498,23 +6486,23 @@ from srcbusinessunit as bu</property>
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="324,444"
-          Size="324,486.857142857143"
+          Size="324,487"
           Id="Package\General Core Data"
           TopLeft="2120.34240187002,818.842966317286" />
         <NodeLayout
-          Size="168,42.2857142857143"
+          Size="168,42"
           Id="Package\Teams\Create BUs to Dest"
           TopLeft="59.6666666666669,72.0000000000001" />
         <NodeLayout
-          Size="197.714285714286,42.2857142857143"
+          Size="198,42"
           Id="Package\Teams\Migrate Area Teams Only"
           TopLeft="50.5238123653697,325" />
         <NodeLayout
-          Size="149.142857142858,42.2857142857143"
+          Size="149,42"
           Id="Package\Teams\Migrate Teams"
           TopLeft="69.238099266883,265.929413755212" />
         <NodeLayout
-          Size="162.285714285715,42.2857142857143"
+          Size="162,42"
           Id="Package\Teams\Truncate local DB"
           TopLeft="69.2894923646276,165.598345177965" />
         <EdgeLayout
@@ -6565,7 +6553,7 @@ from srcbusinessunit as bu</property>
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="316,472"
-          Size="316,514.857142857143"
+          Size="316,515"
           Id="Package\Teams"
           TopLeft="1376.94444172423,804.509632983953" />
         <EdgeLayout
