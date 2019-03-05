@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{c2919c14-917b-4f32-8c5b-e5ff3bea8309}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{e552192b-a316-4135-9009-03f8ad99e15b}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="40%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{edae5a97-1e49-47a7-b5cd-d0de1ad34ba7}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{27a9dad4-d40e-46a0-85e8-29bf57bbe471}" visible="false">
+                        <labels>
+                          <label description="Subject" languagecode="1033" />
+                        </labels>
+                        <control id="msdyn_subject" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="msdyn_subject" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bc5b38f8-4895-4cb5-a51e-35a6657e70b1}" visible="false">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{945cc4bc-579d-7003-7e48-cc9c3149a299}" showlabel="false">
+                        <labels>
+                          <label description="Playbook Activity JSON" languagecode="1033" />
+                        </labels>
+                        <control id="playbookactivity_control" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="msdyn_playbookactivity_json" disabled="false" uniqueid="{7b8c5623-e315-3b79-3dcc-0a4810e67651}">
+                          <parameters>
+                            <Border>false</Border>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="60%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{23645239-7469-49fe-8edb-981939696792}">
+                  <labels>
+                    <label description="" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e3507a76-b1a4-4fbd-97fe-6c8258125d0e}" visible="false">
+                        <labels>
+                          <label description="Activity Logical name" languagecode="1033" />
+                        </labels>
+                        <control id="msdyn_activityLogicalName" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="msdyn_activityLogicalName" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <controlDescriptions>
+        <controlDescription forControl="{7b8c5623-e315-3b79-3dcc-0a4810e67651}">
+          <customControl id="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}">
+            <parameters>
+              <datafieldname>msdyn_playbookactivity_json</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="PlaybookControls.ActivityForm.PBActivityControl">
+            <parameters>
+              <JsonData>msdyn_playbookactivity_json</JsonData>
+              <playbookActivityType>msdyn_activityLogicalName</playbookActivityType>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="PlaybookControls.ActivityForm.PBActivityControl">
+            <parameters>
+              <JsonData>msdyn_playbookactivity_json</JsonData>
+              <playbookActivityType>msdyn_activityLogicalName</playbookActivityType>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="PlaybookControls.ActivityForm.PBActivityControl">
+            <parameters>
+              <JsonData>msdyn_playbookactivity_json</JsonData>
+              <playbookActivityType>msdyn_activityLogicalName</playbookActivityType>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <events>
+        <event name="onsave" application="true" active="true">
+          <InternalHandlers>
+            <Handler functionName="PlaybookService.PlaybookActivityDialog.onSaveClickForActivityForm" libraryName="$webresource:Playbook/PlaybookActivity/PlaybookActivityDialog_main_system_library.js" handlerUniqueId="{92fc6939-a630-4b62-9fef-f54c4117dfa3}" enabled="true" parameters="" passExecutionContext="true" />
+          </InternalHandlers>
+        </event>
+      </events>
+    </form>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{93fa2beb-1ddc-4db6-8244-71d5eeb0a409}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_summary" select="1" icon="1" preview="1">
+        <row name="result" id="defra_logid">
+          <cell name="createdon" width="125" />
+          <cell name="defra_type" width="100" />
+          <cell name="defra_summary" width="300" />
+          <cell name="defra_importance" width="100" />
+          <cell name="defra_sourcesystem" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="defra_log">
+          <attribute name="defra_summary" />
+          <attribute name="createdon" />
+          <order attribute="createdon" descending="true" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="defra_type" />
+          <attribute name="defra_sourcesystem" />
+          <attribute name="defra_importance" />
+          <attribute name="defra_logid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.1.30.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Logs" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

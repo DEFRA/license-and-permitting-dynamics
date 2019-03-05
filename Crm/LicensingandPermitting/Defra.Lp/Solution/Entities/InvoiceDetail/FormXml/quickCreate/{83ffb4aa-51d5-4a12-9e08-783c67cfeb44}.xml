@@ -1,0 +1,452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{83ffb4aa-51d5-4a12-9e08-783c67cfeb44}</formid>
+    <IntroducedVersion>9.0.0.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <hiddencontrols>
+        <data id="invoiceid" datafieldname="invoiceid" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" />
+        <data id="producttypecode" datafieldname="producttypecode" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" />
+      </hiddencontrols>
+      <tabs>
+        <tab id="{2fc7e64e-ab4e-4a70-b96a-e8066f27b273}" name="general" showlabel="false" locklevel="0" expanded="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="33%">
+              <sections>
+                <section id="{841dbe46-c1c0-4e50-bc66-a5ec56f94f40}" name="invoice detail information" columns="1" showlabel="true" showbar="false" IsUserDefined="0" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Invoice Detail Information" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{78146c90-8a11-1387-4a77-dca91bc08e80}" showlabel="true" locklevel="1" visible="true">
+                        <labels>
+                          <label description="Invoice ID" languagecode="1033" />
+                        </labels>
+                        <control id="invoiceid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="invoiceid" disabled="false" uniqueid="{7445b4a7-1614-ee0b-cac4-65b8e61dd03d}">
+                          <parameters>
+                            <AutoResolve>true</AutoResolve>
+                            <DisableMru>false</DisableMru>
+                            <DisableQuickFind>false</DisableQuickFind>
+                            <DisableViewPicker>false</DisableViewPicker>
+                            <DefaultViewId>{A49CD195-5AF0-4F8B-A833-9A5BCBDD44FC}</DefaultViewId>
+                            <AllowFilterOff>false</AllowFilterOff>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c02d5437-7450-c172-bb5c-aac3a8505556}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Select Product" languagecode="1033" />
+                        </labels>
+                        <control id="isproductoverridden" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" uniqueid="{1F170711-E6DE-4803-BF91-569102E729D2}" datafieldname="isproductoverridden" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1b37b6aa-ad3c-2617-3bd3-4a7b1b812714}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Existing Product" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.productid_setadditionalparams" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="e866387d-e01e-4267-b58f-27c89f4f0d85" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="invoiceid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="productid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="productid">
+                          <parameters>
+                            <DefaultViewReadOnly>true</DefaultViewReadOnly>
+                            <ViewPickerReadOnly>true</ViewPickerReadOnly>
+                            <DisableViewPicker>true</DisableViewPicker>
+                            <DefaultViewId>{BCC509EE-1444-4a95-AED2-128EFD85FFD5}</DefaultViewId>
+                            <DisableMru>true</DisableMru>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{414e077e-bd9b-aa1b-8373-47d9a1d5e2ab}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Write-In Product" languagecode="1033" />
+                        </labels>
+                        <control id="productdescription" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="productdescription" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2457d2e9-1325-256e-e239-b5bc7c59c68d}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Unit" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.uomid_setadditionalparams" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="5d0d91bc-bd7b-4ec4-9c9a-6975d6258e48" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="invoiceid" />
+                                  <dependency id="productid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="uomid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="uomid">
+                          <parameters>
+                            <DefaultViewId>{26FF4574-E5B3-468d-B879-8BB27225D70B}</DefaultViewId>
+                            <IsInlineNewEnabled>false</IsInlineNewEnabled>
+                            <DisableMru>true</DisableMru>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="33%">
+              <sections>
+                <section id="{3038c44b-59ce-4762-98e1-10363a346b32}" name="pricing" columns="1" showlabel="true" showbar="false" IsUserDefined="0" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Pricing" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{d9e17972-0b29-3d3b-dd20-43695b0989e4}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Pricing" languagecode="1033" />
+                        </labels>
+                        <control id="ispriceoverridden" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" uniqueid="{97AECA78-30AE-4849-9B9E-533888D802A5}" datafieldname="ispriceoverridden" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{37d2733a-de0c-ad25-60a0-56d4dadbbe0c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Price Per Unit" languagecode="1033" />
+                        </labels>
+                        <control id="priceperunit" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="priceperunit" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{53502563-dbde-d716-9059-40c1da3b871b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Quantity" languagecode="1033" />
+                        </labels>
+                        <control id="quantity" classid="{C3EFE0C3-0EC6-42be-8349-CBD9079DFD8E}" datafieldname="quantity" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b24c8e98-e6ab-8d96-c9c9-4819d47842d8}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Manual Discount" languagecode="1033" />
+                        </labels>
+                        <control id="manualdiscountamount" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="manualdiscountamount" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{142e14a5-9ae9-1863-04d5-d72ddbce45bb}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Tax" languagecode="1033" />
+                        </labels>
+                        <control id="tax" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="tax" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="33%">
+              <sections>
+                <section id="{5556ec4a-49b6-458d-a0b6-9fe3830d4169}" name="delivery information" columns="1" showlabel="false" showbar="false" IsUserDefined="0" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Delivery Information" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{577a3ced-2714-3105-44c0-96b3d2e2b8ac}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Delivered On" languagecode="1033" />
+                        </labels>
+                        <control id="actualdeliveryon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="actualdeliveryon" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a2488b4d-7d3b-856d-122d-9576b7b109a6}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Salesperson" languagecode="1033" />
+                        </labels>
+                        <control id="salesrepid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="salesrepid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7b666e71-4db0-0a16-5549-11236b28e937}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Shipped" languagecode="1033" />
+                        </labels>
+                        <control id="quantityshipped" classid="{C3EFE0C3-0EC6-42be-8349-CBD9079DFD8E}" datafieldname="quantityshipped" disabled="false" uniqueid="{5203968c-e681-1e67-44e5-e83b24e52eeb}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a80b6320-4bc5-3702-5de3-dd6eebba07a8}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Back Ordered" languagecode="1033" />
+                        </labels>
+                        <control id="quantitybackordered" classid="{C3EFE0C3-0EC6-42be-8349-CBD9079DFD8E}" datafieldname="quantitybackordered" disabled="false" uniqueid="{eb12408b-6179-0c11-8760-9d964e534b5b}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{370c1da9-4479-8189-2e76-9001c8503891}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Canceled" languagecode="1033" />
+                        </labels>
+                        <control id="quantitycancelled" classid="{C3EFE0C3-0EC6-42be-8349-CBD9079DFD8E}" datafieldname="quantitycancelled" disabled="false" uniqueid="{b3767a20-9617-0ebc-0d81-3da37e704ea9}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{37e6cc98-b77c-9877-a030-07cb1345be35}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Ship To" languagecode="1033" />
+                        </labels>
+                        <control id="willcall" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="willcall" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{76978197-5c21-9a39-dc84-4eb12dbc8bde}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_name" disabled="false" uniqueid="{732cade1-e108-4e68-0a69-e16cc29b8d84}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9d96a5d9-3231-e50d-9c55-b62e7c1851bc}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Street 1" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_line1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_line1" disabled="false" uniqueid="{b7096c66-2b48-0628-30da-b697ea40b4d0}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c2d20ddb-6760-6dd3-8c38-06dceb687eb9}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="City" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_city" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_city" disabled="false" uniqueid="{4a2a57da-7b91-b818-6d84-933ec5b98966}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b754478d-b643-845e-99e1-68284d83d064}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="State/Province" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_stateorprovince" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_stateorprovince" disabled="false" uniqueid="{8352cab5-2ed0-a604-1913-708b294d9bda}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2c19034d-0077-a874-c898-ad666732c18a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="ZIP/Postal Code" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_postalcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_postalcode" disabled="false" uniqueid="{9d781512-53e6-588c-c3c8-1800974ac346}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4e965186-d077-3323-0300-ca3eb3a8639b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Country/Region" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_country" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_country" disabled="false" uniqueid="{44dc3917-c8bc-bd49-17e5-ebe19119e41e}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{82de0b3b-a1c5-ad68-9795-ab410bc51c54}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Phone" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_telephone" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_telephone" disabled="false" uniqueid="{0c3ca71e-04e2-a273-3055-72c8bbe593cb}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c699c5a2-a564-216e-2083-98c5845aebeb}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Fax" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_fax" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="shipto_fax" disabled="false" uniqueid="{b4c802ec-6ecd-573e-d3c8-8e9bc61e4317}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e96c8da0-465d-b3c2-b157-0de527a30269}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Freight Terms" languagecode="1033" />
+                        </labels>
+                        <control id="shipto_freighttermscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="shipto_freighttermscode" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <events>
+        <event name="onload" application="true" active="true">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.Form_onload" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="d6d92313-608a-4d65-b44c-6169a672eac5" enabled="true">
+              <dependencies>
+                <dependency id="quantity" />
+                <dependency id="productid" />
+                <dependency id="uomid" />
+                <dependency id="isproductoverridden" />
+                <dependency id="productdescription" />
+                <dependency id="ispriceoverridden" />
+                <dependency id="priceperunit" />
+                <dependency id="willcall" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="isproductoverridden">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.isproductoverridden_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="cdfa0900-0a1f-4560-a3ef-c421c2c75bde" enabled="true">
+              <dependencies>
+                <dependency id="invoiceid" />
+                <dependency id="productid" />
+                <dependency id="uomid" />
+                <dependency id="productdescription" />
+                <dependency id="ispriceoverridden" />
+                <dependency id="priceperunit" />
+                <dependency id="quantity" />
+                <dependency id="quantityshipped" />
+                <dependency id="quantitybackordered" />
+                <dependency id="quantitycancelled" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="invoiceid">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.qoidetailparent_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="05470dfb-52b7-4d8a-a1ce-67477468d349" enabled="true">
+              <dependencies>
+                <dependency id="invoiceid" />
+                <dependency id="priceperunit" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="productid">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.productid_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="54728135-18d0-408d-8ec6-6c1a84e1eabb" enabled="true">
+              <dependencies>
+                <dependency id="uomid" />
+                <dependency id="quantity" />
+                <dependency id="quantityshipped" />
+                <dependency id="quantitybackordered" />
+                <dependency id="quantitycancelled" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="uomid">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.uomid_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="ea99bad8-9ba9-4138-802a-36423e003882" enabled="true">
+              <dependencies>
+                <dependency id="invoiceid" />
+                <dependency id="productid" />
+                <dependency id="quantity" />
+                <dependency id="quantityshipped" />
+                <dependency id="quantitybackordered" />
+                <dependency id="quantitycancelled" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="ispriceoverridden">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.ispriceoverridden_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="3ae84c2d-27cf-436c-a4f1-efa720dee3c5" enabled="true">
+              <dependencies>
+                <dependency id="priceperunit" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+        <event name="onchange" application="true" active="true" attribute="willcall">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.willcall_onchange" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="81bca3b5-ce11-4aa5-87ec-4815543d118e" enabled="true" />
+          </InternalHandlers>
+        </event>
+        <event name="onsave" application="true" active="true">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.Form_onsave" libraryName="Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" handlerUniqueId="fd68b141-4edd-41f0-9a83-051601a4247f" enabled="true" passExecutionContext="true">
+              <dependencies>
+                <dependency id="quantity" />
+                <dependency id="priceperunit" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+      </events>
+      <clientresources>
+        <internalresources>
+          <clientincludes>
+            <internaljscriptfile src="$webresource:Sales/InvoiceDetail/InvoiceDetail_main_system_library.js" />
+          </clientincludes>
+        </internalresources>
+      </clientresources>
+      <DisplayConditions FallbackForm="true" Order="1">
+        <Everyone />
+      </DisplayConditions>
+      <controlDescriptions>
+        <controlDescription forControl="{1F170711-E6DE-4803-BF91-569102E729D2}">
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>isproductoverridden</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>isproductoverridden</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>isproductoverridden</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{97AECA78-30AE-4849-9B9E-533888D802A5}">
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ispriceoverridden</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ispriceoverridden</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ispriceoverridden</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <LocalizedNames>
+      <LocalizedName description="InvoiceDetail" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Default quick create form for InvoiceDetail." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

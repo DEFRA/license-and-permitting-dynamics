@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{f3d9a146-4af1-41e0-86ff-209d44672c0a}</formid>
+    <IntroducedVersion>6.0.0.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form shownavigationbar="true">
+      <hiddencontrols>
+        <data id="isdefault" datafieldname="isdefault" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" />
+        <data id="applicablefrom" datafieldname="applicablefrom" classid="{5546E6CD-394C-4bee-94A8-4425E17EF6C6}" />
+      </hiddencontrols>
+      <tabs>
+        <tab verticallayout="true" id="{79777963-6d12-4dc3-938c-61a2ab71ae50}" IsUserDefined="0">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="67%">
+              <sections>
+                <section name="information" showlabel="false" showbar="false" IsUserDefined="0" id="{5fd329f7-72a8-4122-8509-b026fceebc37}" labelwidth="200">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{1dffa6a6-7a24-4e0d-a93f-9866382a437e}" showlabel="true" colspan="2">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{C92FD2A3-7219-40C5-A7D2-824AC9B6194F}" showlabel="true" colspan="2">
+                        <labels>
+                          <label description="Entity" languagecode="1033" />
+                        </labels>
+                        <control id="objecttypecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="objecttypecode" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9c1fbd86-080f-4af6-af65-5d6bb1ad078c}" colspan="2">
+                        <labels>
+                          <label description="Applicable From" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="onchange" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.applicablefrompicklist_onchange" libraryName="ServiceLevelAgreement/Sla/Sla_main_system_library.js" handlerUniqueId="42BCD534-DFC3-465A-AF1F-6CAD2160B904" enabled="true">
+                                <dependencies>
+                                  <dependency id="applicablefrom" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="applicablefrompicklist" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="applicablefrompicklist" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7a10d395-6ed7-4059-ab5f-ed0110219a8d}" showlabel="true" colspan="2">
+                        <labels>
+                          <label description="Business Hours" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="onclick" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.businesshoursid_onclick" libraryName="ServiceLevelAgreement/Sla/Sla_main_system_library.js" handlerUniqueId="56750ebd-033d-4a7f-ad40-47f1a5fa4d72" enabled="true">
+                                <dependencies />
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="businesshoursid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="businesshoursid">
+                          <parameters>
+                            <DefaultViewId>{b1127604-db55-4ad4-aacf-90d870390297}</DefaultViewId>
+                            <IsInlineNewEnabled>false</IsInlineNewEnabled>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell auto="false" showlabel="true" locklevel="0" rowspan="1" colspan="2" id="{5480EA66-70C8-423F-B30F-20713E98488C}">
+                        <labels>
+                          <label description="SLA Type" languagecode="1033" />
+                        </labels>
+                        <control id="SLAType" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="slatype" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell auto="false" showlabel="true" locklevel="0" rowspan="1" colspan="2" id="{3B9C4C09-80B1-4481-8950-828578967721}">
+                        <labels>
+                          <label description="Allow Pause and Resume" languagecode="1033" />
+                        </labels>
+                        <control id="AllowPauseResume" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="allowpauseresume" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c17a0c9e-8983-48ca-a251-601624930f44}" showlabel="true" rowspan="3" colspan="2">
+                        <labels>
+                          <label description="Description" languagecode="1033" />
+                        </labels>
+                        <control id="description" datafieldname="description" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+                <section name="sladetails" showlabel="false" showbar="false" IsUserDefined="0" id="{579ac353-7006-4c14-af07-a50919d94b76}">
+                  <labels>
+                    <label description="SLA Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{780e5817-1f33-4ac7-a86f-8b4b86d88a34}" showlabel="true" colspan="2" auto="false" rowspan="6">
+                        <labels>
+                          <label description="SLA Details" languagecode="1033" />
+                        </labels>
+                        <control id="SLADetails" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}">
+                          <parameters>
+                            <ViewId>{ecbb6af5-96e5-4544-94e1-0f339007039c}</ViewId>
+                            <RelationshipName>sla_slaitem_slaId</RelationshipName>
+                            <TargetEntityType>slaitem</TargetEntityType>
+                            <AutoExpand>Auto</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <EnableChartPicker>false</EnableChartPicker>
+                            <RecordsPerPage>200</RecordsPerPage>
+                            <IsUserView>false</IsUserView>
+                            <ChartGridMode>All</ChartGridMode>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                            <EnableContextualActions>true</EnableContextualActions>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+                <section name="notes" showlabel="true" showbar="true" id="{006ecda6-871e-47e9-a965-2e86a474b22f}" IsUserDefined="0" height="auto">
+                  <labels>
+                    <label description="Notes" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell colspan="2" showlabel="false" rowspan="7" auto="false" id="{d36fb234-f1de-4ef9-b427-f52b74c88aa7}">
+                        <labels>
+                          <label description="Note Text" languagecode="1033" />
+                        </labels>
+                        <control id="notescontrol" classid="{06375649-C143-495E-A496-C962E5B4488E}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{f4148947-de3d-4cdf-95fe-c2481aabdfea}" celllabelposition="Top" columns="1111" labelwidth="115">
+        <rows>
+          <row>
+            <cell id="{ff3903c0-6afb-4486-a9ae-e387f3029ab9}">
+              <labels>
+                <label description="Status Reason" languagecode="1033" />
+              </labels>
+              <control id="header_statuscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="false" />
+            </cell>
+            <cell id="{30da68e6-4c21-4e27-a330-0e0f9821352c}" showlabel="true">
+              <labels>
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <events>
+        <event name="onload" application="true" active="true">
+          <InternalHandlers>
+            <Handler functionName="Mscrm.Form_onload" libraryName="ServiceLevelAgreement/Sla/Sla_main_system_library.js" handlerUniqueId="844C3F58-8FCB-4F35-84AD-02EDC37F2119" enabled="true">
+              <dependencies>
+                <dependency id="slatype" />
+                <dependency id="allowpauseresume" />
+              </dependencies>
+            </Handler>
+          </InternalHandlers>
+        </event>
+      </events>
+      <clientresources>
+        <internalresources>
+          <clientincludes>
+            <internaljscriptfile src="$webresource:ServiceLevelAgreement/Sla/Sla_main_system_library.js" />
+          </clientincludes>
+        </internalresources>
+      </clientresources>
+      <Navigation>
+        <NavBar></NavBar>
+      </Navigation>
+    </form>
+    <LocalizedNames>
+      <LocalizedName description="SLA" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
