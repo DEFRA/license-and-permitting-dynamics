@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{ddc30f29-e6e2-463f-9e37-163b4014b27e}</formid>
+    <IntroducedVersion>8.2.0.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="{4595d230-79e5-4f38-bf37-3db718967d1c}" name="newInvoice" locklevel="0" expanded="true" showlabel="false" IsUserDefined="0" labelid="{c1e71298-705d-4d7f-94a3-1d5d3400bee2}">
+          <labels>
+            <label description="New Invoice" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{82e83854-122b-4d08-bf11-f6bb47d3d822}" name="quickInvoice_summary" columns="1" showlabel="true" showbar="false" IsUserDefined="0" labelid="{2c3f01dc-6eef-4168-ae9a-4e7db027a994}">
+                  <labels>
+                    <label description="Summary" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{e717337a-0d6e-46dc-867e-0453b0543895}" showlabel="true" locklevel="0" labelid="{bc2bd657-9738-47f4-8898-637f753f9411}">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5760381d-99b9-44eb-93a7-3683ab66f60d}" showlabel="true" locklevel="0" labelid="{7f1fe339-3548-4804-8ec6-f0105e12a4d5}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{f69994b4-491a-4a02-910a-e899e897f60d}" showlabel="true" locklevel="0" labelid="{2d3f8cb2-0a0f-4b95-92c1-35d48adce666}">
+                        <labels>
+                          <label description="Currency" languagecode="1033" />
+                        </labels>
+                        <control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{72f11f7e-3a2a-4b88-8479-1841b2506161}" showlabel="true" locklevel="0" labelid="{4a8aebc9-b47e-4f5b-b09b-645e764f7271}">
+                        <labels>
+                          <label description="Price List" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.pricelevelid_setadditionalparams" libraryName="Sales/Invoice/Invoice_main_system_library.js" handlerUniqueId="04967e88-cea1-499d-92b5-09aa9fe2b267" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="pricelevelid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pricelevelid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b3dbd592-e8c7-4f97-af80-8fd6e6ba24a9}" showlabel="true" locklevel="0" labelid="{630154cb-05ea-4796-905d-399975b9ec27}">
+                        <labels>
+                          <label description="Status Reason" languagecode="1033" />
+                        </labels>
+                        <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="quickInvoice_salesinformation" showlabel="true" showbar="false" id="{b2ca3728-4709-4d9f-b731-6a60b941461f}" IsUserDefined="0">
+                  <labels>
+                    <label description="Sales Information" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{c673b11c-af7a-47c1-b8af-9a4a5874c4f2}">
+                        <labels>
+                          <label description="Customer" languagecode="1033" />
+                        </labels>
+                        <control id="customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="customerid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{11b97a65-192b-4572-81ff-ef86c350a457}">
+                        <labels>
+                          <label description="Opportunity" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.opportunityid_setadditionalparams" libraryName="Sales/Invoice/Invoice_main_system_library.js" handlerUniqueId="532ef878-e7f2-4954-9d9c-144a1178d732" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="opportunityid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="opportunityid">
+                          <parameters>
+                            <FilterRelationshipName>transactioncurrency_opportunity</FilterRelationshipName>
+                            <DependentAttributeName>invoice.transactioncurrencyid</DependentAttributeName>
+                            <DependentAttributeType>transactioncurrency</DependentAttributeType>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5a1bbed1-9e4b-4133-93ba-c3f9b54aeb67}">
+                        <labels>
+                          <label description="Order" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.salesorderid_setadditionalparams" libraryName="Sales/Invoice/Invoice_main_system_library.js" handlerUniqueId="1ccd5fa4-501a-43c9-b107-2d78bf06d307" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="salesorderid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="salesorderid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b30a8db9-8c7f-43a8-8c72-4306571edb75}" showlabel="true" locklevel="0" rowspan="12">
+                        <labels>
+                          <label description="Description" languagecode="1033" />
+                        </labels>
+                        <control id="description" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="description" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions FallbackForm="true" Order="2">
+        <Everyone />
+      </DisplayConditions>
+      <clientresources>
+        <internalresources>
+          <clientincludes>
+            <internaljscriptfile src="$webresource:Sales/_static/sfa/invoice/InvoiceRibbonActions.js" />
+            <internaljscriptfile src="$webresource:Sales/Invoice/Invoice_main_system_library.js" />
+          </clientincludes>
+          <clientvariables>
+            <internaljscriptvariable name="LOCID_PRICE_LIST_NOT_SELECTED" resourceid="Web.SFA.quotes.edit.aspx_155" />
+          </clientvariables>
+        </internalresources>
+      </clientresources>
+    </form>
+    <LocalizedNames>
+      <LocalizedName description="Invoice" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Default quick create form for Invoice" languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

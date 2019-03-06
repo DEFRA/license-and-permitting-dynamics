@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms>
+  <systemform>
+    <formid>{cc287fab-10d3-44be-b738-1daf50a2aa03}</formid>
+    <IntroducedVersion>8.2.0.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="{9e5daabf-bd14-47c0-8911-03f58535f291}" name="newSalesOrder" locklevel="0" expanded="true" showlabel="false" IsUserDefined="0" labelid="{4779d44e-0374-46eb-bea7-c0436a4ccda7}">
+          <labels>
+            <label description="New Order" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{680ec554-03d4-4253-86a5-80d7571c92cc}" name="quickOrder_summary" columns="1" showlabel="true" showbar="false" IsUserDefined="0" labelid="{991e01a0-fdbf-4de9-a2f6-598289a3bc12}">
+                  <labels>
+                    <label description="Summary" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{393b646b-488b-4aea-bb83-515a3c17188c}" showlabel="true" locklevel="0" labelid="{2c10147c-cbc2-42be-b0a9-189fc089656f}">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{666247ad-093f-4873-9087-a8cc8ac819d7}" showlabel="true" locklevel="0" labelid="{aef5d1f9-a5c0-4465-83cf-032a1421ff67}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{84c8cead-62ae-4f3a-96c7-bbc024501ec5}" showlabel="true" locklevel="0" labelid="{5acb8ac0-2c86-4996-8ca7-3868be7bb557}">
+                        <labels>
+                          <label description="Currency" languagecode="1033" />
+                        </labels>
+                        <control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8af49599-8545-403e-bd9a-eb6618d0ffcb}" showlabel="true" locklevel="0" labelid="{5a6e76c7-a8a5-4d0e-b489-62c3fde2f37e}">
+                        <labels>
+                          <label description="Price List" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.pricelevelid_setadditionalparams" libraryName="Sales/SalesOrder/SalesOrder_main_system_library.js" handlerUniqueId="6f103b7c-54cb-494d-a65d-906932f568fe" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="pricelevelid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pricelevelid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8dc8699c-0221-45cc-bdc7-28519e9e8dd1}" showlabel="true" locklevel="0" labelid="{c4a7419a-c58f-41fa-a6c1-a52e5fddb83c}">
+                        <labels>
+                          <label description="Status Reason" languagecode="1033" />
+                        </labels>
+                        <control id="header_statuscode" classid="{5D68B988-0661-4db2-BC3E-17598AD3BE6C}" datafieldname="statuscode" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="quickOrder_salesinformation" showlabel="true" showbar="false" id="{d521e869-211c-400d-b1ac-007f1144e2d9}" IsUserDefined="0">
+                  <labels>
+                    <label description="Sales Information" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{31d90daf-40e3-4c61-93f0-3bfce0b7d99b}">
+                        <labels>
+                          <label description="Potential Customer" languagecode="1033" />
+                        </labels>
+                        <control id="customerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="customerid" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4d784ba0-8848-4cc7-b043-668e8b47a15e}">
+                        <labels>
+                          <label description="Opportunity" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.opportunityid_setadditionalparams" libraryName="Sales/SalesOrder/SalesOrder_main_system_library.js" handlerUniqueId="33cb37e7-140d-48c3-91bc-1cdf5c215547" enabled="false" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="opportunityid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="opportunityid">
+                          <parameters>
+                            <FilterRelationshipName>transactioncurrency_opportunity</FilterRelationshipName>
+                            <DependentAttributeName>salesorder.transactioncurrencyid</DependentAttributeName>
+                            <DependentAttributeType>transactioncurrency</DependentAttributeType>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{00f22fa1-ade5-4289-9990-a9bb7aee737b}">
+                        <labels>
+                          <label description="Quote" languagecode="1033" />
+                        </labels>
+                        <events>
+                          <event name="setadditionalparams" application="true" active="true">
+                            <InternalHandlers>
+                              <Handler functionName="Mscrm.quoteid_setadditionalparams" libraryName="Sales/SalesOrder/SalesOrder_main_system_library.js" handlerUniqueId="64fc3121-1f7d-439d-b5df-db47a670cc4d" enabled="true" passExecutionContext="true">
+                                <dependencies>
+                                  <dependency id="transactioncurrencyid" />
+                                </dependencies>
+                              </Handler>
+                            </InternalHandlers>
+                          </event>
+                        </events>
+                        <control id="quoteid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="quoteid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{cbb93559-5b86-4215-a33f-ecf4e4e0f2bc}" showlabel="true" locklevel="0" rowspan="12">
+                        <labels>
+                          <label description="Description" languagecode="1033" />
+                        </labels>
+                        <control id="description" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="description" disabled="false" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <DisplayConditions FallbackForm="true" Order="2">
+        <Everyone />
+      </DisplayConditions>
+      <clientresources>
+        <internalresources>
+          <clientincludes>
+            <internaljscriptfile src="$webresource:Sales/_static/sfa/salesorder/SalesOrderRibbonActions.js" />
+            <internaljscriptfile src="$webresource:Sales/SalesOrder/SalesOrder_main_system_library.js" />
+            <internaljscriptfile src="$webresource:Sales/_static/sfa/invoice/InvoiceRibbonActions.js" />
+          </clientincludes>
+          <clientvariables>
+            <internaljscriptvariable name="LOCID_PRICE_LIST_NOT_SELECTED" resourceid="Web.SFA.quotes.edit.aspx_155" />
+          </clientvariables>
+        </internalresources>
+      </clientresources>
+    </form>
+    <LocalizedNames>
+      <LocalizedName description="Order" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Default quick create form for Sales Order" languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
