@@ -27,14 +27,13 @@
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
         <attribute name="objecttypecode" />
-        <attribute name="createdon" />
         <order attribute="createdon" descending="false" />
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
           <condition attribute="workerid" operator="null" />
-          <condition attribute="objecttypecode" operator="eq" value="10013" />
+          <condition attribute="objecttypecodename" operator="like" value="%Application%" />
         </filter>
-        <link-entity name="defra_application" from="defra_applicationid" to="objectid" visible="false" link-type="outer" alias="a_fdbe0726afc3e71180eb3863bb34fad0">
+        <link-entity alias="a_fdbe0726afc3e71180eb3863bb34fad0" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
           <attribute name="defra_penfolddate" />
           <attribute name="statuscode" />
           <attribute name="defra_applicationnumber" />
@@ -44,6 +43,7 @@
           <attribute name="defra_facility_description" />
           <attribute name="defra_submittedon" />
         </link-entity>
+        <attribute name="createdon" />
         <attribute name="objectid" />
       </entity>
     </fetch>
