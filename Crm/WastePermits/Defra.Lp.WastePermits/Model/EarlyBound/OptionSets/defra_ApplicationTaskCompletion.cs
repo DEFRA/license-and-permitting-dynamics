@@ -16,6 +16,6 @@ namespace WastePermits.Model.EarlyBound
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Completed = 910400000,
+		Done = 910400000,
 	}
 }

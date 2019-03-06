@@ -87,6 +87,15 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_defra_applicationline_defra_payment = "defra_defra_applicationline_defra_payment";
 			public const string Referencingdefra_defra_payment_defra_payment_originatingpayment = "defra_defra_payment_defra_payment_originatingpayment";
 			public const string defra_defra_paymenttransaction_defra_payment_payment_transaction = "defra_defra_paymenttransaction_defra_payment_payment_transaction";
+			public const string defra_systemuser_defra_payment_issued_by = "defra_systemuser_defra_payment_issued_by";
+			public const string defra_systemuser_defra_payment_refund_approved_by = "defra_systemuser_defra_payment_refund_approved_by";
+			public const string defra_systemuser_defra_payment_refundactionedby = "defra_systemuser_defra_payment_refundactionedby";
+			public const string lk_defra_payment_createdby = "lk_defra_payment_createdby";
+			public const string lk_defra_payment_createdonbehalfby = "lk_defra_payment_createdonbehalfby";
+			public const string lk_defra_payment_modifiedby = "lk_defra_payment_modifiedby";
+			public const string lk_defra_payment_modifiedonbehalfby = "lk_defra_payment_modifiedonbehalfby";
+			public const string team_defra_payment = "team_defra_payment";
+			public const string user_defra_payment = "user_defra_payment";
 		}
 		
 		/// <summary>
@@ -1242,6 +1251,167 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_paymenttransaction_defra_payment_payment_transaction");
 				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_paymenttransaction>("defra_defra_paymenttransaction_defra_payment_payment_transaction", null, value);
 				this.OnPropertyChanged("defra_defra_paymenttransaction_defra_payment_payment_transaction");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_issued_by
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_issued_by")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_issued_by")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_issued_by
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_issued_by", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_issued_by");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_issued_by", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_issued_by");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_refund_approved_by
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_refund_approved_by")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_refund_approved_by")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_refund_approved_by
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refund_approved_by", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_refund_approved_by");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refund_approved_by", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_refund_approved_by");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_refundactionedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_refundactionedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_refundactionedby")]
+		public WastePermits.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_refundactionedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refundactionedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_refundactionedby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refundactionedby", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_refundactionedby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_payment_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_payment_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_payment_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_payment_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_payment_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_payment_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_payment_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_payment_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_payment
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_payment")]
+		public WastePermits.Model.EarlyBound.Team team_defra_payment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_defra_payment", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_payment
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_payment")]
+		public WastePermits.Model.EarlyBound.SystemUser user_defra_payment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("user_defra_payment", null);
 			}
 		}
 		

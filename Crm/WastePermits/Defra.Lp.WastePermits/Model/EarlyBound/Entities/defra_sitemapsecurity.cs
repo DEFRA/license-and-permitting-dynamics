@@ -53,6 +53,12 @@ namespace WastePermits.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_sitemapsecurity_createdby = "lk_defra_sitemapsecurity_createdby";
+			public const string lk_defra_sitemapsecurity_createdonbehalfby = "lk_defra_sitemapsecurity_createdonbehalfby";
+			public const string lk_defra_sitemapsecurity_modifiedby = "lk_defra_sitemapsecurity_modifiedby";
+			public const string lk_defra_sitemapsecurity_modifiedonbehalfby = "lk_defra_sitemapsecurity_modifiedonbehalfby";
+			public const string team_defra_sitemapsecurity = "team_defra_sitemapsecurity";
+			public const string user_defra_sitemapsecurity = "user_defra_sitemapsecurity";
 		}
 		
 		/// <summary>
@@ -453,6 +459,104 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_sitemapsecurity_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_sitemapsecurity_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_sitemapsecurity_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_sitemapsecurity_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_sitemapsecurity_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_sitemapsecurity_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_sitemapsecurity_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_sitemapsecurity_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_sitemapsecurity_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_sitemapsecurity_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_sitemapsecurity_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_sitemapsecurity_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_sitemapsecurity_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_sitemapsecurity_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_sitemapsecurity_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_sitemapsecurity_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_sitemapsecurity_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_sitemapsecurity
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_sitemapsecurity")]
+		public WastePermits.Model.EarlyBound.Team team_defra_sitemapsecurity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_defra_sitemapsecurity", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_sitemapsecurity
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_sitemapsecurity")]
+		public WastePermits.Model.EarlyBound.SystemUser user_defra_sitemapsecurity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("user_defra_sitemapsecurity", null);
 			}
 		}
 		

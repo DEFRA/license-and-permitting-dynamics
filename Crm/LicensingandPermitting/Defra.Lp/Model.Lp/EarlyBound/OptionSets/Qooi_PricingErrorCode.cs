@@ -128,5 +128,8 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ProductNotInPriceLevel = 11,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Transactioncurrencyisnotsetfortheproductpricelistitem = 38,
 	}
 }

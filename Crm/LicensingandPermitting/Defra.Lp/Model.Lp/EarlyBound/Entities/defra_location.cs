@@ -59,6 +59,12 @@ namespace Lp.Model.EarlyBound
 			public const string VersionNumber = "versionnumber";
 			public const string defra_application_defra_location = "defra_application_defra_location";
 			public const string defra_defra_permit_defra_location_permitid = "defra_defra_permit_defra_location_permitid";
+			public const string lk_defra_location_createdby = "lk_defra_location_createdby";
+			public const string lk_defra_location_createdonbehalfby = "lk_defra_location_createdonbehalfby";
+			public const string lk_defra_location_modifiedby = "lk_defra_location_modifiedby";
+			public const string lk_defra_location_modifiedonbehalfby = "lk_defra_location_modifiedonbehalfby";
+			public const string team_defra_location = "team_defra_location";
+			public const string user_defra_location = "user_defra_location";
 		}
 		
 		/// <summary>
@@ -621,6 +627,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_permit_defra_location_permitid");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_permit>("defra_defra_permit_defra_location_permitid", null, value);
 				this.OnPropertyChanged("defra_defra_permit_defra_location_permitid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_location_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_location_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_location_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_location_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_location_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_location_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_location_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_location_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_location_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_location_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_location_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_location_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_location_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_location_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_location_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_location_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_location_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_location
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_location")]
+		public Lp.Model.EarlyBound.Team team_defra_location
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_location", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_location
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_location")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_location
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_location", null);
 			}
 		}
 		

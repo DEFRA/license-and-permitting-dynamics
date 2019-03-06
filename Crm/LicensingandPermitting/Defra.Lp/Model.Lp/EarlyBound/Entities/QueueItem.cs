@@ -69,8 +69,15 @@ namespace Lp.Model.EarlyBound
 			public const string defra_application_QueueItems = "defra_application_QueueItems";
 			public const string defra_areacomment_QueueItems = "defra_areacomment_QueueItems";
 			public const string defra_notification_QueueItems = "defra_notification_QueueItems";
+			public const string Email_QueueItem = "Email_QueueItem";
 			public const string Incident_QueueItem = "Incident_QueueItem";
+			public const string lk_queueitem_createdonbehalfby = "lk_queueitem_createdonbehalfby";
+			public const string lk_queueitem_modifiedonbehalfby = "lk_queueitem_modifiedonbehalfby";
+			public const string lk_queueitembase_createdby = "lk_queueitembase_createdby";
+			public const string lk_queueitembase_modifiedby = "lk_queueitembase_modifiedby";
+			public const string lk_queueitembase_workerid = "lk_queueitembase_workerid";
 			public const string queue_entries = "queue_entries";
+			public const string team_queueitembase_workerid = "team_queueitembase_workerid";
 		}
 		
 		/// <summary>
@@ -761,6 +768,27 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 Email_QueueItem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Email_QueueItem")]
+		public Lp.Model.EarlyBound.Email Email_QueueItem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_QueueItem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Email_QueueItem");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Email>("Email_QueueItem", null, value);
+				this.OnPropertyChanged("Email_QueueItem");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Incident_QueueItem
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("objectid")]
@@ -782,6 +810,97 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 lk_queueitem_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_queueitem_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_queueitem_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitem_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_queueitem_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitem_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_queueitem_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_queueitem_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_queueitem_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_queueitem_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitem_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_queueitem_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitem_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_queueitem_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_queueitembase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_queueitembase_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_queueitembase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitembase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_queueitembase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_queueitembase_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_queueitembase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitembase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_queueitembase_workerid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("workerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_queueitembase_workerid")]
+		public Lp.Model.EarlyBound.SystemUser lk_queueitembase_workerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitembase_workerid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_queueitembase_workerid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_queueitembase_workerid", null, value);
+				this.OnPropertyChanged("lk_queueitembase_workerid");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 queue_entries
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("queueid")]
@@ -799,6 +918,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("queue_entries");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Queue>("queue_entries", null, value);
 				this.OnPropertyChanged("queue_entries");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_queueitembase_workerid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("workerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_queueitembase_workerid")]
+		public Lp.Model.EarlyBound.Team team_queueitembase_workerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_queueitembase_workerid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_queueitembase_workerid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.Team>("team_queueitembase_workerid", null, value);
+				this.OnPropertyChanged("team_queueitembase_workerid");
 			}
 		}
 		
