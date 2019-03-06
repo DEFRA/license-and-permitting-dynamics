@@ -11,6 +11,7 @@ using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
 using Lp.Model.Crm;
+using Lp.Model.EarlyBound;
 
 namespace Defra.Lp.Workflows
 {
@@ -46,10 +47,10 @@ namespace Defra.Lp.Workflows
             if (results != null && results.Entities.Count > 0)
             {
                 var emailUploaded = false;
-                if (results.Entities[0].Contains(Email.UploadedToSharePoint))
+                if (results.Entities[0].Contains(Email.Fields.defra_uploadedtosharepoint))
                 {
                     // annotation and email
-                    emailUploaded = results.Entities[0].GetAttributeValue<bool>(Email.UploadedToSharePoint);
+                    emailUploaded = results.Entities[0].GetAttributeValue<bool>(Email.Fields.defra_uploadedtosharepoint);
                 }
 
                 if (!emailUploaded)

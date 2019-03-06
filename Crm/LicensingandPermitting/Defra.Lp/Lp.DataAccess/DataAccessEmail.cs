@@ -1,9 +1,11 @@
-﻿namespace Lp.DataAccess
+﻿
+namespace Lp.DataAccess
 {
     using System;
-    using Lp.Model.Crm;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
+    using Lp.Model.Crm;
+    using Lp.Model.EarlyBound;
 
     public static class DataAccessEmail
     {
@@ -13,13 +15,13 @@
             var queryEmail = new QueryExpression(Email.EntityLogicalName);
 
             // Add columns to QEemail.ColumnSet
-            queryEmail.ColumnSet.AddColumns(Email.ActivityId, Email.UploadedToSharePoint, Email.Subject);
+            queryEmail.ColumnSet.AddColumns(Email.Fields.ActivityId, Email.Fields.defra_uploadedtosharepoint, Email.Fields.Subject);
 
             // Define filter QEemail.Criteria. Only want specific email
-            queryEmail.Criteria.AddCondition(Email.ActivityId, ConditionOperator.Equal, emailId);
+            queryEmail.Criteria.AddCondition(Email.Fields.ActivityId, ConditionOperator.Equal, emailId);
 
             // Add link-entity QEemail_activitymimeattachment
-            var queryEmailAttachment = queryEmail.AddLink(ActivityMimeAttachment.EntityLogicalName, Email.ActivityId, ActivityMimeAttachment.ObjectId, JoinOperator.LeftOuter);
+            var queryEmailAttachment = queryEmail.AddLink(ActivityMimeAttachment.EntityLogicalName, Email.Fields.ActivityId, ActivityMimeAttachment.ObjectId, JoinOperator.LeftOuter);
             queryEmailAttachment.EntityAlias = "attachment";
 
             // Add columns to Attachments

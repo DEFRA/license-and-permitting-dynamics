@@ -70,6 +70,12 @@ namespace WastePermits.Model.EarlyBound
 			public const string defra_contact_defra_preapplication_customerid = "defra_contact_defra_preapplication_customerid";
 			public const string defra_contact_defra_preapplication_primarycontactid = "defra_contact_defra_preapplication_primarycontactid";
 			public const string defra_location_defra_preapplication_siteid = "defra_location_defra_preapplication_siteid";
+			public const string lk_defra_preapplication_createdby = "lk_defra_preapplication_createdby";
+			public const string lk_defra_preapplication_createdonbehalfby = "lk_defra_preapplication_createdonbehalfby";
+			public const string lk_defra_preapplication_modifiedby = "lk_defra_preapplication_modifiedby";
+			public const string lk_defra_preapplication_modifiedonbehalfby = "lk_defra_preapplication_modifiedonbehalfby";
+			public const string team_defra_preapplication = "team_defra_preapplication";
+			public const string user_defra_preapplication = "user_defra_preapplication";
 		}
 		
 		/// <summary>
@@ -897,6 +903,104 @@ namespace WastePermits.Model.EarlyBound
 				this.OnPropertyChanging("defra_location_defra_preapplication_siteid");
 				this.SetRelatedEntity<WastePermits.Model.EarlyBound.defra_location>("defra_location_defra_preapplication_siteid", null, value);
 				this.OnPropertyChanged("defra_location_defra_preapplication_siteid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_preapplication_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_preapplication_createdby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_preapplication_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_preapplication_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_preapplication_createdonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_preapplication_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_preapplication_createdonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_preapplication_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_preapplication_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_preapplication_modifiedby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_preapplication_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_preapplication_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_preapplication_modifiedonbehalfby")]
+		public WastePermits.Model.EarlyBound.SystemUser lk_defra_preapplication_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_preapplication_modifiedonbehalfby");
+				this.SetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("lk_defra_preapplication_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_preapplication_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_preapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_preapplication")]
+		public WastePermits.Model.EarlyBound.Team team_defra_preapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.Team>("team_defra_preapplication", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_preapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_preapplication")]
+		public WastePermits.Model.EarlyBound.SystemUser user_defra_preapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<WastePermits.Model.EarlyBound.SystemUser>("user_defra_preapplication", null);
 			}
 		}
 		
