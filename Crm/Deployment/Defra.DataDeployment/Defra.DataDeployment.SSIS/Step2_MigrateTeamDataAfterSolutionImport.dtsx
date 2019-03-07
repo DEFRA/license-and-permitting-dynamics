@@ -7,12 +7,12 @@
   DTS:CreatorName="KAL-VM-VISIO\Kal"
   DTS:DTSID="{6EAF208F-8B1A-4D28-B74F-1AB2B53244DF}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="14.0.0800.98"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
   DTS:LocaleID="2057"
   DTS:ObjectName="Step2_MigrateTeamDataAfterSolutionImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="394"
-  DTS:VersionGUID="{B4F0AA3A-80A5-4C41-9781-B493A40384BB}">
+  DTS:VersionBuild="393"
+  DTS:VersionGUID="{FA8824D7-9921-4A1E-A7C6-F69D9AB91384}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,7 +23,7 @@
       DTS:ObjectName="(local).LPConfigDataMigration">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost\SQL2017;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,7 +33,11 @@
       DTS:ObjectName="Dynamics CRM Source">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False" />
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAX93njWgqyUGf4xP9yobpmgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABIIlzpTzwyvXOhXQa0kCKo5e31tAXwTMy5NuEd4yV6bgAAAAAOgAAAAAIAACAAAAAVEw4W4MmklEXBlgSAwL6pL6HX/VUIZ9Av58+Cra9G7jAAAADSBSO75jrwPAJ+WTyTsg2vY/G/4ingiGqRaZhaNSV/eGET6JjzmywpxtnHFFje1BRAAAAAPnhVOHkzDYAGoswYjt0Y1MDmWnFnGMNILxwsbqPhtQRVZ5UZypeTbemUCs+wuPPpEIa7c91dWDbkE2XNaRqjpw</Password>
+        </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -43,7 +47,11 @@
       DTS:ObjectName="Dynamics CRM Target">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-MASTER;CrmServerUrl=https://ag-ea-lp-dev-master.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False" />
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-MASTER;CrmServerUrl=https://ag-ea-lp-dev-master.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAX93njWgqyUGf4xP9yobpmgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA6p3oSbYZLkEXkr76l//9gV1Pcbb72ikDxhbseQR1SKgAAAAAOgAAAAAIAACAAAAA63G2lTYY+4CF8tkpRUaBUnbXpkmOQIY8dXKJA5RlYDDAAAAC+z/ys0CaFnaCSH5M/8By/l/vMGiRpG7uHPNu4NxbMAZrNC9z+rqvCc8+GrRu6ngBAAAAAcvQiAudTpQEVm2dVD7DuteIrHpvr9jvlcMFxxGzstmy6d+Rmbpa1xHXiqtKonnntw9BjmxYg5/U6nmpmSgKOvQ</Password>
+        </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -14932,71 +14940,71 @@ on teams.teamid = rm.teamid</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="286,42"
+          Size="285.714285714286,42.2857142857143"
           Id="Package\Sequence Container\(First Time Only) Migrate Holiday Schedules"
           TopLeft="760.952411707116,268.360252602951" />
         <NodeLayout
-          Size="285,42"
+          Size="285.142857142858,42.2857142857143"
           Id="Package\Sequence Container\(First Time Only) Migrate Working Schedule"
           TopLeft="759.243393561337,354.745339664677" />
         <NodeLayout
-          Size="230,42"
+          Size="230.285714285715,42.2857142857143"
           Id="Package\Sequence Container\Check Target Holiday Schedules"
           TopLeft="785.558211682615,165.890501711113" />
         <NodeLayout
-          Size="245,42"
+          Size="245.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Create role membership if not exist"
           TopLeft="424.925932903038,693.824271674914" />
         <NodeLayout
-          Size="230,42"
+          Size="229.714285714286,42.2857142857143"
           Id="Package\Sequence Container\Delete role membership on dest"
           TopLeft="418.142868477742,538.413058003748" />
         <NodeLayout
-          Size="358,42"
+          Size="357.714285714286,42.2857142857143"
           Id="Package\Sequence Container\Delete Team Queues in Target that don't match the Source"
           TopLeft="377.410052722233,911.085143320098" />
         <NodeLayout
-          Size="196,42"
+          Size="196,42.2857142857143"
           Id="Package\Sequence Container\Load BUs to the local DB"
           TopLeft="449.38094953759,94.5066980988295" />
         <NodeLayout
-          Size="280,42"
+          Size="280,42.2857142857143"
           Id="Package\Sequence Container\Load Roles from SRC and Dest to Local DB"
           TopLeft="398.052922621836,470.035858212688" />
         <NodeLayout
-          Size="297,42"
+          Size="297.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues"
           TopLeft="404.925928318962,759.755951309199" />
         <NodeLayout
-          Size="171,42"
+          Size="170.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Load Source Teams"
           TopLeft="567.851868418289,372.430452230181" />
         <NodeLayout
-          Size="220,42"
+          Size="220,42.2857142857143"
           Id="Package\Sequence Container\Migrate Team Default Queues"
           TopLeft="448.243388909742,826.644149753084" />
         <NodeLayout
-          Size="149,42"
+          Size="149.142857142858,42.2857142857143"
           Id="Package\Sequence Container\Migrate Teams"
           TopLeft="382.494721608048,368.669030165405" />
         <NodeLayout
-          Size="192,42"
+          Size="192,42.2857142857143"
           Id="Package\Sequence Container\Read Target Root BU Id and Name"
           TopLeft="445.473164113158,172.336925215739" />
         <NodeLayout
-          Size="191,42"
+          Size="191.428571428572,42.2857142857143"
           Id="Package\Sequence Container\Truncate BU Local table"
           TopLeft="447.272105959756,24.4482406566763" />
         <NodeLayout
-          Size="283,42"
+          Size="282.857142857143,42.2857142857143"
           Id="Package\Sequence Container\Truncate Dest Rolemembership Local Table"
           TopLeft="390.36508573312,608.302525798352" />
         <NodeLayout
-          Size="162,42"
+          Size="162.285714285715,42.2857142857143"
           Id="Package\Sequence Container\Truncate local DB"
           TopLeft="461.289502077977,275.598348546924" />
         <NodeLayout
-          Size="316,42"
+          Size="316,42.2857142857143"
           Id="Package\Sequence Container\Update Team Default Queues to Match the Source"
           TopLeft="394.695767651299,979.364645525903" />
         <EdgeLayout
@@ -15438,8 +15446,8 @@ on teams.teamid = rm.teamid</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="1401,1179"
-          Size="1401,1222"
+          PanelSize="1401.14285714286,1178.85714285715"
+          Size="1401.14285714286,1221.71428571429"
           Id="Package\Sequence Container"
           TopLeft="445.07141792495,72.2549692796717" />
       </GraphLayout>
