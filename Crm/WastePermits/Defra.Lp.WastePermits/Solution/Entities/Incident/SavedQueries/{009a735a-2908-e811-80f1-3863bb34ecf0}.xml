@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{009a735a-2908-e811-80f1-3863bb34ecf0}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" icon="1" preview="1" select="1" jump="title">
+      <row id="incidentid" name="result">
+        <cell name="title" width="150" />
+        <cell name="ticketnumber" width="100" />
+        <cell name="caseorigincode" width="100" />
+        <cell name="statuscode" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch mapping="logical" output-format="xml-platform" version="1.0" distinct="false">
+      <entity name="incident">
+        <attribute name="title" />
+        <order descending="false" attribute="title" />
+        <filter type="and">
+          <condition value="910400000" attribute="casetypecode" operator="eq" />
+        </filter>
+        <attribute name="statuscode" />
+        <attribute name="caseorigincode" />
+        <attribute name="ticketnumber" />
+        <attribute name="incidentid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Application RFIs" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

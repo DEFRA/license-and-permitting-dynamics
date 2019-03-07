@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{51791265-a30d-e811-80f1-3863bb34ecf0}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="title" select="1" preview="1" icon="1">
+      <row name="result" id="incidentid">
+        <cell name="title" width="150" />
+        <cell name="ticketnumber" width="100" />
+        <cell name="createdon" width="100" />
+        <cell name="defra_deadlineresponsebreached" width="100" />
+        <cell name="defra_deadlineresponsedatebreached" width="100" />
+        <cell name="defra_deadlineresponsedate" width="100" />
+        <cell name="defra_deadlinestartdate" width="100" />
+        <cell name="description" width="100" disableSorting="1" />
+        <cell name="defra_informationrequestissuedate" width="100" />
+        <cell name="ownerid" width="100" />
+        <cell name="defra_destination" width="100" />
+        <cell name="defra_requiredresponsedate" width="100" />
+        <cell name="defra_requiredresponsedatebreached" width="100" />
+        <cell name="defra_respondbybreachdate" width="100" />
+        <cell name="defra_responsefaileddate" width="100" />
+        <cell name="defra_responsereceived" width="100" />
+        <cell name="defra_responsereceiveddate" width="100" />
+        <cell name="statuscode" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="incident">
+        <attribute name="title" />
+        <order attribute="title" descending="false" />
+        <filter type="and">
+          <condition attribute="casetypecode" operator="eq" value="910400000" />
+        </filter>
+        <attribute name="statuscode" />
+        <attribute name="defra_responsereceiveddate" />
+        <attribute name="defra_responsereceived" />
+        <attribute name="defra_responsefaileddate" />
+        <attribute name="defra_respondbybreachdate" />
+        <attribute name="defra_requiredresponsedatebreached" />
+        <attribute name="defra_requiredresponsedate" />
+        <attribute name="defra_destination" />
+        <attribute name="ownerid" />
+        <attribute name="defra_informationrequestissuedate" />
+        <attribute name="description" />
+        <attribute name="defra_deadlinestartdate" />
+        <attribute name="defra_deadlineresponsedate" />
+        <attribute name="defra_deadlineresponsedatebreached" />
+        <attribute name="defra_deadlineresponsebreached" />
+        <attribute name="createdon" />
+        <attribute name="ticketnumber" />
+        <attribute name="incidentid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.1.75.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="All RFIs" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

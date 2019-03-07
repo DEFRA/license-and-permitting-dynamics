@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{00000000-0000-0000-00aa-000010001026}</savedqueryid>
+  <queryapi></queryapi>
+  <layoutxml>
+    <grid name="teams" jump="name" select="1" icon="1" preview="1">
+      <row name="team" id="teamid">
+        <cell name="name" width="300" />
+        <cell name="businessunitid" width="100" />
+        <cell name="defra_is_area_team" width="100" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical">
+      <entity name="team">
+        <attribute name="name" />
+        <attribute name="businessunitid" />
+        <filter type="and">
+          <condition attribute="teamtype" operator="eq" value="0" />
+        </filter>
+        <order attribute="name" descending="false" />
+        <attribute name="defra_is_area_team" />
+        <attribute name="teamid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>5.0.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="All Owner Teams" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

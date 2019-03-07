@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{a7c0dfc7-0f97-e811-a96b-000d3a233e06}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="subject" select="1" preview="1" icon="1">
+      <row name="result" id="annotationid">
+        <cell name="subject" width="150" />
+        <cell name="filename" width="100" />
+        <cell name="filesize" width="100" />
+        <cell name="createdby" width="100" />
+        <cell name="createdon" width="100" />
+        <cell name="notetext" width="100" disableSorting="1" />
+        <cell name="a_44e5c747f025e811a955000d3a20838a.defra_applicationnumber" width="100" disableSorting="1" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="annotation">
+        <attribute name="subject" />
+        <attribute name="filesize" />
+        <attribute name="filename" />
+        <attribute name="notetext" />
+        <attribute name="createdon" />
+        <attribute name="createdby" />
+        <order attribute="filesize" descending="true" />
+        <order attribute="subject" descending="false" />
+        <filter type="and">
+          <condition attribute="isdocument" operator="eq" value="1" />
+          <condition attribute="filesize" operator="gt" value="0" />
+        </filter>
+        <link-entity alias="a_44e5c747f025e811a955000d3a20838a" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
+          <attribute name="defra_applicationnumber" />
+        </link-entity>
+        <attribute name="annotationid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.2.1.14</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Files not uploaded to SharePoint" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
