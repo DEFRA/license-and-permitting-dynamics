@@ -162,6 +162,18 @@ namespace WastePermits.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_applicationdocument"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_applicationdocument> defra_applicationdocumentSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_applicationdocument>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_applicationline"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_applicationline> defra_applicationlineSet
@@ -386,6 +398,18 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_item>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.defra_item_application_question"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.defra_item_application_question> defra_item_application_questionSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.defra_item_application_question>();
 			}
 		}
 		
@@ -758,6 +782,30 @@ namespace WastePermits.Model.EarlyBound
 			get
 			{
 				return this.CreateQuery<WastePermits.Model.EarlyBound.Incident>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.SystemUser> SystemUserSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.SystemUser>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="WastePermits.Model.EarlyBound.Team"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<WastePermits.Model.EarlyBound.Team> TeamSet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<WastePermits.Model.EarlyBound.Team>();
 			}
 		}
 	}
