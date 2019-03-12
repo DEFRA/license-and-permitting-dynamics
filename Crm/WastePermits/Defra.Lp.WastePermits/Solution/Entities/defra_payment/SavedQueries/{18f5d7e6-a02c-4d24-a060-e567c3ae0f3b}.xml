@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>1</isdefault>
+  <savedqueryid>{18f5d7e6-a02c-4d24-a060-e567c3ae0f3b}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="defra_title" select="1" icon="1" preview="1">
+      <row name="result" id="defra_paymentid">
+        <cell name="createdon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_type" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_paymentcategory" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_paymentvalue" width="75" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="statuscode" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_customer_payment_reference" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" mapping="logical">
+      <entity name="defra_payment">
+        <attribute name="createdon" />
+        <order attribute="createdon" descending="true" />
+        <filter type="and">
+          <condition attribute="statecode" operator="eq" value="0" />
+        </filter>
+        <attribute name="statuscode" />
+        <attribute name="defra_paymentvalue" />
+        <attribute name="defra_paymentcategory" />
+        <attribute name="defra_type" />
+        <attribute name="defra_customer_payment_reference" />
+        <attribute name="defra_paymentid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.1.75.5</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Active Payments" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RibbonDiffXml>
+  <CustomActions>
+    <CustomAction Id="defra.defra_payment.button.takecardpayment.CustomAction" Location="Mscrm.Form.defra_payment.MainTab.Save.Controls._children" Sequence="55">
+      <CommandUIDefinition>
+        <Button Alt="$LocLabels:defra.defra_payment.button.takecardpayment.Alt" Command="defra.defra_payment.TakeCardPayment" Id="defra.defra_payment.button.takecardpayment" Image32by32="$webresource:Sales/_imgs/ribbon/SubmitOrder_32.png" Image16by16="$webresource:Sales/_imgs/ribbon/SubmitOrder_16.png" LabelText="$LocLabels:defra.defra_payment.button.takecardpayment.LabelText" Sequence="55" TemplateAlias="o2" ToolTipTitle="$LocLabels:defra.defra_payment.button.takecardpayment.ToolTipTitle" ToolTipDescription="$LocLabels:defra.defra_payment.button.takecardpayment.ToolTipDescription" ModernImage="" />
+      </CommandUIDefinition>
+    </CustomAction>
+    <HideCustomAction HideActionId="defra.Mscrm.Form.defra_payment.Deactivate.Hide" Location="Mscrm.Form.defra_payment.Deactivate" />
+  </CustomActions>
+  <Templates>
+    <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+  </Templates>
+  <CommandDefinitions>
+    <CommandDefinition Id="defra.defra_payment.TakeCardPayment">
+      <EnableRules>
+        <EnableRule Id="defra.defra_payment.EnableRule0.TakeCardPayment" />
+      </EnableRules>
+      <DisplayRules>
+        <DisplayRule Id="defra.defra_payment.DisplayRule0.TakeCardPaymentButton" />
+      </DisplayRules>
+      <Actions>
+        <JavaScriptFunction FunctionName="Payments.TakeCardPayment" Library="$webresource:defra_/payments/payment_form_events.js" />
+      </Actions>
+    </CommandDefinition>
+  </CommandDefinitions>
+  <RuleDefinitions>
+    <TabDisplayRules />
+    <DisplayRules>
+      <DisplayRule Id="defra.defra_payment.DisplayRule0.TakeCardPaymentButton">
+        <FormStateRule State="Create" Default="true" InvertResult="true" />
+        <ValueRule Field="" Value="" />
+      </DisplayRule>
+    </DisplayRules>
+    <EnableRules>
+      <EnableRule Id="defra.defra_payment.EnableRule0.TakeCardPayment">
+        <ValueRule Field="defra_type" Value="910400001" Default="true" InvertResult="false" />
+        <ValueRule Field="statuscode" Value="910400004" Default="true" InvertResult="false" />
+      </EnableRule>
+    </EnableRules>
+  </RuleDefinitions>
+  <LocLabels>
+    <LocLabel Id="defra.defra_payment.button.takecardpayment.Alt">
+      <Titles>
+        <Title description="Take Card Payment" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_payment.button.takecardpayment.LabelText">
+      <Titles>
+        <Title description="Take Card Payment" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_payment.button.takecardpayment.ToolTipDescription">
+      <Titles>
+        <Title description="Take a card payment" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+    <LocLabel Id="defra.defra_payment.button.takecardpayment.ToolTipTitle">
+      <Titles>
+        <Title description="Take a card payment" languagecode="1033" />
+      </Titles>
+    </LocLabel>
+  </LocLabels>
+</RibbonDiffXml>
