@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{f7bd81fe-45b0-e811-a967-000d3a23443b}" Name="Validate Payment and Refund Value Fields" Description="Ensure displayed value is always positive.">
+  <XamlFileName>/Workflows/ValidatePaymentandRefundValueFields-F7BD81FE-45B0-E811-A967-000D3A23443B.xaml</XamlFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>2</Category>
+  <Mode>1</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>1.2.1.27</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <PrimaryEntity>defra_payment</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Validate Payment and Refund Value Fields" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="Ensure displayed value is always positive." />
+  </Descriptions>
+  <labels>
+    <steplabels id="{260a3631-8e46-485b-9847-87a9b85fad17}">
+      <label languagecode="1033" description="Inbound payments must be greater than £0." />
+    </steplabels>
+    <steplabels id="{edf15ff5-3cfa-4d3b-9bc5-ae6a38e1fa9e}">
+      <label languagecode="1033" description="Refund value must be greater than £0." />
+    </steplabels>
+  </labels>
+  <ProcessTriggers>
+    <ProcessTrigger processtriggerid="{1be32abd-12b1-e811-a96e-000d3a233e06}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{1ce32abd-12b1-e811-a96e-000d3a233e06}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_paymentcategory</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{1de32abd-12b1-e811-a96e-000d3a233e06}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{16e32abd-12b1-e811-a96e-000d3a233e06}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_paymentcategory</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{17e32abd-12b1-e811-a96e-000d3a233e06}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{18e32abd-12b1-e811-a96e-000d3a233e06}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_paymentvalue</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{19e32abd-12b1-e811-a96e-000d3a233e06}">
+      <scope>1</scope>
+      <event>load</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+    <ProcessTrigger processtriggerid="{1ae32abd-12b1-e811-a96e-000d3a233e06}">
+      <controltype>1</controltype>
+      <scope>1</scope>
+      <controlname>defra_refundvalue</controlname>
+      <event>change</event>
+      <pipelinestage>0</pipelinestage>
+      <iscustomizable>1</iscustomizable>
+      <primaryentitytypecode>defra_payment</primaryentitytypecode>
+    </ProcessTrigger>
+  </ProcessTriggers>
+</Workflow>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{a769077a-1e21-e811-8118-5065f38b3601}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_title" select="1" preview="1" icon="1">
+        <row name="result" id="defra_paymentid">
+          <cell name="defra_reference_number" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_type" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_paymentcategory" width="100" />
+          <cell name="defra_paymentvalue" width="100" />
+          <cell name="statuscode" width="100" />
+          <cell name="defra_title" width="150" />
+          <cell name="createdby" width="100" />
+          <cell name="defra_applicationid" width="100" />
+          <cell name="defra_applicationlineid" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_payment">
+          <attribute name="defra_title" />
+          <attribute name="defra_applicationlineid" />
+          <attribute name="defra_applicationid" />
+          <attribute name="defra_paymentvalue" />
+          <order attribute="defra_title" descending="false" />
+          <filter type="and">
+            <condition attribute="defra_paymentcategory" operator="eq" value="910400000" />
+          </filter>
+          <attribute name="statuscode" />
+          <attribute name="defra_type" />
+          <attribute name="defra_paymentcategory" />
+          <attribute name="createdby" />
+          <attribute name="defra_reference_number" />
+          <attribute name="defra_paymentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.1.75.12</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inbound Payments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

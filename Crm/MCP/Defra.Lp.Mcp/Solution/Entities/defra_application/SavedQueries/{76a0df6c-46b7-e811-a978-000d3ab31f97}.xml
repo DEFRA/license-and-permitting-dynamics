@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{76a0df6c-46b7-e811-a978-000d3ab31f97}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
+        <row name="result" id="defra_applicationid">
+          <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="ownerid" width="100" />
+          <cell name="defra_raguscore" width="100" />
+          <cell name="defra_finalraguscore" width="100" />
+          <cell name="defra_determinedbyid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_applicationtype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_facility_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="statuscode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_penfolddate" width="125" imageproviderfunctionname="Views.DisplayApplicationPendfoldIcon" imageproviderwebresource="$webresource:defra_view_functions" />
+          <cell name="defra_submittedon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_application">
+          <attribute name="defra_penfolddate" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_facility_description" />
+          <attribute name="statuscode" />
+          <attribute name="ownerid" />
+          <attribute name="defra_determinedbyid" />
+          <attribute name="defra_submittedon" />
+          <order attribute="defra_submittedon" descending="true" />
+          <filter type="and">
+            <condition attribute="defra_raguscore" operator="not-null" />
+          </filter>
+          <attribute name="defra_raguscore" />
+          <attribute name="defra_finalraguscore" />
+          <attribute name="defra_applicationid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.2.1.73</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="RAGU rated applications" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

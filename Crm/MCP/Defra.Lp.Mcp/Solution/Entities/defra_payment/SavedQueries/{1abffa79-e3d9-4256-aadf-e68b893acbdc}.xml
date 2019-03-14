@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{1abffa79-e3d9-4256-aadf-e68b893acbdc}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_title" select="1" icon="1" preview="1">
+        <row name="result" id="defra_paymentid">
+          <cell name="defra_reference_number" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_paymentcategory" width="100" />
+          <cell name="defra_paymentvalue" width="100" />
+          <cell name="statecode" width="100" />
+          <cell name="defra_title" width="100" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="createdon" width="125" />
+          <cell name="createdby" width="100" />
+          <cell name="defra_payment_transaction" width="100" />
+          <cell name="defra_type" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="defra_payment">
+          <attribute name="defra_title" />
+          <attribute name="createdon" />
+          <order attribute="defra_reference_number" descending="true" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="statecode" operator="like" value="{0}" />
+            <condition attribute="defra_paymentvalue" operator="eq" value="{2}" />
+            <condition attribute="defra_type" operator="like" value="{0}" />
+            <condition attribute="defra_paymentcategory" operator="like" value="{0}" />
+            <condition attribute="defra_title" operator="like" value="{0}" />
+            <condition attribute="createdby" operator="like" value="{0}" />
+          </filter>
+          <attribute name="statecode" />
+          <attribute name="defra_reference_number" />
+          <attribute name="defra_paymentvalue" />
+          <attribute name="defra_type" />
+          <attribute name="defra_payment_transaction" />
+          <attribute name="defra_paymentcategory" />
+          <attribute name="createdby" />
+          <attribute name="defra_paymentid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.1.75.5</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Payments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
