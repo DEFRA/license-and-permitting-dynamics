@@ -28,6 +28,9 @@
             require([
                 "dojo/on", "dojo/dom", "dojo/domReady!"
             ],
+
+
+
                 function (on, dom) {
                     try {
                         crmApplicationNumber = window.parent.Xrm.Page.getAttribute("defra_permitnumber").getValue()
@@ -48,19 +51,20 @@
                             + "</fetch>";
 
 
-                        window.parent.Xrm.WebApi.retrieveMultipleRecords("defra_application", "?fetchXml=" + FetchXML).then(
+                        window.parent.Xrm.WebApi.retrieveMultipleRecords("defra_application", "?fetchXml= " + FetchXML).then(
                             function success(result) {
+                                console.log("no  result:");
                                 for (var i = 0; i < result.entities.length; i++) {
-                                    let gRef = result.entities[i]["defra_locationdetails2.defra_gridreferenceid"];
-                                    if (!gRef) {
-                                        document.getElementById("lblInfo").innerHTML = "Grid Reference not defined in site data."
-                                    }
-                                    else {
-                                        document.getElementById("lblGridref").innerHTML = "Grid Reference: " + gRef;
-                                        document.getElementById("viewDiv").style.display = "block";
-                                        document.getElementById("viewDiv1").style.display = "none";
-                                    }
+
+                                    console.log(result.entities[i]);
+                                    document.getElementById("lblGridref").innerHTML = "Grid Reference: " + result.entities[i]["defra_locationdetails2.defra_gridreferenceid"];
+
+                                    document.getElementById("viewDiv").style.display = "block";
+                                    document.getElementById("viewDiv1").style.display = "none";
+
                                 }
+
+                                console.log("no  error result:" + result);
                             }
                             ,
                             function (error) {
@@ -70,9 +74,12 @@
                         );
 
                         on(dom.byId("btnGoogle"), "click", function () {
+
                             let googleString = "https://www.google.co.uk/maps/place/@,293m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d51.4299!4d-0.0323";
                             window.open(googleString)
                         }
+
+
                         )
 
                         on(dom.byId("btnEsri"), "click", function () {
@@ -110,11 +117,10 @@
         <input type="button" class="btn btn-info" value="Open Google map" id="btnGoogle">
         <input type="button" class="btn btn-info" value="Open ESRI (Easimap)" id="btnEsri">
         <input type="button" class="btn btn-info" value="Open Grid Reference Finder" id="btngridreferencefinder">
-        <span id="lblGridref" class="label label-success"></span>
+        <label id="lblGridref" class="btn btn-info"></label>
     </div>
     <div id="viewDiv1" hidden="hidden">
-       
-        <span id="lblInfo" class="label label-warning"> No grid reference or site address set for this application.</span>
+        No grid reference or site address set for this application.
     </div>
 
 </body></html>
