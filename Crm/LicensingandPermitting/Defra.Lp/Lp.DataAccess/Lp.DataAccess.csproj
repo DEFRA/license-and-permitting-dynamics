@@ -31,11 +31,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\..\..\SDK\Tools\CoreTools\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\..\..\SDK\Tools\CoreTools\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -56,17 +56,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessApplicationAnswers.cs" />
+    <Compile Include="DataAccessApplicationDocument.cs" />
+    <Compile Include="DataAccessPayments.cs" />
+    <Compile Include="DataAccessApplicationLine.cs" />
+    <Compile Include="DataAccessMetaData.cs" />
     <Compile Include="DataAccessApplication.cs" />
     <Compile Include="DataAccessCase.cs" />
     <Compile Include="DataAccessEmail.cs" />
     <Compile Include="DataAccessContact.cs" />
     <Compile Include="DataAccessSharePointDocumentLocation.cs" />
+    <Compile Include="DataAccessQueues.cs" />
     <Compile Include="DataAccessUsers.cs" />
+    <Compile Include="DataAccessAutoNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="DataAccessPermit.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\Core.DataAccess.Base.csproj">
+      <Project>{2cffc029-78c9-4708-aad9-9f277358cf4e}</Project>
+      <Name>Core.DataAccess.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Core.Helpers.csproj">
       <Project>{259a6611-e8e8-4e32-9fde-097376020fe5}</Project>
       <Name>Core.Helpers</Name>
@@ -81,7 +92,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

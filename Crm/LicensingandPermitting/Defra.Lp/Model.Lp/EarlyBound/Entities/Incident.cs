@@ -34,6 +34,133 @@ namespace Lp.Model.EarlyBound
 	public partial class Incident : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string AccountId = "accountid";
+			public const string ActivitiesComplete = "activitiescomplete";
+			public const string ActualServiceUnits = "actualserviceunits";
+			public const string BilledServiceUnits = "billedserviceunits";
+			public const string BlockedProfile = "blockedprofile";
+			public const string CaseOriginCode = "caseorigincode";
+			public const string CaseTypeCode = "casetypecode";
+			public const string CheckEmail = "checkemail";
+			public const string ContactId = "contactid";
+			public const string ContractDetailId = "contractdetailid";
+			public const string ContractId = "contractid";
+			public const string ContractServiceLevelCode = "contractservicelevelcode";
+			public const string CreatedBy = "createdby";
+			public const string CreatedByExternalParty = "createdbyexternalparty";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string CustomerContacted = "customercontacted";
+			public const string CustomerId = "customerid";
+			public const string CustomerSatisfactionCode = "customersatisfactioncode";
+			public const string DecrementEntitlementTerm = "decremententitlementterm";
+			public const string defra_application = "defra_application";
+			public const string defra_applicationcompanyaddress = "defra_applicationcompanyaddress";
+			public const string defra_applicationpermitdetails = "defra_applicationpermitdetails";
+			public const string defra_applicationsitedetails = "defra_applicationsitedetails";
+			public const string defra_deadlineresponsebreached = "defra_deadlineresponsebreached";
+			public const string defra_deadlineresponsedate = "defra_deadlineresponsedate";
+			public const string defra_deadlineresponsedatebreached = "defra_deadlineresponsedatebreached";
+			public const string defra_deadlinestartdate = "defra_deadlinestartdate";
+			public const string defra_destination = "defra_destination";
+			public const string defra_informationrequestissuedate = "defra_informationrequestissuedate";
+			public const string defra_notificationsentbypost = "defra_notificationsentbypost";
+			public const string defra_peerreviewer = "defra_peerreviewer";
+			public const string defra_peerreviewrejectionnotes = "defra_peerreviewrejectionnotes";
+			public const string defra_peerreviewstatus = "defra_peerreviewstatus";
+			public const string defra_requiredresponsedate = "defra_requiredresponsedate";
+			public const string defra_requiredresponsedatebreached = "defra_requiredresponsedatebreached";
+			public const string defra_requiredresponsedatewarningbreached = "defra_requiredresponsedatewarningbreached";
+			public const string defra_respondbybreachdate = "defra_respondbybreachdate";
+			public const string defra_responsefaileddate = "defra_responsefaileddate";
+			public const string defra_responsereceived = "defra_responsereceived";
+			public const string defra_responsereceiveddate = "defra_responsereceiveddate";
+			public const string Description = "description";
+			public const string EmailAddress = "emailaddress";
+			public const string EntitlementId = "entitlementid";
+			public const string EntityImage = "entityimage";
+			public const string EntityImage_Timestamp = "entityimage_timestamp";
+			public const string EntityImage_URL = "entityimage_url";
+			public const string EntityImageId = "entityimageid";
+			public const string EscalatedOn = "escalatedon";
+			public const string ExchangeRate = "exchangerate";
+			public const string ExistingCase = "existingcase";
+			public const string FirstResponseByKPIId = "firstresponsebykpiid";
+			public const string FirstResponseSent = "firstresponsesent";
+			public const string FirstResponseSLAStatus = "firstresponseslastatus";
+			public const string FollowupBy = "followupby";
+			public const string FollowUpTaskCreated = "followuptaskcreated";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string IncidentId = "incidentid";
+			public const string Id = "incidentid";
+			public const string IncidentStageCode = "incidentstagecode";
+			public const string InfluenceScore = "influencescore";
+			public const string IsDecrementing = "isdecrementing";
+			public const string IsEscalated = "isescalated";
+			public const string KbArticleId = "kbarticleid";
+			public const string LastOnHoldTime = "lastonholdtime";
+			public const string MasterId = "masterid";
+			public const string Merged = "merged";
+			public const string MessageTypeCode = "messagetypecode";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedByExternalParty = "modifiedbyexternalparty";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string NumberOfChildIncidents = "numberofchildincidents";
+			public const string OnHoldTime = "onholdtime";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string ParentCaseId = "parentcaseid";
+			public const string PrimaryContactId = "primarycontactid";
+			public const string PriorityCode = "prioritycode";
+			public const string ProcessId = "processid";
+			public const string ProductId = "productid";
+			public const string ProductSerialNumber = "productserialnumber";
+			public const string ResolveBy = "resolveby";
+			public const string ResolveByKPIId = "resolvebykpiid";
+			public const string ResolveBySLAStatus = "resolvebyslastatus";
+			public const string ResponseBy = "responseby";
+			public const string ResponsibleContactId = "responsiblecontactid";
+			public const string RouteCase = "routecase";
+			public const string SentimentValue = "sentimentvalue";
+			public const string ServiceStage = "servicestage";
+			public const string SeverityCode = "severitycode";
+			public const string SLAId = "slaid";
+			public const string SLAInvokedId = "slainvokedid";
+			public const string SocialProfileId = "socialprofileid";
+			public const string StageId = "stageid";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string SubjectId = "subjectid";
+			public const string TicketNumber = "ticketnumber";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string Title = "title";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string TraversedPath = "traversedpath";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string contact_as_primary_contact = "contact_as_primary_contact";
+			public const string contact_as_responsible_contact = "contact_as_responsible_contact";
+			public const string defra_application_incident_application = "defra_application_incident_application";
+			public const string defra_systemuser_incident_peerreviewer = "defra_systemuser_incident_peerreviewer";
+			public const string incident_customer_accounts = "incident_customer_accounts";
+			public const string incident_customer_contacts = "incident_customer_contacts";
+			public const string Referencingincident_existingcase = "incident_existingcase";
+			public const string Referencingincident_master_incident = "incident_master_incident";
+			public const string Referencingincident_parent_incident = "incident_parent_incident";
+			public const string lk_incidentbase_createdby = "lk_incidentbase_createdby";
+			public const string lk_incidentbase_createdonbehalfby = "lk_incidentbase_createdonbehalfby";
+			public const string lk_incidentbase_modifiedby = "lk_incidentbase_modifiedby";
+			public const string lk_incidentbase_modifiedonbehalfby = "lk_incidentbase_modifiedonbehalfby";
+			public const string system_user_incidents = "system_user_incidents";
+			public const string team_incidents = "team_incidents";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -2106,6 +2233,46 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_incident_defra_applicationdocument_caseid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_incident_defra_applicationdocument_caseid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_applicationdocument> defra_incident_defra_applicationdocument_caseid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_incident_defra_applicationdocument_caseid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_incident_defra_applicationdocument_caseid", null, value);
+				this.OnPropertyChanged("defra_incident_defra_applicationdocument_caseid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Incident_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Annotation")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Incident_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_Annotation");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null, value);
+				this.OnPropertyChanged("Incident_Annotation");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N incident_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_defra_areacomments")]
@@ -2142,6 +2309,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("incident_defra_notifications");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_notification>("incident_defra_notifications", null, value);
 				this.OnPropertyChanged("incident_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Incident_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Incident_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Incident_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Incident_Emails", null, value);
+				this.OnPropertyChanged("Incident_Emails");
 			}
 		}
 		
@@ -2202,6 +2389,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Referencedincident_parent_incident");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedincident_parent_incident");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Incident_QueueItem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_QueueItem")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.QueueItem> Incident_QueueItem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("Incident_QueueItem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Incident_QueueItem");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.QueueItem>("Incident_QueueItem", null, value);
+				this.OnPropertyChanged("Incident_QueueItem");
 			}
 		}
 		
@@ -2285,6 +2492,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_incident_application");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_incident_application", null, value);
 				this.OnPropertyChanged("defra_application_incident_application");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_incident_peerreviewer
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_peerreviewer")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_incident_peerreviewer")]
+		public Lp.Model.EarlyBound.SystemUser defra_systemuser_incident_peerreviewer
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_incident_peerreviewer", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_incident_peerreviewer");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_incident_peerreviewer", null, value);
+				this.OnPropertyChanged("defra_systemuser_incident_peerreviewer");
 			}
 		}
 		
@@ -2390,6 +2618,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Referencingincident_parent_incident");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingincident_parent_incident");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_incidentbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_incidentbase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_incidentbase_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_incidentbase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_incidentbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_incidentbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_incidentbase_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_incidentbase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_incidentbase_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_incidentbase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_incidentbase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 system_user_incidents
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_incidents")]
+		public Lp.Model.EarlyBound.SystemUser system_user_incidents
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("system_user_incidents", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_incidents
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_incidents")]
+		public Lp.Model.EarlyBound.Team team_incidents
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_incidents", null);
 			}
 		}
 		

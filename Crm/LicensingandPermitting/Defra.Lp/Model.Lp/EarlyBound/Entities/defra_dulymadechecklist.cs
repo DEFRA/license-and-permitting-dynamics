@@ -31,6 +31,53 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_dulymadechecklist : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_adequatesiteconditionreport = "defra_adequatesiteconditionreport";
+			public const string defra_adequatesiteplan = "defra_adequatesiteplan";
+			public const string defra_adequatetechnicalability = "defra_adequatetechnicalability";
+			public const string defra_appendix1completed = "defra_appendix1completed";
+			public const string defra_applicationId = "defra_applicationid";
+			public const string defra_baselinereportacceptable = "defra_baselinereportacceptable";
+			public const string defra_completedbyid = "defra_completedbyid";
+			public const string defra_completedon = "defra_completedon";
+			public const string defra_confirmedassrp = "defra_confirmedassrp";
+			public const string defra_dulymadechecklistId = "defra_dulymadechecklistid";
+			public const string Id = "defra_dulymadechecklistid";
+			public const string defra_fireplanadequate = "defra_fireplanadequate";
+			public const string defra_general_notes = "defra_general_notes";
+			public const string defra_miningwastemanagementplanacceptable = "defra_miningwastemanagementplanacceptable";
+			public const string defra_name = "defra_name";
+			public const string defra_rejectedstatusreason = "defra_rejectedstatusreason";
+			public const string defra_samplingreport = "defra_samplingreport";
+			public const string defra_wasterecoveryplanacceptable = "defra_wasterecoveryplanacceptable";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string defra_application_defra_dulymadechecklist = "defra_application_defra_dulymadechecklist";
+			public const string defra_systemuser_defra_dulymadechecklist = "defra_systemuser_defra_dulymadechecklist";
+			public const string lk_defra_dulymadechecklist_createdby = "lk_defra_dulymadechecklist_createdby";
+			public const string lk_defra_dulymadechecklist_createdonbehalfby = "lk_defra_dulymadechecklist_createdonbehalfby";
+			public const string lk_defra_dulymadechecklist_modifiedby = "lk_defra_dulymadechecklist_modifiedby";
+			public const string lk_defra_dulymadechecklist_modifiedonbehalfby = "lk_defra_dulymadechecklist_modifiedonbehalfby";
+			public const string team_defra_dulymadechecklist = "team_defra_dulymadechecklist";
+			public const string user_defra_dulymadechecklist = "user_defra_dulymadechecklist";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -770,6 +817,125 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_dulymadechecklist");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_dulymadechecklist", null, value);
 				this.OnPropertyChanged("defra_application_defra_dulymadechecklist");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_completedbyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_dulymadechecklist")]
+		public Lp.Model.EarlyBound.SystemUser defra_systemuser_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_dulymadechecklist", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_dulymadechecklist");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_dulymadechecklist", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_dulymadechecklist");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_dulymadechecklist_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_dulymadechecklist_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_dulymadechecklist_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_dulymadechecklist_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_dulymadechecklist_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_dulymadechecklist_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_dulymadechecklist_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_dulymadechecklist_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_dulymadechecklist")]
+		public Lp.Model.EarlyBound.Team team_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_dulymadechecklist", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_dulymadechecklist
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_dulymadechecklist")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_dulymadechecklist
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_dulymadechecklist", null);
 			}
 		}
 		

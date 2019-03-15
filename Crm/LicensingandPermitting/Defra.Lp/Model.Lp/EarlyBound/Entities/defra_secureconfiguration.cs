@@ -31,6 +31,38 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_secureconfiguration : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_description = "defra_description";
+			public const string defra_key = "defra_key";
+			public const string defra_secureconfigurationId = "defra_secureconfigurationid";
+			public const string Id = "defra_secureconfigurationid";
+			public const string defra_value = "defra_value";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_secureconfiguration_createdby = "lk_defra_secureconfiguration_createdby";
+			public const string lk_defra_secureconfiguration_createdonbehalfby = "lk_defra_secureconfiguration_createdonbehalfby";
+			public const string lk_defra_secureconfiguration_modifiedby = "lk_defra_secureconfiguration_modifiedby";
+			public const string lk_defra_secureconfiguration_modifiedonbehalfby = "lk_defra_secureconfiguration_modifiedonbehalfby";
+			public const string team_defra_secureconfiguration = "team_defra_secureconfiguration";
+			public const string user_defra_secureconfiguration = "user_defra_secureconfiguration";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -469,6 +501,104 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_secureconfiguration_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_secureconfiguration_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_secureconfiguration_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_secureconfiguration_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_secureconfiguration
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_secureconfiguration")]
+		public Lp.Model.EarlyBound.Team team_defra_secureconfiguration
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_secureconfiguration", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_secureconfiguration
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_secureconfiguration")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_secureconfiguration
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_secureconfiguration", null);
 			}
 		}
 		

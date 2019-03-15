@@ -70,7 +70,13 @@ namespace Lp.Model.EarlyBound
 		Application = 10013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationAnswer = 10081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationContact = 10014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDocument = 10092,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationFile = 4707,
@@ -82,10 +88,31 @@ namespace Lp.Model.EarlyBound
 		ApplicationPrice = 10016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestion = 10082,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionGroup = 10083,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationQuestionOption = 10084,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationRibbons = 1120,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationSubtype = 10053,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTask = 10077,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskDefinition = 10078,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskDefinitionLink = 10079,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationTaskType = 10080,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AppModuleComponent = 9007,
@@ -328,6 +355,9 @@ namespace Lp.Model.EarlyBound
 		CustomerRelationship = 4502,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DatabaseVersion = 10099,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DataImport = 4410,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -410,6 +440,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EntitlementContact = 7272,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EntitlementEntityAllocationTypeMapping = 9704,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EntitlementProduct = 6363,
@@ -547,6 +580,9 @@ namespace Lp.Model.EarlyBound
 		Item = 10059,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItemApplicationQuestion = 10087,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ItemDetail = 10061,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -575,6 +611,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Language = 9957,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LanguageProvisioningState = 9875,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Lead = 4,
@@ -1141,10 +1180,19 @@ namespace Lp.Model.EarlyBound
 		SolutionComponent = 7103,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentDataSource = 10065,
+		SolutionComponentDataSource = 10104,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SolutionComponentSummary = 10064,
+		SolutionComponentSummary = 10103,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistory = 10097,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryData = 9890,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SolutionHistoryDataSource = 10098,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		StatusMap = 1075,
@@ -1301,6 +1349,15 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		UntrackedEmail = 4220,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeRun = 10100,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeStep = 10101,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UpgradeVersion = 10102,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		User = 8,

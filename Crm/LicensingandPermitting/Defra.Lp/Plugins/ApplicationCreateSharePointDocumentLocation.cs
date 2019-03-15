@@ -10,6 +10,7 @@
 // </auto-generated>
 
 using System;
+using Core.Helpers.Extensions;
 using Lp.DataAccess;
 using Lp.Model.Crm;
 using Lp.Model.EarlyBound;
@@ -113,7 +114,6 @@ namespace Defra.Lp.Plugins
                         adminService.UpdateDocumentLocations(target, applicationLocation, null);
                     }
                 }
-             
             }
             else if (applicationType.Value == (int)defra_ApplicationType.NewApplication)
             {
@@ -124,16 +124,17 @@ namespace Defra.Lp.Plugins
 
         private static void CreateDocumentLocation(ITracingService tracing, IOrganizationService adminService, Entity target, Guid permitListRef, IPluginExecutionContext context)
         {
-            tracing.Trace("Creating sharePointdocumentlocation for Permit");
-            var permitLocation = adminService.CreatePermitDocumentLocation((string) target["defra_permitnumber"], permitListRef, null);
+            string permitNumber = target.GetAttributeValue<string>("defra_permitnumber").Replace('/', '_');
+            tracing.Trace($"Creating sharePointdocumentlocation for Permit {permitNumber}");
+            var permitLocation = adminService.CreatePermitDocumentLocation(permitNumber, permitListRef, null);
             if (permitLocation != null)
             {
 
                 // Now create Application document location 
-                tracing.Trace("Creating sharePointdocumentlocation for Application (new application)");
+                string applicationNumber = target.GetAttributeValue<string>("defra_applicationnumber").Replace('/', '_');
+                tracing.Trace($"Creating sharePointdocumentlocation for Application (new application) {applicationNumber}");
                 var applicationLocation =
-                    adminService.CreateApplicationDocumentLocation((string) target["defra_applicationnumber"],
-                        permitLocation.Id, target.ToEntityReference());
+                    adminService.CreateApplicationDocumentLocation(applicationNumber, permitLocation.Id, target.ToEntityReference());
 
                 // Set the lookup on the Application to the Permit Document Location. Creating 
                 // a new entity so as not to trigger updates on all fields. 

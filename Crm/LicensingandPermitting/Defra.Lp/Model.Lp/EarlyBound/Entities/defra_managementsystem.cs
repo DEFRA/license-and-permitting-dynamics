@@ -31,6 +31,38 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_managementsystem : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_description = "defra_description";
+			public const string defra_managementsystemId = "defra_managementsystemid";
+			public const string Id = "defra_managementsystemid";
+			public const string defra_name = "defra_name";
+			public const string defra_shortcode = "defra_shortcode";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_managementsystem_createdby = "lk_defra_managementsystem_createdby";
+			public const string lk_defra_managementsystem_createdonbehalfby = "lk_defra_managementsystem_createdonbehalfby";
+			public const string lk_defra_managementsystem_modifiedby = "lk_defra_managementsystem_modifiedby";
+			public const string lk_defra_managementsystem_modifiedonbehalfby = "lk_defra_managementsystem_modifiedonbehalfby";
+			public const string team_defra_managementsystem = "team_defra_managementsystem";
+			public const string user_defra_managementsystem = "user_defra_managementsystem";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -489,6 +521,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_managementsystem_defra_application_managementsystem");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_application>("defra_managementsystem_defra_application_managementsystem", null, value);
 				this.OnPropertyChanged("defra_managementsystem_defra_application_managementsystem");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_managementsystem_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_managementsystem_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_managementsystem_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_managementsystem_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_managementsystem_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_managementsystem_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_managementsystem_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_managementsystem_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_managementsystem_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_managementsystem_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_managementsystem_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_managementsystem_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_managementsystem_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_managementsystem_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_managementsystem_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_managementsystem_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_managementsystem_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_managementsystem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_managementsystem")]
+		public Lp.Model.EarlyBound.Team team_defra_managementsystem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_managementsystem", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_managementsystem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_managementsystem")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_managementsystem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_managementsystem", null);
 			}
 		}
 		

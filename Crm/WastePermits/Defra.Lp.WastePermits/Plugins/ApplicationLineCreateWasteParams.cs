@@ -13,9 +13,10 @@ using System;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
-using DAL;
+using Lp.DataAccess.Interfaces;
 using Lp.Model.Crm;
-using WastePermits.Model.Crm;
+using WastePermits.DataAccess;
+using WastePermits.Model.EarlyBound;
 using Application = Lp.Model.Crm.Application;
 
 
@@ -30,8 +31,11 @@ namespace Defra.Lp.WastePermits.Plugins
         private ITracingService _TracingService { get; set; }
         private IPluginExecutionContext _Context { get; set; }
         private IOrganizationService _Service { get; set; }
-
         private IOrganizationService _AdminService { get; set; }
+
+        // Data Access Classes
+        private IDataAccessApplication _dataAccessApplication;
+        private IDataAccessApplication DataAccessApplication => _dataAccessApplication ?? (_dataAccessApplication = new DataAccessApplication(_Service, _TracingService));
 
         /// <summary>
         /// Alias of the image registered for the snapshot of the
@@ -98,11 +102,10 @@ namespace Defra.Lp.WastePermits.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
+            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
             _TracingService = localContext.TracingService;
             _Context = localContext.PluginExecutionContext;
             _Service = localContext.OrganizationService;
-
-            var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
             _AdminService = serviceFactory.CreateOrganizationService(null);
 
             //The pre Image 
@@ -121,23 +124,31 @@ namespace Defra.Lp.WastePermits.Plugins
                         //Run only if Application Line
                         if (targetAppLine != null && targetAppLine.LogicalName == ApplicationLine.EntityLogicalName)
                         {
-                            //Retrieve the Application
+                            // 1. Retrieve the Application
                             Guid? applicationId = this.GetApplicationId(preImageEntity, targetAppLine);
                             this.GetApplication(applicationId);
 
-                            // Check for Duplicate Standard Rules on this Application
+                            // 2. Create Included Items as Application Lines
+                            // TODO
+
+
+                            // 3. Price the Application Line
+                            // TODO
+                            this.UpdateApplicationLinePrice(targetAppLine);
+
+                            // 4. Discount all Application Lines
+                            // TODO
+
+                            // 5. Check for Duplicate Standard Rules on this Application
                             CheckForDuplicateStandardRules(targetAppLine);
 
-                            //Run only if the standard rule is updated
-                            _TracingService.Trace("Checking for defra_standardruleid");
+                            // 6,7. Standard Rule Processing (Copy Waste Parameters to App Line, Create DMC)
+                            // ProcessStandardRule()
                             if (targetAppLine.Contains("defra_standardruleid"))
                             {
                                 //Retrieve the Standard Rule
                                 _TracingService.Trace("Calling RetrieveStandardRule");
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
-
-                                // Update Application Line Amount
-                                this.UpdateApplicationLinePrice(targetAppLine);
 
                                 //Create the Parameters record based on the Standard Rule Parameteres record
                                 _TracingService.Trace("Calling CrateApplicationLineParameters");
@@ -148,8 +159,9 @@ namespace Defra.Lp.WastePermits.Plugins
                                 this.UpdateDulyMadeChecklist(targetAppLine, preImageEntity);
                             }
 
-                            //Update the Application
+                            // 8. Aggregate parameters onto Application
                             this.UpdateApplication(targetAppLine, null);
+
                         }
                         else
                         {
@@ -207,6 +219,34 @@ namespace Defra.Lp.WastePermits.Plugins
             _TracingService.Trace("UpdateApplicationLinePrice()");
 
             // Only update the price if the standard rule has changed and its not null.
+            if (targetAppLine.Contains(ApplicationLine.ItemId) && targetAppLine.GetAttributeValue<EntityReference>(ApplicationLine.ItemId) != null)
+            {
+                OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
+                EntityReference itemEntityEntityReference = targetAppLine[ApplicationLine.ItemId] as EntityReference;
+
+                // Get the application sub type if it exists
+                EntityReference applicationSubType = null;
+                if (this.ApplicationEntity.Attributes.ContainsKey(Application.ApplicationSubType))
+                {
+                    applicationSubType = this.ApplicationEntity[Application.ApplicationSubType] as EntityReference;
+                }
+
+                // Get the price from the Application Price table
+                _TracingService.Trace("Getting Application Price for type {0} and subtype {1} and item {2}", applicationType?.Value ?? 0, applicationSubType?.Id ?? Guid.Empty, itemEntityEntityReference?.Id ?? Guid.Empty);
+                Money price = this._Service.RetrieveApplicationPrice(applicationType, null, itemEntityEntityReference, applicationSubType);
+
+                if (price != null)
+                {
+                    _TracingService.Trace("Setting Application Price to {0}", price.Value);
+                    targetAppLine[ApplicationLine.Value] = price;
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException("You can’t select that type of application for that permit. For example, you may have tried to start a substantial variation for a standard rule. Check you can select that application type for that rule set or activity and try again.\n \nNo need to contact support, but…");
+                }
+            }
+
+            // Only update the price if the standard rule has changed and its not null.
             if (targetAppLine.Contains(ApplicationLine.StandardRule) && targetAppLine.GetAttributeValue<EntityReference>(ApplicationLine.StandardRule) != null)
             {
                 OptionSetValue applicationType = this.ApplicationEntity[Application.ApplicationType] as OptionSetValue;
@@ -221,7 +261,7 @@ namespace Defra.Lp.WastePermits.Plugins
 
                 // Get the price from the Application Price table
                 _TracingService.Trace("Getting Application Price for type {0} and subtype {1} and rule {2}", applicationType?.Value ?? 0, applicationSubType?.Id ?? Guid.Empty, standardRuleEntityReference?.Id ?? Guid.Empty);
-                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference, applicationSubType);
+                Money price = this._Service.RetrieveApplicationPrice(applicationType, standardRuleEntityReference, null, applicationSubType);
                 
                 if (price != null)
                 {
@@ -369,33 +409,6 @@ namespace Defra.Lp.WastePermits.Plugins
                 _Service.Update(dulyMade);
             }
         }
-
-        /*
-        /// <summary>
-        /// Retrieves the Application entity
-        /// </summary>
-        private void RetrieveApplicationEntity(Entity targetAppLine, Entity preImage)
-        {
-            //Get the Application
-            EntityReference applicationER = null;
-
-            if (_Context.MessageName == "Update" && preImage != null && preImage.Attributes.Contains("defra_applicationid"))
-                applicationER = (EntityReference)preImage["defra_applicationid"];
-            if (targetAppLine.Attributes.Contains("defra_applicationid"))
-                applicationER = (EntityReference)targetAppLine["defra_applicationid"];
-
-            //Check if the Duly Made record exists. If not create it
-            if (applicationER == null)
-                return;
-
-            //Retrieve the duly made record if exists
-            _TracingService.Trace("Application with Id {0} is being retrieved", applicationER.Id);
-            this.ApplicationEntity = _Service.Retrieve(applicationER.LogicalName, applicationER.Id, new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Application.ApplicationType, Application.ApplicationSubType));
-
-            //Initiate the updated application entity
-            this.UpdatedApplicationEntity = new Entity(ApplicationEntity.LogicalName) { Id = ApplicationEntity.Id };
-        }
-        */
 
         /// <summary>
         /// Retrieves the Standard Rule entity
@@ -606,19 +619,19 @@ namespace Defra.Lp.WastePermits.Plugins
             {
                 ColumnSet =
                     new ColumnSet(
-                        ApplicationLine.NpsDetermination,
-                        ApplicationLineWaste.LocationScreeningRequired,
-                        ApplicationLine.State,
-                        ApplicationLine.LineType,
-                        ApplicationLine.StandardRule),
+                        defra_applicationline.Fields.defra_npsdetermination,
+                        defra_applicationline.Fields.defra_locationscreeningrequired,
+                        defra_applicationline.Fields.StateCode,
+                        defra_applicationline.Fields.defra_linetype,
+                        defra_applicationline.Fields.defra_standardruleId),
                 Criteria = new FilterExpression()
                 {
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression(ApplicationLine.ApplicationId, ConditionOperator.Equal, applicationId),
-                        new ConditionExpression(ApplicationLine.State, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
-                        new ConditionExpression(ApplicationLine.LineType, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
+                        new ConditionExpression(defra_applicationline.Fields.defra_applicationId, ConditionOperator.Equal, applicationId),
+                        new ConditionExpression(defra_applicationline.Fields.StateCode, ConditionOperator.Equal, (int)ApplicationLineStates.Active),
+                        new ConditionExpression(defra_applicationline.Fields.defra_linetype, ConditionOperator.Equal, (int)ApplicationLineTypeValues.RegulatedFacility)
                     }
                 }
             };
@@ -646,16 +659,7 @@ namespace Defra.Lp.WastePermits.Plugins
             {
                 return;
             }
-
-            //Retrieve the duly made record if exists
-            _TracingService.Trace("Application with Id {0} is being retrieved", applicationId);
-            this.ApplicationEntity = _Service.Retrieve(
-                Application.EntityLogicalName,
-                applicationId.Value,
-                new ColumnSet("defra_dulymadechecklistid", "defra_applicationnumber", "defra_npsdetermination", "defra_locationscreeningrequired", Application.ApplicationType, Application.ApplicationSubType));
-
-            //Initiate the updated application entity
-            _TracingService.Trace("Application with Id {0} successfully retrieved", applicationId);
+            this.ApplicationEntity = DataAccessApplication.GetApplication(applicationId.Value);
             this.UpdatedApplicationEntity = new Entity(Application.EntityLogicalName) { Id = applicationId.Value };
         }
 

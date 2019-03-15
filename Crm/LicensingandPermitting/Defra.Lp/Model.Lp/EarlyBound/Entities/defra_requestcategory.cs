@@ -31,6 +31,32 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_requestcategory : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_name = "defra_name";
+			public const string defra_requestcategoryId = "defra_requestcategoryid";
+			public const string Id = "defra_requestcategoryid";
+			public const string defra_type = "defra_type";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OrganizationId = "organizationid";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_requestcategory_createdby = "lk_defra_requestcategory_createdby";
+			public const string lk_defra_requestcategory_createdonbehalfby = "lk_defra_requestcategory_createdonbehalfby";
+			public const string lk_defra_requestcategory_modifiedby = "lk_defra_requestcategory_modifiedby";
+			public const string lk_defra_requestcategory_modifiedonbehalfby = "lk_defra_requestcategory_modifiedonbehalfby";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -423,6 +449,76 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_requestcategory_incident");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.Incident>("defra_defra_requestcategory_incident", null, value);
 				this.OnPropertyChanged("defra_defra_requestcategory_incident");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_requestcategory_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_requestcategory_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_requestcategory_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_requestcategory_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_requestcategory_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_requestcategory_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_requestcategory_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_requestcategory_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_requestcategory_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_requestcategory_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_requestcategory_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_requestcategory_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_requestcategory_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_requestcategory_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_requestcategory_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_requestcategory_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_requestcategory_modifiedonbehalfby");
 			}
 		}
 		

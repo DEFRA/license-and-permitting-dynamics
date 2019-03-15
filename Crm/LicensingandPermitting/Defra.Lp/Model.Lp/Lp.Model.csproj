@@ -31,11 +31,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\..\..\SDK\Tools\CoreTools\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\..\..\SDK\Tools\CoreTools\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="Crm\ActivityMimeAttachment.cs" />
     <Compile Include="Crm\Address.cs" />
-    <Compile Include="Crm\Annotation.cs" />
     <Compile Include="Crm\Application.cs" />
     <Compile Include="Crm\ApplicationLine.cs" />
     <Compile Include="Crm\ApplicationPrice.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Crm\Email.cs" />
     <Compile Include="Crm\Location.cs" />
     <Compile Include="Crm\LocationDetail.cs" />
+    <Compile Include="Crm\Payment.cs" />
     <Compile Include="Crm\Permit.cs" />
     <Compile Include="Crm\PermitLine.cs" />
     <Compile Include="Crm\PluginInputParams.cs" />
@@ -75,13 +75,21 @@
     <Compile Include="Crm\TeamMembership.cs" />
     <Compile Include="EarlyBound\Actions\Actions.cs" />
     <Compile Include="EarlyBound\Entities\Account.cs" />
+    <Compile Include="EarlyBound\Entities\Annotation.cs" />
     <Compile Include="EarlyBound\Entities\Contact.cs" />
     <Compile Include="EarlyBound\Entities\defra_address.cs" />
     <Compile Include="EarlyBound\Entities\defra_addressdetails.cs" />
     <Compile Include="EarlyBound\Entities\defra_application.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationanswer.cs" />
     <Compile Include="EarlyBound\Entities\defra_applicationcontact.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationdocument.cs" />
     <Compile Include="EarlyBound\Entities\defra_applicationline.cs" />
     <Compile Include="EarlyBound\Entities\defra_applicationprice.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationquestion.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationquestiongroup.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationquestionoption.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationtask.cs" />
+    <Compile Include="EarlyBound\Entities\defra_applicationtaskdefinition.cs" />
     <Compile Include="EarlyBound\Entities\defra_application_subtypes.cs" />
     <Compile Include="EarlyBound\Entities\defra_areacomment.cs" />
     <Compile Include="EarlyBound\Entities\defra_autonumbering.cs" />
@@ -91,9 +99,11 @@
     <Compile Include="EarlyBound\Entities\defra_dulymadechecklist.cs" />
     <Compile Include="EarlyBound\Entities\defra_exception.cs" />
     <Compile Include="EarlyBound\Entities\defra_item.cs" />
+    <Compile Include="EarlyBound\Entities\defra_itemapplicationtaskdefinition.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemdetail.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemdetailtype.cs" />
     <Compile Include="EarlyBound\Entities\defra_itemtype.cs" />
+    <Compile Include="EarlyBound\Entities\defra_item_application_question.cs" />
     <Compile Include="EarlyBound\Entities\defra_location.cs" />
     <Compile Include="EarlyBound\Entities\defra_locationdetails.cs" />
     <Compile Include="EarlyBound\Entities\defra_log.cs" />
@@ -109,9 +119,15 @@
     <Compile Include="EarlyBound\Entities\defra_requestcategory.cs" />
     <Compile Include="EarlyBound\Entities\defra_saveandreturn.cs" />
     <Compile Include="EarlyBound\Entities\defra_secureconfiguration.cs" />
+    <Compile Include="EarlyBound\Entities\defra_tasktype.cs" />
     <Compile Include="EarlyBound\Entities\defra_town.cs" />
+    <Compile Include="EarlyBound\Entities\Email.cs" />
     <Compile Include="EarlyBound\Entities\Incident.cs" />
     <Compile Include="EarlyBound\Entities\LpCrmServiceContext.cs" />
+    <Compile Include="EarlyBound\Entities\Queue.cs" />
+    <Compile Include="EarlyBound\Entities\QueueItem.cs" />
+    <Compile Include="EarlyBound\Entities\SystemUser.cs" />
+    <Compile Include="EarlyBound\Entities\Team.cs" />
     <Compile Include="EarlyBound\OptionSets\Account_AccountCategoryCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Account_AccountClassificationCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Account_AccountRatingCode.cs" />
@@ -149,10 +165,13 @@
     <Compile Include="EarlyBound\OptionSets\activity_typecode.cs" />
     <Compile Include="EarlyBound\OptionSets\addlistcampaign.cs" />
     <Compile Include="EarlyBound\OptionSets\adminsettingsentity_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\AdvancedSimilarityRule_FilterResultByStatus.cs" />
     <Compile Include="EarlyBound\OptionSets\AdvancedSimilarityRule_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\AllocationType.cs" />
     <Compile Include="EarlyBound\OptionSets\AppConfig_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\AppModuleComponent_ComponentType.cs" />
     <Compile Include="EarlyBound\OptionSets\AppModuleComponent_RootComponentBehavior.cs" />
+    <Compile Include="EarlyBound\OptionSets\AppModule_NavigationType.cs" />
     <Compile Include="EarlyBound\OptionSets\Appointment_AttachmentErrors.cs" />
     <Compile Include="EarlyBound\OptionSets\Appointment_InstanceTypeCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Appointment_PriorityCode.cs" />
@@ -248,6 +267,7 @@
     <Compile Include="EarlyBound\OptionSets\Contact_GenderCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Contact_HasChildrenCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Contact_LeadSourceCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\Contact_msdyn_orgchangestatus.cs" />
     <Compile Include="EarlyBound\OptionSets\Contact_PaymentTermsCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Contact_PreferredAppointmentDayCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Contact_PreferredAppointmentTimeCode.cs" />
@@ -270,6 +290,8 @@
     <Compile Include="EarlyBound\OptionSets\ConvertRule_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\convert_campaign_response_deactivate_status.cs" />
     <Compile Include="EarlyBound\OptionSets\convert_campaign_response_option.cs" />
+    <Compile Include="EarlyBound\OptionSets\convert_campaign_response_options.cs" />
+    <Compile Include="EarlyBound\OptionSets\convert_campaign_response_qualify_lead_options.cs" />
     <Compile Include="EarlyBound\OptionSets\convert_campaign_response_sales_entity_type.cs" />
     <Compile Include="EarlyBound\OptionSets\convert_campaign_response_to_lead_disqualify_status.cs" />
     <Compile Include="EarlyBound\OptionSets\convert_campaign_response_to_lead_option.cs" />
@@ -280,18 +302,29 @@
     <Compile Include="EarlyBound\OptionSets\defra_addressdetails_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_AddressType.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_address_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationanswer_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationcontact_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_ApplicationDocumentSource.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationdocument_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationline_defra_linetype.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationline_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_applicationprice_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationquestiongroup_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationquestionoption_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationquestion_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_ApplicationTaskCompletion.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationtaskdefinition_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_applicationtask_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_ApplicationType.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_applicant_type.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_convictionsfound.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_regime.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_source.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_defra_technicalability.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_application_question_types.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_application_subtypes_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_application_task_scope.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_defra_areacommentscategory.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_InstanceTypeCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_areacomment_PriorityCode.cs" />
@@ -304,9 +337,11 @@
     <Compile Include="EarlyBound\OptionSets\defra_dulymadechecklist2.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_dulymadechecklist_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_exception_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_itemapplicationtaskdefinition_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemdetailtype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemdetail_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_itemtype_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_item_application_question_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_item_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_locationdetails_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_location_StatusCode.cs" />
@@ -334,8 +369,10 @@
     <Compile Include="EarlyBound\OptionSets\defra_requestcategory_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_saveandreturn_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_secureconfiguration_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\defra_tasktype_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_town_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\defra_yes_and_no.cs" />
+    <Compile Include="EarlyBound\OptionSets\delete_recurringappointmentmaster.cs" />
     <Compile Include="EarlyBound\OptionSets\DelveActionHub_CardType.cs" />
     <Compile Include="EarlyBound\OptionSets\DelveActionHub_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\DependencyType.cs" />
@@ -365,6 +402,7 @@
     <Compile Include="EarlyBound\OptionSets\Email_Notifications.cs" />
     <Compile Include="EarlyBound\OptionSets\Email_PriorityCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Email_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\EntitlementEntityAllocationTypeMapping_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\EntitlementTemplate_AllocationTypeCode.cs" />
     <Compile Include="EarlyBound\OptionSets\EntitlementTemplate_DecreaseRemainingOn.cs" />
     <Compile Include="EarlyBound\OptionSets\EntitlementTemplate_KbAccessLevel.cs" />
@@ -372,6 +410,7 @@
     <Compile Include="EarlyBound\OptionSets\Entitlement_DecreaseRemainingOn.cs" />
     <Compile Include="EarlyBound\OptionSets\Entitlement_KbAccessLevel.cs" />
     <Compile Include="EarlyBound\OptionSets\Entitlement_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\EntityType.cs" />
     <Compile Include="EarlyBound\OptionSets\ExpiredProcess_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\externalpartyitem_status_code.cs" />
     <Compile Include="EarlyBound\OptionSets\ExternalParty_StatusCode.cs" />
@@ -484,6 +523,7 @@
     <Compile Include="EarlyBound\OptionSets\msdyn_BookableResourceType.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_callablecontext_msdyn_EntityOTC.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_callablecontext_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_databaseversion_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_icebreakersconfig_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_notesanalysisconfig_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_odatav4ds_msdyn_paginationtype.cs" />
@@ -501,8 +541,15 @@
     <Compile Include="EarlyBound\OptionSets\msdyn_PostRuleConfig_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_relationshipinsightsunifiedconfig_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_siconfig_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_solutionhistory_msdyn_operation.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_solutionhistory_msdyn_status.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_solutionhistory_msdyn_suboperation.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_TeamsCollaboration_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_untrackedappointment_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_upgraderun_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_UpgradeStatus.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_upgradestep_StatusCode.cs" />
+    <Compile Include="EarlyBound\OptionSets\msdyn_upgradeversion_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_wallsavedqueryusersettings_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\msdyn_wallsavedquery_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\NavigationSetting_SettingType.cs" />
@@ -694,6 +741,9 @@
     <Compile Include="EarlyBound\OptionSets\SocialProfile_Community.cs" />
     <Compile Include="EarlyBound\OptionSets\SocialProfile_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\SolutionComponent_RootComponentBehavior.cs" />
+    <Compile Include="EarlyBound\OptionSets\SolutionHistoryData_Operation.cs" />
+    <Compile Include="EarlyBound\OptionSets\SolutionHistoryData_Status.cs" />
+    <Compile Include="EarlyBound\OptionSets\SolutionHistoryData_SubOperation.cs" />
     <Compile Include="EarlyBound\OptionSets\Solution_SolutionType.cs" />
     <Compile Include="EarlyBound\OptionSets\SyncAttributeMapping_SyncDirection.cs" />
     <Compile Include="EarlyBound\OptionSets\SyncError_ErrorType.cs" />
@@ -718,6 +768,7 @@
     <Compile Include="EarlyBound\OptionSets\Task_PriorityCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Task_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Team_TeamType.cs" />
+    <Compile Include="EarlyBound\OptionSets\TextAnalyticsEntityMapping_EntityPickList.cs" />
     <Compile Include="EarlyBound\OptionSets\TextAnalyticsEntityMapping_FieldPickList.cs" />
     <Compile Include="EarlyBound\OptionSets\Theme_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\TopicModelConfiguration_TimeFilter.cs" />
@@ -754,6 +805,8 @@
     <Compile Include="EarlyBound\OptionSets\Workflow_Stage.cs" />
     <Compile Include="EarlyBound\OptionSets\Workflow_StatusCode.cs" />
     <Compile Include="EarlyBound\OptionSets\Workflow_Type.cs" />
+    <Compile Include="Internal\ApplicationAnswer.cs" />
+    <Compile Include="Internal\ApplicationQuestionsAndLines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

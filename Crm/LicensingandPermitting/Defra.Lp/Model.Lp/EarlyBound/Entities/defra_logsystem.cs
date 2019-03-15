@@ -31,6 +31,31 @@ namespace Lp.Model.EarlyBound
 	public partial class defra_logsystem : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string CreatedBy = "createdby";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string defra_logsystemId = "defra_logsystemid";
+			public const string Id = "defra_logsystemid";
+			public const string defra_name = "defra_name";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string OrganizationId = "organizationid";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_logsystem_createdby = "lk_defra_logsystem_createdby";
+			public const string lk_defra_logsystem_createdonbehalfby = "lk_defra_logsystem_createdonbehalfby";
+			public const string lk_defra_logsystem_modifiedby = "lk_defra_logsystem_modifiedby";
+			public const string lk_defra_logsystem_modifiedonbehalfby = "lk_defra_logsystem_modifiedonbehalfby";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -423,6 +448,76 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_logsystem_defra_log_targetsystem");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_log>("defra_defra_logsystem_defra_log_targetsystem", null, value);
 				this.OnPropertyChanged("defra_defra_logsystem_defra_log_targetsystem");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_logsystem_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_logsystem_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_logsystem_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_logsystem_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_logsystem_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_logsystem_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_logsystem_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_logsystem_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_logsystem_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_logsystem_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_logsystem_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_logsystem_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_logsystem_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_logsystem_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_logsystem_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_logsystem_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_logsystem_modifiedonbehalfby");
 			}
 		}
 		

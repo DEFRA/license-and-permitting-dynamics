@@ -56,15 +56,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.9.0.0.7\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.CrmSdk.Workflow.9.0.2.5\lib\net452\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
@@ -104,14 +104,32 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Model\Crm\*.cs">
-      <Link>Model\WastePermits\Crm\%(RecursiveDir)%(FileName)</Link>
+    <Compile Include="..\Model\EarlyBound\Entities\*.cs">
+      <Link>Linked\Model\WastePermits\EarlyBound\Entities\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+	<Compile Include="..\Model\EarlyBound\OptionSets\*.cs">
+      <Link>Linked\Model\WastePermits\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Model.Lp\Crm\*.cs">
-      <Link>Model\Lp\Crm\%(RecursiveDir)%(FileName)</Link>
+      <Link>Linked\Model\Lp\Crm\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+		    <Compile Include="..\Model\Internal\*.cs">
+      <Link>Linked\Model\WastePermits\Internal\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
+      <Link>Linked\DataAccess\Core\Base\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
+      <Link>Linked\Helpers\Core\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\DataAccess\*.cs">
-      <Link>DataAccess\WastePermits\%(RecursiveDir)%(FileName)</Link>
+      <Link>Linked\DataAccess\WastePermits\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\DataAccess\Interfaces\*.cs">
+      <Link>Linked\DataAccess\WastePermits\Interfaces\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\LicensingandPermitting\Defra.Lp\Lp.DataAccess.Interfaces\*.cs">
+      <Link>Linked\DataAccess\Lp\Interfaces\%(RecursiveDir)%(FileName)</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +144,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

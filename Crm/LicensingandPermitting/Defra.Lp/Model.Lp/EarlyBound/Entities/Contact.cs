@@ -31,6 +31,225 @@ namespace Lp.Model.EarlyBound
 	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
+		public static class Fields
+		{
+			public const string AccountId = "accountid";
+			public const string AccountRoleCode = "accountrolecode";
+			public const string Address1_AddressId = "address1_addressid";
+			public const string Address1_AddressTypeCode = "address1_addresstypecode";
+			public const string Address1_City = "address1_city";
+			public const string Address1_Composite = "address1_composite";
+			public const string Address1_Country = "address1_country";
+			public const string Address1_County = "address1_county";
+			public const string Address1_Fax = "address1_fax";
+			public const string Address1_FreightTermsCode = "address1_freighttermscode";
+			public const string Address1_Latitude = "address1_latitude";
+			public const string Address1_Line1 = "address1_line1";
+			public const string Address1_Line2 = "address1_line2";
+			public const string Address1_Line3 = "address1_line3";
+			public const string Address1_Longitude = "address1_longitude";
+			public const string Address1_Name = "address1_name";
+			public const string Address1_PostalCode = "address1_postalcode";
+			public const string Address1_PostOfficeBox = "address1_postofficebox";
+			public const string Address1_PrimaryContactName = "address1_primarycontactname";
+			public const string Address1_ShippingMethodCode = "address1_shippingmethodcode";
+			public const string Address1_StateOrProvince = "address1_stateorprovince";
+			public const string Address1_Telephone1 = "address1_telephone1";
+			public const string Address1_Telephone2 = "address1_telephone2";
+			public const string Address1_Telephone3 = "address1_telephone3";
+			public const string Address1_UPSZone = "address1_upszone";
+			public const string Address1_UTCOffset = "address1_utcoffset";
+			public const string Address2_AddressId = "address2_addressid";
+			public const string Address2_AddressTypeCode = "address2_addresstypecode";
+			public const string Address2_City = "address2_city";
+			public const string Address2_Composite = "address2_composite";
+			public const string Address2_Country = "address2_country";
+			public const string Address2_County = "address2_county";
+			public const string Address2_Fax = "address2_fax";
+			public const string Address2_FreightTermsCode = "address2_freighttermscode";
+			public const string Address2_Latitude = "address2_latitude";
+			public const string Address2_Line1 = "address2_line1";
+			public const string Address2_Line2 = "address2_line2";
+			public const string Address2_Line3 = "address2_line3";
+			public const string Address2_Longitude = "address2_longitude";
+			public const string Address2_Name = "address2_name";
+			public const string Address2_PostalCode = "address2_postalcode";
+			public const string Address2_PostOfficeBox = "address2_postofficebox";
+			public const string Address2_PrimaryContactName = "address2_primarycontactname";
+			public const string Address2_ShippingMethodCode = "address2_shippingmethodcode";
+			public const string Address2_StateOrProvince = "address2_stateorprovince";
+			public const string Address2_Telephone1 = "address2_telephone1";
+			public const string Address2_Telephone2 = "address2_telephone2";
+			public const string Address2_Telephone3 = "address2_telephone3";
+			public const string Address2_UPSZone = "address2_upszone";
+			public const string Address2_UTCOffset = "address2_utcoffset";
+			public const string Address3_AddressId = "address3_addressid";
+			public const string Address3_AddressTypeCode = "address3_addresstypecode";
+			public const string Address3_City = "address3_city";
+			public const string Address3_Composite = "address3_composite";
+			public const string Address3_Country = "address3_country";
+			public const string Address3_County = "address3_county";
+			public const string Address3_Fax = "address3_fax";
+			public const string Address3_FreightTermsCode = "address3_freighttermscode";
+			public const string Address3_Latitude = "address3_latitude";
+			public const string Address3_Line1 = "address3_line1";
+			public const string Address3_Line2 = "address3_line2";
+			public const string Address3_Line3 = "address3_line3";
+			public const string Address3_Longitude = "address3_longitude";
+			public const string Address3_Name = "address3_name";
+			public const string Address3_PostalCode = "address3_postalcode";
+			public const string Address3_PostOfficeBox = "address3_postofficebox";
+			public const string Address3_PrimaryContactName = "address3_primarycontactname";
+			public const string Address3_ShippingMethodCode = "address3_shippingmethodcode";
+			public const string Address3_StateOrProvince = "address3_stateorprovince";
+			public const string Address3_Telephone1 = "address3_telephone1";
+			public const string Address3_Telephone2 = "address3_telephone2";
+			public const string Address3_Telephone3 = "address3_telephone3";
+			public const string Address3_UPSZone = "address3_upszone";
+			public const string Address3_UTCOffset = "address3_utcoffset";
+			public const string Aging30 = "aging30";
+			public const string Aging30_Base = "aging30_base";
+			public const string Aging60 = "aging60";
+			public const string Aging60_Base = "aging60_base";
+			public const string Aging90 = "aging90";
+			public const string Aging90_Base = "aging90_base";
+			public const string Anniversary = "anniversary";
+			public const string AnnualIncome = "annualincome";
+			public const string AnnualIncome_Base = "annualincome_base";
+			public const string AssistantName = "assistantname";
+			public const string AssistantPhone = "assistantphone";
+			public const string BirthDate = "birthdate";
+			public const string Business2 = "business2";
+			public const string Callback = "callback";
+			public const string ChildrensNames = "childrensnames";
+			public const string Company = "company";
+			public const string ContactId = "contactid";
+			public const string Id = "contactid";
+			public const string CreatedBy = "createdby";
+			public const string CreatedByExternalParty = "createdbyexternalparty";
+			public const string CreatedOn = "createdon";
+			public const string CreatedOnBehalfBy = "createdonbehalfby";
+			public const string CreditLimit = "creditlimit";
+			public const string CreditLimit_Base = "creditlimit_base";
+			public const string CreditOnHold = "creditonhold";
+			public const string CustomerSizeCode = "customersizecode";
+			public const string CustomerTypeCode = "customertypecode";
+			public const string DefaultPriceLevelId = "defaultpricelevelid";
+			public const string defra_dateofbirthdaycompanieshouse = "defra_dateofbirthdaycompanieshouse";
+			public const string defra_dobmonthcompanieshouse = "defra_dobmonthcompanieshouse";
+			public const string defra_dobyearcompanieshouse = "defra_dobyearcompanieshouse";
+			public const string defra_dobyearcompanieshouse_text = "defra_dobyearcompanieshouse_text";
+			public const string defra_fromcompanieshouse = "defra_fromcompanieshouse";
+			public const string defra_resignedoncompanieshouse = "defra_resignedoncompanieshouse";
+			public const string Department = "department";
+			public const string Description = "description";
+			public const string DoNotBulkEMail = "donotbulkemail";
+			public const string DoNotBulkPostalMail = "donotbulkpostalmail";
+			public const string DoNotEMail = "donotemail";
+			public const string DoNotFax = "donotfax";
+			public const string DoNotPhone = "donotphone";
+			public const string DoNotPostalMail = "donotpostalmail";
+			public const string DoNotSendMM = "donotsendmm";
+			public const string EducationCode = "educationcode";
+			public const string EMailAddress1 = "emailaddress1";
+			public const string EMailAddress2 = "emailaddress2";
+			public const string EMailAddress3 = "emailaddress3";
+			public const string EmployeeId = "employeeid";
+			public const string EntityImage = "entityimage";
+			public const string EntityImage_Timestamp = "entityimage_timestamp";
+			public const string EntityImage_URL = "entityimage_url";
+			public const string EntityImageId = "entityimageid";
+			public const string ExchangeRate = "exchangerate";
+			public const string ExternalUserIdentifier = "externaluseridentifier";
+			public const string FamilyStatusCode = "familystatuscode";
+			public const string Fax = "fax";
+			public const string FirstName = "firstname";
+			public const string FollowEmail = "followemail";
+			public const string FtpSiteUrl = "ftpsiteurl";
+			public const string FullName = "fullname";
+			public const string GenderCode = "gendercode";
+			public const string GovernmentId = "governmentid";
+			public const string HasChildrenCode = "haschildrencode";
+			public const string Home2 = "home2";
+			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string IsBackofficeCustomer = "isbackofficecustomer";
+			public const string JobTitle = "jobtitle";
+			public const string LastName = "lastname";
+			public const string LastOnHoldTime = "lastonholdtime";
+			public const string LastUsedInCampaign = "lastusedincampaign";
+			public const string LeadSourceCode = "leadsourcecode";
+			public const string ManagerName = "managername";
+			public const string ManagerPhone = "managerphone";
+			public const string MarketingOnly = "marketingonly";
+			public const string MasterId = "masterid";
+			public const string Merged = "merged";
+			public const string MiddleName = "middlename";
+			public const string MobilePhone = "mobilephone";
+			public const string ModifiedBy = "modifiedby";
+			public const string ModifiedByExternalParty = "modifiedbyexternalparty";
+			public const string ModifiedOn = "modifiedon";
+			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
+			public const string msdyn_gdproptout = "msdyn_gdproptout";
+			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
+			public const string NickName = "nickname";
+			public const string NumberOfChildren = "numberofchildren";
+			public const string OnHoldTime = "onholdtime";
+			public const string OriginatingLeadId = "originatingleadid";
+			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningTeam = "owningteam";
+			public const string OwningUser = "owninguser";
+			public const string Pager = "pager";
+			public const string ParentContactId = "parentcontactid";
+			public const string ParentCustomerId = "parentcustomerid";
+			public const string ParticipatesInWorkflow = "participatesinworkflow";
+			public const string PaymentTermsCode = "paymenttermscode";
+			public const string PreferredAppointmentDayCode = "preferredappointmentdaycode";
+			public const string PreferredAppointmentTimeCode = "preferredappointmenttimecode";
+			public const string PreferredContactMethodCode = "preferredcontactmethodcode";
+			public const string PreferredEquipmentId = "preferredequipmentid";
+			public const string PreferredServiceId = "preferredserviceid";
+			public const string PreferredSystemUserId = "preferredsystemuserid";
+			public const string ProcessId = "processid";
+			public const string Salutation = "salutation";
+			public const string ShippingMethodCode = "shippingmethodcode";
+			public const string SLAId = "slaid";
+			public const string SLAInvokedId = "slainvokedid";
+			public const string SpousesName = "spousesname";
+			public const string StageId = "stageid";
+			public const string StateCode = "statecode";
+			public const string StatusCode = "statuscode";
+			public const string SubscriptionId = "subscriptionid";
+			public const string Suffix = "suffix";
+			public const string TeamsFollowed = "teamsfollowed";
+			public const string Telephone1 = "telephone1";
+			public const string Telephone2 = "telephone2";
+			public const string Telephone3 = "telephone3";
+			public const string TerritoryCode = "territorycode";
+			public const string TimeSpentByMeOnEmailAndMeetings = "timespentbymeonemailandmeetings";
+			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string TransactionCurrencyId = "transactioncurrencyid";
+			public const string TraversedPath = "traversedpath";
+			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string VersionNumber = "versionnumber";
+			public const string WebSiteUrl = "websiteurl";
+			public const string YomiFirstName = "yomifirstname";
+			public const string YomiFullName = "yomifullname";
+			public const string YomiLastName = "yomilastname";
+			public const string YomiMiddleName = "yomimiddlename";
+			public const string contact_customer_accounts = "contact_customer_accounts";
+			public const string Referencingcontact_customer_contacts = "contact_customer_contacts";
+			public const string Referencingcontact_master_contact = "contact_master_contact";
+			public const string contact_owning_user = "contact_owning_user";
+			public const string lk_contact_createdonbehalfby = "lk_contact_createdonbehalfby";
+			public const string lk_contact_modifiedonbehalfby = "lk_contact_modifiedonbehalfby";
+			public const string lk_contactbase_createdby = "lk_contactbase_createdby";
+			public const string lk_contactbase_modifiedby = "lk_contactbase_modifiedby";
+			public const string system_user_contacts = "system_user_contacts";
+			public const string team_contacts = "team_contacts";
+		}
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
@@ -3039,6 +3258,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// For Internal Use only
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
+		public Microsoft.Xrm.Sdk.OptionSetValue msdyn_orgchangestatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_orgchangestatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_orgchangestatus");
+				this.SetAttributeValue("msdyn_orgchangestatus", value);
+				this.OnPropertyChanged("msdyn_orgchangestatus");
+			}
+		}
+		
+		/// <summary>
 		/// Type the contact's nickname.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("nickname")]
@@ -3951,6 +4190,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N Contact_Annotation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Annotation")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Contact_Annotation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Annotation");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null, value);
+				this.OnPropertyChanged("Contact_Annotation");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N contact_as_primary_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_primary_contact")]
@@ -4047,6 +4306,46 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("contact_defra_notifications");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_notification>("contact_defra_notifications", null, value);
 				this.OnPropertyChanged("contact_defra_notifications");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Contact_Email_EmailSender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Email_EmailSender")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Contact_Email_EmailSender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Email_EmailSender", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Email_EmailSender");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Email_EmailSender", null, value);
+				this.OnPropertyChanged("Contact_Email_EmailSender");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Contact_Emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Emails")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Email> Contact_Emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Contact_Emails");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.Email>("Contact_Emails", null, value);
+				this.OnPropertyChanged("Contact_Emails");
 			}
 		}
 		
@@ -4367,6 +4666,125 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 contact_owning_user
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_owning_user")]
+		public Lp.Model.EarlyBound.SystemUser contact_owning_user
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("contact_owning_user", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contact_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contact_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_contact_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contact_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_contact_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contact_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_contact_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contact_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contact_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_contact_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contact_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_contact_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contact_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_contact_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contactbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contactbase_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_contactbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contactbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_contactbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_contactbase_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_contactbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_contactbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 system_user_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_contacts")]
+		public Lp.Model.EarlyBound.SystemUser system_user_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("system_user_contacts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("system_user_contacts");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("system_user_contacts", null, value);
+				this.OnPropertyChanged("system_user_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_contacts")]
+		public Lp.Model.EarlyBound.Team team_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_contacts", null);
+			}
+		}
+		
+		/// <summary>
 		/// Constructor for populating via LINQ queries given a LINQ anonymous type
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
@@ -4660,6 +5078,21 @@ namespace Lp.Model.EarlyBound
 			set
 			{
 				LeadSourceCode = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
+		public virtual Contact_msdyn_orgchangestatus? msdyn_orgchangestatusEnum
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return ((Contact_msdyn_orgchangestatus?)(EntityOptionSetEnum.GetEnum(this, "msdyn_orgchangestatus")));
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				msdyn_orgchangestatus = value.HasValue ? new Microsoft.Xrm.Sdk.OptionSetValue((int)value) : null;
 			}
 		}
 		

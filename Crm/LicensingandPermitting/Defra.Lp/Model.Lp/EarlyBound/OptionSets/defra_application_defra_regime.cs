@@ -16,6 +16,9 @@ namespace Lp.Model.EarlyBound
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		MCP = 910400002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Waste = 910400000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

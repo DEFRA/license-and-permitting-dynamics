@@ -96,14 +96,20 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-       <Compile Include="..\Lp.DataAccess\*.cs">
+    <Compile Include="..\Lp.DataAccess\*.cs">
       <Link>Linked\DataAccess\Lp\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-	<Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\*.cs">
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
+      <Link>Linked\DataAccess\Core\Base\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess\*.cs">
       <Link>Linked\DataAccess\Core\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\Model.lp\Crm\*.cs">
       <Link>Linked\Model\Lp\Crm\%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model.lp\Internal\*.cs">
+      <Link>Linked\Model\Lp\Internal\%(FileName)</Link>
     </Compile>
     <Compile Include="..\Model.lp\EarlyBound\*.cs">
       <Link>Linked\Model\Lp\EarlyBound\%(FileName)</Link>
@@ -114,43 +120,21 @@
     <Compile Include="..\Model.lp\EarlyBound\OptionSets\*.cs">
       <Link>Linked\Model\Lp\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
       <Link>Linked\Extensions\Core\%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Model\Entities\*.cs">
       <Link>Linked\Model\Core\Entities\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-	
-	
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.CardPayments.Model\*.cs">
       <Link>Linked\Model\Core\CardPayments\%(FileName)</Link>
     </Compile>
-	
-	
-    <Compile Include="..\Common\PermitNumbering\GetNextPermitApplicationNumber.cs">
-      <Link>Common\PermitNumbering\GetNextPermitApplicationNumber.cs</Link>
+    <Compile Include="..\Common\PermitNumbering\*.cs">
+      <Link>Linked\Common\PermitNumbering\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Common\PermitNumbering\GetNextPermitNumber.cs">
-      <Link>Common\PermitNumbering\GetNextPermitNumber.cs</Link>
+    <Compile Include="..\Common\SharePoint\*.cs">
+      <Link>Linked\Common\SharePoint\%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\Common\SharePoint\AzureInterface.cs">
-      <Link>Common\SharePoint\AzureInterface.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SharePoint\AzureInterfaceConstants.cs">
-      <Link>Common\SharePoint\AzureInterfaceConstants.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SharePoint\DocumentRelayRequest.cs">
-      <Link>Common\SharePoint\DocumentRelayRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SharePoint\MetaDataRequest.cs">
-      <Link>Common\SharePoint\MetaDataRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\SharePoint\SharePointSecureConfigurationKeys.cs">
-      <Link>Common\SharePoint\SharePointSecureConfigurationKeys.cs</Link>
-    </Compile>
-
-
     <Compile Include="..\Newtonsoft.Json\Bson\BsonBinaryType.cs">
       <Link>Newtonsoft.Json\Bson\BsonBinaryType.cs</Link>
     </Compile>
@@ -756,6 +740,7 @@
     </Compile>
     <Compile Include="ApplicationCreateSharePointDocumentLocation.cs" />
     <Compile Include="PeerReviewValidation.cs" />
+    <Compile Include="RecalculateApplicationBalanceFields.cs" />
     <Compile Include="PreOperationdefra_applicationCreate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PluginBase.cs" />
