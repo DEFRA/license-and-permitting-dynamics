@@ -29,67 +29,75 @@
                 "dojo/on", "dojo/dom", "dojo/domReady!"
             ],
                 function (on, dom) {
-                    on(dom.byId("btnGoogle"), "click", function () {
-                        try {
-                            crmApplicationNumber = window.parent.Xrm.Page.getAttribute("defra_applicationnumber").getValue();
+                    try {
+                        crmApplicationNumber = window.parent.Xrm.Page.getAttribute("defra_permitnumber").getValue()
+                        document.getElementById("viewDiv").style.display = "none";
+                        document.getElementById("viewDiv1").style.display = "block";
+
+                        var FetchXML = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>"
+                            + "<entity name='defra_application' >"
+                            + "<filter>"
+                            + "<condition attribute='defra_applicationnumber' operator='like' value='%" + crmApplicationNumber + "%' />"
+                            + "</filter>"
+                            + "<link-entity name='defra_location' from='defra_applicationid' to='defra_applicationid' >"
+                            + "<link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' >"
+                            + "<attribute name='defra_gridreferenceid' />"
+                            + "</link-entity>"
+                            + "</link-entity>"
+                            + "</entity>"
+                            + "</fetch>";
 
 
-
-                            var FetchXML = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>"
-                                + "<entity name='defra_application' >"
-                                + "<attribute name='defra_permitnumber' />"
-                                + "<filter>"
-                                + "<condition attribute='defra_applicationnumber' operator='like' value='%EPR/WE1631AA%' />"
-                                + "</filter>"
-                                + "<link-entity name='defra_location' from='defra_applicationid' to='defra_applicationid' >"
-                                + "<link-entity name='defra_locationdetails' from='defra_locationid' to='defra_locationid' >"
-                                + "<attribute name='defra_gridreferenceid' />"
-                                + "</link-entity>"
-                                + "</link-entity>"
-                                + "</entity>"
-                                + "</fetch>";
-
-                            //FetchXML = "?fetchXml" + encodeURIComponent(FetchXML);
-
-                            window.parent.Xrm.WebApi.retrieveMultipleRecords ("defra_application", "fetchXml= " + FetchXML).then(
-                                function success(result) {
-                                    console.log("Retrieved values: Name: " + result);
-                                    // perform operations on record retrieval
-                                },
-                                function (error) {
-                                    console.log(error.message);
-                                    // handle error conditions
+                        window.parent.Xrm.WebApi.retrieveMultipleRecords("defra_application", "?fetchXml=" + FetchXML).then(
+                            function success(result) {
+                                for (var i = 0; i < result.entities.length; i++) {
+                                    let gRef = result.entities[i]["defra_locationdetails2.defra_gridreferenceid"];
+                                    if (!gRef) {
+                                        document.getElementById("lblInfo").innerHTML = "Grid Reference not defined in site data."
+                                    }
+                                    else {
+                                        document.getElementById("lblGridref").innerHTML = "Grid Reference: " + gRef;
+                                        document.getElementById("viewDiv").style.display = "block";
+                                        document.getElementById("viewDiv1").style.display = "none";
+                                    }
                                 }
-                            );
+                            }
+                            ,
+                            function (error) {
+                                document.getElementById("lblGridref").innerHTML = error.message;
+                                // handle error conditions
+                            }
+                        );
 
-
+                        on(dom.byId("btnGoogle"), "click", function () {
                             let googleString = "https://www.google.co.uk/maps/place/@,293m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d51.4299!4d-0.0323";
                             window.open(googleString)
                         }
-                        catch (err) {
-                            alert('Error in btn Google. ' + err)
-                        }
-                    })
+                        )
 
-                    on(dom.byId("btnEsri"), "click", function () {
-                        try {
-                            window.open(arcgisString)
-                        }
-                        catch (err) {
-                            alert('Error in btn ESRI. ' + err)
-                        }
-                    })
+                        on(dom.byId("btnEsri"), "click", function () {
+                            try {
+                                window.open(arcgisString)
+                            }
+                            catch (err) {
+                                alert('Error in btn ESRI. ' + err)
+                            }
+                        })
 
-                    on(dom.byId("btngridreferencefinder"), "click", function () {
-                        try {
-                            window.open(urlgridreferencefinder)
-                        }
-                        catch (err) {
-                            alert('Error in btn ESRI. ' + err)
-                        }
-                    })
-                }
-            )
+                        on(dom.byId("btngridreferencefinder"), "click", function () {
+                            try {
+                                window.open(urlgridreferencefinder)
+                            }
+                            catch (err) {
+                                alert('Error in btngridreferencefinder ' + err)
+                            }
+                        })
+                    }
+
+                    catch (err) {
+                        alert('Error in mapping. ' + err)
+                    }
+                })
         };
 
     </script>
@@ -97,13 +105,15 @@
 <meta></head>
 
 <body>
-    
+
     <div id="viewDiv">
-        <div id="attributeArea">
-            <input type="button" class="btn btn-info" value="Open Google map" id="btnGoogle">
-            <input type="button" class="btn btn-info" value="Open ESRI (Easimap)" id="btnEsri">
-            <input type="button" class="btn btn-info" value="Open Grid Reference Finder" id="btngridreferencefinder">
-        </div>
+        <input type="button" class="btn btn-info" value="Open Google map" id="btnGoogle">
+        <input type="button" class="btn btn-info" value="Open ESRI (Easimap)" id="btnEsri">
+        <input type="button" class="btn btn-info" value="Open Grid Reference Finder" id="btngridreferencefinder">
+        <span id="lblGridref" class="label label-success"></span>
+    </div>
+    <div id="viewDiv1" hidden="hidden">
+        <span id="lblInfo" class="label label-warning"> No grid reference or site address set for this application.</span>
     </div>
 
 </body></html>
