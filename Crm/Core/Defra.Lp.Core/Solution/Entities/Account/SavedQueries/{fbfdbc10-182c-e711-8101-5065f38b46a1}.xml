@@ -1,41 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{fbfdbc10-182c-e711-8101-5065f38b46a1}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="name" select="1" preview="1" icon="1">
-      <row name="result" id="accountid">
-        <cell name="name" width="150" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
-      <entity name="account">
-        <attribute name="name" />
-        <order attribute="name" descending="false" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-        </filter>
-        <link-entity name="connection" from="record1id" to="accountid" alias="aa">
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{fbfdbc10-182c-e711-8101-5065f38b46a1}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="name" select="1" preview="1" icon="1">
+        <row name="result" id="accountid">
+          <cell name="name" width="150" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+        <entity name="account">
+          <attribute name="name" />
+          <order attribute="name" descending="false" />
           <filter type="and">
-            <condition attribute="record2roleid" operator="eq" uiname="Sole Trader" uitype="connectionrole" value="{2A9FDE63-F62B-E711-8101-5065F38B46A1}" />
+            <condition attribute="statecode" operator="eq" value="0" />
           </filter>
-        </link-entity>
-        <attribute name="accountid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.2.0.0</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Sole Traders" languagecode="1033" />
-  </LocalizedNames>
-  <Descriptions>
-    <Description description="Displays Accounts that have a Sole Trader Connection" languagecode="1033" />
-  </Descriptions>
-</savedquery>
+          <link-entity name="connection" from="record1id" to="accountid" alias="aa">
+            <filter type="and">
+              <condition attribute="record2roleid" operator="eq" uiname="Sole Trader" uitype="connectionrole" value="{2A9FDE63-F62B-E711-8101-5065F38B46A1}" />
+            </filter>
+          </link-entity>
+          <attribute name="accountid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.2.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Sole Traders" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Displays Accounts that have a Sole Trader Connection" languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>
