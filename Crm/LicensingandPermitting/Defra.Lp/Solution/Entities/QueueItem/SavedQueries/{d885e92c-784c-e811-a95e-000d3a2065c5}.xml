@@ -1,61 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedqueries>
-  <savedquery>
-    <IsCustomizable>1</IsCustomizable>
-    <CanBeDeleted>1</CanBeDeleted>
-    <isquickfindquery>0</isquickfindquery>
-    <isprivate>0</isprivate>
-    <isdefault>0</isdefault>
-    <savedqueryid>{d885e92c-784c-e811-a95e-000d3a2065c5}</savedqueryid>
-    <layoutxml>
-      <grid name="resultset" jump="title" select="1" preview="1" icon="1">
-        <row name="result" id="objectid" multiobjectidfield="objecttypecode">
-          <cell name="queueitemid" ishidden="1" width="150" />
-          <cell name="createdon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.subject" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.from" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.description" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="a_40e5c747f025e811a955000d3a20838a.defra_facility_description" width="100" disableSorting="1" />
-          <cell name="a_40e5c747f025e811a955000d3a20838a.defra_customerid" width="100" disableSorting="1" />
-          <cell name="a_40e5c747f025e811a955000d3a20838a.defra_site_description" width="100" disableSorting="1" />
-          <cell name="a_40e5c747f025e811a955000d3a20838a.statuscode" width="100" disableSorting="1" />
-          <cell name="a_40e5c747f025e811a955000d3a20838a.defra_applicationnumber" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        </row>
-      </grid>
-    </layoutxml>
-    <querytype>0</querytype>
-    <fetchxml>
-      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-        <entity name="queueitem">
-          <attribute name="queueitemid" />
-          <attribute name="createdon" />
-          <attribute name="objecttypecode" />
-          <order attribute="createdon" descending="true" />
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{d885e92c-784c-e811-a95e-000d3a2065c5}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="title" select="1" preview="1" icon="1">
+      <row name="result" id="objectid" multiobjectidfield="objecttypecode">
+        <cell name="queueitemid" ishidden="1" width="150" />
+        <cell name="createdon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.subject" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.from" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_42d6e490105b4c0abfe4f864eaeb77ee.description" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_40e5c747f025e811a955000d3a20838a.defra_facility_description" width="100" disableSorting="1" />
+        <cell name="a_40e5c747f025e811a955000d3a20838a.defra_customerid" width="100" disableSorting="1" />
+        <cell name="a_40e5c747f025e811a955000d3a20838a.defra_site_description" width="100" disableSorting="1" />
+        <cell name="a_40e5c747f025e811a955000d3a20838a.statuscode" width="100" disableSorting="1" />
+        <cell name="a_40e5c747f025e811a955000d3a20838a.defra_applicationnumber" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="queueitem">
+        <attribute name="queueitemid" />
+        <attribute name="createdon" />
+        <attribute name="objecttypecode" />
+        <order attribute="createdon" descending="true" />
+        <filter type="and">
+          <condition attribute="queueid" operator="eq" uiname="PSC Payments" uitype="queue" value="{6E8C878F-8C41-E811-A958-000D3A20838A}" />
+        </filter>
+        <link-entity name="email" from="activityid" to="objectid" alias="a_42d6e490105b4c0abfe4f864eaeb77ee">
+          <attribute name="from" />
+          <attribute name="description" />
+          <attribute name="subject" />
           <filter type="and">
-            <condition attribute="queueid" operator="eq" uiname="PSC Payments" uitype="queue" value="{6E8C878F-8C41-E811-A958-000D3A20838A}" />
+            <condition attribute="directioncode" operator="eq" value="0" />
           </filter>
-          <link-entity name="email" from="activityid" to="objectid" alias="a_42d6e490105b4c0abfe4f864eaeb77ee">
-            <attribute name="from" />
-            <attribute name="description" />
-            <attribute name="subject" />
-            <filter type="and">
-              <condition attribute="directioncode" operator="eq" value="0" />
-            </filter>
-          </link-entity>
-          <link-entity alias="a_40e5c747f025e811a955000d3a20838a" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
-            <attribute name="statuscode" />
-            <attribute name="defra_site_description" />
-            <attribute name="defra_customerid" />
-            <attribute name="defra_facility_description" />
-            <attribute name="defra_applicationnumber" />
-          </link-entity>
-          <attribute name="objectid" />
-        </entity>
-      </fetch>
-    </fetchxml>
-    <IntroducedVersion>1.2.0.35</IntroducedVersion>
-    <LocalizedNames>
-      <LocalizedName description="Reply emails relating to application payments" languagecode="1033" />
-    </LocalizedNames>
-  </savedquery>
-</savedqueries>
+        </link-entity>
+        <link-entity alias="a_40e5c747f025e811a955000d3a20838a" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
+          <attribute name="statuscode" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_facility_description" />
+          <attribute name="defra_applicationnumber" />
+        </link-entity>
+        <attribute name="objectid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.2.0.35</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="Reply emails relating to application payments" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
