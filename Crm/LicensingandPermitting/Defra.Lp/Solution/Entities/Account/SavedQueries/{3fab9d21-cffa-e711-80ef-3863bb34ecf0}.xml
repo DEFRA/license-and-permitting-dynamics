@@ -1,40 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{3fab9d21-cffa-e711-80ef-3863bb34ecf0}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="name" select="1" preview="1" icon="1">
-      <row name="result" id="accountid">
-        <cell name="name" width="150" />
-        <cell name="defra_tradingname" width="100" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
-      <entity name="account">
-        <attribute name="name" />
-        <order attribute="name" descending="false" />
-        <link-entity name="defra_application" from="defra_agentid" to="accountid" alias="aa">
-          <filter type="and">
-            <condition attribute="defra_applicationid" operator="not-null" />
-          </filter>
-        </link-entity>
-        <attribute name="defra_tradingname" />
-        <attribute name="accountid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.1.67.0</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Agents" languagecode="1033" />
-  </LocalizedNames>
-  <Descriptions>
-    <Description description="Accounts that have been linked to an Application Agent" languagecode="1033" />
-  </Descriptions>
-</savedquery>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{3fab9d21-cffa-e711-80ef-3863bb34ecf0}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="name" select="1" preview="1" icon="1">
+        <row name="result" id="accountid">
+          <cell name="name" width="150" />
+          <cell name="defra_tradingname" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+        <entity name="account">
+          <attribute name="name" />
+          <order attribute="name" descending="false" />
+          <link-entity name="defra_application" from="defra_agentid" to="accountid" alias="aa">
+            <filter type="and">
+              <condition attribute="defra_applicationid" operator="not-null" />
+            </filter>
+          </link-entity>
+          <attribute name="defra_tradingname" />
+          <attribute name="accountid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.1.67.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Agents" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Accounts that have been linked to an Application Agent" languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>
