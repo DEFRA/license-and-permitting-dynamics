@@ -497,7 +497,7 @@
             // Now work out which application answers should be removed
             /* WE -2269 - we no longer deactivate application answers, as the front end may create these ad-hoc */
             /*
-             foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
+            foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
             {
                 // Check if the existing application answer still applies
                 if (!HasMatchingApplicationQuestion(applicableQuestionsAndLines, appAnswer))
