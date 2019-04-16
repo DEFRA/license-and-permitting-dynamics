@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_paymentState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_payment")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_payment : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -39,6 +39,9 @@ namespace Lp.Model.EarlyBound
 			public const string defra_Activity = "defra_activity";
 			public const string defra_applicationid = "defra_applicationid";
 			public const string defra_applicationlineid = "defra_applicationlineid";
+			public const string defra_customer_payment_amount = "defra_customer_payment_amount";
+			public const string defra_customer_payment_amount_Base = "defra_customer_payment_amount_base";
+			public const string defra_customer_payment_date = "defra_customer_payment_date";
 			public const string defra_customer_payment_reference = "defra_customer_payment_reference";
 			public const string defra_daterefundactioned = "defra_daterefundactioned";
 			public const string defra_description = "defra_description";
@@ -240,6 +243,59 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_applicationlineid");
 				this.SetAttributeValue("defra_applicationlineid", value);
 				this.OnPropertyChanged("defra_applicationlineid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_amount")]
+		public Microsoft.Xrm.Sdk.Money defra_customer_payment_amount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_customer_payment_amount");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_customer_payment_amount");
+				this.SetAttributeValue("defra_customer_payment_amount", value);
+				this.OnPropertyChanged("defra_customer_payment_amount");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Customer Payment Amount in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_amount_base")]
+		public Microsoft.Xrm.Sdk.Money defra_customer_payment_amount_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_customer_payment_amount_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_date")]
+		public System.Nullable<System.DateTime> defra_customer_payment_date
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_customer_payment_date");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_customer_payment_date");
+				this.SetAttributeValue("defra_customer_payment_date", value);
+				this.OnPropertyChanged("defra_customer_payment_date");
 			}
 		}
 		
@@ -1107,26 +1163,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_payment_defra_paymenttransaction_payment");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_paymenttransaction>("defra_defra_payment_defra_paymenttransaction_payment", null, value);
 				this.OnPropertyChanged("defra_defra_payment_defra_paymenttransaction_payment");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_payment_Annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_payment_Annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_payment_Annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_payment_Annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_payment_Annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_payment_Annotations", null, value);
-				this.OnPropertyChanged("defra_payment_Annotations");
 			}
 		}
 		

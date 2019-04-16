@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum IncidentState
 	{
 		
@@ -30,7 +30,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("incident")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Incident : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -60,6 +60,7 @@ namespace Lp.Model.EarlyBound
 			public const string defra_applicationcompanyaddress = "defra_applicationcompanyaddress";
 			public const string defra_applicationpermitdetails = "defra_applicationpermitdetails";
 			public const string defra_applicationsitedetails = "defra_applicationsitedetails";
+			public const string defra_businesstrackid = "defra_businesstrackid";
 			public const string defra_deadlineresponsebreached = "defra_deadlineresponsebreached";
 			public const string defra_deadlineresponsedate = "defra_deadlineresponsedate";
 			public const string defra_deadlineresponsedatebreached = "defra_deadlineresponsedatebreached";
@@ -147,6 +148,7 @@ namespace Lp.Model.EarlyBound
 			public const string contact_as_primary_contact = "contact_as_primary_contact";
 			public const string contact_as_responsible_contact = "contact_as_responsible_contact";
 			public const string defra_application_incident_application = "defra_application_incident_application";
+			public const string defra_businesstrack_incident_businesstrackid = "defra_businesstrack_incident_businesstrackid";
 			public const string defra_systemuser_incident_peerreviewer = "defra_systemuser_incident_peerreviewer";
 			public const string incident_customer_accounts = "incident_customer_accounts";
 			public const string incident_customer_contacts = "incident_customer_contacts";
@@ -642,6 +644,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_applicationsitedetails");
 				this.SetAttributeValue("defra_applicationsitedetails", value);
 				this.OnPropertyChanged("defra_applicationsitedetails");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_businesstrackid")]
+		public Microsoft.Xrm.Sdk.EntityReference defra_businesstrackid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defra_businesstrackid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_businesstrackid");
+				this.SetAttributeValue("defra_businesstrackid", value);
+				this.OnPropertyChanged("defra_businesstrackid");
 			}
 		}
 		
@@ -2253,26 +2275,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N Incident_Annotation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Incident_Annotation")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Incident_Annotation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Incident_Annotation");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Incident_Annotation", null, value);
-				this.OnPropertyChanged("Incident_Annotation");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N incident_defra_areacomments
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_defra_areacomments")]
@@ -2492,6 +2494,27 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_incident_application");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_incident_application", null, value);
 				this.OnPropertyChanged("defra_application_incident_application");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_businesstrack_incident_businesstrackid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_businesstrackid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_businesstrack_incident_businesstrackid")]
+		public Lp.Model.EarlyBound.defra_businesstrack defra_businesstrack_incident_businesstrackid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.defra_businesstrack>("defra_businesstrack_incident_businesstrackid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_businesstrack_incident_businesstrackid");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_businesstrack>("defra_businesstrack_incident_businesstrackid", null, value);
+				this.OnPropertyChanged("defra_businesstrack_incident_businesstrackid");
 			}
 		}
 		
