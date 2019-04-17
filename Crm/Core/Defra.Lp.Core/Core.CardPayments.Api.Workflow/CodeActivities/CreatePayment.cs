@@ -70,7 +70,7 @@ namespace Defra.Lp.Core.CardPayments.Workflow.CodeActivities
                 CreatePaymentRequest apiRequest = this.PrepareCardPaymentRequest(executionContext);
 
                 // 2. Retrieve Configuration
-                tracingService.Trace("Calling RetrieveCardPaymentServiceConfiguration...");
+                tracingService.Trace($"Calling RetrieveCardPaymentServiceConfiguration..., using configuration prefix {ConfigurationPrefix.Get(executionContext)}");
                 RestServiceConfiguration cardServiceConfiguration = this.RetrieveCardPaymentServiceConfiguration(executionContext, ConfigurationPrefix.Get(executionContext));
 
                 // 3. Set-up the Api Service
