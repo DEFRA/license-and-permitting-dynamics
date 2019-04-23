@@ -159,14 +159,22 @@
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <mxswa:Workflow>
     <mxswa:Workflow.Variables>
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentId_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentStatus_localParameter" />
-      <Variable x:TypeArguments="x:Boolean" Default="False" Name="CustomActivityStep9PaymentFinished_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentNextUrlHref_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentNextUrlMethod_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentCancelUrlHref_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentCancelUrlMethod_localParameter" />
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep9PaymentProvider_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentId_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentStatus_localParameter" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="CustomActivityStep27PaymentFinished_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentNextUrlHref_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentNextUrlMethod_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentCancelUrlHref_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentCancelUrlMethod_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep27PaymentProvider_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentId_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentStatus_localParameter" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="CustomActivityStep29PaymentFinished_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentNextUrlHref_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentNextUrlMethod_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentCancelUrlHref_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentCancelUrlMethod_localParameter" />
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep29PaymentProvider_localParameter" />
     </mxswa:Workflow.Variables>
     <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="StageStep2: Processing">
       <mxswa:ActivityReference.Properties>
@@ -490,6 +498,687 @@
                               <x:Boolean x:Key="ContainsElseBranch">False</x:Boolean>
                             </mxswa:ActivityReference.Properties>
                           </mxswa:ActivityReference>
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep27: Call Gov Pay, with payment record details">
+                            <mxswa:ActivityReference.Properties>
+                              <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_1" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_2" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_1_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_3" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_4" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_3_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_5" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_6" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_5_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_7" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_8" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_7_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_9" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_10" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep27_9_converted" />
+                              </sco:Collection>
+                              <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Amount }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_2]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27_2 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_1]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep27_1]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_1_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:GetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[CustomActivityStep27_4]">
+                                  <mxswa:GetEntityProperty.TargetType>
+                                    <InArgument x:TypeArguments="s:Type">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                  </mxswa:GetEntityProperty.TargetType>
+                                </mxswa:GetEntityProperty>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27_4 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_3]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep27_3]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_3_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ReturnUrl }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_6]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27_6 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_5]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep27_5]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_5_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Description }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_8]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27_8 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_7]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep27_7]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_7_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:GetEntityProperty Attribute="defra_cardpaymentaccount" Entity="[InputEntities(&quot;PaymentRecord#defra_payment&quot;)]" EntityName="defra_payment" Value="[CustomActivityStep27_10]">
+                                  <mxswa:GetEntityProperty.TargetType>
+                                    <InArgument x:TypeArguments="s:Type">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                  </mxswa:GetEntityProperty.TargetType>
+                                </mxswa:GetEntityProperty>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27_10 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_9]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep27_9]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep27_9_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Core.CardPayments.Workflow.CodeActivities.CreatePayment, Defra.Lp.Core.CardPayments.Workflow, Version=1.3.0.4, Culture=neutral, PublicKeyToken=bf79c057ccb56895" DisplayName="CustomActivityStep27: Call Gov Pay, with payment record details">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="mxs:Money" x:Key="Amount">[DirectCast(CustomActivityStep27_1_converted, Microsoft.Xrm.Sdk.Money)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="Reference">[DirectCast(CustomActivityStep27_3_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ReturnUrl">[DirectCast(CustomActivityStep27_5_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="Description">[DirectCast(CustomActivityStep27_7_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ConfigurationPrefix">[DirectCast(CustomActivityStep27_9_converted, System.String)]</InArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentId">[CustomActivityStep27PaymentId_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentStatus">[CustomActivityStep27PaymentStatus_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Boolean" x:Key="PaymentFinished">[CustomActivityStep27PaymentFinished_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlHref">[CustomActivityStep27PaymentNextUrlHref_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlMethod">[CustomActivityStep27PaymentNextUrlMethod_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlHref">[CustomActivityStep27PaymentCancelUrlHref_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlMethod">[CustomActivityStep27PaymentCancelUrlMethod_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentProvider">[CustomActivityStep27PaymentProvider_localParameter]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                              </sco:Collection>
+                            </mxswa:ActivityReference.Properties>
+                          </mxswa:ActivityReference>
+                          <Sequence DisplayName="UpdateStep30: Save Portal Transaction Id and other portal response parameters">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_1" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_2" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_3" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_4" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_5" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_6" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_7" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep30_8" />
+                            </Sequence.Variables>
+                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_paymenttransaction&quot;)]" />
+                            <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;).Id]" Value="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" />
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentId_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_1]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentid" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_1]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentStatus_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_2]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentstatus" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_2]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentCancelUrlHref_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_3]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_3]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentCancelUrlMethod_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_4]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_4]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentNextUrlHref_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_5]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_5]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentNextUrlMethod_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_6]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_6]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentProvider_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_7]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentprovider" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_7]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep27PaymentFinished_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep30_8]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentfinished" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep30_8]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:UpdateEntity DisplayName="UpdateStep30" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
+                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
+                          </Sequence>
+                        </sco:Collection>
+                      </mxswa:ActivityReference.Properties>
+                    </mxswa:ActivityReference>
+                    <x:Null x:Key="Else" />
+                    <x:Null x:Key="Description" />
+                  </mxswa:ActivityReference.Properties>
+                </mxswa:ActivityReference>
+                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep28">
+                  <mxswa:ActivityReference.Arguments>
+                    <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">True</InArgument>
+                  </mxswa:ActivityReference.Arguments>
+                  <mxswa:ActivityReference.Properties>
+                    <mxswa:ActivityReference x:Key="Then" AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep28">
+                      <mxswa:ActivityReference.Properties>
+                        <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
+                        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep29: Call Gov Pay, without payment record details">
+                            <mxswa:ActivityReference.Properties>
+                              <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_1" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_2" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_1_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_3" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_4" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_3_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_5" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_6" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_5_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_7" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_8" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_7_converted" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_9" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_10" />
+                                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep29_9_converted" />
+                              </sco:Collection>
+                              <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Amount }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_2]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29_2 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_1]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep29_1]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_1_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:GetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[CustomActivityStep29_4]">
+                                  <mxswa:GetEntityProperty.TargetType>
+                                    <InArgument x:TypeArguments="s:Type">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                  </mxswa:GetEntityProperty.TargetType>
+                                </mxswa:GetEntityProperty>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29_4 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_3]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep29_3]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_3_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ReturnUrl }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_6]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29_6 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_5]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep29_5]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_5_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Description }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_8]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29_8 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_7]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep29_7]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_7_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConfigurationPrefix }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_10]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29_10 }]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_9]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep29_9]</InArgument>
+                                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                    </InArgument>
+                                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep29_9_converted]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Core.CardPayments.Workflow.CodeActivities.CreatePayment, Defra.Lp.Core.CardPayments.Workflow, Version=1.3.0.4, Culture=neutral, PublicKeyToken=bf79c057ccb56895" DisplayName="CustomActivityStep29: Call Gov Pay, without payment record details">
+                                  <mxswa:ActivityReference.Arguments>
+                                    <InArgument x:TypeArguments="mxs:Money" x:Key="Amount">[DirectCast(CustomActivityStep29_1_converted, Microsoft.Xrm.Sdk.Money)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="Reference">[DirectCast(CustomActivityStep29_3_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ReturnUrl">[DirectCast(CustomActivityStep29_5_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="Description">[DirectCast(CustomActivityStep29_7_converted, System.String)]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="ConfigurationPrefix">[DirectCast(CustomActivityStep29_9_converted, System.String)]</InArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentId">[CustomActivityStep29PaymentId_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentStatus">[CustomActivityStep29PaymentStatus_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Boolean" x:Key="PaymentFinished">[CustomActivityStep29PaymentFinished_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlHref">[CustomActivityStep29PaymentNextUrlHref_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlMethod">[CustomActivityStep29PaymentNextUrlMethod_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlHref">[CustomActivityStep29PaymentCancelUrlHref_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlMethod">[CustomActivityStep29PaymentCancelUrlMethod_localParameter]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentProvider">[CustomActivityStep29PaymentProvider_localParameter]</OutArgument>
+                                  </mxswa:ActivityReference.Arguments>
+                                </mxswa:ActivityReference>
+                              </sco:Collection>
+                            </mxswa:ActivityReference.Properties>
+                          </mxswa:ActivityReference>
+                          <Sequence DisplayName="UpdateStep31: Save Portal Transaction Id and other portal response parameters">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_1" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_2" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_3" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_4" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_5" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_6" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_7" />
+                              <Variable x:TypeArguments="x:Object" Name="UpdateStep31_8" />
+                            </Sequence.Variables>
+                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_paymenttransaction&quot;)]" />
+                            <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;).Id]" Value="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" />
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentId_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_1]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentid" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_1]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentStatus_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_2]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentstatus" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_2]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentCancelUrlHref_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_3]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_3]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentCancelUrlMethod_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_4]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_4]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentNextUrlHref_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_5]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_5]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentCancelUrlMethod_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_6]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_6]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentProvider_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_7]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentprovider" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_7]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                              <mxswa:ActivityReference.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep29PaymentFinished_localParameter }]</InArgument>
+                                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+                                </InArgument>
+                                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep31_8]</OutArgument>
+                              </mxswa:ActivityReference.Arguments>
+                            </mxswa:ActivityReference>
+                            <mxswa:SetEntityProperty Attribute="defra_responsepaymentfinished" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep31_8]">
+                              <mxswa:SetEntityProperty.TargetType>
+                                <InArgument x:TypeArguments="s:Type">
+                                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
+                                </InArgument>
+                              </mxswa:SetEntityProperty.TargetType>
+                            </mxswa:SetEntityProperty>
+                            <mxswa:UpdateEntity DisplayName="UpdateStep31" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
+                            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
+                          </Sequence>
                         </sco:Collection>
                       </mxswa:ActivityReference.Properties>
                     </mxswa:ActivityReference>
@@ -498,343 +1187,9 @@
                   </mxswa:ActivityReference.Properties>
                 </mxswa:ActivityReference>
               </sco:Collection>
-              <x:Boolean x:Key="ContainsElseBranch">False</x:Boolean>
+              <x:Boolean x:Key="ContainsElseBranch">True</x:Boolean>
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep9: Call Payment Portal API">
-            <mxswa:ActivityReference.Properties>
-              <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_1" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_2" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_1_converted" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_3" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_4" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_3_converted" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_5" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_6" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_5_converted" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_7" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_8" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_7_converted" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_9" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_10" />
-                <Variable x:TypeArguments="x:Object" Name="CustomActivityStep9_9_converted" />
-              </sco:Collection>
-              <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Amount }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_2]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9_2 }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_1]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep9_1]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="mxs:Money" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_1_converted]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:GetEntityProperty Attribute="defra_transactionref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[CustomActivityStep9_4]">
-                  <mxswa:GetEntityProperty.TargetType>
-                    <InArgument x:TypeArguments="s:Type">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                  </mxswa:GetEntityProperty.TargetType>
-                </mxswa:GetEntityProperty>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9_4 }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_3]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep9_3]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_3_converted]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ReturnUrl }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_6]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9_6 }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_5]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep9_5]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_5_converted]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Description }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_8]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9_8 }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_7]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep9_7]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_7_converted]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CustomOperationArguments</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConfigurationPrefix }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_10]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9_10 }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_9]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConvertCrmXrmTypes, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConvertCrmXrmTypes">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:Object" x:Key="Value">[CustomActivityStep9_9]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CustomActivityStep9_9_converted]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.Core.CardPayments.Workflow.CodeActivities.CreatePayment, Defra.Lp.Core.CardPayments.Workflow, Version=1.3.0.4, Culture=neutral, PublicKeyToken=bf79c057ccb56895" DisplayName="CustomActivityStep9: Call Payment Portal API">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="mxs:Money" x:Key="Amount">[DirectCast(CustomActivityStep9_1_converted, Microsoft.Xrm.Sdk.Money)]</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="Reference">[DirectCast(CustomActivityStep9_3_converted, System.String)]</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="ReturnUrl">[DirectCast(CustomActivityStep9_5_converted, System.String)]</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="Description">[DirectCast(CustomActivityStep9_7_converted, System.String)]</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="ConfigurationPrefix">[DirectCast(CustomActivityStep9_9_converted, System.String)]</InArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentId">[CustomActivityStep9PaymentId_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentStatus">[CustomActivityStep9PaymentStatus_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:Boolean" x:Key="PaymentFinished">[CustomActivityStep9PaymentFinished_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlHref">[CustomActivityStep9PaymentNextUrlHref_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentNextUrlMethod">[CustomActivityStep9PaymentNextUrlMethod_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlHref">[CustomActivityStep9PaymentCancelUrlHref_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentCancelUrlMethod">[CustomActivityStep9PaymentCancelUrlMethod_localParameter]</OutArgument>
-                    <OutArgument x:TypeArguments="x:String" x:Key="PaymentProvider">[CustomActivityStep9PaymentProvider_localParameter]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-              </sco:Collection>
-            </mxswa:ActivityReference.Properties>
-          </mxswa:ActivityReference>
-          <Sequence DisplayName="UpdateStep23: Save Portal Transaction Id and other portal response parameters">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_1" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_2" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_3" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_4" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_5" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_6" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_7" />
-              <Variable x:TypeArguments="x:Object" Name="UpdateStep23_8" />
-            </Sequence.Variables>
-            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_paymenttransaction&quot;)]" />
-            <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;).Id]" Value="[CreatedEntities(&quot;CreateStep4_localParameter&quot;).Id]" />
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentId_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_1]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentid" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_1]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentStatus_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_2]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentstatus" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_2]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentCancelUrlHref_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_3]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_3]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentCancelUrlMethod_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_4]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentcancelurlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_4]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentNextUrlHref_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_5]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_5]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentNextUrlMethod_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_6]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentnexturlmethod" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_6]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentProvider_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_7]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentprovider" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_7]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-              <mxswa:ActivityReference.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentFinished_localParameter }]</InArgument>
-                <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep23_8]</OutArgument>
-              </mxswa:ActivityReference.Arguments>
-            </mxswa:ActivityReference>
-            <mxswa:SetEntityProperty Attribute="defra_responsepaymentfinished" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" Value="[UpdateStep23_8]">
-              <mxswa:SetEntityProperty.TargetType>
-                <InArgument x:TypeArguments="s:Type">
-                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:Boolean" />
-                </InArgument>
-              </mxswa:SetEntityProperty.TargetType>
-            </mxswa:SetEntityProperty>
-            <mxswa:UpdateEntity DisplayName="UpdateStep23" Entity="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" EntityName="defra_paymenttransaction" />
-            <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" Value="[CreatedEntities(&quot;CreateStep4_localParameter#Temp&quot;)]" />
-          </Sequence>
         </sco:Collection>
       </mxswa:ActivityReference.Properties>
     </mxswa:ActivityReference>
@@ -842,39 +1197,55 @@
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <Sequence DisplayName="AssignOutputArgumentStep11: Return Next Url Href">
+          <Sequence DisplayName="AssignOutputArgumentStep36: Return Next Url Href">
             <Sequence.Variables>
-              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep11_1" />
+              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep36_1" />
+              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep36_2" />
               <Variable x:TypeArguments="x:String" Default="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="TypeName" />
             </Sequence.Variables>
+            <mxswa:GetEntityProperty Attribute="defra_responsepaymentnexturlhref" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[AssignOutputArgumentStep36_2]">
+              <mxswa:GetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                </InArgument>
+              </mxswa:GetEntityProperty.TargetType>
+            </mxswa:GetEntityProperty>
             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
               <mxswa:ActivityReference.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentNextUrlHref_localParameter }]</InArgument>
+                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { AssignOutputArgumentStep36_2 }]</InArgument>
                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                 </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[AssignOutputArgumentStep11_1]</OutArgument>
+                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[AssignOutputArgumentStep36_1]</OutArgument>
               </mxswa:ActivityReference.Arguments>
             </mxswa:ActivityReference>
-            <Assign x:TypeArguments="x:String" To="[PaymentNextUrlHref]" Value="[AssignOutputArgumentStep11_1.ToString()]" />
+            <Assign x:TypeArguments="x:String" To="[PaymentNextUrlHref]" Value="[AssignOutputArgumentStep36_1.ToString()]" />
           </Sequence>
-          <Sequence DisplayName="AssignOutputArgumentStep22: Return Status">
+          <Sequence DisplayName="AssignOutputArgumentStep37: Return Status">
             <Sequence.Variables>
-              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep22_1" />
+              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep37_1" />
+              <Variable x:TypeArguments="x:Object" Name="AssignOutputArgumentStep37_2" />
               <Variable x:TypeArguments="x:String" Default="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="TypeName" />
             </Sequence.Variables>
+            <mxswa:GetEntityProperty Attribute="statecode" Entity="[CreatedEntities(&quot;CreateStep4_localParameter&quot;)]" EntityName="defra_paymenttransaction" Value="[AssignOutputArgumentStep37_2]">
+              <mxswa:GetEntityProperty.TargetType>
+                <InArgument x:TypeArguments="s:Type">
+                  <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+                </InArgument>
+              </mxswa:GetEntityProperty.TargetType>
+            </mxswa:GetEntityProperty>
             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
               <mxswa:ActivityReference.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
-                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CustomActivityStep9PaymentStatus_localParameter }]</InArgument>
+                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { AssignOutputArgumentStep37_2 }]</InArgument>
                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                 </InArgument>
-                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[AssignOutputArgumentStep22_1]</OutArgument>
+                <OutArgument x:TypeArguments="x:Object" x:Key="Result">[AssignOutputArgumentStep37_1]</OutArgument>
               </mxswa:ActivityReference.Arguments>
             </mxswa:ActivityReference>
-            <Assign x:TypeArguments="x:String" To="[PaymentStatus]" Value="[AssignOutputArgumentStep22_1.ToString()]" />
+            <Assign x:TypeArguments="x:String" To="[PaymentStatus]" Value="[AssignOutputArgumentStep37_1.ToString()]" />
           </Sequence>
         </sco:Collection>
       </mxswa:ActivityReference.Properties>

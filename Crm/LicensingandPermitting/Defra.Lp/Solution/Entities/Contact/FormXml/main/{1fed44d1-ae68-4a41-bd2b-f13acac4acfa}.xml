@@ -559,6 +559,51 @@
           </column>
         </columns>
       </tab>
+      <tab name="linkedin_v2_tab" id="{a177d66d-0113-69a0-bac8-1dc0e71da6bd}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true" availableforphone="false" visible="false">
+        <labels>
+          <label description="LinkedIn Sales Navigator" languagecode="1033" />
+        </labels>
+        <columns>
+          <column width="50%">
+            <sections>
+              <section name="linkedin_v2_tab_section_1" showlabel="true" showbar="false" locklevel="0" id="{dd077547-6a14-b447-ee24-7dec448152e1}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                <labels>
+                  <label description="LinkedIn Member Profile" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{b41cda75-923e-2c4d-2746-952ae4dc49c8}" showlabel="false" locklevel="0">
+                      <labels>
+                        <label description="LinkedIn Member Profile" languagecode="1033" />
+                      </labels>
+                      <control id="lastname" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="lastname" disabled="false" uniqueid="{2d23a2e4-1218-75b7-c389-8c059cd90916}" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+          <column width="50%">
+            <sections>
+              <section name="linkedin_v2_tab_section_2" showlabel="true" showbar="false" locklevel="0" id="{124c9c50-1353-0eeb-d4ca-dd172a208d70}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                <labels>
+                  <label description="LinkedIn Account Profile" languagecode="1033" />
+                </labels>
+                <rows>
+                  <row>
+                    <cell id="{5e5ec361-4dac-5751-6dbe-51d64c2b280d}" showlabel="false" locklevel="0">
+                      <labels>
+                        <label description="LinkedIn Account Lookup" languagecode="1033" />
+                      </labels>
+                      <control id="parentcustomerid" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="parentcustomerid" disabled="false" uniqueid="{3da0db09-5d8b-c66d-e35b-b668a625e085}" />
+                    </cell>
+                  </row>
+                </rows>
+              </section>
+            </sections>
+          </column>
+        </columns>
+      </tab>
     </tabs>
     <header id="{3ff9aa06-4e43-41ce-afa9-22a038af5c19}" celllabelposition="Top" columns="1" labelwidth="115">
       <rows>
@@ -586,6 +631,7 @@
         </InternalHandlers>
         <Handlers>
           <Handler functionName="loadTalkingPoints" libraryName="msdyn_talkingpointsloader.js" handlerUniqueId="{a96425be-a853-9549-dc5a-1610151533dd}" enabled="true" parameters="" passExecutionContext="true" />
+          <Handler functionName="LinkedInIntegration.LinkedInIntegrationCommon.Instance.Form_OnLoad" libraryName="LinkedInIntegration/Common/msdyn_LinkedInIntegrationCommon.js" handlerUniqueId="{008608be-dbe5-ba0d-8be3-6e8507bcbd42}" enabled="true" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
     </events>
@@ -937,6 +983,62 @@
           </parameters>
         </customControl>
       </controlDescription>
+      <controlDescription forControl="{2d23a2e4-1218-75b7-c389-8c059cd90916}">
+        <customControl id="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" formFactor="0">
+          <parameters>
+            <datafieldname>lastname</datafieldname>
+          </parameters>
+        </customControl>
+        <customControl id="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" formFactor="1">
+          <parameters>
+            <datafieldname>lastname</datafieldname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="2" name="MscrmControls.LinkedInIntegration.LinkedInLeadControl">
+          <parameters>
+            <TopCard2 static="true" type="Enum">true</TopCard2>
+            <Icebreakers static="true" type="Enum">true</Icebreakers>
+            <GetIntroduced static="true" type="Enum">true</GetIntroduced>
+            <RelatedLeads static="true" type="Enum">true</RelatedLeads>
+            <ShowChrome static="true" type="Enum">false</ShowChrome>
+            <LastName>lastname</LastName>
+            <FirstName>firstname</FirstName>
+            <JobTitle>jobtitle</JobTitle>
+          </parameters>
+        </customControl>
+      </controlDescription>
+      <controlDescription forControl="{3da0db09-5d8b-c66d-e35b-b668a625e085}">
+        <customControl id="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" formFactor="0">
+          <parameters>
+            <datafieldname>parentcustomerid</datafieldname>
+          </parameters>
+        </customControl>
+        <customControl id="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" formFactor="1">
+          <parameters>
+            <datafieldname>parentcustomerid</datafieldname>
+          </parameters>
+        </customControl>
+        <customControl formFactor="2" name="MscrmControls.LinkedInIntegration.LinkedInAccountLookupControl">
+          <parameters>
+            <TopCard static="true" type="Enum">true</TopCard>
+            <Connections static="true" type="Enum">true</Connections>
+            <RecommendedLeads static="true" type="Enum">true</RecommendedLeads>
+            <News static="true" type="Enum">true</News>
+            <ShowChrome static="true" type="Enum">false</ShowChrome>
+            <CompanyRecordLookup>
+              <BindAttribute>parentcustomerid</BindAttribute>
+              <DefaultViewId>00000000-0000-0000-0000-000000000000</DefaultViewId>
+              <FilterRelationshipName />
+              <DependentAttributeName />
+              <DependentAttributeType />
+              <AvailableViewIds />
+              <AllowFilterOff>false</AllowFilterOff>
+              <DisableQuickFind>true</DisableQuickFind>
+              <DisableViewPicker>false</DisableViewPicker>
+            </CompanyRecordLookup>
+          </parameters>
+        </customControl>
+      </controlDescription>
     </controlDescriptions>
     <DisplayConditions FallbackForm="true" Order="3">
       <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
@@ -944,6 +1046,7 @@
     </DisplayConditions>
     <formLibraries>
       <Library name="msdyn_talkingpointsloader.js" libraryUniqueId="{30d6d0a4-d097-b9be-cc6e-5722727be490}" />
+      <Library name="LinkedInIntegration/Common/msdyn_LinkedInIntegrationCommon.js" libraryUniqueId="{1c515da1-8452-e3c5-244d-707e88c563d9}" />
     </formLibraries>
   </form>
   <LocalizedNames>
