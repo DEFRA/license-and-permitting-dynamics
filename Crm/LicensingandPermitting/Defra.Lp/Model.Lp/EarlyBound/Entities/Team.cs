@@ -15,7 +15,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("team")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Team : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -715,6 +715,26 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// 1:N defra_defra_businesstrack_primaryteamid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_businesstrack_primaryteamid")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_businesstrack> defra_defra_businesstrack_primaryteamid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("defra_defra_businesstrack_primaryteamid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_defra_businesstrack_primaryteamid");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("defra_defra_businesstrack_primaryteamid", null, value);
+				this.OnPropertyChanged("defra_defra_businesstrack_primaryteamid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N defra_notification_team_owningteam
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_notification_team_owningteam")]
@@ -811,26 +831,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("team_accounts");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.Account>("team_accounts", null, value);
 				this.OnPropertyChanged("team_accounts");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N team_annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> team_annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("team_annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("team_annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("team_annotations", null, value);
-				this.OnPropertyChanged("team_annotations");
 			}
 		}
 		
@@ -1131,6 +1131,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("team_defra_applicationtaskdefinition");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationtaskdefinition>("team_defra_applicationtaskdefinition", null, value);
 				this.OnPropertyChanged("team_defra_applicationtaskdefinition");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_defra_businesstrack
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_businesstrack")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_businesstrack> team_defra_businesstrack
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("team_defra_businesstrack", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_defra_businesstrack");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("team_defra_businesstrack", null, value);
+				this.OnPropertyChanged("team_defra_businesstrack");
 			}
 		}
 		
@@ -1491,6 +1511,26 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("team_defra_preapplication");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_preapplication>("team_defra_preapplication", null, value);
 				this.OnPropertyChanged("team_defra_preapplication");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_defra_regime
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_regime")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_regime> team_defra_regime
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_regime>("team_defra_regime", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_defra_regime");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_regime>("team_defra_regime", null, value);
+				this.OnPropertyChanged("team_defra_regime");
 			}
 		}
 		
