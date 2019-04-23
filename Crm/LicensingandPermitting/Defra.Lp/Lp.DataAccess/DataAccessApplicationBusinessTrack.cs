@@ -1,16 +1,22 @@
 ﻿namespace Lp.DataAccess
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk;
+    using Core.Helpers.Extensions;
     using Model.EarlyBound;
     using Core.DataAccess.Base;
+    using Model.Internal;
 
     /// <summary>
-    /// Data access layer for Business Track Related CRM queries
+    /// Data access layer for Application Answer related CRM queries
     /// </summary>
     public class DataAccessApplicationBusinessTrack : DataAccessBase
-    {  
+    {
+
+  
 
         /// <summary>
         /// Constructor sets the CRM services
@@ -23,22 +29,15 @@
         }
 
         /// <summary>
-        /// Returns the business track the application is linked to
+        /// Returns a defra_application_answer record for the given application, application line and question code
         /// </summary>
-        /// <param name="applicationId">The application being sought</param>
-        /// <returns>The Business Track for the application, if found</returns>
+        /// <param name="applicationQuestionCode">The question code to look up the answer by</param>
+        /// <param name="application">The application to lookup the answer by</param>
+        /// <param name="applicationLine">The application line to lookup the answer by</param>
+        /// <returns></returns>
         public EntityReference GetApplicationBusinessTrackEntityReference(Guid applicationId)
-        {
-            Entity application = OrganisationService.Retrieve(defra_application.EntityLogicalName, applicationId, new ColumnSet(defra_application.Fields.defra_businesstrackid));
-
-            if (application == null || !application.Contains(defra_application.Fields.defra_businesstrackid))
-            {
-                // No Business Track to return
-                return null;
-            }
-
-            // Return the business track lookup
-            return application[defra_application.Fields.defra_businesstrackid] as EntityReference;
+        {          
+            return null;
         }
     }
 }
