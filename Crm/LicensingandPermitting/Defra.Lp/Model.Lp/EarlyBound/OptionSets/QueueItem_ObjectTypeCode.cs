@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum QueueItem_ObjectTypeCode
 	{
 		
@@ -65,6 +65,12 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SocialActivity = 4216,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Surveyinvite = 10123,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Surveyresponse = 10124,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Task = 4212,
