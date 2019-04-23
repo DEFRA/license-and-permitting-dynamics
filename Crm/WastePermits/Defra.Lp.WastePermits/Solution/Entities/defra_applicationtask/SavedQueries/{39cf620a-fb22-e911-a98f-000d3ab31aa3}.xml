@@ -1,50 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{39cf620a-fb22-e911-a98f-000d3ab31aa3}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
-      <row name="result" id="defra_applicationtaskid">
-        <cell name="a_2d6abd9931efe811a988000d3ab31f97.defra_name" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_completed" width="100" />
-        <cell name="defra_notes" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_977c936e2cefe811a988000d3ab31f97.defra_name" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_application_task_typeid" width="100" />
-        <cell name="defra_applicationtaskdefinitionid" width="100" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-      <entity name="defra_applicationtask">
-        <attribute name="defra_notes" />
-        <attribute name="defra_completed" />
-        <order attribute="defra_completed" descending="false" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-        </filter>
-        <link-entity name="defra_applicationtaskdefinition" from="defra_applicationtaskdefinitionid" to="defra_applicationtaskdefinitionid" alias="a_2d6abd9931efe811a988000d3ab31f97">
-          <attribute name="defra_name" />
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{39cf620a-fb22-e911-a98f-000d3ab31aa3}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
+        <row name="result" id="defra_applicationtaskid">
+          <cell name="a_2d6abd9931efe811a988000d3ab31f97.defra_name" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_completed" width="100" />
+          <cell name="defra_notes" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_977c936e2cefe811a988000d3ab31f97.defra_name" width="200" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_application_task_typeid" width="100" />
+          <cell name="defra_applicationtaskdefinitionid" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_applicationtask">
+          <attribute name="defra_notes" />
+          <attribute name="defra_completed" />
+          <order attribute="defra_completed" descending="false" />
           <filter type="and">
-            <condition attribute="defra_tasktypeid" operator="eq" uiname="Duly making checklist" uitype="defra_tasktype" value="{63987EC8-33EF-E811-A988-000D3AB31F97}" />
+            <condition attribute="statecode" operator="eq" value="0" />
           </filter>
-        </link-entity>
-        <link-entity alias="a_977c936e2cefe811a988000d3ab31f97" name="defra_applicationline" from="defra_applicationlineid" to="defra_applicationline" link-type="outer" visible="false">
-          <attribute name="defra_name" />
-        </link-entity>
-        <attribute name="defra_application_task_typeid" />
-        <attribute name="defra_applicationtaskdefinitionid" />
-        <attribute name="defra_applicationtaskid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.0.0.2</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Duly Making Checklist" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+          <link-entity name="defra_applicationtaskdefinition" from="defra_applicationtaskdefinitionid" to="defra_applicationtaskdefinitionid" alias="a_2d6abd9931efe811a988000d3ab31f97">
+            <attribute name="defra_name" />
+            <filter type="and">
+              <condition attribute="defra_tasktypeid" operator="eq" uiname="Duly making checklist" uitype="defra_tasktype" value="{63987EC8-33EF-E811-A988-000D3AB31F97}" />
+            </filter>
+          </link-entity>
+          <link-entity alias="a_977c936e2cefe811a988000d3ab31f97" name="defra_applicationline" from="defra_applicationlineid" to="defra_applicationline" link-type="outer" visible="false">
+            <attribute name="defra_name" />
+          </link-entity>
+          <attribute name="defra_application_task_typeid" />
+          <attribute name="defra_applicationtaskdefinitionid" />
+          <attribute name="defra_applicationtaskid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.2</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Duly Making Checklist" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
