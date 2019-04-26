@@ -87,7 +87,7 @@ var Payments = {
         req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
         req.setRequestHeader("Prefer", "odata.include-annotations=\"*\"");
         req.onreadystatechange = function () {
-            
+
             if (this.readyState === 4) {
                 req.onreadystatechange = null;
                 if (this.status === 200) {
@@ -111,9 +111,6 @@ var Payments = {
         var parameters = {};
         parameters.LookupByPaymentReference = paymentRefNumber;
         parameters.ConfigurationPrefix = Payments.ConfigurationPrefix;
-
-        console.log("TEMP *****   ready state now is parameters.ConfigurationPrefix : " + parameters.ConfigurationPrefix);
-
         // Set-up the Get Payment Status CRM Action request
         var req = new XMLHttpRequest();
         req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/defra_get_payment_status", true);

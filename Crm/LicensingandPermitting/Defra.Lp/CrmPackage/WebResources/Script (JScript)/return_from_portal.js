@@ -111,9 +111,6 @@ var Payments = {
         var parameters = {};
         parameters.LookupByPaymentReference = paymentRefNumber;
         parameters.ConfigurationPrefix = Payments.ConfigurationPrefix;
-
-        console.log("TEMP *****   ready state now is parameters.ConfigurationPrefix : " + parameters.ConfigurationPrefix);
-
         // Set-up the Get Payment Status CRM Action request
         var req = new XMLHttpRequest();
         req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/defra_get_payment_status", true);
