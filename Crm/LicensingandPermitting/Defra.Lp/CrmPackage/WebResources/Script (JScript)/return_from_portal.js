@@ -4,6 +4,7 @@
 // GovPay payment page. 
 // Queries CRM for the payment reference and calls a
 // CRM action to check if the payment was successful
+// Modified by Kassim Hassan 
 // ------------------------------------------------------
 
 var Payments = {
@@ -20,6 +21,9 @@ var Payments = {
     // The GovPay payment error message
     PaymentError: '',
 
+    // The payment Account ID
+    ConfigurationPrefix: '',
+
     // Triggered when the HTML package loads
     OnLoad: function () {
 
@@ -29,15 +33,15 @@ var Payments = {
         // 2. Get the Payment Record for the given payment ref
         //Payments.GetPayment(Payments.PaymentRef);
 
-        // 3. Call CRM Action to check payment status
-        Payments.ProcessCardPaymentStatus(Payments.PaymentRef);
+        // 3. Get the Payment Record for the given payment ref
+        Payments.GetPaymentAccount(Payments.PaymentRef);
+
     },
-    
+
     // Function queries CRM with the given Payment Reference number
     // and retries the Payment Record and Payment Transaction record
     // Thenb 
     GetPayment: function (paymentRefNum) {
-
 
         var req = new XMLHttpRequest();
         req.open("GET", Xrm.Page.context.getClientUrl() + "/api/data/v8.2/defra_payments?$select=_defra_payment_transaction_value&$expand=defra_defra_payment_defra_payment_originatingpayment($select=defra_payment_transaction)&$filter=defra_reference_number eq '" + paymentRefNum + "'", true);
@@ -57,9 +61,6 @@ var Payments = {
                         var _defra_payment_transaction_value_lookuplogicalname = results.value[i]["_defra_payment_transaction_value@Microsoft.Dynamics.CRM.lookuplogicalname"];
                         //Use @odata.nextLink to query resulting related records
                         var defra_defra_payment_defra_payment_originatingpayment_NextLink = results.value[i]["defra_defra_payment_defra_payment_originatingpayment@odata.nextLink"];
-
-          
-
                     }
                     Payments.PaymentRecord = results.value[0];
                     //var paymentLink = Payments.GetApplicationRecordUrl(Payments.PaymentRecord.id);
@@ -70,23 +71,52 @@ var Payments = {
             }
         };
         req.send();
+    },
 
+    //** Created by Kassim Hassan on 26/04/2019 for WE-2429 to fix the bug in removing the hard coded  (parameters.ConfigurationPrefix = "WastePermits.MOTO.")*/
+    // Function queries CRM with the given Payment Reference number
+    // and retries the Payment Account ID 
+    // Thenb 
+    GetPaymentAccount: function (paymentRefNum) {
 
+        var req = new XMLHttpRequest();
+        req.open("GET", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/defra_payments?$top=50&$select=defra_cardpaymentaccount&$filter=defra_reference_number eq '" + paymentRefNum + "'", true);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.setRequestHeader("Prefer", "odata.include-annotations=\"*\"");
+        req.onreadystatechange = function () {
+
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 200) {
+                    var results = JSON.parse(this.response);
+                    Payments.ConfigurationPrefix = results.value[0]["defra_cardpaymentaccount"];
+                    // Call CRM Action to check payment status
+                    Payments.ProcessCardPaymentStatus(Payments.PaymentRef);
+                } else {
+                    alert(this.statusText);
+                }
+            }
+        };
+        req.send();
     },
 
     // Functions calls the Get Payment Status CRM Action to check the status
     // of the payment, then displayes the payment status
     ProcessCardPaymentStatus: function (paymentRefNumber) {
 
-
         // Set-up Action Parameters
         var parameters = {};
         parameters.LookupByPaymentReference = paymentRefNumber;
-        parameters.ConfigurationPrefix = "WastePermits.MOTO.";
+        parameters.ConfigurationPrefix = Payments.ConfigurationPrefix;
+
+        console.log("TEMP *****   ready state now is parameters.ConfigurationPrefix : " + parameters.ConfigurationPrefix);
 
         // Set-up the Get Payment Status CRM Action request
         var req = new XMLHttpRequest();
-        req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v8.2/defra_get_payment_status", true);
+        req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/defra_get_payment_status", true);
         req.setRequestHeader("OData-MaxVersion", "4.0");
         req.setRequestHeader("OData-Version", "4.0");
         req.setRequestHeader("Accept", "application/json");
@@ -94,6 +124,7 @@ var Payments = {
 
         // Process result handler
         req.onreadystatechange = function () {
+
             if (this.readyState === 4) {
                 req.onreadystatechange = null;
 
@@ -101,11 +132,11 @@ var Payments = {
                     // On Successful result, display the payment status
                     var results = JSON.parse(this.response);
                     Payments.PaymentStatus = results.Status;
-                    
+
                 } else {
                     // Error
                     Payments.PaymentStatus = 'Error';
-                    payments.PaymentError = this.statusText;
+                    Payments.PaymentError = this.statusText;
                 }
                 // Display message to user
                 Payments.DisplayResult();
@@ -169,8 +200,7 @@ var Payments = {
                     break;
                 }
             }
-            if (!found)
-            { noParams(); }
+            if (!found) { noParams(); }
         }
         else {
             noParams();
@@ -186,7 +216,7 @@ var Payments = {
     },
 
 
-    DisplayResult: function() {
+    DisplayResult: function () {
         $('#paymentStatus').text(Payments.PaymentStatus);
         if (Payments.PaymentStatus === 'success') {
             $('#paymentStatus')
@@ -201,7 +231,7 @@ var Payments = {
                 .html('The payment was not successful. <br/>Please close this popup window and retry the payment using another card.');
         } else {
             $('#paymentStatus')
-               .html('The payment provider reported the transaction status of "' + Payments.PaymentStatus + '". <br/>Please close this popup window and retry the payment if appropriate.');
+                .html('The payment provider reported the transaction status of "' + Payments.PaymentStatus + '". <br/>Please close this popup window and retry the payment if appropriate.');
         }
         $('#errormessage').text(Payments.PaymentError);
     },
@@ -209,7 +239,7 @@ var Payments = {
         // TODO: Complete return URL.
         //$("a").attr("href", Payments.PaymentRef);
     },
-    
+
     // Alert Payment form of change
     SendMessageToPayment: function () {
         window.opener.postMessage(Payments.PaymentRef, window.location.origin);
@@ -218,7 +248,7 @@ var Payments = {
 
 document.onreadystatechange = function () {
     if (document.readyState === "complete") {
-        Payments.OnLoad(); 
+        Payments.OnLoad();
     }
 }
 
