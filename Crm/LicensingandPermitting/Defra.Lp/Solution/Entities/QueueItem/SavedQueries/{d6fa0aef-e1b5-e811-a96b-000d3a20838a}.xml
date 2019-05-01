@@ -1,45 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{d6fa0aef-e1b5-e811-a96b-000d3a20838a}</savedqueryid>
-  <layoutxml>
-    <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
-      <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
-        <cell name="objecttypecode" width="100" />
-        <cell name="title" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_40e5c747f025e811a955000d3a20838a.defra_applicationnumber" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="enteredon" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="queueid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="queueitemid" ishidden="1" width="100" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch distinct="false" mapping="logical">
-      <entity name="queueitem">
-        <attribute name="title" />
-        <attribute name="enteredon" />
-        <attribute name="objecttypecode" />
-        <attribute name="queueid" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-          <condition attribute="workerid" operator="eq-userid" />
-        </filter>
-        <order attribute="enteredon" descending="false" />
-        <link-entity alias="a_40e5c747f025e811a955000d3a20838a" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
-          <attribute name="defra_applicationnumber" />
-        </link-entity>
-        <attribute name="objectid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.2.1.36</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="My work" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{d6fa0aef-e1b5-e811-a96b-000d3a20838a}</savedqueryid>
+    <layoutxml>
+      <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
+        <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
+          <cell name="objecttypecode" width="100" />
+          <cell name="title" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_40e5c747f025e811a955000d3a20838a.defra_applicationnumber" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="enteredon" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="queueid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="queueitemid" ishidden="1" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch distinct="false" mapping="logical">
+        <entity name="queueitem">
+          <attribute name="title" />
+          <attribute name="enteredon" />
+          <attribute name="objecttypecode" />
+          <attribute name="queueid" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+            <condition attribute="workerid" operator="eq-userid" />
+          </filter>
+          <order attribute="enteredon" descending="false" />
+          <link-entity alias="a_40e5c747f025e811a955000d3a20838a" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
+            <attribute name="defra_applicationnumber" />
+          </link-entity>
+          <attribute name="objectid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.2.1.36</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="My work" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
