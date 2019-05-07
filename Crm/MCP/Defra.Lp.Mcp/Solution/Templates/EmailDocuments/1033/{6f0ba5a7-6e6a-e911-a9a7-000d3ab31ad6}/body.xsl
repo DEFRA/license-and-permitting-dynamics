@@ -5,14 +5,14 @@
   <td width=179 valign=top style="width:134.45pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">
   <p class=MsoNormal><span style="color:windowtext;">Applicant:</span></p>
   </td>
-  <td width=404 valign=top style="width:303.3pt;border:solid windowtext 1.0pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_customerid/@name"><xsl:value-of select="defra_application/defra_customerid/@name" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
+  <td width=404 valign=top style="width:303.3pt;border:solid windowtext 1.0pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_primarycontactid/@name"><xsl:value-of select="defra_application/defra_primarycontactid/@name" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
  </tr>
  <tr class=keyboardFocusClass>
   <td width=179 valign=top style="width:134.45pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;">
   <p class=MsoNormal><span style="color:windowtext;">Site
   name:</span></p>
   </td>
-  <td width=404 valign=top style="width:303.3pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_site_description"><xsl:value-of select="defra_application/defra_site_description" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
+  <td width=404 valign=top style="width:303.3pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_main_site/@name"><xsl:value-of select="defra_application/defra_main_site/@name" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
  </tr>
  <tr class=keyboardFocusClass>
   <td width=179 valign=top style="width:134.45pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;">
@@ -28,7 +28,7 @@
   <p class=MsoNormal><span style="color:windowtext;">Application
   Type:</span></p>
   </td>
-  <td width=404 valign=top style="width:303.3pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_applicationtype"><xsl:value-of select="defra_application/defra_applicationtype" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
+  <td width=404 valign=top style="width:303.3pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">]]><xsl:choose><xsl:when test="defra_application/defra_regimeid/@name"><xsl:value-of select="defra_application/defra_regimeid/@name" /></xsl:when><xsl:otherwise></xsl:otherwise></xsl:choose><![CDATA[</td>
  </tr>
  <tr class=keyboardFocusClass>
   <td width=179 valign=top style="width:134.45pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;">

@@ -25,6 +25,12 @@ function OnLoad() {
                 changeForm(DULY_MAKING_FORM);
         }
 
+ if (Xrm.Page.getControl("processid")) {
+       var processId = Xrm.Page.getAttribute("processid").getValue();
+       if (processId != null) {
+           Xrm.Page.ui.process.setVisible(false);
+       }
+   }
     }
 
     catch (err) {
