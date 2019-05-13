@@ -8,7 +8,10 @@ var STANDARD_FORM = "MCP SR Application";
 
 
 function OnLoad() {
-    try {
+  //  try {
+
+
+
         var statusCode = Xrm.Page.getAttribute("statuscode").getValue();
        
         // If status is not draft or received then show advance form
@@ -26,16 +29,20 @@ function OnLoad() {
         }
 
  if (Xrm.Page.getControl("processid")) {
-       var processId = Xrm.Page.getAttribute("processid").getValue();
+var processId = 'B25365DD-9C97-4117-B443-AA75E25732D9' // Xrm.Page.getAttribute("processid").getValue();
+alert(processId);
        if (processId != null) {
            Xrm.Page.ui.process.setVisible(false);
        }
    }
-    }
 
-    catch (err) {
-        console.error('Error captured in OnLoad: ', err);
-    }
+  Xrm.Page.ui.process.setVisible(false);
+
+   // }
+
+  //  catch (err) {
+ //       console.error('Error captured in OnLoad: ', err);
+ //   }
 }
 
 
