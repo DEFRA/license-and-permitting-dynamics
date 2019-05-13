@@ -1,40 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>1</isdefault>
-  <savedqueryid>{8ef40d37-0868-440c-af6b-cac0c62e78e3}</savedqueryid>
-  <queryapi></queryapi>
-  <layoutxml>
-    <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
-      <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
-        <cell name="title" width="300" />
-        <cell name="objecttypecode" width="100" />
-        <cell name="enteredon" width="140" />
-        <cell name="queueid" width="150" />
-        <cell name="queueitemid" ishidden="1" width="100" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch distinct="false" mapping="logical">
-      <entity name="queueitem">
-        <attribute name="title" />
-        <attribute name="enteredon" />
-        <attribute name="objecttypecode" />
-        <attribute name="queueid" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-          <condition attribute="workerid" operator="eq-userid" />
-        </filter>
-        <order attribute="enteredon" descending="true" />
-        <attribute name="objectid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>5.0.0.0</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Items I am working on" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+<savedqueries>
+  <savedquery>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{8ef40d37-0868-440c-af6b-cac0c62e78e3}</savedqueryid>
+    <queryapi></queryapi>
+    <layoutxml>
+      <grid name="queueitems" jump="title" select="1" icon="1" preview="1">
+        <row name="queueitem" id="objectid" multiobjectidfield="objecttypecode">
+          <cell name="title" width="300" />
+          <cell name="objecttypecode" width="100" />
+          <cell name="enteredon" width="140" />
+          <cell name="queueid" width="150" />
+          <cell name="queueitemid" ishidden="1" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch distinct="false" mapping="logical">
+        <entity name="queueitem">
+          <attribute name="title" />
+          <attribute name="enteredon" />
+          <attribute name="objecttypecode" />
+          <attribute name="queueid" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+            <condition attribute="workerid" operator="eq-userid" />
+          </filter>
+          <order attribute="enteredon" descending="true" />
+          <attribute name="objectid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>5.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Items I am working on" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
