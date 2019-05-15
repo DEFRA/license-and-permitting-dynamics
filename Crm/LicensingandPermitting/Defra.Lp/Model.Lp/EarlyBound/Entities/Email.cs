@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum EmailState
 	{
 		
@@ -30,7 +30,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("email")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Email : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1987,26 +1987,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_email_defra_applicationdocument_emailid");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_applicationdocument>("defra_email_defra_applicationdocument_emailid", null, value);
 				this.OnPropertyChanged("defra_email_defra_applicationdocument_emailid");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N Email_Annotation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Email_Annotation")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Email_Annotation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Email_Annotation", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Email_Annotation");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Email_Annotation", null, value);
-				this.OnPropertyChanged("Email_Annotation");
 			}
 		}
 		

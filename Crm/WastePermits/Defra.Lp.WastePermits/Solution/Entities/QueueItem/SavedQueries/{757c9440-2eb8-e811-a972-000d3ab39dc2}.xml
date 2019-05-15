@@ -44,6 +44,11 @@
           <attribute name="defra_facility_description" />
           <attribute name="defra_submittedon" />
         </link-entity>
+        <link-entity name="defra_application" from="defra_applicationid" to="defra_application" alias="aa">
+          <filter type="and">
+            <condition attribute="statuscode" operator="ne" value="1" />
+          </filter>
+        </link-entity>
         <attribute name="objectid" />
       </entity>
     </fetch>

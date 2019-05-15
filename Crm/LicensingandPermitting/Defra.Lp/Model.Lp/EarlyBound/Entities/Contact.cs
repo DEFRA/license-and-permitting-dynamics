@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum ContactState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("contact")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4186,26 +4186,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("account_primary_contact");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.Account>("account_primary_contact", null, value);
 				this.OnPropertyChanged("account_primary_contact");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N Contact_Annotation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Contact_Annotation")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Contact_Annotation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Contact_Annotation");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Contact_Annotation", null, value);
-				this.OnPropertyChanged("Contact_Annotation");
 			}
 		}
 		

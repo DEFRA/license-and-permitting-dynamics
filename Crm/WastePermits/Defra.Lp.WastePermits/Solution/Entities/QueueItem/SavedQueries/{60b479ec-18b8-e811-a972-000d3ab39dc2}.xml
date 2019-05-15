@@ -31,9 +31,9 @@
         <filter type="and">
           <condition attribute="statecode" operator="eq" value="0" />
           <condition attribute="workerid" operator="null" />
-          <condition attribute="objecttypecodename" operator="like" value="%Application%" />
+          <condition attribute="objecttypecode" operator="eq" value="10013" />
         </filter>
-        <link-entity alias="a_fdbe0726afc3e71180eb3863bb34fad0" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
+        <link-entity name="defra_application" from="defra_applicationid" to="objectid" visible="false" link-type="outer" alias="a_fdbe0726afc3e71180eb3863bb34fad0">
           <attribute name="defra_penfolddate" />
           <attribute name="statuscode" />
           <attribute name="defra_applicationnumber" />
@@ -43,6 +43,11 @@
           <attribute name="defra_facility_description" />
           <attribute name="defra_submittedon" />
           <attribute name="defra_raguscore" />
+        </link-entity>
+        <link-entity name="defra_application" from="defra_applicationid" to="defra_application" alias="aa">
+          <filter type="and">
+            <condition attribute="statuscode" operator="ne" value="1" />
+          </filter>
         </link-entity>
         <attribute name="objectid" />
       </entity>
