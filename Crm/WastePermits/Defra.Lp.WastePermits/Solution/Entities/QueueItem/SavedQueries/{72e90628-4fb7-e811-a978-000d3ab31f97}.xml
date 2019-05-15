@@ -38,7 +38,7 @@
           <condition attribute="objecttypecode" operator="ne" value="10013" />
           <condition attribute="objecttypecode" operator="ne" value="10025" />
         </filter>
-        <link-entity alias="a_637d23e25bb7e811a978000d3ab31f97" name="defra_application" from="defra_applicationid" to="defra_application" link-type="outer" visible="false">
+        <link-entity name="defra_application" from="defra_applicationid" to="defra_application" alias="a_637d23e25bb7e811a978000d3ab31f97">
           <attribute name="defra_applicationtype" />
           <attribute name="statuscode" />
           <attribute name="defra_site_description" />
@@ -47,6 +47,9 @@
           <attribute name="defra_deadline" />
           <attribute name="defra_facility_description" />
           <attribute name="defra_applicationnumber" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="ne" value="1" />
+          </filter>
         </link-entity>
         <attribute name="objectid" />
       </entity>
