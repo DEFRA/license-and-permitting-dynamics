@@ -104,8 +104,10 @@ namespace Defra.Lp.Plugins
                 if (teamleaderid != null && teamleaderid.Id == determinedBy.Id)
                     throw new InvalidPluginExecutionException("The team leader signing off the application cannot be the same as the permitting officer!");
 
-                if (peerReviewer != null && teamleaderid != null && peerReviewer.Id == teamleaderid.Id)
-                    throw new InvalidPluginExecutionException("The team leader signing off the application cannot be the same as the peer reviewer!");
+
+                //commented by Kassim Hassan to implement WE-2476 
+                //if (peerReviewer != null && teamleaderid != null && peerReviewer.Id == teamleaderid.Id)
+                //    throw new InvalidPluginExecutionException("The team leader signing off the application cannot be the same as the peer reviewer!");
             }
         }
     }

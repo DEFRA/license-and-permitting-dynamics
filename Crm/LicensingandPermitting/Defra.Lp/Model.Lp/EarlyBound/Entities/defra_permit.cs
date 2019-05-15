@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_permitState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_permit")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_permit : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -713,26 +713,6 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_permit_defra_permit_lines_permitid");
 				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_permit_lines>("defra_defra_permit_defra_permit_lines_permitid", null, value);
 				this.OnPropertyChanged("defra_defra_permit_defra_permit_lines_permitid");
-			}
-		}
-		
-		/// <summary>
-		/// 1:N defra_permit_Annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_permit_Annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_permit_Annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_permit_Annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_permit_Annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_permit_Annotations", null, value);
-				this.OnPropertyChanged("defra_permit_Annotations");
 			}
 		}
 		

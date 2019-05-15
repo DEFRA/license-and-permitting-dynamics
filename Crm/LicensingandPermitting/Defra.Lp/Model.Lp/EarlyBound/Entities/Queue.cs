@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum QueueState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("queue")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Queue : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -870,6 +870,26 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N defra_defra_businesstrack_emailsender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_defra_businesstrack_emailsender")]
+		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.defra_businesstrack> defra_defra_businesstrack_emailsender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("defra_defra_businesstrack_emailsender", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_defra_businesstrack_emailsender");
+				this.SetRelatedEntities<Lp.Model.EarlyBound.defra_businesstrack>("defra_defra_businesstrack_emailsender", null, value);
+				this.OnPropertyChanged("defra_defra_businesstrack_emailsender");
 			}
 		}
 		
