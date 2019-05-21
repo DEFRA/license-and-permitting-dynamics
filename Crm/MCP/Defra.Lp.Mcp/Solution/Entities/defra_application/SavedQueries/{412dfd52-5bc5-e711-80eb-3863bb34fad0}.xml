@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries>
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{412dfd52-5bc5-e711-80eb-3863bb34fad0}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
+        <row name="result" id="defra_applicationid">
+          <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="ownerid" width="100" />
+          <cell name="defra_determinedbyid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_applicationtype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_facility_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="statuscode" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_penfolddate" width="125" imageproviderfunctionname="Views.DisplayApplicationPendfoldIcon" imageproviderwebresource="$webresource:defra_view_functions" />
+          <cell name="defra_submittedon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+        <entity name="defra_application">
+          <attribute name="defra_penfolddate" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_facility_description" />
+          <attribute name="statuscode" />
+          <attribute name="ownerid" />
+          <order attribute="defra_submittedon" descending="false" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="not-in">
+              <value>910400007</value>
+              <value>910400020</value>
+              <value>910400014</value>
+              <value>2</value>
+              <value>910400013</value>
+            </condition>
+          </filter>
+          <link-entity name="queueitem" from="objectid" to="defra_applicationid" alias="aa">
+            <link-entity name="queue" from="queueid" to="queueid" alias="ab">
+              <link-entity name="queuemembership" from="queueid" to="queueid" visible="false" intersect="true">
+                <link-entity name="systemuser" from="systemuserid" to="systemuserid" alias="ac">
+                  <filter type="and">
+                    <condition attribute="systemuserid" operator="eq-userid" />
+                  </filter>
+                </link-entity>
+              </link-entity>
+            </link-entity>
+          </link-entity>
+          <attribute name="defra_determinedbyid" />
+          <attribute name="defra_submittedon" />
+          <attribute name="defra_applicationid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.1.28.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="My team applications" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

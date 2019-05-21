@@ -1,28 +1,52 @@
 
-//** WE-2431 */
+//** WE-2431 **/
 // ** DRAFT CODE ** Created by Kassim Hassan for Duly made checklist grid
-// ** REVIEWED BY: Stuart Adair
+// ** REVIEWED BY:
 // **********************************************************************
 
 function dulymadeCheckListchanged() {
     var selectedGrid = null;
-    var completedDulyMadeFlag;
-    var values;
+    var completedDulyMadeFlag = true;
+    var arrayItems = [];
 
     try {
         selectedGrid = Xrm.Page.getControl("DulyMadeChecklist").getGrid().getRows();
+        selectedGrid.forEach(function (row) {
+           // att = row.getData().getEntity().attributes.getByName("defra_completed").getValue();
+            arrayItems.push(row);
 
-        // map values into an array
-        values = selectedGrid.map(function (row) {
+        })
+
+        values = arrayItems.map(function (row) {
             return row.getData().getEntity().attributes.getByName("defra_completed").getValue();
         });
 
-        // completedDulyMadeFlag is set as true if every item in values array equals 910400000
-        completedDulyMadeFlag = values.every(function (item) {
+        // completedDulyMadeFlag is set as true if values array isn't empty and every item equals 910400000
+        completedDulyMadeFlag = Boolean(values.length && values.every(function (item) {
             return item === 910400000;
-        });
-        
+        }));
+
         window.parent.Xrm.Page.getAttribute("defra_completeddulymade").setValue(completedDulyMadeFlag);
+
+
+        //     if (att != null && att != 'undefined') {
+        //         if (att != 910400000) {
+        //             completedDulyMadeFlag = false;
+        //         }
+        //     }
+        //     else {
+        //         completedDulyMadeFlag = false;
+        //     }
+        // });
+
+
+
+
+
+
+
+        // window.parent.Xrm.Page.getAttribute("defra_completeddulymade").setValue(completedDulyMadeFlag);
+
 
     } catch (e) {
         Xrm.Utility.alertDialog(e.message);
@@ -38,7 +62,7 @@ function showAlert(message) {
             console.log("alert dialog closed");
         },
         function (error) {
-            console.log(error.message);
+            concole.log(error.message);
         }
     );
 }
