@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{92e006ec-cd56-461d-8028-79b52d0891db}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="subject" select="1" icon="1" preview="1">
+      <row name="result" id="activityid">
+        <cell name="subject" width="300" />
+        <cell name="createdon" width="125" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" mapping="logical">
+      <entity name="defra_notification">
+        <attribute name="activityid" />
+        <attribute name="subject" />
+        <attribute name="createdon" />
+        <order attribute="subject" descending="false" />
+        <filter type="and">
+          <condition attribute="statecode" operator="not-null" />
+        </filter>
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="All Notifications" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
