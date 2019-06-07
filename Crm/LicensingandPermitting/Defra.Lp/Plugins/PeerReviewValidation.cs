@@ -93,8 +93,11 @@ namespace Defra.Lp.Plugins
                     peerReviewer = (EntityReference)target["defra_reviewerid"];
 
                 if (peerReviewer != null && peerReviewer.Id == determinedBy.Id)
+                {
+                    if (determinedBy != null)
+                        tracing.Trace("peerReviewer name is: {0} and determinedBy name is: {1}", peerReviewer.Name, determinedBy.Name);
                     throw new InvalidPluginExecutionException("The peer reviewer cannot be the same as the permitting officer!");
-
+                }
                 EntityReference teamleaderid = null;
                 if (preImage.Attributes.Contains("defra_permittingteamleaderid"))
                     teamleaderid = (EntityReference)preImage.Attributes["defra_permittingteamleaderid"];
@@ -102,8 +105,11 @@ namespace Defra.Lp.Plugins
                     teamleaderid = (EntityReference)target["defra_permittingteamleaderid"];
 
                 if (teamleaderid != null && teamleaderid.Id == determinedBy.Id)
+                {
+                    if (determinedBy != null)
+                        tracing.Trace("TeamLeader Name is: {0} and determinedByName is: {1}", teamleaderid.Name, determinedBy.Name);
                     throw new InvalidPluginExecutionException("The team leader signing off the application cannot be the same as the permitting officer!");
-
+                }
 
                 //commented by Kassim Hassan to implement WE-2476 
                 //if (peerReviewer != null && teamleaderid != null && peerReviewer.Id == teamleaderid.Id)
