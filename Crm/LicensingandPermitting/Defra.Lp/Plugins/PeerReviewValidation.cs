@@ -94,6 +94,7 @@ namespace Defra.Lp.Plugins
 
                 if (peerReviewer != null && peerReviewer.Id == determinedBy.Id)
                 {
+
                     tracing.Trace(string.Format("peerReviewer: {0} - determinedBy: {1}", peerReviewer.Name, determinedBy.Name));
                     throw new InvalidPluginExecutionException("The peer reviewer cannot be the same as the permitting officer!");
                 }
@@ -105,6 +106,7 @@ namespace Defra.Lp.Plugins
 
                 if (teamleaderid != null && teamleaderid.Id == determinedBy.Id)
                 {
+
                     tracing.Trace(string.Format("peerReviewer: {0} - determinedBy: {1}", peerReviewer.Name, determinedBy.Name));
                     throw new InvalidPluginExecutionException("The team leader signing off the application cannot be the same as the permitting officer!");
                 }
