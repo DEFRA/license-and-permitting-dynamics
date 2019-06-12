@@ -113,6 +113,7 @@
             List<Guid> retVal = null;
             if (entityCollectionResult?.Entities != null)
             {
+                TracingService.Trace(string.Format("entityCollectionResult.count: {0}", entityCollectionResult.Entities.Count.ToString()));
                 TracingService.Trace("GetTaskDefinitionIdsThatApplyToApplication() Returning data");
                 retVal = entityCollectionResult.Entities
                     .Select(e => e.GetAttributeIdOrDefault(defra_applicationtaskdefinition.Fields
