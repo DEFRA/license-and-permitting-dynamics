@@ -1,16 +1,16 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Microsoft Dynamics 365 Developer Toolkit")]
-[assembly: AssemblyDescription("Dynamics 365 Developer Toolkit for Visual Studio")]
+[assembly: AssemblyTitle("FakeXrmEasy")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Microsoft Dynamics© CRM")]
-[assembly: AssemblyCopyright("© 2015 Microsoft Corporation. All rights reserved")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("FakeXrmEasy")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b208e824-b4b1-439d-b17a-7e58b21098ad")]
+[assembly: Guid("8814c991-8196-4583-980c-288c88af8aa3")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyVersion("1.1.53.17")]
-[assembly: AssemblyFileVersion("1.1.53.17")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
