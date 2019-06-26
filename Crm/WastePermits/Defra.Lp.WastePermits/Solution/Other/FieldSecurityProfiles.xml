@@ -3,6 +3,13 @@
   <FieldSecurityProfile name="FLS Read Only" fieldsecurityprofileid="{1d567fc8-3fce-e711-80ea-3863bb357f98}">
     <FieldPermissions>
       <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_permittingteamleadersignoff</AttributeName>
         <CanRead>4</CanRead>
@@ -56,6 +63,13 @@
   <FieldSecurityProfile name="RAGU Intelligence Team" fieldsecurityprofileid="{ed80d215-3bce-e711-80ea-3863bb357f98}">
     <FieldPermissions>
       <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_raguscore</AttributeName>
         <CanRead>4</CanRead>
@@ -78,8 +92,40 @@
       </FieldPermission>
     </FieldPermissions>
   </FieldSecurityProfile>
+  <FieldSecurityProfile name="Senior Permitting Officer Sign Off" fieldsecurityprofileid="{82f7f95f-ba2d-e811-a951-000d3a206976}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>incident</EntityName>
+        <AttributeName>defra_peerreviewstatus</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>incident</EntityName>
+        <AttributeName>defra_peerreviewrejectionnotes</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
   <FieldSecurityProfile name="Team Leader Sign Off" fieldsecurityprofileid="{e2efe565-19d5-e711-80ea-1458d043c6c0}">
     <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_permittingteamleadersignoff</AttributeName>
@@ -90,6 +136,17 @@
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_locationscreeningrequired</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="Write-Off Full Access Field Security" description="Locks finance specific fields" fieldsecurityprofileid="{dc96c935-142d-e811-a957-000d3a23443b}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>team</EntityName>
+        <AttributeName>defra_maximum_writeoff_allowed</AttributeName>
         <CanRead>4</CanRead>
         <CanUpdate>4</CanUpdate>
         <CanCreate>4</CanCreate>
