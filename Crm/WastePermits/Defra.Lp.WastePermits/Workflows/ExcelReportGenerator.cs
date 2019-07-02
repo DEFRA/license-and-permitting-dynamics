@@ -57,10 +57,7 @@ namespace Defra.Lp.WastePermits.Workflows
         [Input("ReportName")]
         [ReferenceTarget("email")]
         public InArgument<string> ReportName { get; set; }
-
-        [Output("Word Count")]
-        public OutArgument<int> CountOfWords { get; set; }
-
+        
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext executionContext, LocalWorkflowContext crmWorkflowContext)
         {                 
 
@@ -71,16 +68,16 @@ namespace Defra.Lp.WastePermits.Workflows
 
 	        try
 	        {
-                // TODO: Implement your custom activity handling.
+                #region Create tracing and organisation service objects
                 ITracingService tracingService = executionContext.GetExtension<ITracingService>();
                 IOrganizationService organisationService = crmWorkflowContext.OrganizationService;
                 tracingService.Trace("Started ExcelReportGenerator...");
+                #endregion
 
-                #region Export to excel code
-                var exportToExcelRequest = new OrganizationRequest("ExportToExcel");
-                exportToExcelRequest.Parameters = new ParameterCollection();
-                tracingService.Trace("Set FetchXML to retrieve Layout and AdvancedFind...");
+                #region Generate excel report email attachment code
+
                 #region retrieve FetchXML and LayoutXML
+                tracingService.Trace("Set FetchXML to retrieve Layout and AdvancedFind...");
                 string fetch = @"<fetch>
                                     <entity name='annotation'>
                                     <attribute name='subject' />
@@ -109,11 +106,12 @@ namespace Defra.Lp.WastePermits.Workflows
                 tracingService.Trace("FetchXML executed, number records found:{0}", fetchXMLs.Entities.Count.ToString());
                 #endregion
 
+                #region dynamics parameters required from Scheduler entity record
                 string fetchApplications = string.Empty;
                 string layoutApplications = string.Empty;
                 string advancedFindGUID = string.Empty;
 
-                if (fetchXMLs.Entities.Count > 0)
+                if (fetchXMLs.Entities.Count == 3)
                 {
                     foreach (var f in fetchXMLs.Entities)
                     {
@@ -139,22 +137,25 @@ namespace Defra.Lp.WastePermits.Workflows
                     }
                 }
                 else
+                {
+                    tracingService.Trace("Dynamic parameter(s) required are not found...");
                     return;
-                //Has to be a savedquery aka "System View" or userquery aka "Saved View"
-                //The view has to exist, otherwise will error out
-                //Guid of the view has to be passed
+                }
+                #endregion
+
+                #region if all 3 paramters are found then execute Export to excel request
+                //Advanced Find view (Saved query) is a must, it should exist on the target environmnet where the workflow runs
                 if (!string.IsNullOrEmpty(fetchApplications) && !string.IsNullOrEmpty(layoutApplications) && !string.IsNullOrEmpty(advancedFindGUID))
                 {
                     tracingService.Trace("All 3 parameters found...");
-                    exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("View",
-                        new EntityReference("userquery", new Guid(advancedFindGUID))));
+                    var exportToExcelRequest = new OrganizationRequest("ExportToExcel");
+                    exportToExcelRequest.Parameters = new ParameterCollection();
+                    exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("View", new EntityReference("userquery", new Guid(advancedFindGUID))));
 
                     //fetchXML for the report excel
                     exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("FetchXml", fetchApplications));
-
                     //LayoutXML for the report excel
                     exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("LayoutXml", layoutApplications));
-
                     //need these params to keep org service happy
                     exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("QueryApi", ""));
                     exportToExcelRequest.Parameters.Add(new KeyValuePair<string, object>("QueryParameters", new InputArgumentCollection()));
@@ -162,6 +163,8 @@ namespace Defra.Lp.WastePermits.Workflows
                     tracingService.Trace("All parameters for exporttoexcelrequest are set...");
                     var exportToExcelResponse = organisationService.Execute(exportToExcelRequest);
                     tracingService.Trace("exporttoexcelrequest executed successfully...");
+                    
+                    //create email attachment if resultset contains data
                     if (exportToExcelResponse.Results.Any())
                     {
                         tracingService.Trace("exporttoexcelresponse contains results...");
@@ -186,14 +189,14 @@ namespace Defra.Lp.WastePermits.Workflows
                     return;
                 }
                 #endregion
+
+                #endregion
             }
 	        catch (FaultException<OrganizationServiceFault> e)
             {                
                 throw new FaultException("Exception occurred in ExcelReportGenerator execution. Error details: " + e.Message);
             }	  
         }
-         
-
     }
 
 }
