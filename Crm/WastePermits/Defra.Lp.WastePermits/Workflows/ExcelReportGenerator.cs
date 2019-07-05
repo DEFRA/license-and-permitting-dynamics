@@ -74,33 +74,28 @@ namespace Defra.Lp.WastePermits.Workflows
                 #region retrieve FetchXML, Column names and Schema names for CSV file
                 tracingService.Trace("Retrieve FetchXML, Column names and Schema names.....");
                 string fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-                                              <entity name='annotation'>
-                                                <attribute name='subject' />
-                                                <attribute name='notetext' />
-                                                <attribute name='filename' />
-                                                <attribute name='annotationid' />
-                                                <attribute name='isdocument' />
-                                                <attribute name='documentbody' />
-                                                <order attribute='subject' descending='false' />
-                                                <filter type='and'>
-                                                  <filter type='or'>
-                                                    <condition attribute='subject' operator='eq' value='ColumnNames' />
-                                                    <condition attribute='subject' operator='eq' value='SchemaNames' />
-                                                    <condition attribute='subject' operator='eq' value='FetchXML' />
-                                                  </filter>
-                                                </filter>
-                                                <link-entity name='defra_scheduledprocess' from='defra_scheduledprocessid' to='objectid' link-type='inner' alias='ae'>
-                                                  <filter type='and'>
-                                                    <condition attribute='defra_name' operator='like' value='%Application report%' />
-                                                  </filter>
-                                                </link-entity>
-                                              </entity>
-                                            </fetch>";
-
+                                  <entity name='annotation'>
+                                    <attribute name='subject' />
+                                    <attribute name='notetext' />
+                                    <attribute name='filename' />
+                                    <attribute name='annotationid' />
+                                    <attribute name='documentbody' /> 
+                                   <attribute name='isdocument' />
+                                    <order attribute='subject' descending='false' />
+                                    <link-entity name='defra_scheduledprocess' from='defra_scheduledprocessid' to='objectid' link-type='inner' alias='ab'>
+                                      <filter type='and'>
+                                        <condition attribute='defra_name' operator='like' value='%" + ReportName.Get<string>(executionContext) + @"%' />
+                                      </filter>
+                                    </link-entity>
+                                  </entity>
+                                </fetch>";
+                tracingService.Trace("FetchXML --> " + fetch);
                 EntityCollection fetchXMLs = organisationService.RetrieveMultiple(new FetchExpression(fetch));
                 #endregion
 
                 #region initialise and update fetchXML, Columna names and schema names
+                tracingService.Trace("Initialise FetchXML, Column names and Schema names.....");
+                tracingService.Trace("no of notes retrieved -->" + fetchXMLs.Entities.Count);
                 string fetchApplications = string.Empty;
                 string SchemaNames = string.Empty;
                 string ColumnNames = string.Empty;
@@ -114,7 +109,9 @@ namespace Defra.Lp.WastePermits.Workflows
                         {
                             byte[] fil = Convert.FromBase64String(f.Attributes["documentbody"].ToString());
                             //Converting to String
+
                             fetchApplications = System.Text.Encoding.UTF8.GetString(fil);
+                            tracingService.Trace("FetchXML --> " + fetchApplications);
                         }
                         else if ((f.Attributes["subject"]).ToString().Equals("SchemaNames"))
                         {
@@ -126,6 +123,11 @@ namespace Defra.Lp.WastePermits.Workflows
                             ColumnNames = f.Attributes["notetext"].ToString();
                         }
                     }
+                }
+                else
+                {
+                    tracingService.Trace("No annotations found exit.....");
+                    return;
                 }
                 #endregion
 
@@ -155,7 +157,7 @@ namespace Defra.Lp.WastePermits.Workflows
                                             columnText = ((EntityReference)appCol.Value).Name;
                                             break;
                                         case "DateTime":
-                                            columnText = ((DateTime)appCol.Value).ToShortDateString();
+                                            columnText = ((DateTime)appCol.Value).ToLocalTime().ToShortDateString();
                                             break;
                                         case "OptionSetValue":
                                             columnText = app.FormattedValues[appCol.Key];
@@ -173,7 +175,7 @@ namespace Defra.Lp.WastePermits.Workflows
                                                     columnText = ((EntityReference)((AliasedValue)appCol.Value).Value).Name;
                                                     break;
                                                 case "DateTime":
-                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToShortDateString();
+                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToLocalTime().ToShortDateString();
                                                     break;
                                                 case "Boolean":
                                                     if ((bool)((AliasedValue)appCol.Value).Value)
@@ -199,12 +201,13 @@ namespace Defra.Lp.WastePermits.Workflows
 
                 #region create email attachment
                     tracingService.Trace("Flushing stringbuilder contents to a csv file email attachment...");
+                    tracingService.Trace("InArgument email ID --> " + SourceEmail.Get<EntityReference>(executionContext).Id.ToString());
                     Entity emailAttachment = new Entity("activitymimeattachment");
-                    emailAttachment["subject"] = ReportName;
+                    emailAttachment["subject"] = ReportName.Get<string>(executionContext);
                     emailAttachment["objectid"] = SourceEmail.Get<EntityReference>(executionContext);
                     emailAttachment["objecttypecode"] = "email";
                     emailAttachment["body"] = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(sb.ToString()));
-                    emailAttachment["filename"] = ReportName + ".csv";
+                    emailAttachment["filename"] = ReportName.Get<string>(executionContext) + ".csv";
                     Guid emailID = organisationService.Create(emailAttachment);
                     tracingService.Trace("Email attachment with report created...");
                     //byte[] buffer = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
