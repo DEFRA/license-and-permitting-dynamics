@@ -19,13 +19,7 @@
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
           <Variable x:TypeArguments="x:Boolean" Default="False" Name="WaitTimeoutStep3_condition" />
           <Variable x:TypeArguments="x:Object" Default="[System.DateTime.MinValue]" Name="WaitTimeoutStep3_1" />
-          <Variable x:TypeArguments="mxsw:XrmTimeSpan" Name="WaitTimeoutStep3_2">
-            <Variable.Default>
-              <Literal x:TypeArguments="mxsw:XrmTimeSpan">
-                <mxsw:XrmTimeSpan Days="1" Hours="0" Minutes="0" Months="0" Years="0" />
-              </Literal>
-            </Variable.Default>
-          </Variable>
+          <Variable x:TypeArguments="x:Object" Name="WaitTimeoutStep3_2" />
         </sco:Collection>
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
@@ -36,7 +30,15 @@
               <OutArgument x:TypeArguments="x:Object" x:Key="Result">[WaitTimeoutStep3_1]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
-          <Assign x:TypeArguments="x:Boolean" To="[WaitTimeoutStep3_condition]" Value="[DateTime.UtcNow &gt;= WaitTimeoutStep3_2.Add(DirectCast(WaitTimeoutStep3_1, System.DateTime).ToUniversalTime())]" />
+          <mxswa:GetEntityProperty Attribute="defra_nextrundate" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_scheduledprocess" Value="[WaitTimeoutStep3_2]">
+            <mxswa:GetEntityProperty.TargetType>
+              <InArgument x:TypeArguments="s:Type">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+              </InArgument>
+            </mxswa:GetEntityProperty.TargetType>
+          </mxswa:GetEntityProperty>
+          <Assign x:TypeArguments="x:Object" To="[WaitTimeoutStep3_2]" Value="[Microsoft.VisualBasic.IIf(Microsoft.VisualBasic.IsNothing(WaitTimeoutStep3_2), DateTime.MaxValue, WaitTimeoutStep3_2)]" />
+          <Assign x:TypeArguments="x:Boolean" To="[WaitTimeoutStep3_condition]" Value="[DateTime.UtcNow &gt;= DirectCast(WaitTimeoutStep3_2, System.DateTime).ToUniversalTime()]" />
           <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="WaitTimeoutStep3">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">[WaitTimeoutStep3_condition]</InArgument>
@@ -220,7 +222,7 @@
                   </sco:Collection>
                 </mxswa:ActivityReference.Properties>
               </mxswa:ActivityReference>
-              <mxswa:Postpone x:Key="Else" BlockExecution="False" PostponeUntil="[WaitTimeoutStep3_2.Add(DateTime.UtcNow)]" />
+              <mxswa:Postpone x:Key="Else" BlockExecution="False" PostponeUntil="[DirectCast(WaitTimeoutStep3_2, System.DateTime)]" />
               <x:Null x:Key="Description" />
             </mxswa:ActivityReference.Properties>
           </mxswa:ActivityReference>
