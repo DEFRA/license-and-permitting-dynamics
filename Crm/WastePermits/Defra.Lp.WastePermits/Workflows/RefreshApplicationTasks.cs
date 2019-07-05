@@ -82,7 +82,7 @@ namespace Defra.Lp.WastePermits.Workflows
 
             ITracingService tracingService = executionContext.GetExtension<ITracingService>();
             IOrganizationService organisationService = crmWorkflowContext.OrganizationService;
-            tracingService.Trace("Started");
+            tracingService.Trace("Started dsd");
 
             // Validation
             EntityReference application = Application.Get(executionContext);
