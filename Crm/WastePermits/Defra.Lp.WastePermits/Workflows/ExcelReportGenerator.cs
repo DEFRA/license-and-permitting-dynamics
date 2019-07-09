@@ -159,7 +159,7 @@ namespace Defra.Lp.WastePermits.Workflows
                                                 columnText = columnText.Replace(",", ";");
                                             break;
                                         case "DateTime":
-                                            columnText = ((DateTime)appCol.Value).ToLocalTime().ToShortDateString();
+                                            columnText = ((DateTime)appCol.Value).ToString("dd-MM-yyyy");
                                             break;
                                         case "OptionSetValue":
                                             columnText = app.FormattedValues[appCol.Key];
@@ -179,7 +179,7 @@ namespace Defra.Lp.WastePermits.Workflows
                                                         columnText = columnText.Replace(",", ";");
                                                     break;
                                                 case "DateTime":
-                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToLocalTime().ToShortDateString();
+                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToString("dd-MM-yyyy");
                                                     break;
                                                 case "Boolean":
                                                     if ((bool)((AliasedValue)appCol.Value).Value)
