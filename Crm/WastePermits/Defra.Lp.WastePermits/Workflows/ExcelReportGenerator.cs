@@ -155,9 +155,11 @@ namespace Defra.Lp.WastePermits.Workflows
                                     {
                                         case "EntityReference":
                                             columnText = ((EntityReference)appCol.Value).Name;
+                                            if (string.IsNullOrEmpty(columnText))
+                                                columnText = columnText.Replace(",", ";");
                                             break;
                                         case "DateTime":
-                                            columnText = ((DateTime)appCol.Value).ToLocalTime().ToShortDateString();
+                                            columnText = ((DateTime)appCol.Value).ToString("dd-MM-yyyy");
                                             break;
                                         case "OptionSetValue":
                                             columnText = app.FormattedValues[appCol.Key];
@@ -173,9 +175,11 @@ namespace Defra.Lp.WastePermits.Workflows
                                             {
                                                 case "EntityReference":
                                                     columnText = ((EntityReference)((AliasedValue)appCol.Value).Value).Name;
+                                                    if (string.IsNullOrEmpty(columnText))
+                                                        columnText = columnText.Replace(",", ";");
                                                     break;
                                                 case "DateTime":
-                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToLocalTime().ToShortDateString();
+                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToString("dd-MM-yyyy");
                                                     break;
                                                 case "Boolean":
                                                     if ((bool)((AliasedValue)appCol.Value).Value)
@@ -186,7 +190,7 @@ namespace Defra.Lp.WastePermits.Workflows
                                             }
                                             break;
                                         default:
-                                            columnText = appCol.Value.ToString();
+                                            columnText = appCol.Value.ToString().Replace(",",";");
                                             break;
                                     }
                                     break;
