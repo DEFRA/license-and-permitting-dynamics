@@ -149,52 +149,57 @@ namespace Defra.Lp.WastePermits.Workflows
                             string columnText = "";
                             foreach (var appCol in app.Attributes)
                             {
-                                if (col.Equals(appCol.Key))
+                                #region check not null
+                                if (appCol.Value != null)
                                 {
-                                    switch (appCol.Value.GetType().Name)
+                                    if (col.Equals(appCol.Key))
                                     {
-                                        case "EntityReference":
-                                            columnText = ((EntityReference)appCol.Value).Name;
-                                            if (string.IsNullOrEmpty(columnText))
-                                                columnText = columnText.Replace(",", ";");
-                                            break;
-                                        case "DateTime":
-                                            columnText = ((DateTime)appCol.Value).ToString("dd-MM-yyyy");
-                                            break;
-                                        case "OptionSetValue":
-                                            columnText = app.FormattedValues[appCol.Key];
-                                            break;
-                                        case "Boolean":
-                                            if ((bool)appCol.Value)
-                                                columnText = "Yes";
-                                            else
-                                                columnText = "No";
-                                            break;
-                                        case "AliasedValue":
-                                            switch (((AliasedValue)appCol.Value).Value.GetType().Name)
-                                            {
-                                                case "EntityReference":
-                                                    columnText = ((EntityReference)((AliasedValue)appCol.Value).Value).Name;
-                                                    if (string.IsNullOrEmpty(columnText))
-                                                        columnText = columnText.Replace(",", ";");
-                                                    break;
-                                                case "DateTime":
-                                                    columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToString("dd-MM-yyyy");
-                                                    break;
-                                                case "Boolean":
-                                                    if ((bool)((AliasedValue)appCol.Value).Value)
-                                                        columnText = "Yes";
-                                                    else
-                                                        columnText = "No";
-                                                    break;
-                                            }
-                                            break;
-                                        default:
-                                            columnText = appCol.Value.ToString().Replace(",",";");
-                                            break;
+                                        switch (appCol.Value.GetType().Name)
+                                        {
+                                            case "EntityReference":
+                                                columnText = ((EntityReference)appCol.Value).Name;
+                                                if (!string.IsNullOrEmpty(columnText))
+                                                    columnText = columnText.Replace(",", ";");
+                                                break;
+                                            case "DateTime":
+                                                columnText = ((DateTime)appCol.Value).ToString("dd-MM-yyyy");
+                                                break;
+                                            case "OptionSetValue":
+                                                columnText = app.FormattedValues[appCol.Key];
+                                                break;
+                                            case "Boolean":
+                                                if ((bool)appCol.Value)
+                                                    columnText = "Yes";
+                                                else
+                                                    columnText = "No";
+                                                break;
+                                            case "AliasedValue":
+                                                switch (((AliasedValue)appCol.Value).Value.GetType().Name)
+                                                {
+                                                    case "EntityReference":
+                                                        columnText = ((EntityReference)((AliasedValue)appCol.Value).Value).Name;
+                                                        if (!string.IsNullOrEmpty(columnText))
+                                                            columnText = columnText.Replace(",", ";");
+                                                        break;
+                                                    case "DateTime":
+                                                        columnText = ((DateTime)((AliasedValue)appCol.Value).Value).ToString("dd-MM-yyyy");
+                                                        break;
+                                                    case "Boolean":
+                                                        if ((bool)((AliasedValue)appCol.Value).Value)
+                                                            columnText = "Yes";
+                                                        else
+                                                            columnText = "No";
+                                                        break;
+                                                }
+                                                break;
+                                            default:
+                                                columnText = appCol.Value.ToString().Replace(",", ";");
+                                                break;
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
+                                #endregion
                             }
                             CsvRow.Add(columnText);
                         }
