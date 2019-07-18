@@ -217,5 +217,32 @@ namespace FakeXrmEasyTestProject
 
         }
 
+        [TestMethod]
+        public void Test_For_notYPE_Operator_Name_Publicbodyaddress()
+        {
+
+            var context = new XrmRealContext
+            {
+                ProxyTypesAssembly = typeof(GetAddressBasedOnOperatorType).Assembly,
+                ConnectionStringName = "CRMOnline"
+            };
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var executionContext = context.GetDefaultWorkflowContext();
+
+            //Inputs
+            var inputs = new Dictionary<string, object>();
+
+
+            var partnerId = Guid.Parse("CEA2C51C-B8A7-E911-AA0A-000D3A2065C5");
+            var mainApp = new Entity("defra_application", partnerId);
+
+            var result = context.ExecuteCodeActivity<GetAddressBasedOnOperatorType>
+    (mainApp, inputs);
+
+
+        }
+
+        
+
     }
 }

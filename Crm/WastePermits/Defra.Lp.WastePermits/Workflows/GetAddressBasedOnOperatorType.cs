@@ -196,16 +196,18 @@ namespace Defra.Lp.WastePermits.Workflows
         {
           
             var res = string.Empty;
-            
+
+            if (appEnt.Contains(defra_application.Fields.defra_customerid))
+            {
                 var op = (EntityReference)appEnt[defra_application.Fields.defra_customerid];
 
                 if (op.LogicalName == Account.EntityLogicalName)
-                    res= op.Name;
+                    res = op.Name;
 
                 else if (op.LogicalName == Contact.EntityLogicalName)
-                    res= op.Name;
+                    res = op.Name;
 
-            
+            }
 
             return res;
 
