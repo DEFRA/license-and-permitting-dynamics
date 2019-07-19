@@ -49,6 +49,10 @@ namespace Defra.Lp.WastePermits.Workflows
         [ReferenceTarget("defra_address")]
         public OutArgument<EntityReference> GetLocationDetailAddress { get; set; }
 
+        [Output("defra_address")]
+        [ReferenceTarget("defra_address")]
+        public OutArgument<EntityReference> GetContactDetailAddress { get; set; }
+
 
         #endregion
 
