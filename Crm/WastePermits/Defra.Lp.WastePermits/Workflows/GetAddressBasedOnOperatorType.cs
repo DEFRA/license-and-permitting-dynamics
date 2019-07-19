@@ -31,10 +31,7 @@ namespace Defra.Lp.WastePermits.Workflows
     /// </summary>    
     public class GetAddressBasedOnOperatorType: WorkFlowActivityBase
     {
-         
-
-        [Output("PermitHolder Name")]
-        public OutArgument<string> GetPermitHolderName { get; set; }
+       
 
         [Output("PermitHolder Address")]
         [ReferenceTarget(defra_address.EntityLogicalName)]
@@ -61,8 +58,11 @@ namespace Defra.Lp.WastePermits.Workflows
         /// </remarks>
         public override void ExecuteCRMWorkFlowActivity(CodeActivityContext executionContext, LocalWorkflowContext crmWorkflowContext)
         {
+            var tracingService = executionContext.GetExtension<ITracingService>();
 
-           // defra_addressdetails 
+            tracingService.Trace("Inside GetAddressBasedOnOperatorType CWA");
+
+            // defra_addressdetails 
             if (crmWorkflowContext == null)
             {
                 throw new ArgumentNullException("crmWorkflowContext");
@@ -72,14 +72,10 @@ namespace Defra.Lp.WastePermits.Workflows
 
             var service = crmWorkflowContext.OrganizationService;
             var context = crmWorkflowContext.WorkflowExecutionContext;
-            
+
             var appId = crmWorkflowContext.WorkflowExecutionContext.PrimaryEntityId;
             var appEnt = service.Retrieve(defra_application.EntityLogicalName, appId, new Microsoft.Xrm.Sdk.Query.ColumnSet(defra_application.Fields.defra_customerid,defra_application.Fields.defra_applicant_organisation_type));
-            //var oppType = GetOperatorType.Get(executionContext).Value;
-
-            var opName = GetOperatorName(appEnt, service);
-           
-
+          
             OptionSetValue opType = null;
             if (appEnt.Contains(defra_application.Fields.defra_applicant_organisation_type))
                     opType = (OptionSetValue)appEnt[defra_application.Fields.defra_applicant_organisation_type];
@@ -89,28 +85,22 @@ namespace Defra.Lp.WastePermits.Workflows
                            <attribute name='defra_addressid' />
                             <link-entity name='defra_addressdetails' from='defra_address' to='defra_addressid' link-type='inner' alias='am'>
                             <filter type='and'>
-                                    <condition attribute='defra_addresstype' operator='eq' value='910400005' />
+                                    <condition attribute='defra_addresstype' operator='eq' value='"+ (int)defra_organisation_type.Limitedliabilitypartnership + @"' />
                               </filter>
                               <link-entity name='account' from='accountid' to='defra_customer' link-type='inner' alias='an'>
                                 <link-entity name='defra_application' from='defra_customerid' to='accountid' link-type='inner' alias='ao'>
                                   <filter type='and'>
-                                    <condition attribute='defra_applicationid' operator='eq' uiname='EPR/WE6512MF/A001' uitype='defra_application' value='{" + appId.ToString()+@"}' />
+                                    <condition attribute='defra_applicationid' operator='eq'  uitype='defra_application' value='{" + appId.ToString()+@"}' />
                                   </filter>
                                 </link-entity>
                               </link-entity>
                             </link-entity>
                           </entity>
                         </fetch>";
-            
-
-
-
-
-
-            
 
             if (opType != null)
             {
+                tracingService.Trace("Operator Type is {0}", (defra_organisation_type)opType.Value);
                 switch (opType.Value)
                 {
                     case (int)defra_organisation_type.Limitedcompany:
@@ -140,8 +130,8 @@ namespace Defra.Lp.WastePermits.Workflows
                         }
                     case (int)defra_organisation_type.Otherorganisationforexampleacluborassociation:
                         {
-                            var emailA = "";
-                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Postholder, service, out emailA);
+                           
+                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Postholder, service);
                             if (addRef != null)
                                 addressResult = new EntityReference(defra_address.EntityLogicalName, addRef.Id);
                             contactAddressResult = GetContactDetailGivenAppAndType(appId, (int)defra_AddressType.Postholder, service) ?? contactAddressResult;
@@ -149,8 +139,8 @@ namespace Defra.Lp.WastePermits.Workflows
                         }
                     case (int)defra_organisation_type.Partnership:
                         {
-                            var emailA = "";
-                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Partner, service, out emailA);
+                           
+                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Partner, service);
                             if(addRef!=null)
                                  addressResult = new EntityReference(defra_address.EntityLogicalName, addRef.Id);
                             contactAddressResult = GetContactDetailGivenAppAndType(appId, (int)defra_AddressType.Partner, service) ?? contactAddressResult;
@@ -159,8 +149,8 @@ namespace Defra.Lp.WastePermits.Workflows
                     case (int)defra_organisation_type.Registeredcharity:
                         {
                             contactAddressResult = GetContactDetailGivenAppAndType(appId, (int)defra_AddressType.Responsibleofficer, service) ?? contactAddressResult;
-                            var emailA="";
-                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Publicbodyaddress, service, out emailA);
+                          
+                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Publicbodyaddress, service);
                             if (addRef != null)
                                 addressResult = new EntityReference(defra_address.EntityLogicalName, addRef.Id);
 
@@ -168,8 +158,8 @@ namespace Defra.Lp.WastePermits.Workflows
                         }
                     case (int)defra_organisation_type.Soletrader:
                         {
-                            var emailA = "";
-                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service, out emailA);
+                           
+                            var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service);
                             if (addRef != null)
                                 addressResult = new EntityReference(defra_address.EntityLogicalName, addRef.Id);
                             contactAddressResult = GetContactDetailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service) ?? contactAddressResult;
@@ -179,37 +169,21 @@ namespace Defra.Lp.WastePermits.Workflows
             }
             else
             {
-                var emailA = "";
-                var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service, out emailA);
+
+                tracingService.Trace("Operator Type is NULL");
+               
+                var addRef = GetAddressAndEmailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service);
                 if (addRef != null)
                     addressResult = new EntityReference(defra_address.EntityLogicalName, addRef.Id);
                 contactAddressResult = GetContactDetailGivenAppAndType(appId, (int)defra_AddressType.Individualorsoletrader, service) ?? contactAddressResult;
             }
 
-            GetPermitHolderName.Set(executionContext, opName);
+            tracingService.Trace("Try to set the output parameters");
+
             GetPermitHolderAddress.Set(executionContext, addressResult);
             GetPermitHolderAddressDetail.Set(executionContext, contactAddressResult);
 
-        }
-
-        private string GetOperatorName(Entity appEnt, IOrganizationService service)
-        {
-          
-            var res = string.Empty;
-
-            if (appEnt.Contains(defra_application.Fields.defra_customerid))
-            {
-                var op = (EntityReference)appEnt[defra_application.Fields.defra_customerid];
-
-                if (op.LogicalName == Account.EntityLogicalName)
-                    res = op.Name;
-
-                else if (op.LogicalName == Contact.EntityLogicalName)
-                    res = op.Name;
-
-            }
-
-            return res;
+            tracingService.Trace("Done");
 
         }
 
@@ -234,15 +208,12 @@ namespace Defra.Lp.WastePermits.Workflows
             if (resEnt != null&& resEnt.Contains("defra_address"))
                 res = new EntityReference(defra_address.EntityLogicalName,((EntityReference)resEnt["defra_address"]).Id);
             return res;
-          
-
-
 
         }
 
-        private EntityReference GetAddressAndEmailGivenAppAndType(Guid appId, int aType, IOrganizationService service, out string email)
+        private EntityReference GetAddressAndEmailGivenAppAndType(Guid appId, int aType, IOrganizationService service)
         {
-            email = "";
+            
             EntityReference res = null;
             var f = @"<fetch >
                       <entity name='defra_addressdetails'>
@@ -261,14 +232,7 @@ namespace Defra.Lp.WastePermits.Workflows
             var resEnt = service.RetrieveMultiple(new FetchExpression(f)).Entities.FirstOrDefault();
             if (resEnt != null && resEnt.Contains("defra_address"))
                 res = new EntityReference(defra_address.EntityLogicalName, ((EntityReference)resEnt["defra_address"]).Id);
-            if (resEnt != null && resEnt.Contains(defra_addressdetails.Fields.EmailAddress))
-                email = resEnt[defra_addressdetails.Fields.EmailAddress].ToString();
-
-                
             return res;
-
-
-
 
         }
 
@@ -289,9 +253,7 @@ namespace Defra.Lp.WastePermits.Workflows
             if (resEnt != null)
                 res = new EntityReference(defra_addressdetails.EntityLogicalName, resEnt.Id);
             return res;
-
         }
-
 
     }
 
