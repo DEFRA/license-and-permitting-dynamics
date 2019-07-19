@@ -12,7 +12,6 @@
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <mxswa:Workflow>
     <mxswa:Workflow.Variables>
-      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="CustomActivityStep12GetPermitHolderName_localParameter" />
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep12GetPermitHolderAddress_localParameter" />
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep12GetPermitHolderAddressDetail_localParameter" />
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep2GetLocationDetail_localParameter" />
@@ -24,7 +23,6 @@
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
           <mxswa:ActivityReference AssemblyQualifiedName="Defra.Lp.WastePermits.Workflows.GetAddressBasedOnOperatorType, Defra.Lp.WastePermits.Workflows, Version=1.1.53.17, Culture=neutral, PublicKeyToken=db7936729d303436" DisplayName="CustomActivityStep12">
             <mxswa:ActivityReference.Arguments>
-              <OutArgument x:TypeArguments="x:String" x:Key="GetPermitHolderName">[CustomActivityStep12GetPermitHolderName_localParameter]</OutArgument>
               <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="GetPermitHolderAddress">[CustomActivityStep12GetPermitHolderAddress_localParameter]</OutArgument>
               <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="GetPermitHolderAddressDetail">[CustomActivityStep12GetPermitHolderAddressDetail_localParameter]</OutArgument>
             </mxswa:ActivityReference.Arguments>
@@ -235,6 +233,9 @@
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_101" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_102" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_103" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_104" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_105" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_106" />
       </Sequence.Variables>
       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_fmesupport&quot;)]" />
       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
@@ -1351,7 +1352,7 @@
           </InArgument>
         </mxswa:SetEntityProperty.TargetType>
       </mxswa:SetEntityProperty>
-      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CreateStep1_101]">
+      <mxswa:GetEntityProperty Attribute="defra_street" Entity="[CreatedEntities(&quot;CustomActivityStep12GetPermitHolderAddress_entity&quot;)]" EntityName="defra_address" Value="[CreateStep1_101]">
         <mxswa:GetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1378,7 +1379,41 @@
           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_100]</OutArgument>
         </mxswa:ActivityReference.Arguments>
       </mxswa:ActivityReference>
-      <mxswa:SetEntityProperty Attribute="defra_submittedon" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_100]">
+      <mxswa:SetEntityProperty Attribute="defra_street" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_100]">
+        <mxswa:SetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+        </mxswa:SetEntityProperty.TargetType>
+      </mxswa:SetEntityProperty>
+      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CreateStep1_104]">
+        <mxswa:GetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+        </mxswa:GetEntityProperty.TargetType>
+      </mxswa:GetEntityProperty>
+      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+        <mxswa:ActivityReference.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "NULL", "String" }]</InArgument>
+          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_105]</OutArgument>
+        </mxswa:ActivityReference.Arguments>
+      </mxswa:ActivityReference>
+      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+        <mxswa:ActivityReference.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep1_104, CreateStep1_105 }]</InArgument>
+          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_103]</OutArgument>
+        </mxswa:ActivityReference.Arguments>
+      </mxswa:ActivityReference>
+      <mxswa:SetEntityProperty Attribute="defra_submittedon" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_103]">
         <mxswa:SetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1392,10 +1427,10 @@
           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
           </InArgument>
-          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_103]</OutArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_106]</OutArgument>
         </mxswa:ActivityReference.Arguments>
       </mxswa:ActivityReference>
-      <mxswa:SetEntityProperty Attribute="defra_telephone" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_103]">
+      <mxswa:SetEntityProperty Attribute="defra_telephone" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_106]">
         <mxswa:SetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
