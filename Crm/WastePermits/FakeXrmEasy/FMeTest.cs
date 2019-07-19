@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Defra.Lp.WastePermits.Workflows;
 using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
+using System.Net;
 
 namespace FakeXrmEasy
 {
@@ -12,11 +13,13 @@ namespace FakeXrmEasy
         [TestMethod]
         public void TestMethod1()
         {
+            
             var context = new XrmRealContext
             {
                 ProxyTypesAssembly = typeof(CreateFmeSupportRecords).Assembly,
                 ConnectionStringName = "CRMOnline"
             };
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var executionContext = context.GetDefaultWorkflowContext();
 
             //Inputs
