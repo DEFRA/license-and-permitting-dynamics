@@ -1,0 +1,133 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <script>dojoConfig = { parseOnLoad: true }</script>
+    <script data-dojo-config="async: true" src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"></script>
+    <script>
+        require(["dojo/parser", "dijit/layout/TabContainer", "dijit/layout/ContentPane"]);
+    </script>
+    <script>
+        /************************************************************
+         * WE-2008 (MCP Mapping)
+         * Developments for MCP Plant Location Map checking
+         * DRAFT VERSION OF showing Google Map and EasiMap for MCP
+         * Refactored by Stuart Adair 23/05/2019
+         * by Kassim Hassan
+         ************************************************************/
+
+        /************************************************************
+         * WE-2594 Buttons missing
+         * https://eaflood.atlassian.net/browse/WE-2594
+         * Code refactoring to use WebAPI 
+         * and to retrieve the correct values.  
+         * Ninad Belwalker 16/07/2019
+         *********************************************************/
+        const urlGoogle = "https://www.google.co.uk/maps/place/@,293m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d51.4299!4d-0.0323";
+        const urlEsri = "https://easimap.prodds.ntnl/Silverlight/?Viewer=permitting&showAdvancedTools=True&showDataFrame=False&extent=%20411793,%20332833,%20%20413793,%20333533&layerTheme=1&layers=79,0,1,0,72,0,0,121,0,0,73,0,5,0,1,2,3,4,80,0,0,120,0,1,0,114,0,3,0,1,2,22,0,0,78,0,1,1,52,0,3,3,4,5,86,1,0,40,0,0,111,0,2,23,24,75,0,5,1,2,3,4,5,45,0,11,2,3,5,6,8,7,10,11,13,14,0,116,0,20,2,20,21,24,27,30,36,37,39,40,42,43,45,46,48,49,51,52,54,55,118,0,0,117,0,0,74,0,1,0,50,0,3,29,30,31,66,1,0,92,1,0,76,0,3,2,3,4,82,0,6,5,13,22,30,38,41,83,0,0,64,0,2,0,1,65,0,2,1,3,85,0,0,115,1,0,84,0,0,90,1,0,91,1,0,69,0,0,89,0,0,88,0,0,87,0,0,&";
+        const urlGridReferenceFinder = "https://gridreferencefinder.com/";
+
+        
+        // define buttons
+        const buttons = [
+            { id: "btnGoogle", url: urlGoogle, value: "Open Google map" },
+            { id: "btnEsri", url: urlEsri, value: "Open ESRI (Easimap)" },
+            { id: "btnGridReferenceFinder", url: urlGridReferenceFinder, value: "Open Grid Reference Finder" }
+        ];
+
+        require(["dojo/on", "dojo/dom", "dojo/dom-construct", "dojo/domReady!"], (on, dom, domConstruct) => {
+            try {                
+                document.getElementById("viewDiv").style.display = "none";
+                document.getElementById("viewDivInfo").style.display = "none";
+                var displayButtons = false;
+                var applicationId = window.parent.Xrm.Page.data.entity.getId().substring(1, 37);
+                //alert(applicationId);
+                var req = new XMLHttpRequest();
+                req.open("GET", window.parent.Xrm.Page.context.getClientUrl() + "/api/data/v8.2/defra_applications?fetchXml=%3Cfetch%3E%3Centity%20name%3D'defra_application'%3E%3Cattribute%20name%3D'defra_applicationid'%20%2F%3E%3Cattribute%20name%3D'defra_name'%20%2F%3E%3Cattribute%20name%3D'createdon'%20%2F%3E%3Corder%20attribute%3D'defra_name'%20descending%3D'false'%20%2F%3E%3Cfilter%20type%3D'and'%3E%3Ccondition%20attribute%3D'defra_applicationid'%20operator%3D'eq'%20value%3D'%7B" + applicationId + "%7D'%20%2F%3E%3C%2Ffilter%3E%3Clink-entity%20name%3D'defra_location'%20from%3D'defra_applicationid'%20to%3D'defra_applicationid'%20link-type%3D'inner'%20alias%3D'ak'%3E%3Clink-entity%20name%3D'defra_locationdetails'%20from%3D'defra_locationid'%20to%3D'defra_locationid'%20link-type%3D'inner'%20alias%3D'al'%3E%3Cattribute%20name%3D'defra_gridreferenceid'%20%2F%3E%3C%2Flink-entity%3E%3C%2Flink-entity%3E%3C%2Fentity%3E%3C%2Ffetch%3E", true);
+                req.setRequestHeader("OData-MaxVersion", "4.0");
+                req.setRequestHeader("OData-Version", "4.0");
+                req.setRequestHeader("Accept", "application/json");
+                req.setRequestHeader("Prefer", "odata.include-annotations=\"*\"");
+                req.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        req.onreadystatechange = null;
+                        if (this.status === 200) {
+                            debugger;
+                            var results = JSON.parse(this.response);
+                            //alert(results[0].defra_name);
+                            var gRef = null;
+                            if (results.value.length > 0 && results.value[0].al_x002e_defra_gridreferenceid != null && results.value[0].al_x002e_defra_gridreferenceid != undefined)
+                            {
+                                gRef = results.value[0].al_x002e_defra_gridreferenceid;
+                                //alert(gRef);
+                            }
+                            if (gRef == null) {
+                                document.getElementById("viewDivInfo").style.display = "block";
+                            } else {
+                                document.getElementById("lblGridref").innerHTML = "Grid Reference: " + gRef;
+                                document.getElementById("viewDiv").style.display = "block";
+                                displayButtons = true;                
+                                if (displayButtons) {
+                                    // iterate over buttons array, create each button and add click event listener
+                                    buttons.forEach((button) => {
+                                        domConstruct.create("input", {
+                                            type: "button",
+                                            class: "btn btn-info",
+                                            value: button.value,
+                                            id: button.id
+                                        }, "lblGridref", "before");
+
+                                        on(dom.byId(button.id), "click", () => { openWindow(button.url, button.id) });
+                                        document.getElementById("viewDivInfo").style.display = "none";
+                                    })
+                                } else {
+                                    document.getElementById("viewDivInfo").style.display = "block";
+                                }
+                            }
+                            
+                        } else {
+                            document.getElementById("lblInfo").innerHTML = "Grid Reference not defined in site data."
+                            Xrm.Utility.alertDialog(this.statusText);
+                            //alert('No grid');
+                        }
+                    }
+                };
+                req.send();
+            }
+
+            catch (err) {
+                handleErrorMessage(err, "in mapping");
+            }
+        });
+        
+        function openWindow(urlString, btnName) {
+            try {
+                window.open(urlString)
+            }
+            catch (err) {
+                handleErrorMessage(err, "opening window from " + btnName);
+            }
+        };
+
+        function handleErrorMessage(err, errorIn) {
+            document.getElementById("lblInfo").innerHTML = "Error " + errorIn + ": " + err; // or err.message?
+            document.getElementById("viewDiv").style.display = "none";
+            document.getElementById("viewDivInfo").style.display = "block";
+        }
+
+    </script>
+    <meta>
+    <meta>
+<meta></head>
+
+<body style="overflow-wrap: break-word;" onfocusout="parent.setEmailRange();">
+
+    <div id="viewDiv">
+        <span id="lblGridref" class="label label-success"></span>
+    </div>
+    <div id="viewDivInfo" hidden="hidden">
+        <span id="lblInfo" class="label label-warning">No grid reference or site address set for this application.</span>
+    </div>
+
+
+
+</body></html>
