@@ -220,8 +220,19 @@ namespace Defra.Lp.WastePermits.Workflows
                     Guid emailID = organisationService.Create(emailAttachment);
                     tracingService.Trace("Email attachment with report created...");
                     //byte[] buffer = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+                    #endregion
+
+                    #region Send email
+                    SendEmailRequest emailSendReq = new SendEmailRequest
+                    {
+                        EmailId = (SourceEmail.Get<EntityReference>(executionContext)).Id,
+                        TrackingToken = "",
+                        IssueSend = true
+                    };
+                    SendEmailResponse emailSentResp = (SendEmailResponse)organisationService.Execute(emailSendReq);
+                    #endregion
                 }
-                #endregion
+
             }
             catch (FaultException<OrganizationServiceFault> e)
             {
