@@ -24,10 +24,9 @@
                 <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep15_condition" />
                 <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_1" />
                 <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_2" />
-                <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep15_3" />
               </sco:Collection>
               <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-                <mxswa:GetEntityProperty Attribute="defra_scheduledprocessid" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_scheduledprocess" Value="[ConditionBranchStep15_1]">
+                <mxswa:GetEntityProperty Attribute="defra_name" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_scheduledprocess" Value="[ConditionBranchStep15_1]">
                   <mxswa:GetEntityProperty.TargetType>
                     <InArgument x:TypeArguments="s:Type">
                       <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
@@ -39,28 +38,16 @@
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                   <mxswa:ActivityReference.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.Guid, "49b893cf-0694-e911-a990-000d3ab39dc2", "UniqueIdentifier" }]</InArgument>
+                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "FME", "String" }]</InArgument>
                     <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:Guid" />
-                    </InArgument>
-                    <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep15_3]</OutArgument>
-                  </mxswa:ActivityReference.Arguments>
-                </mxswa:ActivityReference>
-                <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
-                  <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                    <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.EntityReference, "defra_scheduledprocess", "FME&amp;#160;Support&amp;#160;Scheduled&amp;#160;Process", ConditionBranchStep15_3, "Lookup" }]</InArgument>
-                    <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
-                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
-                        <x:Null />
-                      </mxswa:ReferenceLiteral>
+                      <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                     </InArgument>
                     <OutArgument x:TypeArguments="x:Object" x:Key="Result">[ConditionBranchStep15_2]</OutArgument>
                   </mxswa:ActivityReference.Arguments>
                 </mxswa:ActivityReference>
                 <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
                   <mxswa:ActivityReference.Arguments>
-                    <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Equal</InArgument>
+                    <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">Contains</InArgument>
                     <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { ConditionBranchStep15_2 }]</InArgument>
                     <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep15_1]</InArgument>
                     <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep15_condition]</OutArgument>
@@ -78,7 +65,7 @@
                           <Sequence DisplayName="StopWorkflowStep16: Exit the workflow">
                             <Sequence.Variables>
                               <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep16_1" />
-                              <Variable x:TypeArguments="x:String" Default="88e010f7-675d-4f45-8253-fc69e2a73a7a" Name="stepLabelLabelId" />
+                              <Variable x:TypeArguments="x:String" Default="ae94a050-c21c-43fd-bcf7-fc2b757ce982" Name="stepLabelLabelId" />
                               <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                                 <Variable.Default>
                                   <Literal x:TypeArguments="x:String" Value="" />
@@ -117,7 +104,7 @@
       <mxswa:ActivityReference.Properties>
         <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
         <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
-          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="WaitStep32">
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="WaitStep32: Create Email and Attachment">
             <mxswa:ActivityReference.Arguments>
               <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">True</InArgument>
             </mxswa:ActivityReference.Arguments>
@@ -275,7 +262,7 @@
                             <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
                               <mxswa:ActivityReference.Arguments>
                                 <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
-                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "Hi&amp;#44;&amp;lt;div&amp;gt;Please find the application report attached.&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;Thanks&amp;#44;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;Permissions team&amp;lt;/div&amp;gt;", "String" }]</InArgument>
+                                <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "&amp;lt;div&amp;gt;&amp;lt;table style=&amp;#34;&amp;#34;font-family:Arial;color:rgb(0&amp;#44;0&amp;#44;0);font-size:12px;background-color:rgb(255&amp;#44;255&amp;#44;255);padding:0px;margin:0px&amp;#34;&amp;#34; width=&amp;#34;&amp;#34;100%&amp;#34;&amp;#34; cellspacing=&amp;#34;&amp;#34;0&amp;#34;&amp;#34; cellpadding=&amp;#34;&amp;#34;0&amp;#34;&amp;#34;&amp;gt;&amp;lt;tbody&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td style=&amp;#34;&amp;#34;background-color:rgb(0&amp;#44;0&amp;#44;0)&amp;#34;&amp;#34;&amp;gt;&amp;lt;img alt=&amp;#34;&amp;#34;Gov.uk Logo&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://ci4.googleusercontent.com/proxy/_FqPJqXiS51c5ctcNUy9hEFBuBhgW9nRDLZ9ZMvRvRCIIbJ8GK9lMuL3-pZhE2OB_DtZmOVopZ8fdneUn33iBzkB9tIHeMAwzY5FE2i0iLBpdVtL1xysKazS1qdcEDRZhB8o9foFqt8MG_op=s0-d-e1-ft#https://apply-for-environmental-permit.service.gov.uk/public/images/azure/gov-uk-logo.png&amp;#34;&amp;#34; class=&amp;#34;&amp;#34;CToWUd&amp;#34;&amp;#34;&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;&amp;lt;img alt=&amp;#34;&amp;#34;Environment Agency Logo&amp;#34;&amp;#34; style=&amp;#34;&amp;#34;margin-top:10px;margin-bottom:10px&amp;#34;&amp;#34; src=&amp;#34;&amp;#34;https://ci4.googleusercontent.com/proxy/J-mHckmimFP-PqPusUjaDsOsn50ZaN7lb4Fh0PdctNKdZzO13b1wwhu5CJI13Z2qmQzkYCqYiTyBl7jxd1QyXhCTnpP-GJqsXarLEoanQozP7ZYTPRXgwXcaQN_7B3YB_IJdwiPi0-RKRPE=s0-d-e1-ft#https://apply-for-environmental-permit.service.gov.uk/public/images/azure/ea_logo_sm.png&amp;#34;&amp;#34; class=&amp;#34;&amp;#34;CToWUd&amp;#34;&amp;#34; width=&amp;#34;&amp;#34;200&amp;#34;&amp;#34; height=&amp;#34;&amp;#34;57&amp;#34;&amp;#34;&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/tbody&amp;gt;&amp;lt;/table&amp;gt;Hi&amp;#44;&amp;lt;div&amp;gt;Please find the weekly applications report attached. The attachment is in CSV format&amp;#44; please open in MS Excel for better experience.&amp;amp;nbsp;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;Thanks&amp;#44;&amp;lt;/div&amp;gt;&amp;lt;div&amp;gt;Waste Permissions Team&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;", "String" }]</InArgument>
                                 <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
                                   <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
                                 </InArgument>
@@ -477,23 +464,6 @@
                               </sco:Collection>
                             </mxswa:ActivityReference.Properties>
                           </mxswa:ActivityReference>
-                          <mxswa:SetState DisplayName="SetStateStep37: Send email" Entity="[CreatedEntities(&quot;CreateStep35_localParameter&quot;)]" EntityId="[CreatedEntities(&quot;CreateStep35_localParameter&quot;).Id]" EntityName="email">
-                            <mxswa:SetState.State>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="1" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.State>
-                            <mxswa:SetState.Status>
-                              <InArgument x:TypeArguments="mxs:OptionSetValue">
-                                <mxswa:ReferenceLiteral x:TypeArguments="mxs:OptionSetValue">
-                                  <mxs:OptionSetValue ExtensionData="{x:Null}" Value="6" />
-                                </mxswa:ReferenceLiteral>
-                              </InArgument>
-                            </mxswa:SetState.Status>
-                          </mxswa:SetState>
-                          <Persist />
                         </sco:Collection>
                       </mxswa:ActivityReference.Properties>
                     </mxswa:ActivityReference>
