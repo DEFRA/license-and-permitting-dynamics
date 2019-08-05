@@ -16,6 +16,7 @@
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep12GetPermitHolderAddressDetail_localParameter" />
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep2GetLocationDetail_localParameter" />
       <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep2GetLocationDetailAddress_localParameter" />
+      <Variable x:TypeArguments="mxs:EntityReference" Default="[New EntityReference()]" Name="CustomActivityStep2GetContactDetailAddress_localParameter" />
     </mxswa:Workflow.Variables>
     <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="CustomActivityStep12">
       <mxswa:ActivityReference.Properties>
@@ -107,6 +108,7 @@
               <InArgument x:TypeArguments="mxs:EntityReference" x:Key="GetLocation">[DirectCast(CustomActivityStep2_1_converted, Microsoft.Xrm.Sdk.EntityReference)]</InArgument>
               <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="GetLocationDetail">[CustomActivityStep2GetLocationDetail_localParameter]</OutArgument>
               <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="GetLocationDetailAddress">[CustomActivityStep2GetLocationDetailAddress_localParameter]</OutArgument>
+              <OutArgument x:TypeArguments="mxs:EntityReference" x:Key="GetContactDetailAddress">[CustomActivityStep2GetContactDetailAddress_localParameter]</OutArgument>
             </mxswa:ActivityReference.Arguments>
           </mxswa:ActivityReference>
           <If Condition="[Microsoft.VisualBasic.IsNothing(CustomActivityStep2GetLocationDetail_localParameter)]">
@@ -123,6 +125,14 @@
             </If.Then>
             <If.Else>
               <mxswa:RetrieveEntity Attributes="{x:Null}" Entity="[CreatedEntities(&quot;CustomActivityStep2GetLocationDetailAddress_entity&quot;)]" EntityId="[DirectCast(CustomActivityStep2GetLocationDetailAddress_localParameter.Id, System.Guid)]" EntityName="defra_address" ThrowIfNotExists="False" />
+            </If.Else>
+          </If>
+          <If Condition="[Microsoft.VisualBasic.IsNothing(CustomActivityStep2GetContactDetailAddress_localParameter)]">
+            <If.Then>
+              <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CustomActivityStep2GetContactDetailAddress_entity&quot;)]" Value="[New Entity()]" />
+            </If.Then>
+            <If.Else>
+              <mxswa:RetrieveEntity Attributes="{x:Null}" Entity="[CreatedEntities(&quot;CustomActivityStep2GetContactDetailAddress_entity&quot;)]" EntityId="[DirectCast(CustomActivityStep2GetContactDetailAddress_localParameter.Id, System.Guid)]" EntityName="defra_address" ThrowIfNotExists="False" />
             </If.Else>
           </If>
         </sco:Collection>
@@ -236,6 +246,9 @@
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_104" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_105" />
         <Variable x:TypeArguments="x:Object" Name="CreateStep1_106" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_107" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_108" />
+        <Variable x:TypeArguments="x:Object" Name="CreateStep1_109" />
       </Sequence.Variables>
       <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" Value="[New Entity(&quot;defra_fmesupport&quot;)]" />
       <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
@@ -1386,7 +1399,7 @@
           </InArgument>
         </mxswa:SetEntityProperty.TargetType>
       </mxswa:SetEntityProperty>
-      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CreateStep1_104]">
+      <mxswa:GetEntityProperty Attribute="defra_street" Entity="[CreatedEntities(&quot;CustomActivityStep12GetPermitHolderAddress_entity&quot;)]" EntityName="defra_address" Value="[CreateStep1_104]">
         <mxswa:GetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1413,7 +1426,41 @@
           <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_103]</OutArgument>
         </mxswa:ActivityReference.Arguments>
       </mxswa:ActivityReference>
-      <mxswa:SetEntityProperty Attribute="defra_submittedon" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_103]">
+      <mxswa:SetEntityProperty Attribute="defra_street" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_103]">
+        <mxswa:SetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+        </mxswa:SetEntityProperty.TargetType>
+      </mxswa:SetEntityProperty>
+      <mxswa:GetEntityProperty Attribute="defra_submittedon" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[CreateStep1_107]">
+        <mxswa:GetEntityProperty.TargetType>
+          <InArgument x:TypeArguments="s:Type">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+        </mxswa:GetEntityProperty.TargetType>
+      </mxswa:GetEntityProperty>
+      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+        <mxswa:ActivityReference.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">CreateCrmType</InArgument>
+          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { Microsoft.Xrm.Sdk.Workflow.WorkflowPropertyType.String, "NULL", "String" }]</InArgument>
+          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_108]</OutArgument>
+        </mxswa:ActivityReference.Arguments>
+      </mxswa:ActivityReference>
+      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+        <mxswa:ActivityReference.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { CreateStep1_107, CreateStep1_108 }]</InArgument>
+          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_106]</OutArgument>
+        </mxswa:ActivityReference.Arguments>
+      </mxswa:ActivityReference>
+      <mxswa:SetEntityProperty Attribute="defra_submittedon" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_106]">
         <mxswa:SetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
@@ -1427,10 +1474,10 @@
           <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
           </InArgument>
-          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_106]</OutArgument>
+          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[CreateStep1_109]</OutArgument>
         </mxswa:ActivityReference.Arguments>
       </mxswa:ActivityReference>
-      <mxswa:SetEntityProperty Attribute="defra_telephone" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_106]">
+      <mxswa:SetEntityProperty Attribute="defra_telephone" Entity="[CreatedEntities(&quot;CreateStep1_localParameter#Temp&quot;)]" EntityName="defra_fmesupport" Value="[CreateStep1_109]">
         <mxswa:SetEntityProperty.TargetType>
           <InArgument x:TypeArguments="s:Type">
             <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="x:String" />
