@@ -6,7 +6,7 @@
   <FormActivationState>1</FormActivationState>
   <form shownavigationbar="true" showImage="false" maxWidth="1900">
     <tabs>
-      <tab id="{bca068a4-5707-4114-9524-fb1c241761c8}" name="tab_general" verticallayout="true" IsUserDefined="1" locklevel="0" expanded="false" showlabel="true" labelid="{f419d84d-a112-4fe3-9b58-a61d681120f3}">
+      <tab id="{bca068a4-5707-4114-9524-fb1c241761c8}" name="tab_general" verticallayout="true" IsUserDefined="1" locklevel="0" expanded="true" showlabel="true" labelid="{f419d84d-a112-4fe3-9b58-a61d681120f3}">
         <labels>
           <label description="Summary" languagecode="1033" />
         </labels>
@@ -94,6 +94,26 @@
                         <label description="State" languagecode="1033" />
                       </labels>
                       <control id="statecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" uniqueid="{a1e0333d-05ed-3e43-60ca-8e745827ae71}" />
+                    </cell>
+                  </row>
+                  <row>
+                    <cell id="{779548e4-0520-baea-9736-e70640c35612}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Admin checks completed?" languagecode="1033" />
+                      </labels>
+                      <control id="defra_admincheckscompleted" classid="{B0C6723A-8503-4fd7-BB28-C8A06AC933C2}" datafieldname="defra_admincheckscompleted" disabled="false" uniqueid="{335e9aa8-bb18-04cb-9dd4-47b8981bc596}" />
+                    </cell>
+                    <cell id="{1cb1d41a-647d-328a-29c9-cb5373667ad5}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Intelligence checks completed?" languagecode="1033" />
+                      </labels>
+                      <control id="defra_intelligencecheckscompleted" classid="{B0C6723A-8503-4fd7-BB28-C8A06AC933C2}" datafieldname="defra_intelligencecheckscompleted" disabled="false" uniqueid="{187e8717-3ba8-a041-8e86-6da39725a0ad}" />
+                    </cell>
+                    <cell id="{07089909-e29b-7a19-306d-71d01784e15c}" showlabel="true" locklevel="0">
+                      <labels>
+                        <label description="Intelligence Checks Required" languagecode="1033" />
+                      </labels>
+                      <control id="defra_intel_checks_required" classid="{B0C6723A-8503-4fd7-BB28-C8A06AC933C2}" datafieldname="defra_intel_checks_required" disabled="false" uniqueid="{c32571b0-6c32-2548-4373-2bc5a624d993}" />
                     </cell>
                   </row>
                 </rows>
@@ -1011,7 +1031,7 @@
                   <row>
                     <cell id="{a632b57c-896b-26a0-1c26-67a2395c2897}" locklevel="0" showlabel="true" labelid="{e516e7fc-3357-46de-9dbb-eedc2d9e978c}">
                       <labels>
-                        <label description="Determined By" languagecode="1033" />
+                        <label description="Determination Officer" languagecode="1033" />
                       </labels>
                       <control disabled="false" id="defra_determinedbyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_determinedbyid" uniqueid="{b1aae72b-6ec1-47b0-352b-1e878b76c8a4}">
                         <parameters>
@@ -2117,8 +2137,8 @@
         <Handlers>
           <Handler functionName="PaymentReceived" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{2c2a109e-ab69-41b2-4ad4-471176dab12a}" enabled="true" parameters="" passExecutionContext="false" />
           <Handler functionName="IntelligenceCheck" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{6db2b26b-d249-625e-8c24-55c825cd7664}" enabled="true" parameters="" passExecutionContext="false" />
-          <Handler functionName="OnLoad" libraryName="defra_/application/mcp_form_selector.js" handlerUniqueId="{4d47e9e0-9016-93d3-38ba-726cd8d8e561}" enabled="true" parameters="" passExecutionContext="false" />
-          <Handler functionName="OnLoad" libraryName="defra_application/mcp_app_driver.js" handlerUniqueId="{93e594aa-9b22-5de4-b387-5388528793a8}" enabled="true" parameters="" passExecutionContext="false" />
+          <Handler functionName="OnLoad" libraryName="defra_/application/mcp_form_selector.js" handlerUniqueId="{4d47e9e0-9016-93d3-38ba-726cd8d8e561}" enabled="false" parameters="" passExecutionContext="false" />
+          <Handler functionName="OnLoad" libraryName="defra_application/mcp_app_driver.js" handlerUniqueId="{93e594aa-9b22-5de4-b387-5388528793a8}" enabled="false" parameters="" passExecutionContext="false" />
         </Handlers>
       </event>
       <event name="onsave" application="false" active="false">
@@ -2138,6 +2158,11 @@
       </event>
     </events>
     <DisplayConditions Order="12" FallbackForm="true">
+      <Role Id="{BDCBF741-81AC-E911-A980-000D3A23443B}" />
+      <Role Id="{4395FDAD-17AE-E911-A997-000D3AB31AA3}" />
+      <Role Id="{D6103658-7EAC-E911-A980-000D3A23443B}" />
+      <Role Id="{55E557F5-8CAC-E911-A980-000D3A206976}" />
+      <Role Id="{F3CD2511-7DAC-E911-A980-000D3A23443B}" />
       <Role Id="{627090ff-40a3-4053-8790-584edc5be201}" />
       <Role Id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
     </DisplayConditions>
