@@ -28,12 +28,13 @@
   </layoutxml>
   <querytype>0</querytype>
   <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical">
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
         <attribute name="queueitemid" />
-        <order attribute="queueitemid" descending="false" />
         <attribute name="defra_application" />
-        <link-entity alias="a_4164b7ab0026e811a951000d3ab3984f" name="defra_application" from="defra_applicationid" to="objectid" link-type="outer" visible="false">
+        <attribute name="objecttypecode" />
+        <order attribute="queueitemid" descending="false" />
+        <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="a_4164b7ab0026e811a951000d3ab3984f">
           <attribute name="defra_businesstrackid" />
           <attribute name="statuscode" />
           <attribute name="defra_regimeid" />
@@ -47,13 +48,17 @@
           <attribute name="defra_primarycontactid" />
           <attribute name="defra_submittedon" />
         </link-entity>
-        <attribute name="objecttypecode" />
+        <link-entity name="queue" from="queueid" to="queueid" alias="aa">
+          <filter type="and">
+            <condition attribute="ownerid" operator="eq-userid" />
+          </filter>
+        </link-entity>
         <attribute name="objectid" />
       </entity>
     </fetch>
   </fetchxml>
   <IntroducedVersion>1.20.0.0</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="New Applications - Applications allocated to me" languagecode="1033" />
+    <LocalizedName description="New Applications - Allocated to me" languagecode="1033" />
   </LocalizedNames>
 </savedquery>
