@@ -10,7 +10,7 @@
     <grid name="resultset" jump="title" select="1" preview="1" icon="1">
       <row name="result" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="queueitemid" ishidden="1" width="150" />
-        <cell name="defra_application" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_applicationnumber" width="100" disableSorting="1" />
         <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_regimeid" width="100" disableSorting="1" />
         <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_businesstrackid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_customerid" width="100" disableSorting="1" />
@@ -31,7 +31,6 @@
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
         <attribute name="queueitemid" />
-        <attribute name="defra_application" />
         <attribute name="objecttypecode" />
         <order attribute="queueitemid" descending="false" />
         <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="a_4164b7ab0026e811a951000d3ab3984f">
@@ -47,11 +46,10 @@
           <attribute name="defra_areaid" />
           <attribute name="defra_primarycontactid" />
           <attribute name="defra_submittedon" />
-        </link-entity>
-        <link-entity name="queue" from="queueid" to="queueid" alias="aa">
           <filter type="and">
             <condition attribute="ownerid" operator="eq-userid" />
           </filter>
+          <attribute name="defra_applicationnumber" />
         </link-entity>
         <attribute name="objectid" />
       </entity>
