@@ -10,14 +10,13 @@
     <grid name="resultset" jump="title" select="1" preview="1" icon="1">
       <row name="result" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="queueitemid" ishidden="1" width="150" />
-        <cell name="title" width="150" />
         <cell name="defra_application" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="aa.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="aa.defra_areaid" width="100" disableSorting="1" />
-        <cell name="aa.defra_determinedbyid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="aa.defra_dulymadecompletedby" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="createdon" width="100" />
+        <cell name="aa.defra_determinedbyid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="enteredon" width="100" />
+        <cell name="createdon" width="100" />
+        <cell name="aa.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
       </row>
     </grid>
   </layoutxml>
@@ -25,13 +24,12 @@
   <fetchxml>
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
-        <attribute name="title" />
         <attribute name="queueitemid" />
         <attribute name="enteredon" />
         <attribute name="createdon" />
         <attribute name="defra_application" />
         <attribute name="objecttypecode" />
-        <order attribute="title" descending="false" />
+        <order attribute="queueitemid" descending="false" />
         <filter type="and">
           <condition attribute="queueid" operator="eq" uiname="&lt;Application Allocation Team&gt;" uitype="queue" value="{B84110E8-D3AE-E911-A997-000D3AB31AA3}" />
         </filter>
@@ -39,6 +37,7 @@
           <filter type="and">
             <condition attribute="defra_dulymadecompletedby" operator="not-null" />
             <condition attribute="defra_determinedbyid" operator="null" />
+            <condition attribute="statuscode" operator="eq" value="910400023" />
           </filter>
         </link-entity>
         <link-entity name="defra_application" from="defra_applicationid" to="defra_application" visible="false" link-type="outer" alias="aa">
