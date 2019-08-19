@@ -13,8 +13,8 @@
         <cell name="defra_admincheckscompleted" width="100" />
         <cell name="defra_intel_checks_required" width="100" />
         <cell name="defra_intelligencecheckscompleted" width="100" />
-        <cell name="defra_determinedbyid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_dulymadecompletedby" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_determinedbyid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_customerid" width="100" />
         <cell name="defra_regimeid" width="100" />
         <cell name="defra_businesstrackid" width="100" />
@@ -42,6 +42,8 @@
         <filter type="and">
           <condition attribute="statuscode" operator="eq" value="910400021" />
           <condition attribute="defra_admincheckscompleted" operator="eq" value="1" />
+          <condition attribute="defra_dulymadecompletedby" operator="null" />
+          <condition attribute="defra_determinedbyid" operator="null" />
         </filter>
         <attribute name="defra_applicationid" />
       </entity>

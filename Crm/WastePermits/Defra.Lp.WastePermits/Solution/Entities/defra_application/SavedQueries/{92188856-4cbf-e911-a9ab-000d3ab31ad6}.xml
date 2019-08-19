@@ -5,7 +5,7 @@
   <isquickfindquery>0</isquickfindquery>
   <isprivate>0</isprivate>
   <isdefault>0</isdefault>
-  <savedqueryid>{cb687dc2-91b7-e911-a997-000d3ab31aa3}</savedqueryid>
+  <savedqueryid>{92188856-4cbf-e911-a9ab-000d3ab31ad6}</savedqueryid>
   <layoutxml>
     <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
       <row name="result" id="defra_applicationid">
@@ -13,8 +13,8 @@
         <cell name="defra_admincheckscompleted" width="100" />
         <cell name="defra_intel_checks_required" width="100" />
         <cell name="defra_intelligencecheckscompleted" width="100" />
-        <cell name="defra_determinedbyid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_dulymadecompletedby" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_determinedbyid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_dulymadecompletedby" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="defra_customerid" width="100" />
         <cell name="defra_regimeid" width="100" />
         <cell name="defra_businesstrackid" width="100" />
@@ -25,7 +25,7 @@
   </layoutxml>
   <querytype>0</querytype>
   <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
       <entity name="defra_application">
         <attribute name="defra_businesstrackid" />
         <attribute name="defra_site_address" />
@@ -40,16 +40,26 @@
         <attribute name="defra_admincheckscompleted" />
         <order attribute="defra_applicationnumber" descending="false" />
         <filter type="and">
-          <condition attribute="statuscode" operator="eq" value="910400002" />
-          <condition attribute="defra_determinedbyid" operator="null" />
-          <condition attribute="defra_dulymadecompletedby" operator="not-null" />
+          <condition attribute="statuscode" operator="eq" value="910400022" />
         </filter>
+        <link-entity name="systemuser" from="systemuserid" to="owninguser" alias="aa">
+          <filter type="and">
+            <condition attribute="parentsystemuserid" operator="eq-userid" />
+          </filter>
+          <link-entity name="teammembership" from="systemuserid" to="systemuserid" visible="false" intersect="true">
+            <link-entity name="team" from="teamid" to="teamid" alias="ab">
+              <filter type="and">
+                <condition attribute="teamid" operator="eq" uiname="Admin Team" uitype="team" value="{738BC2FA-14AE-E911-A9C1-000D3AB3013D}" />
+              </filter>
+            </link-entity>
+          </link-entity>
+        </link-entity>
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>
   </fetchxml>
-  <IntroducedVersion>1.20.0.4</IntroducedVersion>
+  <IntroducedVersion>1.20.0.16</IntroducedVersion>
   <LocalizedNames>
-    <LocalizedName description="NEW Applications - Allocated returned" languagecode="1033" />
+    <LocalizedName description="NEW Lead Admin - My Team's Applications" languagecode="1033" />
   </LocalizedNames>
 </savedquery>
