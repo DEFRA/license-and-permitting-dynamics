@@ -1,56 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{266dfc19-02b5-e911-a9ab-000d3ab31ad6}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="title" select="1" preview="1" icon="1">
-      <row name="result" id="objectid" multiobjectidfield="objecttypecode">
-        <cell name="queueitemid" ishidden="1" width="150" />
-        <cell name="title" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="ab.defra_regimeid" width="100" disableSorting="1" />
-        <cell name="ab.defra_businesstrackid" width="100" disableSorting="1" />
-        <cell name="aa.defra_applicationtype" width="100" disableSorting="1" />
-        <cell name="aa.defra_facility_description" width="100" disableSorting="1" />
-        <cell name="aa.defra_areaid" width="100" disableSorting="1" />
-        <cell name="ab.defra_localauthority" width="100" disableSorting="1" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-      <entity name="queueitem">
-        <attribute name="queueitemid" />
-        <attribute name="objecttypecode" />
-        <order attribute="queueitemid" descending="false" />
-        <filter type="and">
-          <condition attribute="queueid" operator="eq" uiname="&lt;Intelligence team&gt;" uitype="queue" value="{7AA90501-15AE-E911-A9C1-000D3AB3013D}" />
-        </filter>
-        <attribute name="title" />
-        <link-entity name="defra_application" from="defra_applicationid" to="defra_application" visible="false" link-type="outer" alias="aa">
-          <attribute name="defra_areaid" />
-          <attribute name="defra_facility_description" />
-          <attribute name="defra_applicationtype" />
-        </link-entity>
-        <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="ab">
-          <attribute name="defra_businesstrackid" />
-          <attribute name="defra_regimeid" />
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{266dfc19-02b5-e911-a9ab-000d3ab31ad6}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="title" select="1" preview="1" icon="1">
+        <row name="result" id="objectid" multiobjectidfield="objecttypecode">
+          <cell name="queueitemid" ishidden="1" width="150" />
+          <cell name="title" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="ab.defra_regimeid" width="100" disableSorting="1" />
+          <cell name="ab.defra_businesstrackid" width="100" disableSorting="1" />
+          <cell name="aa.defra_applicationtype" width="100" disableSorting="1" />
+          <cell name="aa.defra_facility_description" width="100" disableSorting="1" />
+          <cell name="aa.defra_areaid" width="100" disableSorting="1" />
+          <cell name="ab.defra_localauthority" width="100" disableSorting="1" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="queueitem">
+          <attribute name="queueitemid" />
+          <attribute name="objecttypecode" />
+          <order attribute="queueitemid" descending="false" />
           <filter type="and">
-            <condition attribute="defra_admincheckscompleted" operator="eq" value="1" />
-            <condition attribute="statuscode" operator="eq" value="910400015" />
+            <condition attribute="queueid" operator="eq" uiname="&lt;Intelligence team&gt;" uitype="queue" value="{7AA90501-15AE-E911-A9C1-000D3AB3013D}" />
           </filter>
-          <attribute name="defra_localauthority" />
-        </link-entity>
-        <attribute name="objectid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.20.0.4</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="New Intelligence Team - Admin checks completed" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+          <attribute name="title" />
+          <link-entity name="defra_application" from="defra_applicationid" to="defra_application" visible="false" link-type="outer" alias="aa">
+            <attribute name="defra_areaid" />
+            <attribute name="defra_facility_description" />
+            <attribute name="defra_applicationtype" />
+          </link-entity>
+          <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="ab">
+            <attribute name="defra_businesstrackid" />
+            <attribute name="defra_regimeid" />
+            <filter type="and">
+              <condition attribute="defra_admincheckscompleted" operator="eq" value="1" />
+              <condition attribute="statuscode" operator="eq" value="910400015" />
+            </filter>
+            <attribute name="defra_localauthority" />
+          </link-entity>
+          <attribute name="objectid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.20.0.4</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="New Intelligence Team - Admin checks completed" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
