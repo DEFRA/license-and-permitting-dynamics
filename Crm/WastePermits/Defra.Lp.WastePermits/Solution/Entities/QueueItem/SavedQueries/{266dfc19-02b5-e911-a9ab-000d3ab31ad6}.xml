@@ -10,15 +10,13 @@
     <grid name="resultset" jump="title" select="1" preview="1" icon="1">
       <row name="result" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="queueitemid" ishidden="1" width="150" />
-        <cell name="defra_application" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="aa.defra_areaid" width="100" disableSorting="1" />
+        <cell name="title" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="ab.defra_regimeid" width="100" disableSorting="1" />
         <cell name="ab.defra_businesstrackid" width="100" disableSorting="1" />
-        <cell name="ab.defra_customerid" width="100" disableSorting="1" />
-        <cell name="ab.defra_primarycontactid" width="100" disableSorting="1" />
-        <cell name="enteredon" width="100" />
-        <cell name="createdon" width="100" />
-        <cell name="aa.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="aa.defra_applicationtype" width="100" disableSorting="1" />
+        <cell name="aa.defra_facility_description" width="100" disableSorting="1" />
+        <cell name="aa.defra_areaid" width="100" disableSorting="1" />
+        <cell name="ab.defra_localauthority" width="100" disableSorting="1" />
       </row>
     </grid>
   </layoutxml>
@@ -27,27 +25,25 @@
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="queueitem">
         <attribute name="queueitemid" />
-        <attribute name="enteredon" />
-        <attribute name="createdon" />
-        <attribute name="defra_application" />
         <attribute name="objecttypecode" />
         <order attribute="queueitemid" descending="false" />
         <filter type="and">
           <condition attribute="queueid" operator="eq" uiname="&lt;Intelligence team&gt;" uitype="queue" value="{7AA90501-15AE-E911-A9C1-000D3AB3013D}" />
         </filter>
+        <attribute name="title" />
         <link-entity name="defra_application" from="defra_applicationid" to="defra_application" visible="false" link-type="outer" alias="aa">
           <attribute name="defra_areaid" />
-          <attribute name="statuscode" />
+          <attribute name="defra_facility_description" />
+          <attribute name="defra_applicationtype" />
         </link-entity>
         <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="ab">
           <attribute name="defra_businesstrackid" />
           <attribute name="defra_regimeid" />
-          <attribute name="defra_customerid" />
-          <attribute name="defra_primarycontactid" />
           <filter type="and">
             <condition attribute="defra_admincheckscompleted" operator="eq" value="1" />
             <condition attribute="statuscode" operator="eq" value="910400015" />
           </filter>
+          <attribute name="defra_localauthority" />
         </link-entity>
         <attribute name="objectid" />
       </entity>

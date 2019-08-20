@@ -10,16 +10,15 @@
     <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
       <row name="result" id="defra_applicationid">
         <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_admincheckscompleted" width="100" />
-        <cell name="defra_intel_checks_required" width="100" />
-        <cell name="defra_intelligencecheckscompleted" width="100" />
-        <cell name="defra_determinedbyid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_dulymadecompletedby" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_customerid" width="100" />
         <cell name="defra_regimeid" width="100" />
         <cell name="defra_businesstrackid" width="100" />
+        <cell name="defra_applicationtype" width="100" />
+        <cell name="defra_facility_description" width="100" />
         <cell name="defra_areaid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_site_address" width="100" />
+        <cell name="defra_dulymadecompletedby" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_determinedbyid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="defra_submittedon" width="100" />
+        <cell name="statuscode" width="100" />
       </row>
     </grid>
   </layoutxml>
@@ -28,22 +27,21 @@
     <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
       <entity name="defra_application">
         <attribute name="defra_businesstrackid" />
-        <attribute name="defra_site_address" />
         <attribute name="defra_regimeid" />
-        <attribute name="defra_customerid" />
         <attribute name="defra_areaid" />
         <attribute name="defra_applicationnumber" />
-        <attribute name="defra_intel_checks_required" />
-        <attribute name="defra_intelligencecheckscompleted" />
-        <attribute name="defra_dulymadecompletedby" />
-        <attribute name="defra_determinedbyid" />
-        <attribute name="defra_admincheckscompleted" />
-        <order attribute="defra_applicationnumber" descending="false" />
+        <order attribute="defra_submittedon" descending="false" />
         <link-entity name="systemuser" from="systemuserid" to="owninguser" alias="aa">
           <filter type="and">
             <condition attribute="parentsystemuserid" operator="eq-userid" />
           </filter>
         </link-entity>
+        <attribute name="defra_facility_description" />
+        <attribute name="defra_applicationtype" />
+        <attribute name="statuscode" />
+        <attribute name="defra_dulymadecompletedby" />
+        <attribute name="defra_determinedbyid" />
+        <attribute name="defra_submittedon" />
         <attribute name="defra_applicationid" />
       </entity>
     </fetch>

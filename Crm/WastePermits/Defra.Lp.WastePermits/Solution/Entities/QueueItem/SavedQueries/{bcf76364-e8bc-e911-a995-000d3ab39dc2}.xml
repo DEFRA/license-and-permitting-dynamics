@@ -11,13 +11,15 @@
       <row name="result" id="objectid" multiobjectidfield="objecttypecode">
         <cell name="queueitemid" ishidden="1" width="150" />
         <cell name="title" width="150" />
-        <cell name="defra_application" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="aa.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="ab.defra_regimeid" width="100" disableSorting="1" />
+        <cell name="ab.defra_businesstrackid" width="100" disableSorting="1" />
+        <cell name="ab.defra_applicationtype" width="100" disableSorting="1" />
+        <cell name="ab.defra_facility_description" width="100" disableSorting="1" />
         <cell name="aa.defra_areaid" width="100" disableSorting="1" />
-        <cell name="aa.defra_determinedbyid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
         <cell name="aa.defra_dulymadecompletedby" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="createdon" width="100" />
-        <cell name="enteredon" width="100" />
+        <cell name="aa.defra_determinedbyid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        <cell name="ab.defra_permittingteamleaderid" width="100" disableSorting="1" />
+        <cell name="ab.defra_permiteffectivedate" width="100" disableSorting="1" />
       </row>
     </grid>
   </layoutxml>
@@ -27,9 +29,6 @@
       <entity name="queueitem">
         <attribute name="title" />
         <attribute name="queueitemid" />
-        <attribute name="enteredon" />
-        <attribute name="createdon" />
-        <attribute name="defra_application" />
         <attribute name="objecttypecode" />
         <order attribute="title" descending="false" />
         <filter type="and">
@@ -39,12 +38,17 @@
           <attribute name="defra_dulymadecompletedby" />
           <attribute name="defra_determinedbyid" />
           <attribute name="defra_areaid" />
-          <attribute name="statuscode" />
         </link-entity>
         <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="ab">
           <filter type="and">
             <condition attribute="statuscode" operator="eq" value="910400026" />
           </filter>
+          <attribute name="defra_businesstrackid" />
+          <attribute name="defra_regimeid" />
+          <attribute name="defra_facility_description" />
+          <attribute name="defra_permittingteamleaderid" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_permiteffectivedate" />
         </link-entity>
         <attribute name="objectid" />
       </entity>

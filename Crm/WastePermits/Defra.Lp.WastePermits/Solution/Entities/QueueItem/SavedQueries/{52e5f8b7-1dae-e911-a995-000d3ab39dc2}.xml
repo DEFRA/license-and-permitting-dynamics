@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedquery>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <isquickfindquery>0</isquickfindquery>
+  <isprivate>0</isprivate>
+  <isdefault>0</isdefault>
+  <savedqueryid>{52e5f8b7-1dae-e911-a995-000d3ab39dc2}</savedqueryid>
+  <layoutxml>
+    <grid name="resultset" jump="title" select="1" preview="1" icon="1">
+      <row name="result" id="objectid" multiobjectidfield="objecttypecode">
+        <cell name="queueitemid" ishidden="1" width="150" />
+        <cell name="title" width="150" />
+        <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_applicationnumber" width="100" disableSorting="1" />
+        <cell name="a_4164b7ab0026e811a951000d3ab3984f.statuscode" width="100" disableSorting="1" />
+        <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_submittedon" width="100" disableSorting="1" />
+      </row>
+    </grid>
+  </layoutxml>
+  <querytype>0</querytype>
+  <fetchxml>
+    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+      <entity name="queueitem">
+        <attribute name="title" />
+        <attribute name="queueitemid" />
+        <attribute name="objecttypecode" />
+        <order attribute="title" descending="false" />
+        <filter type="and">
+          <condition attribute="objecttypecode" operator="eq" value="10013" />
+        </filter>
+        <link-entity name="defra_application" from="defra_applicationid" to="objectid" visible="false" link-type="outer" alias="a_4164b7ab0026e811a951000d3ab3984f">
+          <attribute name="defra_submittedon" />
+          <attribute name="statuscode" />
+          <attribute name="defra_applicationnumber" />
+        </link-entity>
+        <attribute name="objectid" />
+      </entity>
+    </fetch>
+  </fetchxml>
+  <IntroducedVersion>1.20.0.0</IntroducedVersion>
+  <LocalizedNames>
+    <LocalizedName description="New_Applications to Work on" languagecode="1033" />
+  </LocalizedNames>
+</savedquery>
