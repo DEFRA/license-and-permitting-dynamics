@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{ee4e3ecf-90c2-e911-a99d-000d3ab31f97}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="subject" select="1" preview="1" icon="1">
+        <row name="result" id="activityid" multiobjectidfield="activitytypecode">
+          <cell name="subject" width="300" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="regardingobjectid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="activitytypecode" width="150" />
+          <cell name="statecode" width="100" />
+          <cell name="createdon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true">
+        <entity name="activitypointer">
+          <attribute name="subject" />
+          <attribute name="activitytypecode" />
+          <attribute name="regardingobjectid" />
+          <attribute name="createdon" />
+          <attribute name="statecode" />
+          <order attribute="subject" descending="false" />
+          <link-entity name="activityparty" from="activityid" to="activityid" alias="aa">
+            <link-entity name="systemuser" from="systemuserid" to="partyid" alias="ab">
+              <filter type="and">
+                <condition attribute="parentsystemuserid" operator="eq-userid" />
+              </filter>
+            </link-entity>
+          </link-entity>
+          <attribute name="activityid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.20.0.22</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="My team's activities" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
