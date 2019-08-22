@@ -1,71 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{4477efd4-00b5-e811-a96e-000d3ab31aa3}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
-      <row name="result" id="defra_applicationid">
-        <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_deadline" width="100" />
-        <cell name="defra_response_deadline" width="100" />
-        <cell name="ownerid" width="100" />
-        <cell name="defra_determinedbyid" width="100" />
-        <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_site_description" width="100" />
-        <cell name="defra_facility_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="statuscode" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_submittedon" width="100" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-      <entity name="defra_application">
-        <attribute name="defra_customerid" />
-        <attribute name="defra_applicationnumber" />
-        <attribute name="statuscode" />
-        <attribute name="ownerid" />
-        <order attribute="defra_deadline" descending="true" />
-        <order attribute="defra_response_deadline" descending="true" />
-        <filter type="and">
-          <condition attribute="statuscode" operator="not-in">
-            <value>910400007</value>
-            <value>910400013</value>
-            <value>2</value>
-            <value>910400014</value>
-            <value>910400020</value>
-          </condition>
-          <filter type="or">
-            <condition attribute="defra_rfipending" operator="eq" value="1" />
-            <condition attribute="defra_schedule5pending" operator="eq" value="1" />
-            <filter type="and">
-              <condition attribute="defra_areasignoff" operator="ne" value="1" />
-              <condition attribute="statuscode" operator="eq" value="910400017" />
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{4477efd4-00b5-e811-a96e-000d3ab31aa3}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
+        <row name="result" id="defra_applicationid">
+          <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_deadline" width="100" />
+          <cell name="defra_response_deadline" width="100" />
+          <cell name="ownerid" width="100" />
+          <cell name="defra_determinedbyid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="100" />
+          <cell name="defra_facility_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="statuscode" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_submittedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_application">
+          <attribute name="defra_customerid" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="statuscode" />
+          <attribute name="ownerid" />
+          <order attribute="defra_deadline" descending="true" />
+          <order attribute="defra_response_deadline" descending="true" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="not-in">
+              <value>910400007</value>
+              <value>910400013</value>
+              <value>2</value>
+              <value>910400014</value>
+              <value>910400020</value>
+            </condition>
+            <filter type="or">
+              <condition attribute="defra_rfipending" operator="eq" value="1" />
+              <condition attribute="defra_schedule5pending" operator="eq" value="1" />
+              <filter type="and">
+                <condition attribute="defra_areasignoff" operator="ne" value="1" />
+                <condition attribute="statuscode" operator="eq" value="910400017" />
+              </filter>
+              <filter type="and">
+                <condition attribute="ownerid" operator="eq-userid" />
+                <condition attribute="statuscode" operator="eq" value="910400005" />
+              </filter>
             </filter>
-            <filter type="and">
-              <condition attribute="ownerid" operator="eq-userid" />
-              <condition attribute="statuscode" operator="eq" value="910400005" />
-            </filter>
+            <condition attribute="ownerid" operator="eq-userid" />
           </filter>
-          <condition attribute="ownerid" operator="eq-userid" />
-        </filter>
-        <attribute name="defra_facility_description" />
-        <attribute name="defra_deadline" />
-        <attribute name="defra_response_deadline" />
-        <attribute name="defra_submittedon" />
-        <attribute name="defra_determinedbyid" />
-        <attribute name="defra_site_description" />
-        <attribute name="defra_applicationid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.2.1.68</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Applications with Responses Pending" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+          <attribute name="defra_facility_description" />
+          <attribute name="defra_deadline" />
+          <attribute name="defra_response_deadline" />
+          <attribute name="defra_submittedon" />
+          <attribute name="defra_determinedbyid" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_applicationid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.2.1.68</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Applications with Responses Pending" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
