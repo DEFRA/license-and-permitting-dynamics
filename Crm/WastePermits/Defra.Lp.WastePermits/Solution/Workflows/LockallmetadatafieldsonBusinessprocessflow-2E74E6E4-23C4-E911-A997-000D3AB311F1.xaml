@@ -1,0 +1,116 @@
+<Activity x:Class="XrmWorkflow00000000000000000000000000000000" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mcwc="clr-namespace:Microsoft.Crm.Workflow.ClientActivities;assembly=Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:mxs="clr-namespace:Microsoft.Xrm.Sdk;assembly=Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:mxsq="clr-namespace:Microsoft.Xrm.Sdk.Query;assembly=Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:mxswa="clr-namespace:Microsoft.Xrm.Sdk.Workflow.Activities;assembly=Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:s="clr-namespace:System;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:srs="clr-namespace:System.Runtime.Serialization;assembly=System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xmlns:this="clr-namespace:" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="InputEntities" Type="InArgument(scg:IDictionary(x:String, mxs:Entity))" />
+    <x:Property Name="CreatedEntities" Type="InArgument(scg:IDictionary(x:String, mxs:Entity))" />
+  </x:Members>
+  <this:XrmWorkflow00000000000000000000000000000000.InputEntities>
+    <InArgument x:TypeArguments="scg:IDictionary(x:String, mxs:Entity)" />
+  </this:XrmWorkflow00000000000000000000000000000000.InputEntities>
+  <this:XrmWorkflow00000000000000000000000000000000.CreatedEntities>
+    <InArgument x:TypeArguments="scg:IDictionary(x:String, mxs:Entity)" />
+  </this:XrmWorkflow00000000000000000000000000000000.CreatedEntities>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <mxswa:Workflow>
+    <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionSequence, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionStep1">
+      <mxswa:ActivityReference.Arguments>
+        <InArgument x:TypeArguments="x:Boolean" x:Key="Wait">False</InArgument>
+      </mxswa:ActivityReference.Arguments>
+      <mxswa:ActivityReference.Properties>
+        <sco:Collection x:TypeArguments="Variable" x:Key="Variables">
+          <Variable x:TypeArguments="x:Boolean" Default="False" Name="ConditionBranchStep2_condition" />
+          <Variable x:TypeArguments="x:Object" Name="ConditionBranchStep2_1" />
+        </sco:Collection>
+        <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+          <mxswa:GetEntityProperty Attribute="createdon" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" Value="[ConditionBranchStep2_1]">
+            <mxswa:GetEntityProperty.TargetType>
+              <InArgument x:TypeArguments="s:Type">
+                <mxswa:ReferenceLiteral x:TypeArguments="s:Type">
+                  <x:Null />
+                </mxswa:ReferenceLiteral>
+              </InArgument>
+            </mxswa:GetEntityProperty.TargetType>
+          </mxswa:GetEntityProperty>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateCondition, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateCondition">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="mxsq:ConditionOperator" x:Key="ConditionOperator">NotNull</InArgument>
+              <x:Null x:Key="Parameters" />
+              <InArgument x:TypeArguments="x:Object" x:Key="Operand">[ConditionBranchStep2_1]</InArgument>
+              <OutArgument x:TypeArguments="x:Boolean" x:Key="Result">[ConditionBranchStep2_condition]</OutArgument>
+            </mxswa:ActivityReference.Arguments>
+          </mxswa:ActivityReference>
+          <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.ConditionBranch, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep2">
+            <mxswa:ActivityReference.Arguments>
+              <InArgument x:TypeArguments="x:Boolean" x:Key="Condition">[ConditionBranchStep2_condition]</InArgument>
+            </mxswa:ActivityReference.Arguments>
+            <mxswa:ActivityReference.Properties>
+              <mxswa:ActivityReference x:Key="Then" AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.Composite, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="ConditionBranchStep2">
+                <mxswa:ActivityReference.Properties>
+                  <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
+                  <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                    <Sequence DisplayName="SetDisplayModeStep1: Lock admin started on">
+                      <mcwc:SetDisplayMode ControlId="defra_adminchecksstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep2: Lock admin finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_adminchecksfinishedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep3: Lock admin completed by">
+                      <mcwc:SetDisplayMode ControlId="defra_admincheckscompletedby" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep4: Lock Intel completed by">
+                      <mcwc:SetDisplayMode ControlId="defra_intelligencecheckscompletedby" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep5: Lock Intel started on">
+                      <mcwc:SetDisplayMode ControlId="defra_intelligencechecksstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep6: Lock intel finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_intelligencechecksfinishedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep7: Lock Duly making started on">
+                      <mcwc:SetDisplayMode ControlId="defra_dulymakingstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep8: Lock Duly making finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_dulymadecompletedate" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep9: Lock determination started on">
+                      <mcwc:SetDisplayMode ControlId="defra_determinationstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep10: Lock determination finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_determinationcompleteddate" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep11: Lock peer review started on">
+                      <mcwc:SetDisplayMode ControlId="defra_peerreviewstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep12: Lock peer review finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_peerreviewedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep13: Lock Team lead sign-off started on">
+                      <mcwc:SetDisplayMode ControlId="defra_teamleadsignoffstartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep14: Lock team lead sign-off finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_teamleadsignofffinishedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep_SetDisplayModeStep14_18: New Action">
+                      <mcwc:SetDisplayMode ControlId="defra_permittingteamleaderid" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep15: Lock Admin issue started on">
+                      <mcwc:SetDisplayMode ControlId="defra_adminissuestartedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep16: Lock admin issue finished on">
+                      <mcwc:SetDisplayMode ControlId="defra_adminissuefinishedon" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                    <Sequence DisplayName="SetDisplayModeStep17: Lock admin issue completed by">
+                      <mcwc:SetDisplayMode ControlId="defra_adminissuecompletedby" ControlType="standard" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityName="defra_application" IsReadOnly="True" />
+                    </Sequence>
+                  </sco:Collection>
+                </mxswa:ActivityReference.Properties>
+              </mxswa:ActivityReference>
+              <x:Null x:Key="Else" />
+              <x:String x:Key="Description">Check if application already exists</x:String>
+            </mxswa:ActivityReference.Properties>
+          </mxswa:ActivityReference>
+        </sco:Collection>
+        <x:Boolean x:Key="ContainsElseBranch">False</x:Boolean>
+      </mxswa:ActivityReference.Properties>
+    </mxswa:ActivityReference>
+  </mxswa:Workflow>
+</Activity>
