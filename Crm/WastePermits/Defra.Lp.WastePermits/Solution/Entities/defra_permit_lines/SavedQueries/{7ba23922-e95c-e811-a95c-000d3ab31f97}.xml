@@ -1,39 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>1</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>0</isdefault>
-  <savedqueryid>{7ba23922-e95c-e811-a95c-000d3ab31f97}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
-      <row name="result" id="defra_permit_linesid">
-        <cell name="defra_permittype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_standardruleid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="a_0509dd5de85ce811a95c000d3ab31f97.defra_rulesnamegovuk" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-      <entity name="defra_permit_lines">
-        <attribute name="defra_standardruleid" />
-        <attribute name="defra_permittype" />
-        <order attribute="defra_permittype" descending="false" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-        </filter>
-        <link-entity alias="a_0509dd5de85ce811a95c000d3ab31f97" name="defra_standardrule" from="defra_standardruleid" to="defra_standardruleid" link-type="outer" visible="false">
-          <attribute name="defra_rulesnamegovuk" />
-        </link-entity>
-        <attribute name="defra_permit_linesid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.2.1.18</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Active Waste Permit Lines" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{7ba23922-e95c-e811-a95c-000d3ab31f97}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
+        <row name="result" id="defra_permit_linesid">
+          <cell name="defra_permittype" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_standardruleid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_0509dd5de85ce811a95c000d3ab31f97.defra_rulesnamegovuk" width="300" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_permit_lines">
+          <attribute name="defra_standardruleid" />
+          <attribute name="defra_permittype" />
+          <order attribute="defra_permittype" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <link-entity alias="a_0509dd5de85ce811a95c000d3ab31f97" name="defra_standardrule" from="defra_standardruleid" to="defra_standardruleid" link-type="outer" visible="false">
+            <attribute name="defra_rulesnamegovuk" />
+          </link-entity>
+          <attribute name="defra_permit_linesid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.2.1.18</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Waste Permit Lines" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>
