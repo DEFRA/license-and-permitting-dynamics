@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Step2_MigrateTeamDataAfterSolutionImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="399"
-  DTS:VersionGUID="{3C5714F5-AD44-444A-9905-58CD09BDEB91}">
+  DTS:VersionBuild="402"
+  DTS:VersionGUID="{C3DD6B63-25C4-4A11-B43C-96E679C9060D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -36,7 +36,7 @@
           ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=Masoud.Ghabachi@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA9G3Fs8M9wQQffw6kwchn2qASH0bPf1n047UCamzFE1wAAAAAOgAAAAAIAACAAAACsQk5XZmN+bJUKz7ou8eeInTc3wIAYWYVwj3ABTjp02iAAAADVEXalUDB33TtM8NExO/2m81mRDsk37YfJlmEr5JTaQUAAAADrlVR9uwIBRjZ0BL8lG+ZIj8pobpoSekcd1zQlaaQEzxP25dh2dCZ0VPbOc9ZTn4yUdiHQWtmF99AE6ilkGohE</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACd6hQRZWfyms5qhnxU4LDbrt/ZNYTESFZKn7DXTFV/lwAAAAAOgAAAAAIAACAAAACjbc71cTP47yuNCkq6TZAO8wl+HLn2SNHM55DqaEeUYyAAAABgZz5MGIW6mekvpUalfdeVYiaGd4MoImdLdo2dkDY5HEAAAADvqIB53/btY/q8UtyWrzrR5/kXahOSKSH6/NmXRAPsbG3pclgpKPOVjko1pPfEQ7XVzPWQc8nl5ayYVKQ/qcwr</Password>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -50,7 +50,7 @@
           ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=ninad.belwalker@defra.gov.uk;Domain=;OrganizationName=EA-LP-UAT;CrmServerUrl=https://ea-lp-uat.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
           <Password
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACQeWK+ZkyyHIlKM1G8YcyKLEHHH3XIFCf40ChyxSNNQQAAAAAOgAAAAAIAACAAAACPSu/gEJtW72bIF9/o9b0VgrWMlL1BHWpEW6A9Z+eJryAAAAAVfxpE9vDgjoDBbEZbrCucYTXPXJhtREdhxxhgF1yypEAAAABWXAPGHJCfsqSZzslHxD99Oe3Swfwj5R6p61OSwtk29h9X0WPuDylD45E5fJJgeH5192X8oOU3DUOrX4fT06s7</Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADQ/hm6NnGgnoK10Vj3N0/Q2SGvheGXgXCRSjSTEknCKgAAAAAOgAAAAAIAACAAAADhNCwENKZq+Ddu7UC4w9qShREDHqXT7CfZFCNAjnI3ICAAAABHL0r/HWD+n3gZzowlU9bSH8yEotI1nhOJoq5i3mQjpkAAAACpvg31BDv1TL3dwyXf81Fo9jtppZOzZxeJVwZp7gx8tqHFkDMdbcUGQhCh0X5FdD4NbMUk4ArNDBL3x6sj3btB</Password>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -11838,7 +11838,7 @@ on teams.teamid = rm.teamid</property>
                     <input
                       refId="Package\Sequence Container\Migrate Team Default Queues\Dynamics CRM Destination.Inputs[Input]"
                       errorOrTruncationOperation="Insert"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       hasSideEffects="true"
                       name="Input">
                       <inputColumns>
@@ -12716,8 +12716,127 @@ on teams.teamid = rm.teamid</property>
                     </output>
                   </outputs>
                 </component>
+                <component
+                  refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[ErrorLogs]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">true</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      connectionManagerRefId="Package.ConnectionManagers[(local).LPConfigDataMigration]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CrmErrorMessage]"
+                          cachedDataType="wstr"
+                          cachedLength="2048"
+                          cachedName="CrmErrorMessage"
+                          externalMetadataColumnId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Message]"
+                          lineageId="Package\Sequence Container\Migrate Team Default Queues\Dynamics CRM Destination.Outputs[Error Output].Columns[CrmErrorMessage]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Message]"
+                          dataType="nText"
+                          name="Message" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
               </components>
               <paths>
+                <path
+                  refId="Package\Sequence Container\Migrate Team Default Queues.Paths[Error Output]"
+                  endId="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Error Output"
+                  startId="Package\Sequence Container\Migrate Team Default Queues\Dynamics CRM Destination.Outputs[Error Output]" />
                 <path
                   refId="Package\Sequence Container\Migrate Team Default Queues.Paths[OLE DB Source Output]"
                   endId="Package\Sequence Container\Migrate Team Default Queues\Dynamics CRM Destination.Inputs[Input]"
@@ -15685,49 +15804,47 @@ on teams.teamid = rm.teamid</property>
     design-time-name="Package\Sequence Container\Create role membership if not exist">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="149.714285714286,42.2857142857143"
+          Size="149.6,42.4"
           Id="Package\Sequence Container\Create role membership if not exist\OLE DB Source"
           TopLeft="147,80" />
         <NodeLayout
-          Size="205.142857142858,42.2857142857143"
+          Size="204,41.6"
           Id="Package\Sequence Container\Create role membership if not exist\Dynamics CRM Destination"
           TopLeft="281,335" />
         <EdgeLayout
           Id="Package\Sequence Container\Create role membership if not exist.Paths[OLE DB Source Output]"
-          TopLeft="222,122">
+          TopLeft="221.8,122.4">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="161.5,213"
+              EndConnector="161.2,212.6"
               Start="0,0"
-              End="161.5,205.5">
+              End="161.2,205.1">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,102.5" />
+                    End="0,102.3" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,102.5"
-                    Point2="0,106.5"
-                    Point3="4,106.5" />
+                    Point1="0,102.3"
+                    Point2="0,106.3"
+                    Point3="4,106.3" />
                   <mssgle:LineSegment
-                    End="157.5,106.5" />
+                    End="157.2,106.3" />
                   <mssgle:CubicBezierSegment
-                    Point1="157.5,106.5"
-                    Point2="161.5,106.5"
-                    Point3="161.5,110.5" />
+                    Point1="157.2,106.3"
+                    Point2="161.2,106.3"
+                    Point3="161.2,110.3" />
                   <mssgle:LineSegment
-                    End="161.5,205.5" />
+                    End="161.2,205.1" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -15793,49 +15910,47 @@ on teams.teamid = rm.teamid</property>
     design-time-name="Package\Sequence Container\Delete Team Queues in Target that don't match the Source">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="282.857142857143,42.2857142857143"
+          Size="283.2,42.4"
           Id="Package\Sequence Container\Delete Team Queues in Target that don't match the Source\Get the Target Team Queues to be Deleted"
           TopLeft="180,174" />
         <NodeLayout
-          Size="464,42.2857142857143"
+          Size="463.2,41.6"
           Id="Package\Sequence Container\Delete Team Queues in Target that don't match the Source\Delete Team Queues in Target that don't match the Source Team Default Queues"
           TopLeft="104,442" />
         <EdgeLayout
           Id="Package\Sequence Container\Delete Team Queues in Target that don't match the Source.Paths[OLE DB Source Output]"
-          TopLeft="321.5,216">
+          TopLeft="321.6,216.4">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="14.5,226"
+              EndConnector="14,225.6"
               Start="0,0"
-              End="14.5,218.5">
+              End="14,218.1">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,109" />
+                    End="0,108.8" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,109"
-                    Point2="0,113"
-                    Point3="4,113" />
+                    Point1="0,108.8"
+                    Point2="0,112.8"
+                    Point3="4,112.8" />
                   <mssgle:LineSegment
-                    End="10.5,113" />
+                    End="10,112.8" />
                   <mssgle:CubicBezierSegment
-                    Point1="10.5,113"
-                    Point2="14.5,113"
-                    Point3="14.5,117" />
+                    Point1="10,112.8"
+                    Point2="14,112.8"
+                    Point3="14,116.8" />
                   <mssgle:LineSegment
-                    End="14.5,218.5" />
+                    End="14,218.1" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -16102,37 +16217,37 @@ on teams.teamid = rm.teamid</property>
     design-time-name="Package\Sequence Container\Load Source and Target Team Default Queues">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="218.285714285715,42.2857142857143"
+          Size="218.4,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Get Non-team Target Queues"
           TopLeft="910.450549450549,81.1428571428571" />
         <NodeLayout
-          Size="213.714285714286,42.2857142857143"
+          Size="213.6,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Save Source Queues to DB 1"
           TopLeft="29.1428571428571,217.714285714286" />
         <NodeLayout
-          Size="204.571428571429,42.2857142857143"
+          Size="204.8,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Save Target Queues to DB"
           TopLeft="632.857142857143,216.428571428571" />
         <NodeLayout
-          Size="225.142857142858,42.2857142857143"
+          Size="224.8,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Get Team Queues from Source"
           TopLeft="296.142857142857,88.7142857142857" />
         <NodeLayout
-          Size="222.857142857143,42.2857142857143"
+          Size="223.2,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Get Team Queues from Target"
           TopLeft="623.142857142857,91.7142857142857" />
         <NodeLayout
-          Size="254.285714285715,42.2857142857143"
+          Size="254.4,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Save Non-team Target Queues to DB"
           TopLeft="900,215.065934065934" />
         <NodeLayout
-          Size="219.428571428572,42.2857142857143"
+          Size="219.2,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Get Non-team Source Queues"
           TopLeft="28.7362637362637,86.6483516483516" />
         <NodeLayout
-          Size="205.142857142858,42.2857142857143"
+          Size="204.8,42.4"
           Id="Package\Sequence Container\Load Source and Target Team Default Queues\Save Source Queues to DB"
           TopLeft="312.285714285714,216.571428571429" />
         <EdgeLayout
@@ -16154,9 +16269,7 @@ on teams.teamid = rm.teamid</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -16178,9 +16291,7 @@ on teams.teamid = rm.teamid</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -16202,9 +16313,7 @@ on teams.teamid = rm.teamid</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -16226,9 +16335,7 @@ on teams.teamid = rm.teamid</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -16355,48 +16462,74 @@ on teams.teamid = rm.teamid</property>
     design-time-name="Package\Sequence Container\Migrate Team Default Queues">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="408,42.2857142857143"
+          Size="408,42.4"
           Id="Package\Sequence Container\Migrate Team Default Queues\Get Team Queues to Create or Update (with email address for target)"
-          TopLeft="291,362" />
+          TopLeft="318.2,159.6" />
         <NodeLayout
-          Size="205.142857142858,42.2857142857143"
+          Size="204,41.6"
           Id="Package\Sequence Container\Migrate Team Default Queues\Dynamics CRM Destination"
-          TopLeft="240,535" />
+          TopLeft="426.4,296.6" />
         <EdgeLayout
           Id="Package\Sequence Container\Migrate Team Default Queues.Paths[OLE DB Source Output]"
-          TopLeft="495,404.285714285714">
+          TopLeft="525.3,202">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-152.428571428571,130.714285714286"
+              EndConnector="0,94.6000000000001"
               Start="0,0"
-              End="-152.428571428571,123.214285714286">
+              End="0,87.1000000000001">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,61.3571428571429" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,61.3571428571429"
-                    Point2="0,65.3571428571429"
-                    Point3="-4,65.3571428571429" />
+                    End="0,87.1000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination"
+          TopLeft="517.6,378.4" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Migrate Team Default Queues.Paths[Error Output]"
+          TopLeft="528.4,338.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74.4000000000002,40.2"
+              Start="0,0"
+              End="74.4000000000002,32.7">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-148.428571428571,65.3571428571429" />
+                    End="0,16.1" />
                   <mssgle:CubicBezierSegment
-                    Point1="-148.428571428571,65.3571428571429"
-                    Point2="-152.428571428571,65.3571428571429"
-                    Point3="-152.428571428571,69.3571428571429" />
+                    Point1="0,16.1"
+                    Point2="0,20.1"
+                    Point3="4,20.1" />
                   <mssgle:LineSegment
-                    End="-152.428571428571,123.214285714286" />
+                    End="70.4000000000002,20.1" />
+                  <mssgle:CubicBezierSegment
+                    Point1="70.4000000000002,20.1"
+                    Point2="74.4000000000002,20.1"
+                    Point3="74.4000000000002,24.1" />
+                  <mssgle:LineSegment
+                    End="74.4000000000002,32.7" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
+              BoundingBox="8.8636132812501,25.1,56.6727734375,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -16515,5 +16648,18 @@ on teams.teamid = rm.teamid</property>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Migrate Team Default Queues\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
