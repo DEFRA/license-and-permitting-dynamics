@@ -18,6 +18,7 @@
           <cell name="defra_areaid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="defra_site_description" width="100" />
           <cell name="defra_balance_line_items" width="100" />
+          <cell name="defra_submittedon" width="100" />
         </row>
       </grid>
     </layoutxml>
@@ -29,16 +30,16 @@
           <attribute name="defra_regimeid" />
           <attribute name="defra_areaid" />
           <attribute name="defra_applicationnumber" />
-          <order attribute="defra_applicationnumber" descending="false" />
-          <filter type="and">
-            <condition attribute="defra_submittedon" operator="null" />
-            <condition attribute="statuscode" operator="eq" value="910400000" />
-            <condition attribute="defra_paymentreceived" operator="eq" value="1" />
-          </filter>
           <attribute name="defra_facility_description" />
           <attribute name="defra_site_description" />
           <attribute name="defra_balance_line_items" />
           <attribute name="defra_applicationtype" />
+          <order attribute="defra_applicationnumber" descending="false" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="eq" value="910400000" />
+            <condition attribute="defra_paymentreceived" operator="eq" value="1" />
+          </filter>
+          <attribute name="defra_submittedon" />
           <attribute name="defra_applicationid" />
         </entity>
       </fetch>
