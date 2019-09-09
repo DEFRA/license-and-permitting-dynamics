@@ -422,7 +422,7 @@
                     <Sequence DisplayName="StopWorkflowStep9: Successful">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep9_1" />
-                        <Variable x:TypeArguments="x:String" Default="936240ff-e408-4a7f-a383-f5145da39141" Name="stepLabelLabelId" />
+                        <Variable x:TypeArguments="x:String" Default="ca6869af-9427-4024-9dc2-f2eb012c7ad0" Name="stepLabelLabelId" />
                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                           <Variable.Default>
                             <Literal x:TypeArguments="x:String" Value="" />
@@ -510,6 +510,43 @@
                 <mxswa:ActivityReference.Properties>
                   <sco:Collection x:TypeArguments="Variable" x:Key="Variables" />
                   <sco:Collection x:TypeArguments="Activity" x:Key="Activities">
+                    <Sequence DisplayName="UpdateStep15: Update Duly making complete stage metadata">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep15_1" />
+                        <Variable x:TypeArguments="x:Object" Name="UpdateStep15_2" />
+                      </Sequence.Variables>
+                      <Assign x:TypeArguments="mxs:Entity" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" Value="[New Entity(&quot;defra_application&quot;)]" />
+                      <Assign x:TypeArguments="s:Guid" To="[CreatedEntities(&quot;primaryEntity#Temp&quot;).Id]" Value="[InputEntities(&quot;primaryEntity&quot;).Id]" />
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">RetrieveCurrentTime</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters" xml:space="preserve">[New Object() {  }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep15_2]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:ActivityReference AssemblyQualifiedName="Microsoft.Crm.Workflow.Activities.EvaluateExpression, Microsoft.Crm.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" DisplayName="EvaluateExpression">
+                        <mxswa:ActivityReference.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="ExpressionOperator">SelectFirstNonNull</InArgument>
+                          <InArgument x:TypeArguments="s:Object[]" x:Key="Parameters">[New Object() { UpdateStep15_2 }]</InArgument>
+                          <InArgument x:TypeArguments="s:Type" x:Key="TargetType">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                          </InArgument>
+                          <OutArgument x:TypeArguments="x:Object" x:Key="Result">[UpdateStep15_1]</OutArgument>
+                        </mxswa:ActivityReference.Arguments>
+                      </mxswa:ActivityReference>
+                      <mxswa:SetEntityProperty Attribute="defra_dulymadecompletedate" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" Value="[UpdateStep15_1]">
+                        <mxswa:SetEntityProperty.TargetType>
+                          <InArgument x:TypeArguments="s:Type">
+                            <mxswa:ReferenceLiteral x:TypeArguments="s:Type" Value="s:DateTime" />
+                          </InArgument>
+                        </mxswa:SetEntityProperty.TargetType>
+                      </mxswa:SetEntityProperty>
+                      <mxswa:UpdateEntity DisplayName="UpdateStep15" Entity="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" EntityName="defra_application" />
+                      <Assign x:TypeArguments="mxs:Entity" To="[InputEntities(&quot;primaryEntity&quot;)]" Value="[CreatedEntities(&quot;primaryEntity#Temp&quot;)]" />
+                    </Sequence>
                     <mxswa:SetState DisplayName="SetStateStep10: Change status to Duly making complete" Entity="[InputEntities(&quot;primaryEntity&quot;)]" EntityId="[InputEntities(&quot;primaryEntity&quot;).Id]" EntityName="defra_application">
                       <mxswa:SetState.State>
                         <InArgument x:TypeArguments="mxs:OptionSetValue">
@@ -714,7 +751,7 @@
                     <Sequence DisplayName="StopWorkflowStep11: Successful">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Object" Name="StopWorkflowStep11_1" />
-                        <Variable x:TypeArguments="x:String" Default="c24184f7-0e05-48e1-b983-d267a0c220ba" Name="stepLabelLabelId" />
+                        <Variable x:TypeArguments="x:String" Default="d0147b23-bd13-4144-86c7-a2b9b22143d7" Name="stepLabelLabelId" />
                         <Variable x:TypeArguments="x:String" Name="stepLabelDescription">
                           <Variable.Default>
                             <Literal x:TypeArguments="x:String" Value="" />
