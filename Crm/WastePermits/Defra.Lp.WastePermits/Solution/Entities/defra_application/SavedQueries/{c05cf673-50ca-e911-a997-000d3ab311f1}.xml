@@ -11,7 +11,8 @@
       <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
         <row name="result" id="defra_applicationid">
           <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="defra_regimeid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="defra_businesstrackid" width="100" />
           <cell name="defra_applicationtype" width="100" />
           <cell name="defra_areaid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
@@ -28,7 +29,6 @@
       <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
         <entity name="defra_application">
           <attribute name="defra_businesstrackid" />
-          <attribute name="defra_regimeid" />
           <attribute name="defra_areaid" />
           <attribute name="defra_applicationnumber" />
           <attribute name="defra_dulymadecompletedby" />
@@ -51,6 +51,8 @@
             <condition attribute="defra_dulymadecompletedby" operator="not-null" />
             <condition attribute="defra_determinedbyid" operator="not-null" />
           </filter>
+          <attribute name="defra_site_description" />
+          <attribute name="defra_customerid" />
           <attribute name="defra_applicationid" />
         </entity>
       </fetch>
