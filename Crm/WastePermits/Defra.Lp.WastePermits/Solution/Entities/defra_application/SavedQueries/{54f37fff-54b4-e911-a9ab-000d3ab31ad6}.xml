@@ -11,12 +11,12 @@
       <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
         <row name="result" id="defra_applicationid">
           <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="defra_regimeid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="defra_businesstrackid" width="100" />
           <cell name="defra_applicationtype" width="100" />
           <cell name="defra_facility_description" width="100" />
           <cell name="defra_areaid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="defra_site_description" width="100" />
           <cell name="defra_balance_line_items" width="100" />
           <cell name="defra_submittedon" width="100" />
         </row>
@@ -27,19 +27,19 @@
       <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
         <entity name="defra_application">
           <attribute name="defra_businesstrackid" />
-          <attribute name="defra_regimeid" />
           <attribute name="defra_areaid" />
           <attribute name="defra_applicationnumber" />
           <attribute name="defra_facility_description" />
           <attribute name="defra_site_description" />
           <attribute name="defra_balance_line_items" />
           <attribute name="defra_applicationtype" />
+          <attribute name="defra_submittedon" />
+          <attribute name="defra_customerid" />
           <order attribute="defra_applicationnumber" descending="false" />
           <filter type="and">
             <condition attribute="statuscode" operator="eq" value="910400000" />
-            <condition attribute="defra_paymentreceived" operator="eq" value="1" />
+            <condition attribute="defra_payment_required" operator="eq" value="1" />
           </filter>
-          <attribute name="defra_submittedon" />
           <attribute name="defra_applicationid" />
         </entity>
       </fetch>

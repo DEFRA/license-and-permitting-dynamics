@@ -11,7 +11,8 @@
       <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
         <row name="result" id="defra_applicationid">
           <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="defra_regimeid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="defra_businesstrackid" width="100" />
           <cell name="defra_applicationtype" width="100" />
           <cell name="statuscode" width="100" />
@@ -26,17 +27,25 @@
       <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
         <entity name="defra_application">
           <attribute name="defra_businesstrackid" />
-          <attribute name="defra_regimeid" />
           <attribute name="defra_areaid" />
           <attribute name="defra_applicationnumber" />
-          <order attribute="defra_submittedon" descending="false" />
-          <filter type="and">
-            <condition attribute="ownerid" operator="eq-userid" />
-          </filter>
           <attribute name="statuscode" />
           <attribute name="defra_applicationtype" />
           <attribute name="defra_localauthority" />
           <attribute name="defra_submittedon" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_customerid" />
+          <order attribute="defra_submittedon" descending="false" />
+          <filter type="and">
+            <condition attribute="ownerid" operator="eq-userid" />
+            <condition attribute="statuscode" operator="not-in">
+              <value>1</value>
+              <value>910400007</value>
+              <value>910400013</value>
+              <value>2</value>
+              <value>910400020</value>
+            </condition>
+          </filter>
           <attribute name="defra_applicationid" />
         </entity>
       </fetch>

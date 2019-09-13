@@ -11,10 +11,10 @@
       <grid name="resultset" jump="title" select="1" preview="1" icon="1">
         <row name="result" id="objectid" multiobjectidfield="objecttypecode">
           <cell name="queueitemid" ishidden="1" width="150" />
-          <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_applicationnumber" width="100" disableSorting="1" />
-          <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_regimeid" width="100" disableSorting="1" />
+          <cell name="title" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_customerid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_site_description" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_businesstrackid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_customerid" width="100" disableSorting="1" />
           <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_primarycontactid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="a_4164b7ab0026e811a951000d3ab3984f.defra_areaid" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="a_4164b7ab0026e811a951000d3ab3984f.createdon" width="100" disableSorting="1" />
@@ -33,11 +33,11 @@
         <entity name="queueitem">
           <attribute name="queueitemid" />
           <attribute name="objecttypecode" />
+          <attribute name="title" />
           <order attribute="queueitemid" descending="false" />
           <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="a_4164b7ab0026e811a951000d3ab3984f">
             <attribute name="defra_businesstrackid" />
             <attribute name="statuscode" />
-            <attribute name="defra_regimeid" />
             <attribute name="defra_paymentreceived" />
             <attribute name="defra_customerid" />
             <attribute name="defra_localauthority" />
@@ -47,10 +47,18 @@
             <attribute name="defra_areaid" />
             <attribute name="defra_primarycontactid" />
             <attribute name="defra_submittedon" />
+            <attribute name="defra_site_description" />
             <filter type="and">
               <condition attribute="ownerid" operator="eq-userid" />
+              <condition attribute="statuscode" operator="not-in">
+                <value>1</value>
+                <value>910400019</value>
+                <value>910400020</value>
+                <value>2</value>
+                <value>910400013</value>
+                <value>910400007</value>
+              </condition>
             </filter>
-            <attribute name="defra_applicationnumber" />
           </link-entity>
           <attribute name="objectid" />
         </entity>
