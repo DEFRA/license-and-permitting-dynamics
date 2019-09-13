@@ -12,7 +12,8 @@
         <row name="result" id="objectid" multiobjectidfield="objecttypecode">
           <cell name="queueitemid" ishidden="1" width="150" />
           <cell name="title" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="ab.defra_regimeid" width="100" disableSorting="1" />
+          <cell name="ab.defra_customerid" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="ab.defra_site_description" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="ab.defra_businesstrackid" width="100" disableSorting="1" />
           <cell name="aa.defra_applicationtype" width="100" disableSorting="1" />
           <cell name="aa.defra_facility_description" width="100" disableSorting="1" />
@@ -39,12 +40,13 @@
           </link-entity>
           <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="ab">
             <attribute name="defra_businesstrackid" />
-            <attribute name="defra_regimeid" />
             <filter type="and">
               <condition attribute="defra_admincheckscompleted" operator="eq" value="1" />
               <condition attribute="statuscode" operator="eq" value="910400015" />
             </filter>
             <attribute name="defra_localauthority" />
+            <attribute name="defra_site_description" />
+            <attribute name="defra_customerid" />
           </link-entity>
           <attribute name="objectid" />
         </entity>
