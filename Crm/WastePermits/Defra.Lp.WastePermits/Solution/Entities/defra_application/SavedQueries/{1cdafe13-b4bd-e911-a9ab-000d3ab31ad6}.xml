@@ -11,7 +11,8 @@
       <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
         <row name="result" id="defra_applicationid">
           <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-          <cell name="defra_regimeid" width="100" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
           <cell name="defra_businesstrackid" width="100" />
           <cell name="defra_applicationtype" width="100" />
           <cell name="defra_facility_description" width="100" />
@@ -28,21 +29,32 @@
       <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
         <entity name="defra_application">
           <attribute name="defra_businesstrackid" />
-          <attribute name="defra_regimeid" />
           <attribute name="defra_areaid" />
           <attribute name="defra_applicationnumber" />
-          <order attribute="defra_submittedon" descending="false" />
-          <link-entity name="systemuser" from="systemuserid" to="owninguser" alias="aa">
-            <filter type="and">
-              <condition attribute="parentsystemuserid" operator="eq-userid" />
-            </filter>
-          </link-entity>
           <attribute name="defra_facility_description" />
           <attribute name="defra_applicationtype" />
           <attribute name="statuscode" />
           <attribute name="defra_dulymadecompletedby" />
           <attribute name="defra_determinedbyid" />
           <attribute name="defra_submittedon" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_customerid" />
+          <order attribute="defra_submittedon" descending="false" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="not-in">
+              <value>910400019</value>
+              <value>1</value>
+              <value>910400020</value>
+              <value>910400013</value>
+              <value>910400007</value>
+              <value>2</value>
+            </condition>
+          </filter>
+          <link-entity name="systemuser" from="systemuserid" to="owninguser" alias="aa">
+            <filter type="and">
+              <condition attribute="parentsystemuserid" operator="eq-userid" />
+            </filter>
+          </link-entity>
           <attribute name="defra_applicationid" />
         </entity>
       </fetch>
