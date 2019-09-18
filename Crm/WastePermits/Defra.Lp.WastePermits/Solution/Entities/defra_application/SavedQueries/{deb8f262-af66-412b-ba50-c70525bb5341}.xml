@@ -1,61 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<savedquery>
-  <IsCustomizable>1</IsCustomizable>
-  <CanBeDeleted>0</CanBeDeleted>
-  <isquickfindquery>0</isquickfindquery>
-  <isprivate>0</isprivate>
-  <isdefault>1</isdefault>
-  <savedqueryid>{deb8f262-af66-412b-ba50-c70525bb5341}</savedqueryid>
-  <layoutxml>
-    <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
-      <row name="result" id="defra_applicationid">
-        <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
-        <cell name="defra_regimeid" width="100" />
-        <cell name="defra_applicationtype" width="100" />
-        <cell name="defra_source" width="100" />
-        <cell name="defra_penfolddate" width="125" imageproviderfunctionname="Views.DisplayApplicationPendfoldIcon" imageproviderwebresource="$webresource:defra_view_functions" />
-        <cell name="defra_customerid" width="100" />
-        <cell name="defra_applicant_organisation_type" width="100" />
-        <cell name="defra_primarycontactid" width="100" />
-        <cell name="statuscode" width="100" />
-        <cell name="defra_payment_required" width="100" />
-        <cell name="defra_dulymadechecklistid" width="100" />
-        <cell name="defra_balance" width="100" />
-        <cell name="ownerid" width="100" />
-        <cell name="defra_permitid" width="100" />
-        <cell name="createdon" width="125" />
-      </row>
-    </grid>
-  </layoutxml>
-  <querytype>0</querytype>
-  <fetchxml>
-    <fetch version="1.0" mapping="logical">
-      <entity name="defra_application">
-        <attribute name="createdon" />
-        <order attribute="createdon" descending="true" />
-        <filter type="and">
-          <condition attribute="statecode" operator="eq" value="0" />
-        </filter>
-        <attribute name="statuscode" />
-        <attribute name="defra_source" />
-        <attribute name="defra_permitid" />
-        <attribute name="ownerid" />
-        <attribute name="defra_dulymadechecklistid" />
-        <attribute name="defra_balance" />
-        <attribute name="defra_applicationtype" />
-        <attribute name="defra_applicationnumber" />
-        <attribute name="defra_primarycontactid" />
-        <attribute name="defra_customerid" />
-        <attribute name="defra_payment_required" />
-        <attribute name="defra_penfolddate" />
-        <attribute name="defra_applicant_organisation_type" />
-        <attribute name="defra_regimeid" />
-        <attribute name="defra_applicationid" />
-      </entity>
-    </fetch>
-  </fetchxml>
-  <IntroducedVersion>1.0.0.0</IntroducedVersion>
-  <LocalizedNames>
-    <LocalizedName description="Active Applications" languagecode="1033" />
-  </LocalizedNames>
-</savedquery>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{deb8f262-af66-412b-ba50-c70525bb5341}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" icon="1" preview="1">
+        <row name="result" id="defra_applicationid">
+          <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_regimeid" width="100" />
+          <cell name="defra_businesstrackid" width="100" />
+          <cell name="defra_applicationtype" width="100" />
+          <cell name="defra_customerid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_localauthority" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="statuscode" width="100" />
+          <cell name="defra_payment_required" width="100" />
+          <cell name="defra_dulymadechecklistid" width="100" />
+          <cell name="defra_balance" width="100" />
+          <cell name="ownerid" width="100" />
+          <cell name="defra_submittedon" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_dulymadecompletedate" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_determinationcompleteddate" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_permitid" width="100" />
+          <cell name="a_fea319c40026e811a951000d3ab3984f.defra_permitissuedate" width="150" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_application">
+          <attribute name="statuscode" />
+          <attribute name="defra_permitid" />
+          <attribute name="ownerid" />
+          <attribute name="defra_dulymadechecklistid" />
+          <attribute name="defra_balance" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_payment_required" />
+          <attribute name="defra_regimeid" />
+          <attribute name="defra_businesstrackid" />
+          <attribute name="defra_site_description" />
+          <attribute name="defra_localauthority" />
+          <attribute name="defra_submittedon" />
+          <attribute name="defra_dulymadecompletedate" />
+          <attribute name="defra_determinationcompleteddate" />
+          <order attribute="defra_submittedon" descending="false" />
+          <order attribute="statuscode" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+            <condition attribute="statuscode" operator="not-in">
+              <value>910400019</value>
+              <value>1</value>
+              <value>910400013</value>
+              <value>2</value>
+              <value>910400014</value>
+              <value>910400020</value>
+              <value>910400007</value>
+            </condition>
+            <condition attribute="defra_payment_required" operator="eq" value="0" />
+            <condition attribute="defra_submittedon" operator="not-null" />
+          </filter>
+          <link-entity name="defra_permit" from="defra_permitid" to="defra_permitid" visible="false" link-type="outer" alias="a_fea319c40026e811a951000d3ab3984f">
+            <attribute name="defra_permitissuedate" />
+          </link-entity>
+          <attribute name="defra_applicationid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Applications" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

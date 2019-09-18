@@ -7,12 +7,12 @@
   DTS:CreatorName="KAL-VM-VISIO\Kal"
   DTS:DTSID="{354D5399-1CA9-41BE-89A4-5F730511B9CA}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="14.0.0800.98"
+  DTS:LastModifiedProductVersion="13.0.2165.0"
   DTS:LocaleID="2057"
   DTS:ObjectName="Step1_MigrateBaseDataBeforeSolutionsImport"
   DTS:PackageType="5"
-  DTS:VersionBuild="299"
-  DTS:VersionGUID="{A0FB436C-BCEC-4FB7-9C07-99636BBA4499}">
+  DTS:VersionBuild="303"
+  DTS:VersionGUID="{3587B94E-71B6-4FEA-87BE-0833E408B723}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,7 +23,7 @@
       DTS:ObjectName="(local).LPConfigDataMigration">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=DEFRASSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,7 +33,11 @@
       DTS:ObjectName="Dynamics CRM Source">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=hugo.herrera@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False" />
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=Masoud.Ghabachi@defradev.onmicrosoft.com;Domain=;OrganizationName=AG-EA-LP-DEV-WASTE;CrmServerUrl=https://ag-ea-lp-dev-waste.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACZs1G4FBd9L0ydSlJzGA6I8IXx7zevwErWMXW9+3AMgAAAAAAOgAAAAAIAACAAAADiEqEwPNc5kZ0tyUuC7poiREQDgrqao21MOfN15im7vCAAAAANI8oCiHddH08Thot4Gmif8YcbRnvExEr3n7FxEooU1EAAAABkvbkrog/F9xVrtDBO6VdWZCXu4p6vLWbEwPPb33n9SMdSKIkO1J1h7WWNmurBnCmnwD8Gz3Ktj0HCxC2fG/vc</Password>
+        </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -43,7 +47,11 @@
       DTS:ObjectName="Dynamics CRM Target">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=SA-EA-LP-Prod-ServiceTier@Defra.onmicrosoft.com;Domain=;OrganizationName=EA-LP-Prod;CrmServerUrl=https://ea-lp-prod.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False" />
+          ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm4.dynamics.com;UserName=ninad.belwalker@defra.gov.uk;Domain=;OrganizationName=EA-LP-Prod;CrmServerUrl=https://ea-lp-prod.api.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+          <Password
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAZXWddhaUe0qGRaMmUxDoEwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACibyM9cfabkBmEJv+6h6iqlbYXo+PgXBJ909O+f42GgAAAAAAOgAAAAAIAACAAAAAOqwhkFs0Ezn12FaQQNLwtCxh5XogCXNgN5wc5S/ohByAAAABFVjL7da+x2m9eewwsZCne+ptEDyJPqxBOMBSIwlusQkAAAACEnNKGeWKaMDd94U8Wu7otd3JjFr09W28aC17yKtUPURLUyz9ZfucpNgpkVZSxB9oNpDbbdbiTLFeM1GtTFrf1</Password>
+        </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -1452,7 +1460,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Read Target Root BU Id and Name"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -6344,7 +6352,7 @@ from srcbusinessunit as bu</property>
           DTS:LocaleID="-1"
           DTS:ObjectName="Truncate local DB"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -6404,11 +6412,11 @@ from srcbusinessunit as bu</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="196,42"
+          Size="196,41.6"
           Id="Package\BU\Load BUs to the local DB"
           TopLeft="45.0000002724784,144.942857226204" />
         <NodeLayout
-          Size="191,42"
+          Size="191.2,41.6"
           Id="Package\BU\Truncate BU Local table"
           TopLeft="43.3673471834499,54.0521011075346" />
         <EdgeLayout
@@ -6436,16 +6444,16 @@ from srcbusinessunit as bu</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="262,435"
-          Size="262,478"
+          PanelSize="262.4,435.2"
+          Size="262.4,478.4"
           Id="Package\BU"
           TopLeft="1824.34240187002,818.478628174637" />
         <NodeLayout
-          Size="195,42"
+          Size="195.2,41.6"
           Id="Package\General Core Data\Migrate Schedule Entries"
           TopLeft="53.571432600216,171.929413755212" />
         <NodeLayout
-          Size="192,42"
+          Size="192,41.6"
           Id="Package\General Core Data\Read Target Root BU Id and Name"
           TopLeft="30,29" />
         <EdgeLayout
@@ -6486,23 +6494,23 @@ from srcbusinessunit as bu</property>
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="324,444"
-          Size="324,487"
+          Size="324,487.2"
           Id="Package\General Core Data"
           TopLeft="2120.34240187002,818.842966317286" />
         <NodeLayout
-          Size="168,42"
+          Size="168,41.6"
           Id="Package\Teams\Create BUs to Dest"
           TopLeft="59.6666666666669,72.0000000000001" />
         <NodeLayout
-          Size="198,42"
+          Size="198.4,41.6"
           Id="Package\Teams\Migrate Area Teams Only"
           TopLeft="50.5238123653697,325" />
         <NodeLayout
-          Size="149,42"
+          Size="148.8,41.6"
           Id="Package\Teams\Migrate Teams"
           TopLeft="69.238099266883,265.929413755212" />
         <NodeLayout
-          Size="162,42"
+          Size="161.6,41.6"
           Id="Package\Teams\Truncate local DB"
           TopLeft="69.2894923646276,165.598345177965" />
         <EdgeLayout
@@ -6553,7 +6561,7 @@ from srcbusinessunit as bu</property>
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="316,472"
-          Size="316,515"
+          Size="316,515.2"
           Id="Package\Teams"
           TopLeft="1376.94444172423,804.509632983953" />
         <EdgeLayout
