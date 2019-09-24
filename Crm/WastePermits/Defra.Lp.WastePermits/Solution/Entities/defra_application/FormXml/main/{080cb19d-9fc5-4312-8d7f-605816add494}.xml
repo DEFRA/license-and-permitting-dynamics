@@ -130,7 +130,7 @@
                         <labels>
                           <label description="Regime" languagecode="1033" />
                         </labels>
-                        <control id="defra_regimeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_regimeid" disabled="false" />
+                        <control id="defra_regimeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="defra_regimeid" disabled="false" uniqueid="{a984b8cc-dde7-25dd-6ab2-daa7b57e140d}" />
                       </cell>
                     </row>
                     <row>
@@ -2309,6 +2309,7 @@
       <formLibraries>
         <Library name="defra_waste_application_form_events.js" libraryUniqueId="{a2a69e12-11da-a76a-29ee-e728db327980}" />
         <Library name="defra_/applications/application_form_events.js" libraryUniqueId="{9ba127ad-3e57-400d-b615-dde2580a9862}" />
+        <Library name="defra_application_onload" libraryUniqueId="{2245b21d-7387-3d83-48e0-5d4ecd3a9095}" />
       </formLibraries>
       <events>
         <event name="onload" application="false" active="false">
@@ -2319,6 +2320,7 @@
             <Handler functionName="PaymentReceived" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{2c2a109e-ab69-41b2-4ad4-471176dab12a}" enabled="true" parameters="" passExecutionContext="false" />
             <Handler functionName="IntelligenceCheck" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{6db2b26b-d249-625e-8c24-55c825cd7664}" enabled="true" parameters="" passExecutionContext="false" />
             <Handler functionName="Applications.OnLoad" libraryName="defra_/applications/application_form_events.js" handlerUniqueId="{a56b9ad9-9a44-dbe0-6e8b-2eb3ce5a1763}" enabled="true" parameters="" passExecutionContext="false" />
+            <Handler functionName="displayDulyMakingChecklistTab" libraryName="defra_waste_application_form_events.js" handlerUniqueId="{7ba95cbb-a26a-c0e9-e997-7418da45a19d}" enabled="true" parameters="" passExecutionContext="true" />
           </Handlers>
         </event>
         <event name="onsave" application="false" active="false">
@@ -2357,7 +2359,7 @@
     <IsCustomizable>1</IsCustomizable>
     <CanBeDeleted>1</CanBeDeleted>
     <LocalizedNames>
-      <LocalizedName description="Permit" languagecode="1033" />
+      <LocalizedName description="Application form" languagecode="1033" />
     </LocalizedNames>
   </systemform>
 </forms>

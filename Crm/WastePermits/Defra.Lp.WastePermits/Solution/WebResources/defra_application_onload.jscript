@@ -1,0 +1,14 @@
+function displayDulyMakingChecklistTab(executionContext) {
+    var formContext = executionContext.getFormContext();
+    if (formContext.ui.getFormType() == 2 && formContext.getAttribute('defra_regimeid').getValue() != null) {
+        var regimeName = formContext.getAttribute('defra_regimeid').getValue()[0].name;        
+        switch (regimeName) {            
+            case "MCP":
+                formContext.ui.tabs.get("tab_12").setVisible(false);
+                break;
+            default:
+                formContext.ui.tabs.get("tab_12").setVisible(true);
+                break;
+        }
+    }
+}
