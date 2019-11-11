@@ -91,11 +91,14 @@ namespace Defra.Lp.Plugins
                 // Use the Document Location on the Permit as the parent Document Location. It should already exist.
                 tracing.Trace("Creating sharePointdocumentlocation for Application (not a new application)");
                 Guid parentRef = adminService.FindPermitListInSharePoint(permitListRef.ToString(), (string)target["defra_permitnumber"]);
-                tracing.Trace("Permit List in SharePoint document location = {0}", parentRef.ToString());
+                tracing.Trace("Permit List in SharePoint document location1 = {0}", parentRef.ToString());
+
+                tracing.Trace("Application type= {0}", applicationType.Value);
 
                 // Permit document location does not exist, then create it, as required by partial transfers
-                if (parentRef == Guid.Empty && applicationType.Value == (int) defra_ApplicationType.Transfer)
+                if (parentRef == Guid.Empty && applicationType.Value == (int) defra_ApplicationType.Transfer || applicationType.Value == (int)defra_ApplicationType.Variation || applicationType.Value == (int)defra_ApplicationType.Surrender )
                 {
+                    tracing.Trace("Creating DocumentLocation");
                     // Create a document location for the permit as if it was a new application
                     CreateDocumentLocation(tracing, adminService, target, permitListRef, context);
                 }
