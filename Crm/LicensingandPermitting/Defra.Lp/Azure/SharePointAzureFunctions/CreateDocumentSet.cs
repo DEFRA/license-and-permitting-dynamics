@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 namespace Defra.Lp.SharePointAzureFunctions
 {
     public static class CreateDocumentSet
+
+
     {
         [FunctionName("CreateDocumentSet")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
@@ -68,23 +70,44 @@ namespace Defra.Lp.SharePointAzureFunctions
                     var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
                     log.Info(string.Format("Folder is {0}", permitFolder.Name));
 
+                   
+
                     // Get the Application document set content type
                     var ctApplication = GetByName(list.ContentTypes, data.ApplicationContentType.ToString());
                     log.Info(string.Format("Applicaction Content Type Id is {0}", ctApplication.Id.StringValue));
 
                     // Create the Document Set
+                    Folder f;
+
                     try
                     {
                         var ds = DocumentSet.Create(clientContext, permitFolder, applicationFolder, ctApplication.Id);
                         clientContext.ExecuteQuery();
                         documentSetUrl = ds.Value;
                         log.Info(string.Format("Document Set Id is {0}", documentSetUrl));
+                                               
                     }
                     catch (ServerException ex) when (ex.Message.StartsWith("A document, folder or document set with the name") && ex.Message.EndsWith("already exists."))
                     {
                         documentSetUrl = "Document set exists already";
                         log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
                     }
+
+                    // Create Complince folder
+                    try
+                    {
+                        log.Info("try to create Compliance folder...");
+                        var complinceFolder = DocumentSet.Create(clientContext, permitFolder, "Compliance", ctPermit.Id);
+                        clientContext.ExecuteQuery();
+                        log.Info("Compliance folder created");
+
+                    }
+                    catch (ServerException ex) when (ex.Message.StartsWith("A document, folder or document set with the name") && ex.Message.EndsWith("already exists."))
+                    {
+                        documentSetUrl = "Document set exists already";
+                        log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
+                    }
+                  
                 }
 
                 return req.CreateResponse(HttpStatusCode.OK, "{ \"DocumentSetUrl\" : \"" + documentSetUrl + "\" }");
