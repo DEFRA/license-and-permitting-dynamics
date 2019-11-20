@@ -103,7 +103,7 @@ namespace FakeXrmEasyTestProject
             var inputs = new Dictionary<string, object>();
             inputs.Add("GetContact", new EntityReference("contact", null));
             inputs.Add("GetAccount", new EntityReference("account", new Guid("95F84FA5-F3EF-49C6-AC51-AB307DCF4151")));
-            inputs.Add("GetOperatorType", new OptionSetValue((int)defra_organisation_type.Limitedcompany));
+           // inputs.Add("GetOperatorType", new OptionSetValue((int)defra_organisation_type.Limitedcompany));
 
 
             var partnerId = Guid.Parse("86C561FF-D2A7-E911-AA0A-000D3A2065C5");
