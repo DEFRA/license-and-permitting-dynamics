@@ -79,22 +79,6 @@ namespace Defra.Lp.WastePermits.Plugins
 
         }
 
-
-        /// <summary>
-        /// Main entry point for he business logic that the plug-in is to execute.
-        /// </summary>
-        /// <param name="localContext">The <see cref="LocalPluginContext"/> which contains the
-        /// <see cref="IPluginExecutionContext"/>,
-        /// <see cref="IOrganizationService"/>
-        /// and <see cref="ITracingService"/>
-        /// </param>
-        /// <remarks>
-        /// For improved performance, Microsoft Dynamics 365 caches plug-in instances.
-        /// The plug-in's Execute method should be written to be stateless as the constructor
-        /// is not called for every invocation of the plug-in. Also, multiple system threads
-        /// could execute the plug-in at the same time. All per invocation state information
-        /// is stored in the context. This means that you should not use global variables in plug-ins.
-        /// </remarks>
         protected override void ExecuteCrmPlugin(LocalPluginContext localContext)
         {
             if (localContext == null)
@@ -102,18 +86,26 @@ namespace Defra.Lp.WastePermits.Plugins
                 throw new InvalidPluginExecutionException("localContext");
             }
 
+            if (localContext.PluginExecutionContext.Depth>1)                    {
+                return;
+            }
+
+
             var serviceFactory = (IOrganizationServiceFactory)localContext.ServiceProvider.GetService(typeof(IOrganizationServiceFactory));
             _TracingService = localContext.TracingService;
             _Context = localContext.PluginExecutionContext;
             _Service = localContext.OrganizationService;
             _AdminService = serviceFactory.CreateOrganizationService(null);
 
+            _TracingService.Trace("Inside ExecuteCrmPlugin");
             //The pre Image 
             Entity preImageEntity = (_Context.PreEntityImages != null && _Context.PreEntityImages.Contains(PreImageAlias))
                     ? _Context.PreEntityImages[PreImageAlias] : null;
 
+            _TracingService.Trace("Message: " + _Context.MessageName);
             switch (_Context.MessageName)
             {
+                
                 case PluginMessages.Create:
                 case PluginMessages.Update:
 
@@ -121,9 +113,20 @@ namespace Defra.Lp.WastePermits.Plugins
                     {
                         Entity targetAppLine = (Entity)_Context.InputParameters["Target"];
 
+                        _TracingService.Trace("Check if it is discount?");
                         //Run only if Application Line
                         if (targetAppLine != null && targetAppLine.LogicalName == ApplicationLine.EntityLogicalName)
                         {
+
+                           
+                            if (targetAppLine.Attributes.Contains(defra_applicationline.Fields.defra_linetype) && ((ApplicationLineTypeValues)((OptionSetValue)targetAppLine[defra_applicationline.Fields.defra_linetype]).Value) == ApplicationLineTypeValues.Discount)
+                            {
+                                _TracingService.Trace("The line is discount?");
+                                // It is disocunt line so no action
+                                return;
+                            }
+
+                            _TracingService.Trace("The line is NOT discount");
                             // 1. Retrieve the Application
                             Guid? applicationId = this.GetApplicationId(preImageEntity, targetAppLine);
                             this.GetApplication(applicationId);
@@ -134,18 +137,21 @@ namespace Defra.Lp.WastePermits.Plugins
 
                             // 3. Price the Application Line
                             // TODO
+                            _TracingService.Trace("UpdateApplicationLinePrice...");
                             this.UpdateApplicationLinePrice(targetAppLine);
 
                             // 4. Discount all Application Lines
                             // TODO
 
                             // 5. Check for Duplicate Standard Rules on this Application
+                            _TracingService.Trace("CheckForDuplicateStandardRules...");
                             CheckForDuplicateStandardRules(targetAppLine);
 
                             // 6,7. Standard Rule Processing (Copy Waste Parameters to App Line, Create DMC)
                             // ProcessStandardRule()
                             if (targetAppLine.Contains("defra_standardruleid"))
                             {
+                                _TracingService.Trace("Contains  defra_standardruleid");
                                 //Retrieve the Standard Rule
                                 _TracingService.Trace("Calling RetrieveStandardRule");
                                 this.RetrieveStandardRule(targetAppLine, preImageEntity);
@@ -175,11 +181,12 @@ namespace Defra.Lp.WastePermits.Plugins
                     break;
 
                 case PluginMessages.Delete:
+                    _TracingService.Trace("Delete message");
                     UpdateApplicationOnStatusChange(ApplicationLineStates.Inactive);
                     break;
                 case PluginMessages.SetState:
                 case PluginMessages.SetStateDynamicEntity:
-
+                    _TracingService.Trace("SetStateDynamicEntity message");
                     // Check if Quote Entity is activated
                     if (_Context.InputParameters.Contains("EntityMoniker") &&
                         _Context.InputParameters["EntityMoniker"] is EntityReference &&
