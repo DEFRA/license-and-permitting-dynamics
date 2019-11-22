@@ -212,21 +212,28 @@ namespace Defra.Lp.WastePermits.Workflows
 
         private void CreateDiscountEntity(string name, decimal val, int dis, Guid appLineId, ApplicationLineDiscountTypeValues disType, Guid appId, Guid itemId)
         {
-            _TracingService.Trace("Inside CreateDiscountEntity item name is:" + name);
 
-            var disEnt = new Entity(defra_applicationline.EntityLogicalName);
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_name, name);
-            var m = new Money(-dis * val / 100);
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_value, m);
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_linetype, new OptionSetValue((int)ApplicationLineTypeValues.Discount));
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_parentapplicationline, new EntityReference(defra_applicationline.EntityLogicalName, appLineId));
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_discounttype, new OptionSetValue((int)disType));
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_applicationId, new EntityReference(defra_application.EntityLogicalName, appId));
-            disEnt.Attributes.Add(defra_applicationline.Fields.defra_itemid, new EntityReference(defra_item.EntityLogicalName,itemId));
+            var item= _Service.Retrieve(defra_item.EntityLogicalName, itemId, new ColumnSet(defra_item.Fields.defra_itemtypeid));
+            
+            // Not assessment
+            if (item != null && item.GetAttributeId(defra_item.Fields.defra_itemtypeid) != Guid.Parse("288C1ACD-34D9-E811-A96E-000D3A23443B"))
+            {
+
+                _TracingService.Trace("Inside CreateDiscountEntity item name is:" + name);
+
+                var disEnt = new Entity(defra_applicationline.EntityLogicalName);
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_name, name);
+                var m = new Money(-dis * val / 100);
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_value, m);
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_linetype, new OptionSetValue((int)ApplicationLineTypeValues.Discount));
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_parentapplicationline, new EntityReference(defra_applicationline.EntityLogicalName, appLineId));
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_discounttype, new OptionSetValue((int)disType));
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_applicationId, new EntityReference(defra_application.EntityLogicalName, appId));
+                disEnt.Attributes.Add(defra_applicationline.Fields.defra_itemid, new EntityReference(defra_item.EntityLogicalName, itemId));
 
 
-            _Service.Create(disEnt);
-
+                _Service.Create(disEnt);
+            }
             _TracingService.Trace("Finished CreateDiscountEntity");
 
 
