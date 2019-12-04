@@ -147,7 +147,7 @@ namespace Defra.Lp.WastePermits.Workflows
         private void UpdateApplicationLinePriceForAssociatedActivities(List<Entity> appLines)
         {
             _TracingService.Trace("Inside UpdateApplicationLinePriceForAssociatedActivities");
-            var itemIds =
+            var appLinesFound =
                     appLines.Select(e => new MyAppLine
                     {
                         LineType = e.GetAttributeValue<OptionSetValue>(defra_applicationline.Fields.defra_linetype).Value,
@@ -155,33 +155,35 @@ namespace Defra.Lp.WastePermits.Workflows
                         ItemId = e.GetAttributeIdOrDefault(defra_applicationline.Fields.defra_itemid),
                     }).ToList().Where(x => x.LineType != (int)ApplicationLineTypeValues.Discount);
 
-            var orCon = "";
-            foreach (var item in itemIds)
+            var inCon = "";
+            foreach (var item in appLinesFound)
             {
-                orCon += @"< condition attribute = 'defra_parentitem' operator= 'eq'   value = '{" + item.ItemId.ToString() + @"}' />";
+                inCon += @"<value  uitype='defra_item'>{" + item.ItemId.ToString() + @"}</value>";
             }
 
-            var fetch = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' encoding='Windows-1252' distinct='false'>
-                          <entity name='defra_itemsassociated'>
-                            <attribute name='defra_itemsassociatedid' />
-                            <attribute name='defra_associateditem' />
-                            <attribute name='defra_parentitem' />
-    
-                            <filter type='and'>
-                              <filter type='or'>
-                               " + WebUtility.HtmlEncode(orCon) + @"
-                              </filter>
-                            </filter>
-                          </entity>
-                        </fetch>";
-
-            var parentItems = _Service.RetrieveMultiple(new FetchExpression(fetch)).Entities.GroupBy(x => x.GetAttributeIdOrDefault("defra_associateditem"));
+            var fetch = @"<fetch>
+  <entity name='defra_itemsassociated'>
+   
+    <attribute name='defra_associateditem' />
+   
+  
+    <link-entity name='defra_item' from='defra_itemid' to='defra_parentitem' link-type='inner' alias='ad'>
+      <filter type='and'>
+        <condition attribute='defra_itemid' operator='in'>"
+          + inCon+@"
+        </condition>
+      </filter>
+    </link-entity>
+  </entity>
+</fetch>";
+        
+            var parentItems = _Service.RetrieveMultiple(new FetchExpression(fetch)).Entities;
 
             if (parentItems.Count() > 0)
             {
                 foreach (var associate in parentItems)
                 {
-                    var appLine = itemIds.FirstOrDefault(x => x.ItemId == (associate.Key));
+                    var appLine = appLinesFound.FirstOrDefault(x => x.ItemId == (associate.GetAttributeIdOrDefault("defra_associateditem")));
                     if (appLine != null)
                     {
 

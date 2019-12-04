@@ -28,7 +28,7 @@ namespace FakeXrmEasyTestProject
 
             //9569808e-fd09-ea11-a811-000d3a649fc7
 
-            var soleId = Guid.Parse("D8307C83-940B-EA11-A811-000D3ABAC0B9");
+            var soleId = Guid.Parse("2653dedd-8316-ea11-a811-000d3a44a2a9");
             var mainApp = new Entity("defra_application", soleId);
 
             var result = context.ExecuteCodeActivity<CreateDiscountLines>
