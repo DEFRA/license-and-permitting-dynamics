@@ -40,6 +40,7 @@ namespace Defra.Lp.SharePointAzureFunctions
 
                 using (ClientContext clientContext = new ClientContext(connectionString))
                 {
+                   
                     var dummy = new TaxonomyItem(clientContext, null);
 
                     var username = ConfigurationManager.ConnectionStrings["UserName"].ConnectionString;
@@ -67,7 +68,7 @@ namespace Defra.Lp.SharePointAzureFunctions
                     log.Info(string.Format("Permit Content Type Id is {0}", ctPermit.Id.StringValue));
 
                     // Create permit sub folder inside list root folder if it doesn't exist
-                    var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
+                    var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString(),log, data.ListName.ToString());
                     log.Info(string.Format("Folder is {0}", permitFolder.Name));
 
                    
@@ -128,36 +129,42 @@ namespace Defra.Lp.SharePointAzureFunctions
             return Enumerable.FirstOrDefault(cts, ct => ct.Name == name);
         }
 
-        private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId)
+        private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId, TraceWriter log,string parentName)
         {
-            // Check if the subfolder exists
-            clientContext.Load(folder);
-            var subFolders = folder.Folders;
-            clientContext.Load(folder.Folders);
-            clientContext.ExecuteQuery();
-            if (folder.Folders.Count > 0)
+            
+            var web = clientContext.Web;
+
+            log.Info("Try to GetFolderByServerRelativeUrl");
+            var result = web.GetFolderByServerRelativeUrl($"{parentName}/{subFolder}");
+            clientContext.Load(result);
+
+            try
             {
-                foreach (Folder fd in folder.Folders)
-                {
-                    if (fd.Name.ToUpper() == subFolder.ToUpper())
-                    {
-                        // Already exists
-                        return fd;
-                    }
-                }
+                clientContext.ExecuteQuery();
+            }
+            catch(Exception ex) when (ex.Message.Contains("File Not Found."))
+            {
+
+                log.Info($"Folder with name {subFolder} dose not exit. Inside catch");
+                // Create the folder
+
+                var newFolder = folder.Folders.Add(subFolder);
+
+                // Set the content type 
+                newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
+                newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
+                newFolder.ListItemAllFields.Update();
+                clientContext.Load(newFolder);
+                log.Info($"Try to ExecuteQuery to create {subFolder}");
+                clientContext.ExecuteQuery();
+                log.Info("Created");
+                return newFolder;
             }
 
-            // Create the folder
-            var newFolder = folder.Folders.Add(subFolder);
 
-            // Set the content type 
-            newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
-            newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
-            newFolder.ListItemAllFields.Update();
-            clientContext.Load(newFolder);
-            clientContext.ExecuteQuery();
+            return result;
+            
 
-            return newFolder;
         }
     }
 }
