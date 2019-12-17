@@ -16,6 +16,9 @@ namespace WastePermits.Model.EarlyBound
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AADGroup = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Access = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

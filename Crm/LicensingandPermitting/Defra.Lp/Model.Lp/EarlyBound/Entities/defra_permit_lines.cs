@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_permit_linesState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_permit_lines")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_permit_lines : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -56,6 +56,12 @@ namespace Lp.Model.EarlyBound
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 			public const string defra_defra_permit_defra_permit_lines_permitid = "defra_defra_permit_defra_permit_lines_permitid";
+			public const string lk_defra_permit_lines_createdby = "lk_defra_permit_lines_createdby";
+			public const string lk_defra_permit_lines_createdonbehalfby = "lk_defra_permit_lines_createdonbehalfby";
+			public const string lk_defra_permit_lines_modifiedby = "lk_defra_permit_lines_modifiedby";
+			public const string lk_defra_permit_lines_modifiedonbehalfby = "lk_defra_permit_lines_modifiedonbehalfby";
+			public const string team_defra_permit_lines = "team_defra_permit_lines";
+			public const string user_defra_permit_lines = "user_defra_permit_lines";
 		}
 		
 		/// <summary>
@@ -517,6 +523,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_permit_defra_permit_lines_permitid");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_permit>("defra_defra_permit_defra_permit_lines_permitid", null, value);
 				this.OnPropertyChanged("defra_defra_permit_defra_permit_lines_permitid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_permit_lines_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_permit_lines_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_permit_lines_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_permit_lines_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_permit_lines_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_permit_lines_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_permit_lines_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_permit_lines_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_permit_lines_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_permit_lines_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_permit_lines_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_permit_lines_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_permit_lines_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_permit_lines_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_permit_lines_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_permit_lines_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_permit_lines_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_permit_lines
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_permit_lines")]
+		public Lp.Model.EarlyBound.Team team_defra_permit_lines
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_permit_lines", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_permit_lines
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_permit_lines")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_permit_lines
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_permit_lines", null);
 			}
 		}
 		

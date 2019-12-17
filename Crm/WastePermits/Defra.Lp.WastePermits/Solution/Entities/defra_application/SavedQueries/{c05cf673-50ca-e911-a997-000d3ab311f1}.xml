@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{c05cf673-50ca-e911-a997-000d3ab311f1}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="defra_name" select="1" preview="1" icon="1">
+        <row name="result" id="defra_applicationid">
+          <cell name="defra_applicationnumber" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_customerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_site_description" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_businesstrackid" width="100" />
+          <cell name="defra_applicationtype" width="100" />
+          <cell name="defra_areaid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_facility_description" width="100" />
+          <cell name="defra_localauthority" width="100" />
+          <cell name="defra_dulymadecompletedby" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_determinedbyid" width="200" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="defra_submittedon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="defra_application">
+          <attribute name="defra_businesstrackid" />
+          <attribute name="defra_areaid" />
+          <attribute name="defra_applicationnumber" />
+          <attribute name="defra_dulymadecompletedby" />
+          <attribute name="defra_determinedbyid" />
+          <attribute name="defra_localauthority" />
+          <attribute name="defra_facility_description" />
+          <attribute name="defra_applicationtype" />
+          <attribute name="defra_submittedon" />
+          <order attribute="defra_applicationnumber" descending="false" />
+          <filter type="and">
+            <condition attribute="statuscode" operator="in">
+              <value>910400017</value>
+              <value>910400001</value>
+              <value>910400023</value>
+              <value>910400005</value>
+              <value>910400018</value>
+              <value>910400002</value>
+              <value>910400030</value>
+            </condition>
+            <condition attribute="defra_dulymadecompletedby" operator="not-null" />
+            <condition attribute="defra_determinedbyid" operator="not-null" />
+          </filter>
+          <attribute name="defra_site_description" />
+          <attribute name="defra_customerid" />
+          <attribute name="defra_applicationid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.20.0.27</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="NEW Applications - All allocated" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

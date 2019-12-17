@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_secureconfigurationState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_secureconfiguration")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_secureconfiguration : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -55,6 +55,12 @@ namespace Lp.Model.EarlyBound
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
+			public const string lk_defra_secureconfiguration_createdby = "lk_defra_secureconfiguration_createdby";
+			public const string lk_defra_secureconfiguration_createdonbehalfby = "lk_defra_secureconfiguration_createdonbehalfby";
+			public const string lk_defra_secureconfiguration_modifiedby = "lk_defra_secureconfiguration_modifiedby";
+			public const string lk_defra_secureconfiguration_modifiedonbehalfby = "lk_defra_secureconfiguration_modifiedonbehalfby";
+			public const string team_defra_secureconfiguration = "team_defra_secureconfiguration";
+			public const string user_defra_secureconfiguration = "user_defra_secureconfiguration";
 		}
 		
 		/// <summary>
@@ -495,6 +501,104 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_secureconfiguration_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_secureconfiguration_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_secureconfiguration_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_secureconfiguration_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_secureconfiguration_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_secureconfiguration_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_secureconfiguration_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_secureconfiguration_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_secureconfiguration
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_secureconfiguration")]
+		public Lp.Model.EarlyBound.Team team_defra_secureconfiguration
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_secureconfiguration", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_secureconfiguration
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_secureconfiguration")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_secureconfiguration
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_secureconfiguration", null);
 			}
 		}
 		

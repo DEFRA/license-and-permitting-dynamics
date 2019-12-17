@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_exceptionState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_exception")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_exception : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -61,6 +61,12 @@ namespace Lp.Model.EarlyBound
 			public const string VersionNumber = "versionnumber";
 			public const string defra_applicationline_defra_exception_applicationlineid = "defra_applicationline_defra_exception_applicationlineid";
 			public const string Referencingdefra_exception_defra_exception = "defra_exception_defra_exception";
+			public const string lk_defra_exception_createdby = "lk_defra_exception_createdby";
+			public const string lk_defra_exception_createdonbehalfby = "lk_defra_exception_createdonbehalfby";
+			public const string lk_defra_exception_modifiedby = "lk_defra_exception_modifiedby";
+			public const string lk_defra_exception_modifiedonbehalfby = "lk_defra_exception_modifiedonbehalfby";
+			public const string team_defra_exception = "team_defra_exception";
+			public const string user_defra_exception = "user_defra_exception";
 		}
 		
 		/// <summary>
@@ -643,6 +649,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("Referencingdefra_exception_defra_exception");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_exception>("defra_exception_defra_exception", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingdefra_exception_defra_exception");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_exception_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_exception_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_exception_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_exception_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_exception_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_exception_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_exception_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_exception_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_exception_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_exception_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_exception_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_exception_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_exception_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_exception_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_exception_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_exception_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_exception_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_exception
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_exception")]
+		public Lp.Model.EarlyBound.Team team_defra_exception
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_exception", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_exception
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_exception")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_exception
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_exception", null);
 			}
 		}
 		

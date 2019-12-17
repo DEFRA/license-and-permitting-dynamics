@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_areacommentState
 	{
 		
@@ -33,7 +33,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_areacomment")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_areacomment : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -110,6 +110,12 @@ namespace Lp.Model.EarlyBound
 			public const string account_defra_areacomments = "account_defra_areacomments";
 			public const string contact_defra_areacomments = "contact_defra_areacomments";
 			public const string defra_application_defra_areacomments = "defra_application_defra_areacomments";
+			public const string defra_areacomment_systemuser_createdby = "defra_areacomment_systemuser_createdby";
+			public const string defra_areacomment_systemuser_createdonbehalfby = "defra_areacomment_systemuser_createdonbehalfby";
+			public const string defra_areacomment_systemuser_modifiedby = "defra_areacomment_systemuser_modifiedby";
+			public const string defra_areacomment_systemuser_modifiedonbehalfby = "defra_areacomment_systemuser_modifiedonbehalfby";
+			public const string defra_areacomment_systemuser_owninguser = "defra_areacomment_systemuser_owninguser";
+			public const string defra_areacomment_team_owningteam = "defra_areacomment_team_owningteam";
 			public const string defra_payment_defra_areacomments = "defra_payment_defra_areacomments";
 			public const string defra_permit_defra_areacomments = "defra_permit_defra_areacomments";
 			public const string incident_defra_areacomments = "incident_defra_areacomments";
@@ -1560,26 +1566,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N defra_areacomment_Annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_Annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_areacomment_Annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_areacomment_Annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_areacomment_Annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_areacomment_Annotations", null, value);
-				this.OnPropertyChanged("defra_areacomment_Annotations");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N defra_areacomment_QueueItems
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_QueueItems")]
@@ -1659,6 +1645,104 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_application_defra_areacomments");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_application>("defra_application_defra_areacomments", null, value);
 				this.OnPropertyChanged("defra_application_defra_areacomments");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_systemuser_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_systemuser_createdby")]
+		public Lp.Model.EarlyBound.SystemUser defra_areacomment_systemuser_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_systemuser_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_systemuser_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser defra_areacomment_systemuser_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_areacomment_systemuser_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_createdonbehalfby", null, value);
+				this.OnPropertyChanged("defra_areacomment_systemuser_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_systemuser_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_systemuser_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser defra_areacomment_systemuser_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_systemuser_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_systemuser_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser defra_areacomment_systemuser_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_areacomment_systemuser_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("defra_areacomment_systemuser_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_systemuser_owninguser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_systemuser_owninguser")]
+		public Lp.Model.EarlyBound.SystemUser defra_areacomment_systemuser_owninguser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_areacomment_systemuser_owninguser", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_areacomment_team_owningteam
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_areacomment_team_owningteam")]
+		public Lp.Model.EarlyBound.Team defra_areacomment_team_owningteam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("defra_areacomment_team_owningteam", null);
 			}
 		}
 		

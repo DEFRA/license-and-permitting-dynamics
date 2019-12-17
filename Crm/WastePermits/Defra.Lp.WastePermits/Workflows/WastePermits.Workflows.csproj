@@ -39,11 +39,17 @@
     <AssemblyOriginatorKeyFile>Defra.Waste.Workflows.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\DataAccess\DataAccessStandardRule.cs">
-      <Link>Linked\DataAccess\WastePermits\DataAccessStandardRule.cs</Link>
+    <Compile Include="..\DataAccess\*.cs">
+      <Link>Linked\DataAccess\WastePermits\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\Model\Crm\*.cs">
       <Link>Linked\Model\WastePermits\Crm\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\Model\Internal\*.cs">
+      <Link>Linked\Model\WastePermits\Internal\%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.DataAccess.Base\*.cs">
+      <Link>Linked\DataAccess\Core\Base\%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\..\Core\Defra.Lp.Core\Core.Helpers\Extensions\*.cs">
       <Link>Linked\Helpers\Core\%(RecursiveDir)%(FileName)</Link>
@@ -59,18 +65,6 @@
     </Compile>
     <Compile Include="..\Model\EarlyBound\OptionSets\*.cs">
       <Link>Linked\Model\WastePermits\EarlyBound\OptionSets\%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\DataAccess\DataAccessApplicationLine.cs">
-      <Link>Linked\DataAccess\WastePermits\DataAccessApplicationLine</Link>
-    </Compile>
-    <Compile Include="..\DataAccess\DataAccessApplicationPrice.cs">
-      <Link>Linked\DataAccess\WastePermits\DataAccessApplicationPrice</Link>
-    </Compile>
-    <Compile Include="..\DataAccess\DataAccessCase.cs">
-      <Link>Linked\DataAccess\WastePermits\DataAccessCase</Link>
-    </Compile>
-    <Compile Include="..\DataAccess\Messages.Designer.cs">
-      <Link>Linked\DataAccess\WastePermits\Messages.Designer</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +108,16 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateFmeSupportRecords.cs" />
+    <Compile Include="ExcelReportGenerator.cs" />
+    <Compile Include="GenerateApplicationTasksGivenTaskType.cs" />
     <Compile Include="GetActiveCasesCount.cs" />
     <Compile Include="GetActiveLinesCount.cs" />
+    <Compile Include="GetAddressBasedOnOperatorType.cs" />
+    <Compile Include="GetLocationDetailAndAddress.cs" />
     <Compile Include="GetPermitDetails.cs" />
+    <Compile Include="GetValidPermitApplication.cs" />
+    <Compile Include="RefreshApplicationTasks.cs" />
     <Compile Include="WorkFlowActivityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

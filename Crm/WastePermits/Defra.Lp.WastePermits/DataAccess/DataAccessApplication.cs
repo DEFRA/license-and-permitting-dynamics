@@ -1,4 +1,7 @@
-﻿namespace WastePermits.DataAccess
+﻿using Core.Helpers.Extensions;
+using WastePermits.Model.Internal;
+
+namespace WastePermits.DataAccess
 {
     using System;
     using Core.DataAccess.Base;
@@ -29,7 +32,7 @@
         public Entity GetApplication(Guid applicationId)
         {
 
-            //Retrieve the duly made record if exists
+            //Retrieve the application if it exists
             TracingService.Trace("Application with Id {0} is being retrieved", applicationId);
             Entity applicatEntity = OrganisationService.Retrieve(
                 defra_application.EntityLogicalName,
@@ -42,10 +45,35 @@
                     defra_application.Fields.defra_applicationtype, 
                     defra_application.Fields.defra_application_subtype));
 
-            //Initiate the updated application entity
             TracingService.Trace("Application with Id {0} successfully retrieved", applicationId);
 
             return applicatEntity;
+        }
+
+        /// <summary>
+        /// Retrieves the Application Type, Sub Type and Owner fields for an application
+        /// </summary>
+        public ApplicationTypesAndOwners GetApplicationTypeAndOwner(Guid applicationId)
+        {
+            TracingService.Trace("GetApplicationType() Application with Id {0} is being retrieved", applicationId);
+            Entity applicatEntity = OrganisationService.Retrieve(
+                defra_application.EntityLogicalName,
+                applicationId,
+                new ColumnSet(
+                    defra_application.Fields.defra_applicationtype,
+                    defra_application.Fields.defra_application_subtype,
+                    defra_application.Fields.OwningUser,
+                    defra_application.Fields.OwningTeam));
+
+            TracingService.Trace("GetApplicationType() Application with Id {0} successfully retrieved", applicationId);
+
+            return new ApplicationTypesAndOwners
+            {
+                ApplicationType = applicatEntity.GetOptionSetValue(defra_application.Fields.defra_applicationtype),
+                ApplicationSubType = applicatEntity.GetAttributeId(defra_application.Fields.defra_application_subtype),
+                OwningUser = applicatEntity.GetAttributeId(defra_application.Fields.OwningUser),
+                OwningTeam = applicatEntity.GetAttributeId(defra_application.Fields.OwningTeam),
+            };
         }
     }
 }

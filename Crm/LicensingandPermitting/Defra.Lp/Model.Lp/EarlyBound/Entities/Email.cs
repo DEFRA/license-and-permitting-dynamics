@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum EmailState
 	{
 		
@@ -30,7 +30,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("email")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class Email : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -141,7 +141,14 @@ namespace Lp.Model.EarlyBound
 			public const string defra_permit_Emails = "defra_permit_Emails";
 			public const string Referencingemail_email_parentactivityid = "email_email_parentactivityid";
 			public const string Incident_Emails = "Incident_Emails";
+			public const string lk_email_createdby = "lk_email_createdby";
+			public const string lk_email_createdonbehalfby = "lk_email_createdonbehalfby";
+			public const string lk_email_modifiedby = "lk_email_modifiedby";
+			public const string lk_email_modifiedonbehalfby = "lk_email_modifiedonbehalfby";
 			public const string Queue_Email_EmailSender = "Queue_Email_EmailSender";
+			public const string SystemUser_Email_EmailSender = "SystemUser_Email_EmailSender";
+			public const string team_email = "team_email";
+			public const string user_email = "user_email";
 		}
 		
 		/// <summary>
@@ -1984,26 +1991,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N Email_Annotation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Email_Annotation")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> Email_Annotation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Email_Annotation", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Email_Annotation");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("Email_Annotation", null, value);
-				this.OnPropertyChanged("Email_Annotation");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N email_email_parentactivityid
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("email_email_parentactivityid", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -2233,6 +2220,76 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
+		/// N:1 lk_email_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_email_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_email_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_email_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_email_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_email_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_email_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_email_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_email_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_email_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_email_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_email_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_email_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_email_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_email_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_email_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_email_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 Queue_Email_EmailSender
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailsender")]
@@ -2243,6 +2300,48 @@ namespace Lp.Model.EarlyBound
 			get
 			{
 				return this.GetRelatedEntity<Lp.Model.EarlyBound.Queue>("Queue_Email_EmailSender", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 SystemUser_Email_EmailSender
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailsender")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("SystemUser_Email_EmailSender")]
+		public Lp.Model.EarlyBound.SystemUser SystemUser_Email_EmailSender
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("SystemUser_Email_EmailSender", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_email
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_email")]
+		public Lp.Model.EarlyBound.Team team_email
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_email", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_email
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_email")]
+		public Lp.Model.EarlyBound.SystemUser user_email
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_email", null);
 			}
 		}
 		

@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_paymentState
 	{
 		
@@ -27,7 +27,7 @@ namespace Lp.Model.EarlyBound
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("defra_payment")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public partial class defra_payment : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -39,6 +39,9 @@ namespace Lp.Model.EarlyBound
 			public const string defra_Activity = "defra_activity";
 			public const string defra_applicationid = "defra_applicationid";
 			public const string defra_applicationlineid = "defra_applicationlineid";
+			public const string defra_customer_payment_amount = "defra_customer_payment_amount";
+			public const string defra_customer_payment_amount_Base = "defra_customer_payment_amount_base";
+			public const string defra_customer_payment_date = "defra_customer_payment_date";
 			public const string defra_customer_payment_reference = "defra_customer_payment_reference";
 			public const string defra_daterefundactioned = "defra_daterefundactioned";
 			public const string defra_description = "defra_description";
@@ -87,6 +90,15 @@ namespace Lp.Model.EarlyBound
 			public const string defra_defra_applicationline_defra_payment = "defra_defra_applicationline_defra_payment";
 			public const string Referencingdefra_defra_payment_defra_payment_originatingpayment = "defra_defra_payment_defra_payment_originatingpayment";
 			public const string defra_defra_paymenttransaction_defra_payment_payment_transaction = "defra_defra_paymenttransaction_defra_payment_payment_transaction";
+			public const string defra_systemuser_defra_payment_issued_by = "defra_systemuser_defra_payment_issued_by";
+			public const string defra_systemuser_defra_payment_refund_approved_by = "defra_systemuser_defra_payment_refund_approved_by";
+			public const string defra_systemuser_defra_payment_refundactionedby = "defra_systemuser_defra_payment_refundactionedby";
+			public const string lk_defra_payment_createdby = "lk_defra_payment_createdby";
+			public const string lk_defra_payment_createdonbehalfby = "lk_defra_payment_createdonbehalfby";
+			public const string lk_defra_payment_modifiedby = "lk_defra_payment_modifiedby";
+			public const string lk_defra_payment_modifiedonbehalfby = "lk_defra_payment_modifiedonbehalfby";
+			public const string team_defra_payment = "team_defra_payment";
+			public const string user_defra_payment = "user_defra_payment";
 		}
 		
 		/// <summary>
@@ -231,6 +243,59 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_applicationlineid");
 				this.SetAttributeValue("defra_applicationlineid", value);
 				this.OnPropertyChanged("defra_applicationlineid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_amount")]
+		public Microsoft.Xrm.Sdk.Money defra_customer_payment_amount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_customer_payment_amount");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_customer_payment_amount");
+				this.SetAttributeValue("defra_customer_payment_amount", value);
+				this.OnPropertyChanged("defra_customer_payment_amount");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Customer Payment Amount in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_amount_base")]
+		public Microsoft.Xrm.Sdk.Money defra_customer_payment_amount_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("defra_customer_payment_amount_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_customer_payment_date")]
+		public System.Nullable<System.DateTime> defra_customer_payment_date
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("defra_customer_payment_date");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_customer_payment_date");
+				this.SetAttributeValue("defra_customer_payment_date", value);
+				this.OnPropertyChanged("defra_customer_payment_date");
 			}
 		}
 		
@@ -1102,26 +1167,6 @@ namespace Lp.Model.EarlyBound
 		}
 		
 		/// <summary>
-		/// 1:N defra_payment_Annotations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_payment_Annotations")]
-		public System.Collections.Generic.IEnumerable<Lp.Model.EarlyBound.Annotation> defra_payment_Annotations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_payment_Annotations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("defra_payment_Annotations");
-				this.SetRelatedEntities<Lp.Model.EarlyBound.Annotation>("defra_payment_Annotations", null, value);
-				this.OnPropertyChanged("defra_payment_Annotations");
-			}
-		}
-		
-		/// <summary>
 		/// 1:N defra_payment_defra_application_lastpaymentid
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_payment_defra_application_lastpaymentid")]
@@ -1282,6 +1327,167 @@ namespace Lp.Model.EarlyBound
 				this.OnPropertyChanging("defra_defra_paymenttransaction_defra_payment_payment_transaction");
 				this.SetRelatedEntity<Lp.Model.EarlyBound.defra_paymenttransaction>("defra_defra_paymenttransaction_defra_payment_payment_transaction", null, value);
 				this.OnPropertyChanged("defra_defra_paymenttransaction_defra_payment_payment_transaction");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_issued_by
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_issued_by")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_issued_by")]
+		public Lp.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_issued_by
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_issued_by", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_issued_by");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_issued_by", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_issued_by");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_refund_approved_by
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_refund_approved_by")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_refund_approved_by")]
+		public Lp.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_refund_approved_by
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refund_approved_by", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_refund_approved_by");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refund_approved_by", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_refund_approved_by");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 defra_systemuser_defra_payment_refundactionedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defra_refundactionedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("defra_systemuser_defra_payment_refundactionedby")]
+		public Lp.Model.EarlyBound.SystemUser defra_systemuser_defra_payment_refundactionedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refundactionedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("defra_systemuser_defra_payment_refundactionedby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("defra_systemuser_defra_payment_refundactionedby", null, value);
+				this.OnPropertyChanged("defra_systemuser_defra_payment_refundactionedby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_createdby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_payment_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_createdonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_payment_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_payment_createdonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_payment_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_modifiedby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_payment_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_defra_payment_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_defra_payment_modifiedonbehalfby")]
+		public Lp.Model.EarlyBound.SystemUser lk_defra_payment_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_defra_payment_modifiedonbehalfby");
+				this.SetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("lk_defra_payment_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_defra_payment_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_defra_payment
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_defra_payment")]
+		public Lp.Model.EarlyBound.Team team_defra_payment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.Team>("team_defra_payment", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_defra_payment
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_defra_payment")]
+		public Lp.Model.EarlyBound.SystemUser user_defra_payment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<Lp.Model.EarlyBound.SystemUser>("user_defra_payment", null);
 			}
 		}
 		

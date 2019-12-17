@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{eb439eb7-f3b1-e911-a99d-000d3ab31f97}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="title" select="1" preview="1" icon="1">
+        <row name="result" id="objectid" multiobjectidfield="objecttypecode">
+          <cell name="queueitemid" ishidden="1" width="150" />
+          <cell name="title" width="150" />
+          <cell name="defra_application" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="aa.statuscode" width="125" disableSorting="1" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="queueid" width="150" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="workerid" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="workeridmodifiedon" width="125" imageproviderfunctionname="" imageproviderwebresource="$webresource:" />
+          <cell name="aa.defra_areaid" width="100" disableSorting="1" />
+          <cell name="aa.defra_determinedbyid" width="100" disableSorting="1" />
+          <cell name="aa.defra_dulymadecompletedby" width="100" disableSorting="1" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+        <entity name="queueitem">
+          <attribute name="title" />
+          <attribute name="queueitemid" />
+          <attribute name="objecttypecode" />
+          <attribute name="workeridmodifiedon" />
+          <attribute name="workerid" />
+          <attribute name="queueid" />
+          <attribute name="defra_application" />
+          <order attribute="title" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <link-entity name="queue" from="queueid" to="queueid" alias="ab">
+            <filter type="and">
+              <condition attribute="ownerid" operator="eq-userid" />
+            </filter>
+          </link-entity>
+          <link-entity name="defra_application" from="defra_applicationid" to="objectid" alias="aa">
+            <attribute name="defra_dulymadecompletedby" />
+            <attribute name="defra_determinedbyid" />
+            <attribute name="defra_areaid" />
+            <attribute name="statuscode" />
+          </link-entity>
+          <attribute name="objectid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.20.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="New Permitting Officer's Applications" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

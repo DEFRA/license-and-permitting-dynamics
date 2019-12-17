@@ -11,7 +11,7 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_AddressType
 	{
 		
@@ -31,7 +31,7 @@ namespace Lp.Model.EarlyBound
 		Director = 910400011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Individualorsoletraderaddress = 910400002,
+		Individualorsoletrader = 910400002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Invoicecontact = 910400004,
@@ -44,6 +44,9 @@ namespace Lp.Model.EarlyBound
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Partner = 910400009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Postholder = 910400012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Publicbodyaddress = 910400001,

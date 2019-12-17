@@ -11,11 +11,11 @@ namespace Lp.Model.EarlyBound
 {
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9369")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.0.0.9479")]
 	public enum defra_ApplicationTaskCompletion
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Completed = 910400000,
+		Done = 910400000,
 	}
 }

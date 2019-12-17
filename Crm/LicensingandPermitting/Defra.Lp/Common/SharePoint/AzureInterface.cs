@@ -174,41 +174,6 @@ namespace Defra.Lp.Common.SharePoint
             }
         }
 
-        private void CreateApplicationDocument(Entity attachmentData, string fileDescription, string fileName, string url)
-        {
-            // Create document source record
-            Guid? createdById = attachmentData.GetAttributeId(defra_application.Fields.CreatedBy);
-            Guid? applicationId = attachmentData.GetAliasedAttributeId($"application.{defra_application.Fields.defra_applicationId}");
-            Guid? caseApplicationId = attachmentData.GetAliasedAttributeId($"case.application.{defra_application.Fields.defra_applicationId}");
-            Guid? caseId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.IncidentId}");
-            Guid? emailId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.ActivityId}");
-
-            defra_ApplicationDocumentSource documentSource;
-
-            if (emailId.HasValue)
-            {
-                documentSource = defra_ApplicationDocumentSource.Email;
-            }
-            else if (caseId.HasValue)
-            {
-                documentSource = defra_ApplicationDocumentSource.RFIorS5;
-            }
-            else
-            {
-                documentSource = defra_ApplicationDocumentSource.Application;
-            }
-
-            DalApplicationDocument.CreateApplicationDocument(
-                fileDescription,
-                url,
-                fileName,
-                documentSource,
-                applicationId ?? caseApplicationId,
-                caseId,
-                emailId,
-                createdById);
-        }
-
         private void UploadEmail(Guid recordId)
         {
             var request = new DocumentRelayRequest();
@@ -744,14 +709,28 @@ namespace Defra.Lp.Common.SharePoint
             queryExpressionAnnotationApp.EntityAlias = "application";
 
             // Add columns to Application entity
-            queryExpressionAnnotationApp.Columns.AddColumns(Application.ApplicationId, Application.Name, Application.PermitNumber, Application.ApplicationNumber, Application.StatusCode);
+            queryExpressionAnnotationApp.Columns.AddColumns(
+                defra_application.Fields.defra_applicationId,
+                defra_application.Fields.defra_name, 
+                defra_application.Fields.defra_permitnumber, 
+                defra_application.Fields.defra_applicationnumber, 
+                defra_application.Fields.StatusCode, 
+                defra_application.Fields.OwningUser, 
+                defra_application.Fields.OwningTeam);
 
             // Add link-entity to Case. Outer join as it might be regarding case or application
             var queryExpressionAnnotationIncident = queryAnnotation.AddLink(Incident.EntityLogicalName, Annotation.Fields.ObjectId, Incident.Fields.IncidentId, JoinOperator.LeftOuter);
             queryExpressionAnnotationIncident.EntityAlias = "case";
 
             // Add columns to Case entity
-            queryExpressionAnnotationIncident.Columns.AddColumns(Incident.Fields.Title, Incident.Fields.IncidentId, Incident.Fields.CaseTypeCode, Incident.Fields.TicketNumber, Incident.Fields.IncidentId);
+            queryExpressionAnnotationIncident.Columns.AddColumns(
+                Incident.Fields.Title, 
+                Incident.Fields.IncidentId, 
+                Incident.Fields.CaseTypeCode, 
+                Incident.Fields.TicketNumber,
+                Incident.Fields.IncidentId,
+                Incident.Fields.OwningUser,
+                Incident.Fields.OwningTeam);
 
             // Add link-entity from case to application
             var queryExpressionAnnotationIncidentApplication = queryExpressionAnnotationIncident.AddLink(defra_application.EntityLogicalName, Case.Application, defra_application.Fields.defra_applicationId, JoinOperator.LeftOuter);
@@ -787,7 +766,18 @@ namespace Defra.Lp.Common.SharePoint
             queryActivityMimeAttachmentEmail.EntityAlias = "email";
 
             // Add columns to QEactivitymimeattachment_email.Columns
-            queryActivityMimeAttachmentEmail.Columns.AddColumns(Email.Fields.Description, Email.Fields.Subject, Email.Fields.DirectionCode, Email.Fields.ActivityId, Email.Fields.StatusCode, Email.Fields.RegardingObjectId, Email.Fields.Sender, Email.Fields.ToRecipients, Email.Fields.CreatedOn);
+            queryActivityMimeAttachmentEmail.Columns.AddColumns(
+                Email.Fields.Description,
+                Email.Fields.Subject, 
+                Email.Fields.DirectionCode, 
+                Email.Fields.ActivityId, 
+                Email.Fields.StatusCode, 
+                Email.Fields.RegardingObjectId, 
+                Email.Fields.Sender, 
+                Email.Fields.ToRecipients, 
+                Email.Fields.CreatedOn, 
+                Email.Fields.OwningUser,
+                Email.Fields.OwningTeam);
 
             // Add Application link-entity and define an alias.
             // Its an outer join as we want to return results even if not regarding an application
@@ -913,5 +903,54 @@ namespace Defra.Lp.Common.SharePoint
             };
             Service.Execute(actionRequest);
         }
+
+        #region CRM data access
+
+        private void CreateApplicationDocument(Entity attachmentData, string fileDescription, string fileName, string url)
+        {
+            // Create document source record
+            Guid? createdById = attachmentData.GetAttributeId(defra_application.Fields.CreatedBy);
+            Guid? applicationId = attachmentData.GetAliasedAttributeId($"application.{defra_application.Fields.defra_applicationId}");
+            Guid? caseApplicationId = attachmentData.GetAliasedAttributeId($"case.application.{defra_application.Fields.defra_applicationId}");
+            Guid? caseId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.IncidentId}");
+            Guid? emailId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.ActivityId}");
+            Guid? emailOwningUserId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.OwningUser}");
+            Guid? emailOwningTeamId = attachmentData.GetAliasedAttributeId($"email.{Email.Fields.OwningTeam}");
+            Guid? appOwningUserId = attachmentData.GetAliasedAttributeId($"application.{defra_application.Fields.OwningUser}");
+            Guid? appOwningTeamId = attachmentData.GetAliasedAttributeId($"application.{defra_application.Fields.OwningTeam}");
+            Guid? caseOwningUserId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.OwningUser}");
+            Guid? caseOwningTeamId = attachmentData.GetAliasedAttributeId($"case.{Incident.Fields.OwningTeam}");
+
+
+            defra_ApplicationDocumentSource documentSource;
+
+            if (emailId.HasValue)
+            {
+                documentSource = defra_ApplicationDocumentSource.Email;
+            }
+            else if (caseId.HasValue)
+            {
+                documentSource = defra_ApplicationDocumentSource.RFIorS5;
+            }
+            else
+            {
+                documentSource = defra_ApplicationDocumentSource.Application;
+            }
+
+            DalApplicationDocument.CreateApplicationDocument(
+                fileDescription,
+                url,
+                fileName,
+                documentSource,
+                applicationId ?? caseApplicationId,
+                caseId,
+                emailId,
+                createdById,
+                emailOwningUserId ?? appOwningUserId ?? caseOwningUserId,
+                emailOwningTeamId ?? appOwningTeamId ?? caseOwningTeamId);
+        }
+
+        #endregion
+
     }
 }

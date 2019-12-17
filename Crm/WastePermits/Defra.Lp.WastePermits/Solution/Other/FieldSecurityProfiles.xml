@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<FieldSecurityProfiles>
+<FieldSecurityProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <FieldSecurityProfile name="FLS Read Only" fieldsecurityprofileid="{1d567fc8-3fce-e711-80ea-3863bb357f98}">
     <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_permittingteamleadersignoff</AttributeName>
@@ -26,6 +33,13 @@
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_locationscreeningrequired</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_completeddulymade</AttributeName>
         <CanRead>4</CanRead>
         <CanUpdate>0</CanUpdate>
         <CanCreate>0</CanCreate>
@@ -51,10 +65,123 @@
         <CanUpdate>0</CanUpdate>
         <CanCreate>0</CanCreate>
       </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_admincheckscompleted</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_determinedbyid</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_dulymadecompletedby</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_intel_checks_required</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_intelligencecheckscompleted</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_permitissuecompletemcp</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="New Admin Team FLS Role" fieldsecurityprofileid="{2be53298-afb2-e911-a99d-000d3ab31f97}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_admincheckscompleted</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_intel_checks_required</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_permitissuecompletemcp</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="New Application Allocation Team FLS Role" fieldsecurityprofileid="{0fe5389e-16ae-e911-a997-000d3ab31aa3}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_dulymadecompletedby</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_determinedbyid</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="New Intelligence Team FLS Role" fieldsecurityprofileid="{18c5b3b0-afb2-e911-a99d-000d3ab31f97}">
+    <FieldPermissions />
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="NEW Permitting officer FLS" fieldsecurityprofileid="{d17873d6-24cb-e911-a997-000d3ab3984f}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_completeddulymade</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
     </FieldPermissions>
   </FieldSecurityProfile>
   <FieldSecurityProfile name="RAGU Intelligence Team" fieldsecurityprofileid="{ed80d215-3bce-e711-80ea-3863bb357f98}">
     <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>0</CanUpdate>
+        <CanCreate>0</CanCreate>
+      </FieldPermission>
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_raguscore</AttributeName>
@@ -76,10 +203,49 @@
         <CanUpdate>4</CanUpdate>
         <CanCreate>4</CanCreate>
       </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_intelligencecheckscompleted</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="Senior Permitting Officer Sign Off" fieldsecurityprofileid="{82f7f95f-ba2d-e811-a951-000d3a206976}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>incident</EntityName>
+        <AttributeName>defra_peerreviewstatus</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>incident</EntityName>
+        <AttributeName>defra_peerreviewrejectionnotes</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
     </FieldPermissions>
   </FieldSecurityProfile>
   <FieldSecurityProfile name="Team Leader Sign Off" fieldsecurityprofileid="{e2efe565-19d5-e711-80ea-1458d043c6c0}">
     <FieldPermissions>
+      <FieldPermission>
+        <EntityName>defra_permit</EntityName>
+        <AttributeName>defra_permitissuedate</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_permittingteamleadersignoff</AttributeName>
@@ -90,6 +256,24 @@
       <FieldPermission>
         <EntityName>defra_application</EntityName>
         <AttributeName>defra_locationscreeningrequired</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+      <FieldPermission>
+        <EntityName>defra_application</EntityName>
+        <AttributeName>defra_completeddulymade</AttributeName>
+        <CanRead>4</CanRead>
+        <CanUpdate>4</CanUpdate>
+        <CanCreate>4</CanCreate>
+      </FieldPermission>
+    </FieldPermissions>
+  </FieldSecurityProfile>
+  <FieldSecurityProfile name="Write-Off Full Access Field Security" description="Locks finance specific fields" fieldsecurityprofileid="{dc96c935-142d-e811-a957-000d3a23443b}">
+    <FieldPermissions>
+      <FieldPermission>
+        <EntityName>team</EntityName>
+        <AttributeName>defra_maximum_writeoff_allowed</AttributeName>
         <CanRead>4</CanRead>
         <CanUpdate>4</CanUpdate>
         <CanCreate>4</CanCreate>

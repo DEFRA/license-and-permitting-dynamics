@@ -431,7 +431,7 @@
             return resultEntities.Entities.Select(entity =>
                 new ApplicationQuestionsAndLines
                 {
-                    ApplicationLineId = entity.GetAttributeGuid(defra_applicationline.Fields.defra_applicationlineId),
+                    ApplicationLineId = entity.GetAttributeId(defra_applicationline.Fields.defra_applicationlineId),
                     ApplicationQuestionId = entity.GetAliasedAttributeId(questionIdAttributeName),
                     Scope = entity.GetAliasedOptionSetValue(scopeAttributeName),
                 }).ToList();
@@ -495,6 +495,8 @@
             List<ApplicationAnswer> currentApplicationAnswers = GetApplicationAnswers(applicationId) ?? new List<ApplicationAnswer>();
 
             // Now work out which application answers should be removed
+            /* WE -2269 - we no longer deactivate application answers, as the front end may create these ad-hoc */
+            /*
             foreach (ApplicationAnswer appAnswer in currentApplicationAnswers)
             {
                 // Check if the existing application answer still applies
@@ -507,6 +509,7 @@
                         (int)defra_applicationanswer_StatusCode.Inactive);
                 }
             }
+            */
 
             // And work out which application answers should be created
             foreach (ApplicationQuestionsAndLines appQuestionAndLine in applicableQuestionsAndLines)
