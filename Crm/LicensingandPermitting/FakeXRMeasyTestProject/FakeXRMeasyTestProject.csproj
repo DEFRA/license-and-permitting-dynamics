@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8814C991-8196-4583-980C-288C88AF8AA3}</ProjectGuid>
+    <ProjectGuid>{28BBC852-3293-456F-8B98-1E0807CA916B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FakeXrmEasyTestProject</RootNamespace>
-    <AssemblyName>FakeXrmEasyTestProject</AssemblyName>
+    <RootNamespace>FakeXRMeasyTestProject</RootNamespace>
+    <AssemblyName>FakeXRMeasyTestProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -39,16 +39,12 @@
       <HintPath>..\packages\FakeItEasy.3.2.0\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FakeXrmEasy, Version=1.53.0.0, Culture=neutral, PublicKeyToken=dd4e58c4492635a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeXrmEasy.9.1.53.0\lib\net452\FakeXrmEasy.dll</HintPath>
+    <Reference Include="FakeXrmEasy, Version=1.55.0.0, Culture=neutral, PublicKeyToken=dd4e58c4492635a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeXrmEasy.9.1.55.0\lib\net452\FakeXrmEasy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.0.7\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.22.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -109,22 +105,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FMeTest.cs" />
+    <Compile Include="ApplicationCreateFolderInSharePointTest.cs" />
+    <Compile Include="ApplicationCreateSharePointDocumentLocationTest.cs" />
+    <Compile Include="UploadEmailAndAttachmentsToSharePointTest.cs" />
+    <Compile Include="UpdateSharePointMetadataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GetAddressBasedOnOperatorType_UnitTest.cs" />
-    <Compile Include="RefreshApplicationTasksTest.cs" />
-
-    <Compile Include="IsActivePermittest.cs" />
-
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Defra.Lp.WastePermits\Workflows\WastePermits.Workflows.csproj">
-      <Project>{b208e824-b4b1-439d-b17a-7e58b21098ad}</Project>
-      <Name>WastePermits.Workflows</Name>
+    <ProjectReference Include="..\Defra.Lp\Plugins\Lp.Plugins.csproj">
+      <Project>{21c950c3-204c-4eeb-be42-d698fa1443ce}</Project>
+      <Name>Lp.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Defra.Lp\Workflows\Lp.Workflows.csproj">
+      <Project>{7bb5f5da-5d84-4127-9b47-ccf70bb24485}</Project>
+      <Name>Lp.Workflows</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

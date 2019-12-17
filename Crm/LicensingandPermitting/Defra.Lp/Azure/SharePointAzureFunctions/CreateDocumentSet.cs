@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 namespace Defra.Lp.SharePointAzureFunctions
 {
     public static class CreateDocumentSet
+
+
     {
         [FunctionName("CreateDocumentSet")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
@@ -38,6 +40,7 @@ namespace Defra.Lp.SharePointAzureFunctions
 
                 using (ClientContext clientContext = new ClientContext(connectionString))
                 {
+                   
                     var dummy = new TaxonomyItem(clientContext, null);
 
                     var username = ConfigurationManager.ConnectionStrings["UserName"].ConnectionString;
@@ -65,26 +68,47 @@ namespace Defra.Lp.SharePointAzureFunctions
                     log.Info(string.Format("Permit Content Type Id is {0}", ctPermit.Id.StringValue));
 
                     // Create permit sub folder inside list root folder if it doesn't exist
-                    var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString());
+                    var permitFolder = CreateSubFolderIfDoesntExist(clientContext, permitFolderName, rootFolder, ctPermit, data.PermitFolder.ToString(),log, data.ListName.ToString());
                     log.Info(string.Format("Folder is {0}", permitFolder.Name));
+
+                   
 
                     // Get the Application document set content type
                     var ctApplication = GetByName(list.ContentTypes, data.ApplicationContentType.ToString());
                     log.Info(string.Format("Applicaction Content Type Id is {0}", ctApplication.Id.StringValue));
 
                     // Create the Document Set
+                    Folder f;
+
                     try
                     {
                         var ds = DocumentSet.Create(clientContext, permitFolder, applicationFolder, ctApplication.Id);
                         clientContext.ExecuteQuery();
                         documentSetUrl = ds.Value;
                         log.Info(string.Format("Document Set Id is {0}", documentSetUrl));
+                                               
                     }
                     catch (ServerException ex) when (ex.Message.StartsWith("A document, folder or document set with the name") && ex.Message.EndsWith("already exists."))
                     {
                         documentSetUrl = "Document set exists already";
                         log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
                     }
+
+                    // Create Complince folder
+                    try
+                    {
+                        log.Info("try to create Compliance folder...");
+                        var complinceFolder = DocumentSet.Create(clientContext, permitFolder, "Compliance", ctPermit.Id);
+                        clientContext.ExecuteQuery();
+                        log.Info("Compliance folder created");
+
+                    }
+                    catch (ServerException ex) when (ex.Message.StartsWith("A document, folder or document set with the name") && ex.Message.EndsWith("already exists."))
+                    {
+                        documentSetUrl = "Document set exists already";
+                        log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
+                    }
+                  
                 }
 
                 return req.CreateResponse(HttpStatusCode.OK, "{ \"DocumentSetUrl\" : \"" + documentSetUrl + "\" }");
@@ -105,36 +129,42 @@ namespace Defra.Lp.SharePointAzureFunctions
             return Enumerable.FirstOrDefault(cts, ct => ct.Name == name);
         }
 
-        private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId)
+        private static Folder CreateSubFolderIfDoesntExist(ClientContext clientContext, string subFolder, Folder folder, ContentType ct, string permitId, TraceWriter log,string parentName)
         {
-            // Check if the subfolder exists
-            clientContext.Load(folder);
-            var subFolders = folder.Folders;
-            clientContext.Load(folder.Folders);
-            clientContext.ExecuteQuery();
-            if (folder.Folders.Count > 0)
+            
+            var web = clientContext.Web;
+
+            log.Info("Try to GetFolderByServerRelativeUrl");
+            var result = web.GetFolderByServerRelativeUrl($"{parentName}/{subFolder}");
+            clientContext.Load(result);
+
+            try
             {
-                foreach (Folder fd in folder.Folders)
-                {
-                    if (fd.Name.ToUpper() == subFolder.ToUpper())
-                    {
-                        // Already exists
-                        return fd;
-                    }
-                }
+                clientContext.ExecuteQuery();
+            }
+            catch(Exception ex) when (ex.Message.Contains("File Not Found."))
+            {
+
+                log.Info($"Folder with name {subFolder} dose not exit. Inside catch");
+                // Create the folder
+
+                var newFolder = folder.Folders.Add(subFolder);
+
+                // Set the content type 
+                newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
+                newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
+                newFolder.ListItemAllFields.Update();
+                clientContext.Load(newFolder);
+                log.Info($"Try to ExecuteQuery to create {subFolder}");
+                clientContext.ExecuteQuery();
+                log.Info("Created");
+                return newFolder;
             }
 
-            // Create the folder
-            var newFolder = folder.Folders.Add(subFolder);
 
-            // Set the content type 
-            newFolder.ListItemAllFields.ParseAndSetFieldValue("ContentTypeId", ct.Id.ToString());
-            newFolder.ListItemAllFields.ParseAndSetFieldValue("Permit_x0020_ID", permitId);
-            newFolder.ListItemAllFields.Update();
-            clientContext.Load(newFolder);
-            clientContext.ExecuteQuery();
+            return result;
+            
 
-            return newFolder;
         }
     }
 }
