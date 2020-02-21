@@ -19,6 +19,7 @@
             return service.GetStandardRules(entityRef, entityName, fieldName, lineEntityName);
         }
 
+
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName, string lineEntityName)
         {
             const string alias = "permit";
@@ -59,5 +60,7 @@
 
             return returnData;
         }
+
+       
     }
 }
