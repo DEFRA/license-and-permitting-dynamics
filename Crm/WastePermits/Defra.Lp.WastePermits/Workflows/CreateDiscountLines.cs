@@ -113,7 +113,7 @@ namespace Defra.Lp.WastePermits.Workflows
                             if (!appLines.Select(x => x.GetAttributeIdOrDefault(defra_applicationline.Fields.defra_parentapplicationline)).Contains(line.ApplicationLineId))
 
                                 // multiple 50% 
-                                CreateDiscountEntity("-50% discount for a multiple activity", line.Value.Value, 50, line.ApplicationLineId, ApplicationLineDiscountTypeValues.D50, line.ApplicationId,line.ItemId);
+                                CreateDiscountEntity("-50% discount for an associated activity", line.Value.Value, 50, line.ApplicationLineId, ApplicationLineDiscountTypeValues.D50, line.ApplicationId,line.ItemId);
                         }
                         if (g1 > 0 && i > 0)
                         {
@@ -128,7 +128,7 @@ namespace Defra.Lp.WastePermits.Workflows
                     {
                         if (!appLines.Select(x => x.GetAttributeIdOrDefault(defra_applicationline.Fields.defra_parentapplicationline)).Contains(line.ApplicationLineId))
 
-                            CreateDiscountEntity("-50% discount for a multiple activity", line.Value.Value, 50, line.ApplicationLineId, ApplicationLineDiscountTypeValues.D50, line.ApplicationId, line.ItemId);
+                            CreateDiscountEntity("-50% discount for an associated activity", line.Value.Value, 50, line.ApplicationLineId, ApplicationLineDiscountTypeValues.D50, line.ApplicationId, line.ItemId);
 
                     }
 
