@@ -12,6 +12,7 @@ using System.Text;
 using Lp.Model.Crm;
 using Lp.Model.EarlyBound;
 using Email = Lp.Model.EarlyBound.Email;
+using System.Net;
 
 namespace Defra.Lp.Common.SharePoint
 {
@@ -393,11 +394,14 @@ namespace Defra.Lp.Common.SharePoint
             var applicationNo = GetApplicationNumber(queryRecord);
             var fileName = GetFileName(queryRecord);
             var body = GetBody(queryRecord);
-            var subject = GetSubject(queryRecord);
+            // to do: change subject based on naming convention 
+            var newSubject = GetSubject(queryRecord);
+            newSubject = GetNamingConvention(queryRecord, newSubject);
+
             var crmId = GetCrmId(queryRecord);
             var caseNo = GetCaseFolderName(queryRecord);
             var regarding = GetRegarding(queryRecord);
-
+            var subject = newSubject;
             request.ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"];
             request.ApplicationNo = applicationNo;
             request.FileBody = body;
@@ -416,6 +420,61 @@ namespace Defra.Lp.Common.SharePoint
             AddEmailParametersToRequest(request, queryRecord);
 
             TracingService.Trace(string.Format("Requests: {0}", request));
+        }
+
+        private string GetNamingConvention(Entity queryRecord, string newSubject)
+        {
+            if (queryRecord.Contains("objectid") && queryRecord["objecttypecode"].ToString() == "defra_application")
+            {
+
+                var con = "";
+
+
+                EntityReference appReg = null;
+                EntityReference appTrack = null;
+                var appType = -1;
+                Guid appSubType = Guid.Empty;
+
+                var app = Service.Retrieve(Application.EntityLogicalName, ((EntityReference)queryRecord["objectid"]).Id, new ColumnSet(defra_application.Fields.defra_regimeid, defra_application.Fields.defra_businesstrackid, defra_application.Fields.defra_applicationtype, defra_application.Fields.defra_application_subtype));
+                if (app.Contains(defra_application.Fields.defra_regimeid))
+                {
+                    appReg = ((EntityReference)app[defra_application.Fields.defra_regimeid]);
+                    con += "<condition attribute = 'defra_regime' operator= 'eq'  value ='{" + appReg.Id.ToString() + "}'/>";
+                }
+                if (app.Contains(defra_application.Fields.defra_businesstrackid))
+                {
+                    appTrack = ((EntityReference)app[defra_application.Fields.defra_businesstrackid]);
+                    con += "<condition attribute = 'defra_track' operator= 'eq'  value = '{" + appTrack.Id.ToString() + "}' />";
+                }
+                if (app.Contains(defra_application.Fields.defra_applicationtype))
+                {
+                    appType = (app[defra_application.Fields.defra_applicationtype] as OptionSetValue).Value;
+                    con += $"<condition attribute = 'defra_applicationtype' operator= 'eq' value = '{ appType.ToString() }' />";
+                }
+                if (app.Contains(defra_application.Fields.defra_application_subtype))
+                {
+                    appSubType = (app[defra_application.Fields.defra_application_subtype] as EntityReference).Id;
+                    con += "< condition attribute = 'defra_applicationsubtype' operator= 'eq'  value = '{" + appSubType.ToString() + "}' />";
+                }
+
+                var fetchXml = $@"<fetch >
+                                      <entity name='defra_documentnamingconventionmapping'>
+                                         <filter type='and'>
+                                          <condition attribute='defra_name' operator='eq' value='" + newSubject + @"' />{con}
+                                        </filter>
+                                      </entity>
+                                    </fetch>";
+                var result = Query.QueryCRMForSingleEntity(Service, fetchXml);
+
+                if (result != null && result.Contains("defra_value"))
+                {
+                    newSubject = result["defra_value"].ToString();
+                }
+
+
+            }
+
+            return newSubject;
         }
 
         private EntityReference GetRegardingObjectId(Entity queryRecord)
@@ -699,7 +758,7 @@ namespace Defra.Lp.Common.SharePoint
                 Annotation.Fields.FileSize,
                 Annotation.Fields.IsDocument, 
                 Annotation.Fields.CreatedOn,
-                Annotation.Fields.CreatedBy);
+                Annotation.Fields.CreatedBy,Annotation.Fields.ObjectId);
 
             // Define filter on Primary key
             queryAnnotation.Criteria.AddCondition(Annotation.Fields.Id, ConditionOperator.Equal, recordId);
