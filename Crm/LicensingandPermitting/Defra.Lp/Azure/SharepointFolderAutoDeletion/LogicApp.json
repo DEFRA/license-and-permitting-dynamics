@@ -1,0 +1,452 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "metadata": {
+        "description": "Name of the Logic App."
+      }
+    },
+    "logicAppLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "southafricanorth",
+        "southafricawest"
+      ],
+      "metadata": {
+        "description": "Location of the Logic App."
+      }
+    },
+    "sharepointonline_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sharepointonline-2"
+    },
+    "sharepointonline_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "SA-EA-LP-Prod-ServiceTier@Defra.onmicrosoft.com"
+    },
+    "sharepointonline_1_token:TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID of for the Azure Active Directory application"
+      }
+    },
+    "dynamicscrmonline_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "dynamicscrmonline-3"
+    },
+    "dynamicscrmonline_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Masoud.Ghabachi@defradev.onmicrosoft.com"
+    },
+    "dynamicscrmonline_1_token:TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID for the Azure Active Directory application"
+      }
+    },
+    "sharepointonline_2_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sharepointonline-4"
+    },
+    "sharepointonline_2_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Masoud.Ghabachi@defradev.onmicrosoft.com"
+    },
+    "sharepointonline_2_token:TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID of for the Azure Active Directory application"
+      }
+    },
+    "dynamicscrmonline_2_Connection_Name": {
+      "type": "string",
+      "defaultValue": "dynamicscrmonline"
+    },
+    "dynamicscrmonline_2_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Masoud.Ghabachi@defradev.onmicrosoft.com"
+    },
+    "dynamicscrmonline_2_token:TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID for the Azure Active Directory application"
+      }
+    },
+    "sharepointonline_3_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sharepointonline"
+    },
+    "sharepointonline_3_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "wastesysops@defradev.onmicrosoft.com"
+    },
+    "sharepointonline_3_token:TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID of for the Azure Active Directory application"
+      }
+    }
+  },
+  "variables": {
+    "spo": {}
+  },
+  "resources": [
+    {
+      "name": "[parameters('logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('logicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "List_records": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['dynamicscrmonline_2']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/datasets/@{encodeURIComponent(encodeURIComponent('orgc00df9d4.crm4'))}/tables/@{encodeURIComponent(encodeURIComponent('defra_applications'))}/items",
+                "queries": {
+                  "$filter": "modifiedon le @{formatDateTime(addDays(utcNow(),-180))} and statuscode eq 1 and  (defra_folderdeletedinsharepoint  ne true )"
+                }
+              },
+              "runAfter": {
+                "Initialize_variable_3": [
+                  "Succeeded"
+                ]
+              },
+              "runtimeConfiguration": {
+                "paginationPolicy": {
+                  "minimumItemCount": 50000
+                }
+              }
+            },
+            "For_each": {
+              "type": "Foreach",
+              "foreach": "@body('List_records')?['value']",
+              "actions": {
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OLD_PermitNumber",
+                    "value": "@items('For_each')?['defra_applicationnumber']"
+                  },
+                  "runAfter": {}
+                },
+                "Set_variable_2": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "NEW_PermitNumber",
+                    "value": "@{if(equals(indexOf(variables('OLD_PermitNumber'),'/'),-1),variables('OLD_PermitNumber'), substring(replace(variables('OLD_PermitNumber'),'/','_'),0,12))}"
+                  },
+                  "runAfter": {
+                    "Set_variable": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Get_items": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/tables/@{encodeURIComponent(encodeURIComponent('Permit'))}/items",
+                    "queries": {
+                      "$filter": "Permit_x0020_ID eq '@{variables('NEW_PermitNumber')}'"
+                    }
+                  },
+                  "runAfter": {
+                    "Set_variable_2": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "For_each_2": {
+                  "type": "Foreach",
+                  "foreach": "@body('Get_items')?['value']",
+                  "actions": {
+                    "Delete_item": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                          }
+                        },
+                        "method": "delete",
+                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/tables/@{encodeURIComponent(encodeURIComponent('Permit'))}/items/@{encodeURIComponent(items('For_each_2')?['ID'])}"
+                      },
+                      "runAfter": {}
+                    },
+                    "Update_a_record": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['dynamicscrmonline_2']['connectionId']"
+                          }
+                        },
+                        "method": "patch",
+                        "body": {
+                          "_defra_applicationtype_label": "",
+                          "_defra_customerid_type": "",
+                          "_defra_agentid_type": "",
+                          "_defra_applicant_type_label": "",
+                          "_defra_areahandoverdocument_label": "",
+                          "_ownerid_type": "",
+                          "_defra_convictionsfound_label": "",
+                          "_defra_determinationoutcome_label": "",
+                          "_defra_drainagetype_label": "",
+                          "_defra_externalconsultationfinished_label": "",
+                          "_defra_externalconsultationstarted_label": "",
+                          "_defra_finalraguscore_label": "",
+                          "_defra_fireplan_label": "",
+                          "defra_folderdeletedinsharepoint": true,
+                          "_defra_raguscore_label": "",
+                          "_defra_screeningstatus_label": "",
+                          "_defra_miningwasteplan_label": "",
+                          "_defra_applicant_organisation_type_label": "",
+                          "_defra_plan_assessment_status_label": "",
+                          "_defra_external_system_label": "",
+                          "_defra_regime_label": "",
+                          "_defra_reviewstatus_label": "",
+                          "_defra_rvd_team_decision_label": "",
+                          "_defra_source_label": "",
+                          "_statecode_label": "",
+                          "_statuscode_label": "",
+                          "_defra_technicalability_label": "",
+                          "_defra_tradingnameused_label": "",
+                          "_defra_withdrawaltype_label": ""
+                        },
+                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('orgc00df9d4.crm4'))}/tables/@{encodeURIComponent(encodeURIComponent('defra_applications'))}/items/@{encodeURIComponent(encodeURIComponent(items('For_each')?['defra_applicationid']))}"
+                      },
+                      "runAfter": {
+                        "Delete_item": [
+                          "Succeeded"
+                        ]
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Get_items": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "List_records": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_variable": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "OLD_PermitNumber",
+                    "type": "string",
+                    "value": "''"
+                  }
+                ]
+              },
+              "runAfter": {}
+            },
+            "Initialize_variable_2": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "NEW_PermitNumber",
+                    "type": "string"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_variable": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_variable_3": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "REPLACMENT_STRING",
+                    "type": "string",
+                    "value": "'/'"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_variable_2": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "recurrence",
+              "recurrence": {
+                "frequency": "Day",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "dynamicscrmonline_2": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'dynamicscrmonline')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('dynamicscrmonline_2_Connection_Name'))]",
+                "connectionName": "[parameters('dynamicscrmonline_2_Connection_Name')]"
+              },
+              "sharepointonline": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sharepointonline_3_Connection_Name'))]",
+                "connectionName": "[parameters('sharepointonline_3_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('dynamicscrmonline_2_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('sharepointonline_3_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sharepointonline_1_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]"
+        },
+        "displayName": "[parameters('sharepointonline_1_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "token:TenantId": "[parameters('sharepointonline_1_token:TenantId')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('dynamicscrmonline_1_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'dynamicscrmonline')]"
+        },
+        "displayName": "[parameters('dynamicscrmonline_1_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "token:TenantId": "[parameters('dynamicscrmonline_1_token:TenantId')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sharepointonline_2_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]"
+        },
+        "displayName": "[parameters('sharepointonline_2_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "token:TenantId": "[parameters('sharepointonline_2_token:TenantId')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('dynamicscrmonline_2_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'dynamicscrmonline')]"
+        },
+        "displayName": "[parameters('dynamicscrmonline_2_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "token:TenantId": "[parameters('dynamicscrmonline_2_token:TenantId')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('sharepointonline_3_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'sharepointonline')]"
+        },
+        "displayName": "[parameters('sharepointonline_3_Connection_DisplayName')]",
+        "nonSecretParameterValues": {
+          "token:TenantId": "[parameters('sharepointonline_3_token:TenantId')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
