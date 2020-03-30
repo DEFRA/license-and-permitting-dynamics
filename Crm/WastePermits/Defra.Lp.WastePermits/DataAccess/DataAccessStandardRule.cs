@@ -19,6 +19,7 @@
             return service.GetStandardRules(entityRef, entityName, fieldName, lineEntityName);
         }
 
+
         public static string GetStandardRules(this IOrganizationService service, EntityReference entityRef, string entityName, string fieldName, string lineEntityName)
         {
             const string alias = "permit";
@@ -28,8 +29,8 @@
                                     <filter>
                                       <condition attribute='{fieldName}' operator='eq' value='{entityRef.Id.ToString()}' />
                                     </filter>
-                                    <link-entity name='{lineEntityName}' from='{fieldName}' to='{fieldName}' >
-                                      <link-entity name='{defra_standardrule.EntityLogicalName}' from='{defra_standardrule.Fields.defra_standardruleId}' to='{defra_applicationline.Fields.defra_standardruleId}' alias='{alias}' >
+                                    <link-entity name='{lineEntityName}' from='{fieldName}' to='{fieldName}' ><attribute name='defra_itemid' />
+                                      <link-entity name='{defra_standardrule.EntityLogicalName}' from='{defra_standardrule.Fields.defra_standardruleId}' to='{defra_applicationline.Fields.defra_standardruleId}' alias='{alias}' link-type='outer' >
                                         <attribute name='{defra_standardrule.Fields.defra_name}' />
                                         <attribute name='{defra_standardrule.Fields.defra_rulesnamegovuk}' />
                                       </link-entity>
@@ -59,5 +60,7 @@
 
             return returnData;
         }
+
+       
     }
 }

@@ -98,7 +98,10 @@ namespace WastePermits.Model.EarlyBound
 			public const string lk_defra_applicationline_modifiedonbehalfby = "lk_defra_applicationline_modifiedonbehalfby";
 			public const string team_defra_applicationline = "team_defra_applicationline";
 			public const string user_defra_applicationline = "user_defra_applicationline";
-		}
+            public const string defra_parentapplicationline = "defra_parentapplicationline";
+            public const string defra_discounttype = "defra_discounttype";
+            public const string defra_displayorder = "defra_displayorder";
+        }
 		
 		/// <summary>
 		/// Default Constructor.

@@ -88,6 +88,14 @@ namespace Lp.Model.Crm
     {
         RegulatedFacility = 910400000,
         PositiveAdjustment = 910400001,
-        NegativeAdjustment = 910400002
+        NegativeAdjustment = 910400002,
+        Discount= 910400003
+    }
+    public enum ApplicationLineDiscountTypeValues
+    {
+        D90 = 910400000,
+        D50 = 910400001,
+        
+       
     }
 }
