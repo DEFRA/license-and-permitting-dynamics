@@ -148,9 +148,9 @@
                 "method": "get",
                 "path": "/datasets/@{encodeURIComponent(encodeURIComponent('orgc00df9d4.crm4'))}/tables/@{encodeURIComponent(encodeURIComponent('defra_applications'))}/items",
                 "queries": {
-                  "$filter": "modifiedon le @{formatDateTime(addDays(utcNow(),-180))} and statuscode eq 1 and  (defra_folderdeletedinsharepoint  ne true )",
+                  "$filter": "createdon le @{formatDateTime(addDays(utcNow(),-180))} and statuscode eq 1",
                   "$orderby": "createdon desc",
-                  "$top": 5000
+                  "$top": 15000
                 }
               },
               "runAfter": {
