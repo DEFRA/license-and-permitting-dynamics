@@ -148,7 +148,9 @@
                 "method": "get",
                 "path": "/datasets/@{encodeURIComponent(encodeURIComponent('orgc00df9d4.crm4'))}/tables/@{encodeURIComponent(encodeURIComponent('defra_applications'))}/items",
                 "queries": {
-                  "$filter": "modifiedon le @{formatDateTime(addDays(utcNow(),-180))} and statuscode eq 1 and  (defra_folderdeletedinsharepoint  ne true )"
+                  "$filter": "modifiedon le @{formatDateTime(addDays(utcNow(),-180))} and statuscode eq 1 and  (defra_folderdeletedinsharepoint  ne true )",
+                  "$orderby": "createdon desc",
+                  "$top": 5000
                 }
               },
               "runAfter": {
@@ -186,7 +188,7 @@
                     ]
                   }
                 },
-                "Get_items": {
+                "Get_folder_metadata": {
                   "type": "ApiConnection",
                   "inputs": {
                     "host": {
@@ -195,9 +197,9 @@
                       }
                     },
                     "method": "get",
-                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/tables/@{encodeURIComponent(encodeURIComponent('Permit'))}/items",
+                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/GetFolder",
                     "queries": {
-                      "$filter": "Permit_x0020_ID eq '@{variables('NEW_PermitNumber')}'"
+                      "id": "/Permit/@{variables('NEW_PermitNumber')}"
                     }
                   },
                   "runAfter": {
@@ -206,75 +208,48 @@
                     ]
                   }
                 },
-                "For_each_2": {
-                  "type": "Foreach",
-                  "foreach": "@body('Get_items')?['value']",
-                  "actions": {
-                    "Delete_item": {
-                      "type": "ApiConnection",
-                      "inputs": {
-                        "host": {
-                          "connection": {
-                            "name": "@parameters('$connections')['sharepointonline']['connectionId']"
-                          }
-                        },
-                        "method": "delete",
-                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/tables/@{encodeURIComponent(encodeURIComponent('Permit'))}/items/@{encodeURIComponent(items('For_each_2')?['ID'])}"
-                      },
-                      "runAfter": {}
-                    },
-                    "Update_a_record": {
-                      "type": "ApiConnection",
-                      "inputs": {
-                        "host": {
-                          "connection": {
-                            "name": "@parameters('$connections')['dynamicscrmonline_2']['connectionId']"
-                          }
-                        },
-                        "method": "patch",
-                        "body": {
-                          "_defra_applicationtype_label": "",
-                          "_defra_customerid_type": "",
-                          "_defra_agentid_type": "",
-                          "_defra_applicant_type_label": "",
-                          "_defra_areahandoverdocument_label": "",
-                          "_ownerid_type": "",
-                          "_defra_convictionsfound_label": "",
-                          "_defra_determinationoutcome_label": "",
-                          "_defra_drainagetype_label": "",
-                          "_defra_externalconsultationfinished_label": "",
-                          "_defra_externalconsultationstarted_label": "",
-                          "_defra_finalraguscore_label": "",
-                          "_defra_fireplan_label": "",
-                          "defra_folderdeletedinsharepoint": true,
-                          "_defra_raguscore_label": "",
-                          "_defra_screeningstatus_label": "",
-                          "_defra_miningwasteplan_label": "",
-                          "_defra_applicant_organisation_type_label": "",
-                          "_defra_plan_assessment_status_label": "",
-                          "_defra_external_system_label": "",
-                          "_defra_regime_label": "",
-                          "_defra_reviewstatus_label": "",
-                          "_defra_rvd_team_decision_label": "",
-                          "_defra_source_label": "",
-                          "_statecode_label": "",
-                          "_statuscode_label": "",
-                          "_defra_technicalability_label": "",
-                          "_defra_tradingnameused_label": "",
-                          "_defra_withdrawaltype_label": ""
-                        },
-                        "path": "/datasets/@{encodeURIComponent(encodeURIComponent('orgc00df9d4.crm4'))}/tables/@{encodeURIComponent(encodeURIComponent('defra_applications'))}/items/@{encodeURIComponent(encodeURIComponent(items('For_each')?['defra_applicationid']))}"
-                      },
-                      "runAfter": {
-                        "Delete_item": [
-                          "Succeeded"
-                        ]
+                "Delete_item": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
                       }
-                    }
+                    },
+                    "method": "delete",
+                    "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster'))}/tables/@{encodeURIComponent(encodeURIComponent('Permit'))}/items/@{encodeURIComponent(body('Get_folder_metadata')?['ItemId'])}"
                   },
                   "runAfter": {
-                    "Get_items": [
+                    "Get_folder_metadata": [
                       "Succeeded"
+                    ]
+                  }
+                },
+                "Set_variable_3": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OLD_PermitNumber",
+                    "value": "No folder found "
+                  },
+                  "runAfter": {
+                    "Get_folder_metadata": [
+                      "Failed",
+                      "Skipped",
+                      "TimedOut"
+                    ]
+                  }
+                },
+                "Set_variable_4": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OLD_PermitNumber",
+                    "value": "Skipped"
+                  },
+                  "runAfter": {
+                    "Delete_item": [
+                      "Failed",
+                      "Skipped",
+                      "TimedOut"
                     ]
                   }
                 }
