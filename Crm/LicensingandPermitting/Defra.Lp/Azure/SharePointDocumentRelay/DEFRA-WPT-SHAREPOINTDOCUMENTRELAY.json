@@ -6,41 +6,52 @@
       "type": "string"
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "northeurope"
     },
     "connectionName": {
       "type": "string",
       "defaultValue": "sharepointonline"
     },
     "connectionDisplayName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "wastesysops@defradev.onmicrosoft.com"
     },
     "siteName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE"
     },
     "permitLibraryGuid": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "041a7022-c01d-46ee-801e-c628b6419348"
     },
     "metaDataLogicAppName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "Lp.DevWaste.SharePointMetadataUpdate"
     },
     "sharePointAzureFunctionName": {
-      "type" : "string"
+      "type": "string",
+      "defaultValue": "LpSharePointAzureFunctions"
     },
     "Environment": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "DEV"
     },
     "ServiceCode": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "WPT"
     },
     "ServiceName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "Sharepoint Document Relay Logic App"
     },
     "ServiceType": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "LOB"
     },
     "CreatedDate": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "20200302"
     }
   },
   "variables": {
@@ -212,7 +223,8 @@
                   "PermitFolder": "@{triggerBody()?['PermitNo']}",
                   "ListName": "@{triggerBody()?['ListName']}",
                   "SpoSiteName": "[variables('spo').siteName]",
-                  "PermitContentType": "@{triggerBody()?['PermitContentType']}"
+                  "PermitContentType": "@{triggerBody()?['PermitContentType']}",
+                  "CreateAirQualityModelling": "@{triggerBody()?['CreateAirQualityModelling']}"
                 },
                 "function": {
                   "id": "[concat(resourceGroup().id,'/providers/Microsoft.Web/sites/',parameters('sharePointAzureFunctionName'),'/functions/','CreateDocumentSet')]"
@@ -284,7 +296,8 @@
                     },
                     "SiteDetails": {
                       "type": "string"
-                    }
+                    },
+                    "CreateAirQualityModelling": { "type": "string" }
                   },
                   "type": "object"
                 },

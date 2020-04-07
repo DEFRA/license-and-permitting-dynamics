@@ -74,10 +74,22 @@ namespace Defra.Lp.Common.SharePoint
         {
             TracingService.Trace($"In CreateFolder with Entity Type {application.LogicalName} and Entity Id {application.Id}");
             
-            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { defra_application.Fields.defra_name, defra_application.Fields.defra_permitnumber, defra_application.Fields.defra_applicationnumber }, application);
+            var applicationEntity = Query.RetrieveDataForEntityRef(Service, new[] { defra_application.Fields.defra_name, defra_application.Fields.defra_permitnumber, defra_application.Fields.defra_applicationnumber, defra_application.Fields.defra_businesstrackid }, application);
 
             TracingService.Trace($"Permit Number = {applicationEntity[defra_application.Fields.defra_permitnumber]}; Application Number = {applicationEntity[defra_application.Fields.defra_applicationnumber]}");
 
+            // MCP Bespoke c994c55b-7b2f-e911-a9a2-000d3ab31ad6
+            // Waste Bespoke 01b282dc-e909-ea11-a811-000d3a44a5b1
+            var createAirQualityModelling = "No";
+
+            if (applicationEntity.Contains(defra_application.Fields.defra_businesstrackid))
+            {
+                if(((EntityReference)(applicationEntity[defra_application.Fields.defra_businesstrackid])).Id.ToString().Equals("c994c55b-7b2f-e911-a9a2-000d3ab31ad6") ||
+                    ((EntityReference)(applicationEntity[defra_application.Fields.defra_businesstrackid])).Id.ToString().Equals("01b282dc-e909-ea11-a811-000d3a44a5b1"))
+                {
+                    createAirQualityModelling = "Yes";
+                }
+            }
             var request = new DocumentRelayRequest
             {
                 ApplicationContentType = Config[$"{SharePointSecureConfigurationKeys.ApplicationFolderContentType}"],
@@ -90,7 +102,9 @@ namespace Defra.Lp.Common.SharePoint
                 PermitNo = SharePointFilters.FilterPath(applicationEntity.GetAttributeValue<string>(defra_application.Fields.defra_permitnumber)),
                 Customer = string.Empty,
                 SiteDetails = string.Empty,
-                PermitDetails = string.Empty
+                PermitDetails = string.Empty,
+                CreateAirQualityModelling = createAirQualityModelling
+                
             };
 
             var stringContent = JsonConvert.SerializeObject(request);
