@@ -37,6 +37,9 @@ namespace Defra.Lp.SharePointAzureFunctions
                 var documentSetUrl = string.Empty;
                 var applicationFolder = data.ApplicationFolder.ToString();
                 var permitFolderName = data.PermitFolder.ToString();
+                var createAirQualityModelling = data.CreateAirQualityModelling.ToString();
+
+                log.Info("If create AirQualityModelling folder:" + createAirQualityModelling);
 
                 using (ClientContext clientContext = new ClientContext(connectionString))
                 {
@@ -94,6 +97,24 @@ namespace Defra.Lp.SharePointAzureFunctions
                         log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
                     }
 
+                    
+                    // Create AirQualityModelling
+                    if (createAirQualityModelling == "Yes")
+                    {
+                        try
+                        {
+                            log.Info("try to create AirQualityModelling folder...");
+                            var complinceFolder = DocumentSet.Create(clientContext, permitFolder, "Air Quality Modelling", ctPermit.Id);
+                            clientContext.ExecuteQuery();
+                            log.Info("AirQualityModelling folder created");
+
+                        }
+                        catch (ServerException ex) when (ex.Message.StartsWith("A document, folder or document set with the name") && ex.Message.EndsWith("already exists."))
+                        {
+                            documentSetUrl = "Document set exists already";
+                            log.Info(string.Format("Handling {0} - {1}", ex.Source, ex.Message));
+                        }
+                    }
                     // Create Complince folder
                     try
                     {

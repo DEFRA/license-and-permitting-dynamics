@@ -25,6 +25,8 @@
         public string EmailLink { get; internal set; }
         public string CaseNo { get; internal set; }
 
+        public string CreateAirQualityModelling { get; internal set; }
+
         public bool HasBody()
         {
             return !string.IsNullOrEmpty((string)FileBody);
