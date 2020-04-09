@@ -457,10 +457,10 @@ namespace Defra.Lp.Common.SharePoint
                     con += "< condition attribute = 'defra_applicationsubtype' operator= 'eq'  value = '{" + appSubType.ToString() + "}' />";
                 }
 
-                var fetchXml = $@"<fetch >
+                var fetchXml = @"<fetch >
                                       <entity name='defra_documentnamingconventionmapping'>
                                          <filter type='and'>
-                                          <condition attribute='defra_name' operator='eq' value='" + newSubject + @"' />{con}
+                                          <condition attribute='defra_name' operator='eq' value='" + newSubject + "' />"+con+@"}
                                         </filter>
                                       </entity>
                                     </fetch>";
