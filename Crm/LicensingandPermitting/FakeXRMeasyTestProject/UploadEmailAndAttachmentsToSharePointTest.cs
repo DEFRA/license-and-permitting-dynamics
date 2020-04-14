@@ -25,10 +25,11 @@ namespace FakeXRMeasyTestProject
             //Inputs
             var inputs = new Dictionary<string, object>();
 
-            // master var mailId = Guid.Parse("575e588c-4ea2-e911-aa05-000d3a2065c5");
+            // master 
+            var mailId = Guid.Parse("575e588c-4ea2-e911-aa05-000d3a2065c5");
             //0ec946a0-fcf3-e911-a811-000d3a649465
 
-            var mailId = Guid.Parse("d667072e-dfff-e911-a811-000d3a64905b");
+            //var mailId = Guid.Parse("d667072e-dfff-e911-a811-000d3a64905b");
             var mainApp = new Entity("email", mailId);
 
             //inputs.Add("Application", new Entity("defra_application", mailId).ToEntityReference());
