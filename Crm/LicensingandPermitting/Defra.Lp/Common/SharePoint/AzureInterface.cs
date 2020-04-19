@@ -104,7 +104,9 @@ namespace Defra.Lp.Common.SharePoint
                 Customer = string.Empty,
                 SiteDetails = string.Empty,
                 PermitDetails = string.Empty,
-                CreateAirQualityModelling = createAirQualityModelling
+                CreateAirQualityModelling = createAirQualityModelling,
+                FolderPathInSP= string.Empty
+                
                 
             };
 
@@ -410,7 +412,10 @@ namespace Defra.Lp.Common.SharePoint
             var body = GetBody(queryRecord);
             // to do: change subject based on naming convention 
             var newSubject = GetSubject(queryRecord);
-            newSubject = GetNamingConvention(queryRecord, newSubject);
+            var spFoldrPath = string.Empty;
+            newSubject = GetNamingConvention(queryRecord, newSubject, ref spFoldrPath);
+
+           
 
             var crmId = GetCrmId(queryRecord);
             var caseNo = GetCaseFolderName(queryRecord);
@@ -430,13 +435,15 @@ namespace Defra.Lp.Common.SharePoint
             request.CrmId = crmId;
             request.CaseNo = caseNo;
             request.EmailRegarding = regarding;
+            request.FolderPathInSP = spFoldrPath;
 
             AddEmailParametersToRequest(request, queryRecord);
+
 
             TracingService.Trace(string.Format("Requests: {0}", request));
         }
 
-        private string GetNamingConvention(Entity queryRecord, string newSubject)
+        private string GetNamingConvention(Entity queryRecord, string newSubject,ref string spFoldrPath)
         {
             if (queryRecord.Contains("objectid") && queryRecord["objecttypecode"].ToString() == "defra_application")
             {
@@ -472,7 +479,7 @@ namespace Defra.Lp.Common.SharePoint
                 }
 
                 var fetchXml = @"<fetch >
-                                      <entity name='defra_documentnamingconventionmapping'>
+                                      <entity name='defra_documentnamingconventionmapping'><attribute name='defra_value'/><attribute name='defra_folderpathinsharepoint'/>
                                          <filter type='and'>
                                           <condition attribute='defra_name' operator='eq' value='" + newSubject + "' />"+con+@"}
                                         </filter>
@@ -484,7 +491,10 @@ namespace Defra.Lp.Common.SharePoint
                 {
                     newSubject = result["defra_value"].ToString();
                 }
-
+                if (result != null && result.Contains("defra_folderpathinsharepoint"))
+                {
+                    spFoldrPath = result["defra_folderpathinsharepoint"].ToString();
+                }
 
             }
 
