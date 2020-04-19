@@ -85,6 +85,7 @@ namespace Defra.Lp.SharePointAzureFunctions
 
                     try
                     {
+                        
                         var ds = DocumentSet.Create(clientContext, permitFolder, applicationFolder, ctApplication.Id);
                         clientContext.ExecuteQuery();
                         documentSetUrl = ds.Value;
@@ -103,8 +104,12 @@ namespace Defra.Lp.SharePointAzureFunctions
                     {
                         try
                         {
+                            log.Info($"AirQualityModelling folder path: {data.ListName.ToString()}/{permitFolderName}/{applicationFolder}");
+                            var web = clientContext.Web;
+                            var result = web.GetFolderByServerRelativeUrl($"{data.ListName.ToString()}/{permitFolderName}/{applicationFolder}");
+
                             log.Info("try to create AirQualityModelling folder...");
-                            var complinceFolder = DocumentSet.Create(clientContext, permitFolder, "Air Quality Modelling", ctPermit.Id);
+                            var complinceFolder = DocumentSet.Create(clientContext, result, "Air Quality Modelling", ctPermit.Id);
                             clientContext.ExecuteQuery();
                             log.Info("AirQualityModelling folder created");
 

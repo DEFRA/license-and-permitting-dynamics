@@ -27,6 +27,8 @@
 
         public string CreateAirQualityModelling { get; internal set; }
 
+        public string FolderPathInSP { get; internal set; }
+
         public bool HasBody()
         {
             return !string.IsNullOrEmpty((string)FileBody);

@@ -4,7 +4,7 @@
   "parameters": {
     "logicAppName": {
       "type": "string",
-      "defaultValue": "Lp.DevMaster.SharePointDocumentRelay"
+      "defaultValue": "Lp.DevWaste.SharePointDocumentRelay"
     },
     "location": {
       "type": "string",
@@ -16,11 +16,11 @@
     },
     "connectionDisplayName": {
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "wastesysops@defradev.onmicrosoft.com"
     },
     "siteName": {
       "type": "string",
-      "defaultValue": "https://defradev.sharepoint.com/sites/ea-sp-lp-devmaster"
+      "defaultValue": "https://defradev.sharepoint.com/sites/EA-SP-LP-DEVWASTE"
     },
     "permitLibraryGuid": {
       "type": "string",
@@ -28,7 +28,7 @@
     },
     "metaDataLogicAppName": {
       "type": "string",
-      "defaultValue": "Lp.DevMaster.SharePointMetadataUpdate"
+      "defaultValue": "Lp.DevWaste.SharePointMetadataUpdate"
     },
     "sharePointAzureFunctionName": {
       "type": "string",
@@ -133,7 +133,7 @@
                     "body": "@base64ToBinary(triggerBody()?['FileBody'])",
                     "path": "[variables('spo').fileUpload]",
                     "queries": {
-                      "folderPath": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/@{if(empty(triggerBody()?['CaseNo']),'',triggerBody()?['CaseNo'])}",
+                      "folderPath": "@variables('SPFOLDERPATH')",
                       "name": "@triggerBody()?['FileName']",
                       "queryParametersSingleEncoded": true
                     }
@@ -231,7 +231,63 @@
                   "id": "[concat(resourceGroup().id,'/providers/Microsoft.Web/sites/',parameters('sharePointAzureFunctionName'),'/functions/','CreateDocumentSet')]"
                 }
               },
+              "runAfter": {
+                "Condition": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_variable": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "SPFOLDERPATH",
+                    "type": "string"
+                  }
+                ]
+              },
               "runAfter": {}
+            },
+            "Condition": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@length(triggerBody()?['FolderPathInSP'])",
+                      0
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "SPFOLDERPATH",
+                    "value": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/@{if(empty(triggerBody()?['CaseNo']),'',triggerBody()?['CaseNo'])}"
+                  },
+                  "runAfter": {}
+                }
+              },
+              "runAfter": {
+                "Initialize_variable": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Set_variable_2": {
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "SPFOLDERPATH",
+                      "value": "@{triggerBody()?['ListName']}/@{triggerBody()?['PermitNo']}/@{triggerBody()?['ApplicationNo']}/@{triggerBody()?['FolderPathInSP']}"
+                    },
+                    "runAfter": {}
+                  }
+                }
+              }
             }
           },
           "parameters": {
@@ -298,7 +354,13 @@
                     "SiteDetails": {
                       "type": "string"
                     },
-                    "CreateAirQualityModelling": { "type": "string" }
+                    "CreateAirQualityModelling": {
+                      "type": "string" 
+
+                    },
+                    "FolderPathInSP": {
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 },
